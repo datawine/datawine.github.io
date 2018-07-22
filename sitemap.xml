@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://datawine.github.io/2018/07/22/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%EF%BC%9AM1%E5%8D%A1%E5%B0%8F%E5%AE%9E%E9%AA%8C/</loc>
+    
+    <lastmod>2018-07-22T09:25:52.079Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://datawine.github.io/2018/07/15/DPDK-Pktgen-Docker%E6%90%AD%E5%BB%BAVNF%E7%8E%AF%E5%A2%83%E5%8F%8A%E9%AA%8C%E8%AF%81/</loc>
     
     <lastmod>2018-07-16T06:09:07.746Z</lastmod>
