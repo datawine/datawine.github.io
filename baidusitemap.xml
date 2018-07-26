@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://datawine.github.io/2018/07/26/ubuntu-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE%E8%B8%A9%E5%9D%91%E5%AE%9E%E5%BD%95/</loc>
-    <lastmod>2018-07-26T08:05:06.673Z</lastmod>
+    <lastmod>2018-07-26T08:37:09.631Z</lastmod>
     <data>
         <display>
         <title>ubuntu 服务器网络配置踩坑实录</title>
@@ -15,6 +15,9 @@
          
          
            
+             
+              <breadCrumb title="linux" url="http://datawine.github.io/categories/linux/"/>
+          
         </display>
     </data>
     </url>
