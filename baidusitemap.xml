@@ -4,14 +4,18 @@
 
     
   <url>
-    <loc>http://datawine.github.io/2018/07/15/DPDK-Pktgen-Docker%E6%90%AD%E5%BB%BAVNF%E7%8E%AF%E5%A2%83%E5%8F%8A%E9%AA%8C%E8%AF%81/</loc>
-    <lastmod>2018-08-15T03:06:54.335Z</lastmod>
+    <loc>http://datawine.github.io/2018/07/22/Docker-DPDK-OVS/</loc>
+    <lastmod>2018-08-19T05:30:47.213Z</lastmod>
     <data>
         <display>
-        <title>DPDK Pktgen+Docker搭建VNF环境及验证</title>
-        <pubTime>2018-07-15T12:15:42.000Z</pubTime>
+        <title>Docker + DPDK + OVS</title>
+        <pubTime>2018-07-22T09:33:28.000Z</pubTime>
         
         <tag>dpdk</tag>
+         
+        <tag>docker</tag>
+         
+        <tag>ovs</tag>
          
          
            
@@ -24,18 +28,14 @@
 
     
   <url>
-    <loc>http://datawine.github.io/2018/07/22/Docker-DPDK-OVS/</loc>
-    <lastmod>2018-08-13T05:22:21.045Z</lastmod>
+    <loc>http://datawine.github.io/2018/07/15/DPDK-Pktgen-Docker%E6%90%AD%E5%BB%BAVNF%E7%8E%AF%E5%A2%83%E5%8F%8A%E9%AA%8C%E8%AF%81/</loc>
+    <lastmod>2018-08-15T03:06:54.335Z</lastmod>
     <data>
         <display>
-        <title>Docker + DPDK + OVS</title>
-        <pubTime>2018-07-22T09:33:28.000Z</pubTime>
+        <title>DPDK Pktgen+Docker搭建VNF环境及验证</title>
+        <pubTime>2018-07-15T12:15:42.000Z</pubTime>
         
         <tag>dpdk</tag>
-         
-        <tag>docker</tag>
-         
-        <tag>ovs</tag>
          
          
            
