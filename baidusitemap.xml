@@ -4,6 +4,46 @@
 
     
   <url>
+    <loc>http://datawine.coding.me/2018/07/08/dpdk%E5%AE%89%E8%A3%85%E8%B8%A9%E5%9D%91%E5%AE%9E%E5%BD%95/</loc>
+    <lastmod>2018-10-08T13:02:17.084Z</lastmod>
+    <data>
+        <display>
+        <title>dpdk安装踩坑实录</title>
+        <pubTime>2018-07-08T13:01:29.000Z</pubTime>
+        
+        <tag>dpdk</tag>
+         
+         
+           
+             
+              <breadCrumb title="网络" url="http://datawine.coding.me/categories/%E7%BD%91%E7%BB%9C/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/10/07/MoonGen%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2018-10-08T12:59:09.187Z</lastmod>
+    <data>
+        <display>
+        <title>MoonGen学习</title>
+        <pubTime>2018-10-07T02:55:00.000Z</pubTime>
+        
+        <tag>MoonGen</tag>
+         
+         
+           
+             
+              <breadCrumb title="技能" url="http://datawine.coding.me/categories/%E6%8A%80%E8%83%BD/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://datawine.coding.me/2018/10/06/Lua%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2018-10-08T11:37:51.117Z</lastmod>
     <data>
@@ -17,26 +57,6 @@
            
              
               <breadCrumb title="技能学习" url="http://datawine.coding.me/categories/%E6%8A%80%E8%83%BD%E5%AD%A6%E4%B9%A0/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2018/10/07/MoonGen%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2018-10-07T03:40:43.066Z</lastmod>
-    <data>
-        <display>
-        <title>MoonGen学习</title>
-        <pubTime>2018-10-07T02:55:00.000Z</pubTime>
-        
-        <tag>MoonGen</tag>
-         
-         
-           
-             
-              <breadCrumb title="技能" url="http://datawine.coding.me/categories/%E6%8A%80%E8%83%BD/"/>
           
         </display>
     </data>

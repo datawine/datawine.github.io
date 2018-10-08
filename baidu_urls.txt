@@ -19,6 +19,7 @@ http://datawine.coding.me/2018/07/15/DPDK-Pktgen-Docker搭建VNF环境及验证/
 http://datawine.coding.me/2018/07/09/网络攻防小学期（三）网站安全/
 http://datawine.coding.me/2018/07/09/网络攻防小学期（二）信息隐藏与保密/
 http://datawine.coding.me/2018/07/09/网络攻防小学期（一）网络侦查与取证分析/
+http://datawine.coding.me/2018/07/08/dpdk安装踩坑实录/
 http://datawine.coding.me/2018/07/02/NFP-Enabling-Network-Function-Parallelism-in-NFV论文阅读/
 http://datawine.coding.me/2018/07/01/ClickOS-and-the-Art-of-Network-Function-Virtualization论文阅读/
 http://datawine.coding.me/2018/07/01/Making-Middleboxes-Someone-Else’s-Problem-Network-Processing-as-a-Cloud-Service论文阅读/
