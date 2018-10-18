@@ -4,6 +4,46 @@
 
     
   <url>
+    <loc>http://datawine.coding.me/2018/07/08/dpdk%E5%AE%89%E8%A3%85%E8%B8%A9%E5%9D%91%E5%AE%9E%E5%BD%95/</loc>
+    <lastmod>2018-10-18T14:03:24.260Z</lastmod>
+    <data>
+        <display>
+        <title>dpdk安装踩坑实录</title>
+        <pubTime>2018-07-08T13:01:29.000Z</pubTime>
+        
+        <tag>dpdk</tag>
+         
+         
+           
+             
+              <breadCrumb title="工具" url="http://datawine.coding.me/categories/%E5%B7%A5%E5%85%B7/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/09/19/usaco-writeups/</loc>
+    <lastmod>2018-10-12T03:43:58.137Z</lastmod>
+    <data>
+        <display>
+        <title>usaco writeups</title>
+        <pubTime>2018-09-19T08:54:51.000Z</pubTime>
+        
+        <tag>usaco</tag>
+         
+         
+           
+             
+              <breadCrumb title="算法" url="http://datawine.coding.me/categories/%E7%AE%97%E6%B3%95/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://datawine.coding.me/2018/10/11/mac-os%E6%B8%85%E7%90%86%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4/</loc>
     <lastmod>2018-10-11T14:05:55.267Z</lastmod>
     <data>
@@ -84,26 +124,6 @@
 
     
   <url>
-    <loc>http://datawine.coding.me/2018/07/08/dpdk%E5%AE%89%E8%A3%85%E8%B8%A9%E5%9D%91%E5%AE%9E%E5%BD%95/</loc>
-    <lastmod>2018-10-08T13:02:17.084Z</lastmod>
-    <data>
-        <display>
-        <title>dpdk安装踩坑实录</title>
-        <pubTime>2018-07-08T13:01:29.000Z</pubTime>
-        
-        <tag>dpdk</tag>
-         
-         
-           
-             
-              <breadCrumb title="网络" url="http://datawine.coding.me/categories/%E7%BD%91%E7%BB%9C/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://datawine.coding.me/2018/09/29/smartNIC%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2018-10-02T11:40:50.583Z</lastmod>
     <data>
@@ -158,21 +178,6 @@
              
               <breadCrumb title="lab" url="http://datawine.coding.me/categories/lab/"/>
           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2018/09/19/usaco-writeups/</loc>
-    <lastmod>2018-09-19T08:54:51.617Z</lastmod>
-    <data>
-        <display>
-        <title>usaco writeups</title>
-        <pubTime>2018-09-19T08:54:51.000Z</pubTime>
-        
-         
-           
         </display>
     </data>
     </url>
