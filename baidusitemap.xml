@@ -4,6 +4,61 @@
 
     
   <url>
+    <loc>http://datawine.coding.me/2018/10/22/dpdk-docker%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%B8%A9%E5%9D%91%E5%AE%9E%E5%BD%95/</loc>
+    <lastmod>2018-10-22T08:05:11.231Z</lastmod>
+    <data>
+        <display>
+        <title>dpdk+docker环境搭建踩坑实录</title>
+        <pubTime>2018-10-22T08:04:14.000Z</pubTime>
+        
+        <tag>dpdk, docker</tag>
+         
+         
+           
+             
+              <breadCrumb title="实验" url="http://datawine.coding.me/categories/%E5%AE%9E%E9%AA%8C/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/10/22/dpdk-vagrant%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%B8%A9%E5%9D%91%E5%AE%9E%E5%BD%95/</loc>
+    <lastmod>2018-10-22T08:03:46.085Z</lastmod>
+    <data>
+        <display>
+        <title>dpdk+vagrant环境搭建踩坑实录</title>
+        <pubTime>2018-10-22T08:03:46.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/10/18/pktgen-dpdk%E5%AE%89%E8%A3%85%E8%B8%A9%E5%9D%91%E5%AE%9E%E5%BD%95/</loc>
+    <lastmod>2018-10-18T14:05:30.728Z</lastmod>
+    <data>
+        <display>
+        <title>pktgen-dpdk安装踩坑实录</title>
+        <pubTime>2018-10-18T14:04:28.000Z</pubTime>
+        
+        <tag>pktgen</tag>
+         
+         
+           
+             
+              <breadCrumb title="工具" url="http://datawine.coding.me/categories/%E5%B7%A5%E5%85%B7/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://datawine.coding.me/2018/07/08/dpdk%E5%AE%89%E8%A3%85%E8%B8%A9%E5%9D%91%E5%AE%9E%E5%BD%95/</loc>
     <lastmod>2018-10-18T14:03:24.260Z</lastmod>
     <data>
@@ -304,9 +359,9 @@
          
         <tag>ovs</tag>
          
-        <tag>iperf</tag>
-         
         <tag>pktgen</tag>
+         
+        <tag>iperf</tag>
          
          
            

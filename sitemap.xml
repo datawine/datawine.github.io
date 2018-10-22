@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://datawine.coding.me/2018/10/22/dpdk-docker%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%B8%A9%E5%9D%91%E5%AE%9E%E5%BD%95/</loc>
+    
+    <lastmod>2018-10-22T08:05:11.231Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://datawine.coding.me/2018/10/22/dpdk-vagrant%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%B8%A9%E5%9D%91%E5%AE%9E%E5%BD%95/</loc>
+    
+    <lastmod>2018-10-22T08:03:46.085Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://datawine.coding.me/2018/10/18/pktgen-dpdk%E5%AE%89%E8%A3%85%E8%B8%A9%E5%9D%91%E5%AE%9E%E5%BD%95/</loc>
+    
+    <lastmod>2018-10-18T14:05:30.728Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://datawine.coding.me/2018/07/08/dpdk%E5%AE%89%E8%A3%85%E8%B8%A9%E5%9D%91%E5%AE%9E%E5%BD%95/</loc>
     
     <lastmod>2018-10-18T14:03:24.260Z</lastmod>
