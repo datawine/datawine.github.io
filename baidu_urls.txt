@@ -1,3 +1,4 @@
+http://datawine.coding.me/2018/10/23/git-无法clone踩坑实录/
 http://datawine.coding.me/2018/10/22/dpdk-docker环境搭建踩坑实录/
 http://datawine.coding.me/2018/10/22/dpdk-vagrant环境搭建踩坑实录/
 http://datawine.coding.me/2018/10/18/pktgen-dpdk安装踩坑实录/
