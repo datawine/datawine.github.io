@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://datawine.coding.me/2018/12/11/YCSB%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/</loc>
+    
+    <lastmod>2018-12-20T15:56:31.914Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://datawine.coding.me/2018/11/30/redis%E5%AD%A6%E4%B9%A0/</loc>
+    
+    <lastmod>2018-12-11T11:59:50.573Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://datawine.coding.me/2018/11/30/nginx%E5%AD%A6%E4%B9%A0/</loc>
+    
+    <lastmod>2018-11-30T08:36:56.589Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://datawine.coding.me/about/index.html</loc>
     
     <lastmod>2018-10-30T12:04:45.473Z</lastmod>
