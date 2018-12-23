@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://datawine.coding.me/2018/12/23/route-add%E6%8A%A5%E9%94%99SIOCADDRT-Network-is-unreachable/</loc>
+    <lastmod>2018-12-23T12:10:31.998Z</lastmod>
+    <data>
+        <display>
+        <title>route add报错SIOCADDRT:Network is unreachable</title>
+        <pubTime>2018-12-23T12:01:16.000Z</pubTime>
+        
+        <tag>linux网络</tag>
+         
+         
+           
+             
+              <breadCrumb title="其他" url="http://datawine.coding.me/categories/%E5%85%B6%E4%BB%96/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://datawine.coding.me/2018/12/11/YCSB%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2018-12-20T16:01:16.133Z</lastmod>
     <data>
