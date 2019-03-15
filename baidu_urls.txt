@@ -1,3 +1,4 @@
+http://datawine.coding.me/2019/03/15/change-python-default-version/
 http://datawine.coding.me/2019/03/15/修改或删除git-submodule/
 http://datawine.coding.me/2019/03/15/ssh-permissions-are-too-open/
 http://datawine.coding.me/2019/03/15/解决普通用户下使用docker问题/
