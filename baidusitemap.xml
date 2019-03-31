@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://datawine.coding.me/2019/03/15/%E8%A7%A3%E5%86%B3%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E4%B8%8B%E4%BD%BF%E7%94%A8docker%E9%97%AE%E9%A2%98/</loc>
+    <lastmod>2019-03-31T10:41:00.317Z</lastmod>
+    <data>
+        <display>
+        <title>解决普通用户下使用docker问题</title>
+        <pubTime>2019-03-15T12:07:37.000Z</pubTime>
+        
+        <tag>docker</tag>
+         
+        <tag>linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="系统" url="http://datawine.coding.me/categories/%E7%B3%BB%E7%BB%9F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://datawine.coding.me/2018/09/29/smartNIC%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2019-03-31T10:39:11.611Z</lastmod>
     <data>
@@ -271,31 +293,6 @@
            
              
               <breadCrumb title="系统" url="http://datawine.coding.me/categories/%E7%B3%BB%E7%BB%9F/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2019/03/15/%E8%A7%A3%E5%86%B3%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E4%B8%8B%E4%BD%BF%E7%94%A8docker%E9%97%AE%E9%A2%98/</loc>
-    <lastmod>2019-03-31T10:32:45.430Z</lastmod>
-    <data>
-        <display>
-        <title>解决普通用户下使用docker问题</title>
-        <pubTime>2019-03-15T12:07:37.000Z</pubTime>
-        
-        <tag>docker</tag>
-         
-        <tag>linux</tag>
-         
-         
-           
-             
-              <breadCrumb title="工具" url="http://datawine.coding.me/categories/%E5%B7%A5%E5%85%B7/"/>
-          
-             
-              <breadCrumb title="系统" url="http://datawine.coding.me/categories/%E5%B7%A5%E5%85%B7/%E7%B3%BB%E7%BB%9F/"/>
           
         </display>
     </data>
