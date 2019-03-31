@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://datawine.coding.me/2018/09/29/smartNIC%E5%AD%A6%E4%B9%A0/</loc>
+    
+    <lastmod>2019-03-31T10:39:11.611Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://datawine.coding.me/2018/08/20/%E6%AF%94%E8%BE%83docker%E9%BB%98%E8%AE%A4%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F%E3%80%81dpdk%E3%80%81ovs-dpdk%E4%B8%89%E7%A7%8D%E7%BD%91%E7%BB%9C%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/</loc>
     
     <lastmod>2019-03-31T10:37:51.935Z</lastmod>
@@ -61,13 +68,6 @@
     <loc>http://datawine.coding.me/2018/09/24/NetVM%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</loc>
     
     <lastmod>2019-03-31T10:35:35.568Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://datawine.coding.me/2018/09/29/smartNIC%E5%AD%A6%E4%B9%A0/</loc>
-    
-    <lastmod>2019-03-31T10:35:26.429Z</lastmod>
     
   </url>
   
