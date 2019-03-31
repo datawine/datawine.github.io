@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://datawine.coding.me/2018/12/23/route-add%E6%8A%A5%E9%94%99SIOCADDRT-Network-is-unreachable/</loc>
+    <lastmod>2019-03-31T10:22:57.113Z</lastmod>
+    <data>
+        <display>
+        <title>route add报错SIOCADDRT:Network is unreachable</title>
+        <pubTime>2018-12-23T12:01:16.000Z</pubTime>
+        
+        <tag>linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="系统" url="http://datawine.coding.me/categories/%E7%B3%BB%E7%BB%9F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://datawine.coding.me/2019/03/31/linux%E6%9F%A5%E7%9C%8B%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81/</loc>
     <lastmod>2019-03-31T08:25:02.596Z</lastmod>
     <data>
@@ -197,26 +217,6 @@
         
          
            
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2018/12/23/route-add%E6%8A%A5%E9%94%99SIOCADDRT-Network-is-unreachable/</loc>
-    <lastmod>2018-12-23T12:10:31.998Z</lastmod>
-    <data>
-        <display>
-        <title>route add报错SIOCADDRT:Network is unreachable</title>
-        <pubTime>2018-12-23T12:01:16.000Z</pubTime>
-        
-        <tag>linux网络</tag>
-         
-         
-           
-             
-              <breadCrumb title="其他" url="http://datawine.coding.me/categories/%E5%85%B6%E4%BB%96/"/>
-          
         </display>
     </data>
     </url>
@@ -443,26 +443,6 @@
 
     
   <url>
-    <loc>http://datawine.coding.me/2018/09/30/smartNIC-programmer-studio-ide%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2018-10-08T13:35:36.986Z</lastmod>
-    <data>
-        <display>
-        <title>smartNIC programmer studio ide学习</title>
-        <pubTime>2018-09-30T11:42:34.000Z</pubTime>
-        
-        <tag>smartnic</tag>
-         
-         
-           
-             
-              <breadCrumb title="工具" url="http://datawine.coding.me/categories/%E5%B7%A5%E5%85%B7/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://datawine.coding.me/2018/10/06/Lua%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2018-10-08T13:34:45.441Z</lastmod>
     <data>
@@ -567,26 +547,6 @@
         
          
            
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2018/09/19/%E5%AA%92%E4%BD%93%E8%AE%A1%E7%AE%97%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93/</loc>
-    <lastmod>2018-09-19T07:37:51.283Z</lastmod>
-    <data>
-        <display>
-        <title>媒体计算课程总结</title>
-        <pubTime>2018-09-19T07:36:02.000Z</pubTime>
-        
-        <tag>媒体计算</tag>
-         
-         
-           
-             
-              <breadCrumb title="课程" url="http://datawine.coding.me/categories/%E8%AF%BE%E7%A8%8B/"/>
-          
         </display>
     </data>
     </url>

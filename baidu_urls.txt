@@ -19,14 +19,12 @@ http://datawine.coding.me/2018/10/18/pktgen-dpdk安装踩坑实录/
 http://datawine.coding.me/2018/10/11/mac-os清理磁盘空间/
 http://datawine.coding.me/2018/10/07/MoonGen学习/
 http://datawine.coding.me/2018/10/06/Lua学习/
-http://datawine.coding.me/2018/09/30/smartNIC-programmer-studio-ide学习/
 http://datawine.coding.me/2018/09/29/smartNIC学习/
 http://datawine.coding.me/2018/09/29/P4学习/
 http://datawine.coding.me/2018/09/24/NetVM论文阅读/
 http://datawine.coding.me/2018/09/19/usaco-writeups/
 http://datawine.coding.me/2018/09/19/leetcode-writeups/
 http://datawine.coding.me/2018/09/19/bzoj-writeups/
-http://datawine.coding.me/2018/09/19/媒体计算课程总结/
 http://datawine.coding.me/2018/08/20/比较docker默认网络模式、dpdk、ovs-dpdk三种网络性能测试/
 http://datawine.coding.me/2018/07/30/网络攻防小学期：M1卡大实验/
 http://datawine.coding.me/2018/07/26/网络攻防小学期（四）逆向工程与二进制漏洞/
