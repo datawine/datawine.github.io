@@ -4,6 +4,529 @@
 
     
   <url>
+    <loc>http://datawine.coding.me/2018/08/20/%E6%AF%94%E8%BE%83docker%E9%BB%98%E8%AE%A4%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F%E3%80%81dpdk%E3%80%81ovs-dpdk%E4%B8%89%E7%A7%8D%E7%BD%91%E7%BB%9C%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/</loc>
+    <lastmod>2019-03-31T10:37:51.935Z</lastmod>
+    <data>
+        <display>
+        <title>比较docker默认网络模式、dpdk、ovs+dpdk三种网络性能测试</title>
+        <pubTime>2018-08-20T06:03:48.000Z</pubTime>
+        
+        <tag>dpdk</tag>
+         
+        <tag>docker</tag>
+         
+        <tag>ovs</tag>
+         
+        <tag>pktgen</tag>
+         
+        <tag>iperf</tag>
+         
+         
+           
+             
+              <breadCrumb title="实验" url="http://datawine.coding.me/categories/%E5%AE%9E%E9%AA%8C/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/07/09/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%BA%8C%EF%BC%89%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F%E4%B8%8E%E4%BF%9D%E5%AF%86/</loc>
+    <lastmod>2019-03-31T10:37:31.404Z</lastmod>
+    <data>
+        <display>
+        <title>网络攻防小学期（二）信息隐藏于保密/密码</title>
+        <pubTime>2018-07-09T06:45:18.000Z</pubTime>
+        
+        <tag>网络攻防</tag>
+         
+        <tag>密码学</tag>
+         
+         
+           
+             
+              <breadCrumb title="课程" url="http://datawine.coding.me/categories/%E8%AF%BE%E7%A8%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/07/15/DPDK-Pktgen-Docker%E6%90%AD%E5%BB%BAVNF%E7%8E%AF%E5%A2%83%E5%8F%8A%E9%AA%8C%E8%AF%81/</loc>
+    <lastmod>2019-03-31T10:36:58.208Z</lastmod>
+    <data>
+        <display>
+        <title>DPDK Pktgen+Docker搭建VNF环境及验证</title>
+        <pubTime>2018-07-15T12:15:42.000Z</pubTime>
+        
+        <tag>dpdk</tag>
+         
+         
+           
+             
+              <breadCrumb title="实验" url="http://datawine.coding.me/categories/%E5%AE%9E%E9%AA%8C/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/07/22/Docker-DPDK-OVS/</loc>
+    <lastmod>2019-03-31T10:36:48.730Z</lastmod>
+    <data>
+        <display>
+        <title>Docker + DPDK + OVS</title>
+        <pubTime>2018-07-22T09:33:28.000Z</pubTime>
+        
+        <tag>dpdk</tag>
+         
+        <tag>docker</tag>
+         
+        <tag>ovs</tag>
+         
+         
+           
+             
+              <breadCrumb title="实验" url="http://datawine.coding.me/categories/%E5%AE%9E%E9%AA%8C/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/07/22/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%9AM1%E5%8D%A1%E5%B0%8F%E5%AE%9E%E9%AA%8C/</loc>
+    <lastmod>2019-03-31T10:36:26.656Z</lastmod>
+    <data>
+        <display>
+        <title>网络攻防：M1卡小实验</title>
+        <pubTime>2018-07-22T09:18:31.000Z</pubTime>
+        
+        <tag>arduino</tag>
+         
+         
+           
+             
+              <breadCrumb title="课程" url="http://datawine.coding.me/categories/%E8%AF%BE%E7%A8%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/09/19/bzoj-writeups/</loc>
+    <lastmod>2019-03-31T10:36:07.906Z</lastmod>
+    <data>
+        <display>
+        <title>bzoj writeups</title>
+        <pubTime>2018-09-19T08:00:31.000Z</pubTime>
+        
+        <tag>bzoj</tag>
+         
+         
+           
+             
+              <breadCrumb title="算法" url="http://datawine.coding.me/categories/%E7%AE%97%E6%B3%95/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/09/19/leetcode-writeups/</loc>
+    <lastmod>2019-03-31T10:35:59.830Z</lastmod>
+    <data>
+        <display>
+        <title>leetcode writeups</title>
+        <pubTime>2018-09-19T08:00:45.000Z</pubTime>
+        
+        <tag>leetcode</tag>
+         
+         
+           
+             
+              <breadCrumb title="算法" url="http://datawine.coding.me/categories/%E7%AE%97%E6%B3%95/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/09/29/P4%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2019-03-31T10:35:49.255Z</lastmod>
+    <data>
+        <display>
+        <title>P4学习</title>
+        <pubTime>2018-09-29T02:33:21.000Z</pubTime>
+        
+        <tag>p4</tag>
+         
+         
+           
+             
+              <breadCrumb title="语言" url="http://datawine.coding.me/categories/%E8%AF%AD%E8%A8%80/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/09/24/NetVM%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</loc>
+    <lastmod>2019-03-31T10:35:35.568Z</lastmod>
+    <data>
+        <display>
+        <title>NetVM论文阅读</title>
+        <pubTime>2018-09-23T18:29:54.000Z</pubTime>
+        
+        <tag>论文阅读</tag>
+         
+         
+           
+             
+              <breadCrumb title="论文" url="http://datawine.coding.me/categories/%E8%AE%BA%E6%96%87/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/09/29/smartNIC%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2019-03-31T10:35:26.429Z</lastmod>
+    <data>
+        <display>
+        <title>smartNIC学习</title>
+        <pubTime>2018-09-29T09:19:47.000Z</pubTime>
+        
+        <tag>smartnic</tag>
+         
+         
+           
+             
+              <breadCrumb title="lab" url="http://datawine.coding.me/categories/lab/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/10/06/Lua%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2019-03-31T10:35:18.448Z</lastmod>
+    <data>
+        <display>
+        <title>Lua学习</title>
+        <pubTime>2018-10-06T09:49:09.000Z</pubTime>
+        
+        <tag>lua</tag>
+         
+         
+           
+             
+              <breadCrumb title="语言" url="http://datawine.coding.me/categories/%E8%AF%AD%E8%A8%80/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/11/30/nginx%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2019-03-31T10:33:43.090Z</lastmod>
+    <data>
+        <display>
+        <title>nginx学习</title>
+        <pubTime>2018-11-30T08:36:56.000Z</pubTime>
+        
+        <tag>nginx</tag>
+         
+         
+           
+             
+              <breadCrumb title="工具" url="http://datawine.coding.me/categories/%E5%B7%A5%E5%85%B7/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/12/25/too-many-open-files%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</loc>
+    <lastmod>2019-03-31T10:33:24.422Z</lastmod>
+    <data>
+        <display>
+        <title>too many open files解决方法</title>
+        <pubTime>2018-12-25T11:14:55.000Z</pubTime>
+        
+        <tag>linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="系统" url="http://datawine.coding.me/categories/%E7%B3%BB%E7%BB%9F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2019/03/15/%E8%A7%A3%E5%86%B3%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E4%B8%8B%E4%BD%BF%E7%94%A8docker%E9%97%AE%E9%A2%98/</loc>
+    <lastmod>2019-03-31T10:32:45.430Z</lastmod>
+    <data>
+        <display>
+        <title>解决普通用户下使用docker问题</title>
+        <pubTime>2019-03-15T12:07:37.000Z</pubTime>
+        
+        <tag>docker</tag>
+         
+        <tag>linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="工具" url="http://datawine.coding.me/categories/%E5%B7%A5%E5%85%B7/"/>
+          
+             
+              <breadCrumb title="系统" url="http://datawine.coding.me/categories/%E5%B7%A5%E5%85%B7/%E7%B3%BB%E7%BB%9F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2019/03/15/ssh-permissions-are-too-open/</loc>
+    <lastmod>2019-03-31T10:32:22.555Z</lastmod>
+    <data>
+        <display>
+        <title>ssh 'permissions are too open'</title>
+        <pubTime>2019-03-15T12:16:53.000Z</pubTime>
+        
+        <tag>linux</tag>
+         
+        <tag>ssh</tag>
+         
+         
+           
+             
+              <breadCrumb title="工具" url="http://datawine.coding.me/categories/%E5%B7%A5%E5%85%B7/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2019/03/15/change-python-default-version/</loc>
+    <lastmod>2019-03-31T10:32:06.688Z</lastmod>
+    <data>
+        <display>
+        <title>change python default version</title>
+        <pubTime>2019-03-15T12:36:14.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="系统" url="http://datawine.coding.me/categories/%E7%B3%BB%E7%BB%9F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2019/03/09/%E3%80%8AServerless-Computation-with-OpenLambda%E3%80%8B%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</loc>
+    <lastmod>2019-03-31T10:30:52.187Z</lastmod>
+    <data>
+        <display>
+        <title>《Serverless Computation with OpenLambda》论文阅读</title>
+        <pubTime>2019-03-09T11:41:39.000Z</pubTime>
+        
+        <tag>论文阅读</tag>
+         
+         
+           
+             
+              <breadCrumb title="论文" url="http://datawine.coding.me/categories/%E8%AE%BA%E6%96%87/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/07/26/ubuntu-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE%E8%B8%A9%E5%9D%91%E5%AE%9E%E5%BD%95/</loc>
+    <lastmod>2019-03-31T10:28:51.501Z</lastmod>
+    <data>
+        <display>
+        <title>ubuntu 服务器网络配置踩坑实录</title>
+        <pubTime>2018-07-26T07:58:11.000Z</pubTime>
+        
+        <tag>linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="系统" url="http://datawine.coding.me/categories/%E7%B3%BB%E7%BB%9F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/07/26/ubuntu-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8D%87%E9%99%8Dlinux-kernel%E8%B8%A9%E5%9D%91%E5%AE%9E%E5%BD%95/</loc>
+    <lastmod>2019-03-31T10:28:25.561Z</lastmod>
+    <data>
+        <display>
+        <title>ubuntu 服务器升降linux kernel踩坑实录</title>
+        <pubTime>2018-07-26T06:59:50.000Z</pubTime>
+        
+        <tag>linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="系统" url="http://datawine.coding.me/categories/%E7%B3%BB%E7%BB%9F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/07/01/OpenFlow-enabling-innovation-in-Campus-Networks%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</loc>
+    <lastmod>2019-03-31T10:28:04.152Z</lastmod>
+    <data>
+        <display>
+        <title>OpenFlow enabling innovation in Campus Networks论文阅读</title>
+        <pubTime>2018-07-01T05:21:51.000Z</pubTime>
+        
+        <tag>论文阅读</tag>
+         
+         
+           
+             
+              <breadCrumb title="论文" url="http://datawine.coding.me/categories/%E8%AE%BA%E6%96%87/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/07/02/NFP-Enabling-Network-Function-Parallelism-in-NFV%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</loc>
+    <lastmod>2019-03-31T10:26:57.265Z</lastmod>
+    <data>
+        <display>
+        <title>NFP: Enabling Network Function Parallelism in NFV论文阅读</title>
+        <pubTime>2018-07-02T00:53:56.000Z</pubTime>
+        
+        <tag>论文阅读</tag>
+         
+         
+           
+             
+              <breadCrumb title="论文" url="http://datawine.coding.me/categories/%E8%AE%BA%E6%96%87/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/07/01/ClickOS-and-the-Art-of-Network-Function-Virtualization%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</loc>
+    <lastmod>2019-03-31T10:26:42.602Z</lastmod>
+    <data>
+        <display>
+        <title>ClickOS and the Art of Network Function Virtualization论文阅读</title>
+        <pubTime>2018-07-01T10:00:46.000Z</pubTime>
+        
+        <tag>论文阅读</tag>
+         
+         
+           
+             
+              <breadCrumb title="论文" url="http://datawine.coding.me/categories/%E8%AE%BA%E6%96%87/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/07/01/Making-Middleboxes-Someone-Else%E2%80%99s-Problem-Network-Processing-as-a-Cloud-Service%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</loc>
+    <lastmod>2019-03-31T10:25:40.501Z</lastmod>
+    <data>
+        <display>
+        <title>Making Middleboxes Someone Else’s Problem: Network Processing as a Cloud Service论文阅读</title>
+        <pubTime>2018-07-01T05:54:57.000Z</pubTime>
+        
+        <tag>论文阅读</tag>
+         
+         
+           
+             
+              <breadCrumb title="论文" url="http://datawine.coding.me/categories/%E8%AE%BA%E6%96%87/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/07/01/Hedera-Dynamic-Flow-Scheduling-for-Data-Center-Networks%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</loc>
+    <lastmod>2019-03-31T10:25:14.975Z</lastmod>
+    <data>
+        <display>
+        <title>Hedera: Dynamic Flow Scheduling for Data Center Networks论文阅读</title>
+        <pubTime>2018-07-01T05:28:26.000Z</pubTime>
+        
+        <tag>论文阅读</tag>
+         
+         
+           
+             
+              <breadCrumb title="论文" url="http://datawine.coding.me/categories/%E8%AE%BA%E6%96%87/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://datawine.coding.me/2018/07/01/NOX-Towards-an-Operating-System-for-Networks%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</loc>
+    <lastmod>2019-03-31T10:24:31.527Z</lastmod>
+    <data>
+        <display>
+        <title>NOX: Towards an Operating System for Networks论文阅读</title>
+        <pubTime>2018-07-01T05:26:21.000Z</pubTime>
+        
+        <tag>论文阅读</tag>
+         
+         
+           
+             
+              <breadCrumb title="论文" url="http://datawine.coding.me/categories/%E8%AE%BA%E6%96%87/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://datawine.coding.me/2018/12/23/route-add%E6%8A%A5%E9%94%99SIOCADDRT-Network-is-unreachable/</loc>
     <lastmod>2019-03-31T10:22:57.113Z</lastmod>
     <data>
@@ -44,48 +567,6 @@
 
     
   <url>
-    <loc>http://datawine.coding.me/2019/03/09/%E3%80%8AServerless-Computation-with-OpenLambda%E3%80%8B%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</loc>
-    <lastmod>2019-03-18T09:06:50.166Z</lastmod>
-    <data>
-        <display>
-        <title>《Serverless Computation with OpenLambda》论文阅读</title>
-        <pubTime>2019-03-09T11:41:39.000Z</pubTime>
-        
-        <tag>serverless_computation</tag>
-         
-         
-           
-             
-              <breadCrumb title="论文" url="http://datawine.coding.me/categories/%E8%AE%BA%E6%96%87/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2019/03/15/change-python-default-version/</loc>
-    <lastmod>2019-03-15T13:15:43.912Z</lastmod>
-    <data>
-        <display>
-        <title>change python default version</title>
-        <pubTime>2019-03-15T12:36:14.000Z</pubTime>
-        
-        <tag>python</tag>
-         
-        <tag>linux环境</tag>
-         
-         
-           
-             
-              <breadCrumb title="系统" url="http://datawine.coding.me/categories/%E7%B3%BB%E7%BB%9F/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://datawine.coding.me/2019/03/15/%E4%BF%AE%E6%94%B9%E6%88%96%E5%88%A0%E9%99%A4git-submodule/</loc>
     <lastmod>2019-03-15T12:34:58.055Z</lastmod>
     <data>
@@ -94,46 +575,6 @@
         <pubTime>2019-03-15T12:30:02.000Z</pubTime>
         
         <tag>git</tag>
-         
-         
-           
-             
-              <breadCrumb title="工具" url="http://datawine.coding.me/categories/%E5%B7%A5%E5%85%B7/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2019/03/15/ssh-permissions-are-too-open/</loc>
-    <lastmod>2019-03-15T12:27:26.713Z</lastmod>
-    <data>
-        <display>
-        <title>ssh 'permissions are too open'</title>
-        <pubTime>2019-03-15T12:16:53.000Z</pubTime>
-        
-        <tag>ssh</tag>
-         
-         
-           
-             
-              <breadCrumb title="工具" url="http://datawine.coding.me/categories/%E5%B7%A5%E5%85%B7/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2019/03/15/%E8%A7%A3%E5%86%B3%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E4%B8%8B%E4%BD%BF%E7%94%A8docker%E9%97%AE%E9%A2%98/</loc>
-    <lastmod>2019-03-15T12:13:26.140Z</lastmod>
-    <data>
-        <display>
-        <title>解决普通用户下使用docker问题</title>
-        <pubTime>2019-03-15T12:07:37.000Z</pubTime>
-        
-        <tag>docker</tag>
          
          
            
@@ -208,21 +649,6 @@
 
     
   <url>
-    <loc>http://datawine.coding.me/2018/12/25/too-many-open-files%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</loc>
-    <lastmod>2018-12-25T11:14:55.807Z</lastmod>
-    <data>
-        <display>
-        <title>too many open files解决方法</title>
-        <pubTime>2018-12-25T11:14:55.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://datawine.coding.me/2018/12/11/YCSB%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2018-12-20T16:01:16.133Z</lastmod>
     <data>
@@ -257,21 +683,6 @@
              
               <breadCrumb title="工具" url="http://datawine.coding.me/categories/%E5%B7%A5%E5%85%B7/"/>
           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2018/11/30/nginx%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2018-11-30T08:36:56.589Z</lastmod>
-    <data>
-        <display>
-        <title>nginx学习</title>
-        <pubTime>2018-11-30T08:36:56.000Z</pubTime>
-        
-         
-           
         </display>
     </data>
     </url>
@@ -443,133 +854,6 @@
 
     
   <url>
-    <loc>http://datawine.coding.me/2018/10/06/Lua%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2018-10-08T13:34:45.441Z</lastmod>
-    <data>
-        <display>
-        <title>Lua学习</title>
-        <pubTime>2018-10-06T09:49:09.000Z</pubTime>
-        
-        <tag>lua</tag>
-         
-         
-           
-             
-              <breadCrumb title="语言" url="http://datawine.coding.me/categories/%E8%AF%AD%E8%A8%80/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2018/09/29/smartNIC%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2018-10-02T11:40:50.583Z</lastmod>
-    <data>
-        <display>
-        <title>smartNIC学习</title>
-        <pubTime>2018-09-29T09:19:47.000Z</pubTime>
-        
-        <tag>smartNIC</tag>
-         
-         
-           
-             
-              <breadCrumb title="lab" url="http://datawine.coding.me/categories/lab/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2018/09/24/NetVM%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</loc>
-    <lastmod>2018-10-02T07:43:35.072Z</lastmod>
-    <data>
-        <display>
-        <title>NetVM论文阅读</title>
-        <pubTime>2018-09-23T18:29:54.000Z</pubTime>
-        
-        <tag>论文阅读</tag>
-         
-         
-           
-             
-              <breadCrumb title="lab" url="http://datawine.coding.me/categories/lab/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2018/09/29/P4%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2018-09-29T07:05:37.509Z</lastmod>
-    <data>
-        <display>
-        <title>P4学习</title>
-        <pubTime>2018-09-29T02:33:21.000Z</pubTime>
-        
-        <tag>p4</tag>
-         
-         
-           
-             
-              <breadCrumb title="lab" url="http://datawine.coding.me/categories/lab/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2018/09/19/leetcode-writeups/</loc>
-    <lastmod>2018-09-19T08:00:45.075Z</lastmod>
-    <data>
-        <display>
-        <title>leetcode writeups</title>
-        <pubTime>2018-09-19T08:00:45.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2018/09/19/bzoj-writeups/</loc>
-    <lastmod>2018-09-19T08:00:31.782Z</lastmod>
-    <data>
-        <display>
-        <title>bzoj writeups</title>
-        <pubTime>2018-09-19T08:00:31.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2018/07/22/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%9AM1%E5%8D%A1%E5%B0%8F%E5%AE%9E%E9%AA%8C/</loc>
-    <lastmod>2018-09-12T11:38:55.665Z</lastmod>
-    <data>
-        <display>
-        <title>网络攻防：M1卡小实验</title>
-        <pubTime>2018-07-22T09:18:31.000Z</pubTime>
-        
-        <tag>arduino</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://datawine.coding.me/2018/07/30/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%9AM1%E5%8D%A1%E5%A4%A7%E5%AE%9E%E9%AA%8C/</loc>
     <lastmod>2018-08-21T03:22:45.561Z</lastmod>
     <data>
@@ -610,78 +894,6 @@
 
     
   <url>
-    <loc>http://datawine.coding.me/2018/08/20/%E6%AF%94%E8%BE%83docker%E9%BB%98%E8%AE%A4%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F%E3%80%81dpdk%E3%80%81ovs-dpdk%E4%B8%89%E7%A7%8D%E7%BD%91%E7%BB%9C%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/</loc>
-    <lastmod>2018-08-20T06:45:01.339Z</lastmod>
-    <data>
-        <display>
-        <title>比较docker默认网络模式、dpdk、ovs+dpdk三种网络性能测试</title>
-        <pubTime>2018-08-20T06:03:48.000Z</pubTime>
-        
-        <tag>dpdk</tag>
-         
-        <tag>docker</tag>
-         
-        <tag>ovs</tag>
-         
-        <tag>pktgen</tag>
-         
-        <tag>iperf</tag>
-         
-         
-           
-             
-              <breadCrumb title="lab" url="http://datawine.coding.me/categories/lab/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2018/07/22/Docker-DPDK-OVS/</loc>
-    <lastmod>2018-08-20T06:26:29.153Z</lastmod>
-    <data>
-        <display>
-        <title>Docker + DPDK + OVS</title>
-        <pubTime>2018-07-22T09:33:28.000Z</pubTime>
-        
-        <tag>dpdk</tag>
-         
-        <tag>docker</tag>
-         
-        <tag>ovs</tag>
-         
-         
-           
-             
-              <breadCrumb title="lab" url="http://datawine.coding.me/categories/lab/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2018/07/15/DPDK-Pktgen-Docker%E6%90%AD%E5%BB%BAVNF%E7%8E%AF%E5%A2%83%E5%8F%8A%E9%AA%8C%E8%AF%81/</loc>
-    <lastmod>2018-08-20T05:48:40.434Z</lastmod>
-    <data>
-        <display>
-        <title>DPDK Pktgen+Docker搭建VNF环境及验证</title>
-        <pubTime>2018-07-15T12:15:42.000Z</pubTime>
-        
-        <tag>dpdk</tag>
-         
-         
-           
-             
-              <breadCrumb title="lab" url="http://datawine.coding.me/categories/lab/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://datawine.coding.me/2018/07/09/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%B8%89%EF%BC%89%E7%BD%91%E7%AB%99%E5%AE%89%E5%85%A8/</loc>
     <lastmod>2018-07-30T06:42:51.305Z</lastmod>
     <data>
@@ -690,26 +902,6 @@
         <pubTime>2018-07-09T08:43:06.000Z</pubTime>
         
         <tag>网络攻防</tag>
-         
-         
-           
-             
-              <breadCrumb title="课程" url="http://datawine.coding.me/categories/%E8%AF%BE%E7%A8%8B/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2018/07/09/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%BA%8C%EF%BC%89%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F%E4%B8%8E%E4%BF%9D%E5%AF%86/</loc>
-    <lastmod>2018-07-26T08:50:25.889Z</lastmod>
-    <data>
-        <display>
-        <title>网络攻防小学期（二）信息隐藏于保密/密码</title>
-        <pubTime>2018-07-09T06:45:18.000Z</pubTime>
-        
-        <tag>密码学</tag>
          
          
            
@@ -742,46 +934,6 @@
 
     
   <url>
-    <loc>http://datawine.coding.me/2018/07/26/ubuntu-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8D%87%E9%99%8Dlinux-kernel%E8%B8%A9%E5%9D%91%E5%AE%9E%E5%BD%95/</loc>
-    <lastmod>2018-07-26T08:45:35.094Z</lastmod>
-    <data>
-        <display>
-        <title>ubuntu 服务器升降linux kernel踩坑实录</title>
-        <pubTime>2018-07-26T06:59:50.000Z</pubTime>
-        
-        <tag>linux kernel</tag>
-         
-         
-           
-             
-              <breadCrumb title="linux" url="http://datawine.coding.me/categories/linux/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2018/07/26/ubuntu-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE%E8%B8%A9%E5%9D%91%E5%AE%9E%E5%BD%95/</loc>
-    <lastmod>2018-07-26T08:37:09.631Z</lastmod>
-    <data>
-        <display>
-        <title>ubuntu 服务器网络配置踩坑实录</title>
-        <pubTime>2018-07-26T07:58:11.000Z</pubTime>
-        
-        <tag>ubuntu服务器网络</tag>
-         
-         
-           
-             
-              <breadCrumb title="linux" url="http://datawine.coding.me/categories/linux/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://datawine.coding.me/2018/01/29/hello-world/</loc>
     <lastmod>2018-07-25T08:34:51.528Z</lastmod>
     <data>
@@ -789,108 +941,6 @@
         <title>Hello World and testings</title>
         <pubTime>2018-01-29T07:41:56.179Z</pubTime>
         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2018/07/01/OpenFlow-enabling-innovation-in-Campus-Networks%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</loc>
-    <lastmod>2018-07-02T08:40:49.527Z</lastmod>
-    <data>
-        <display>
-        <title>OpenFlow enabling innovation in Campus Networks论文阅读</title>
-        <pubTime>2018-07-01T05:21:51.000Z</pubTime>
-        
-        <tag>论文阅读</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2018/07/02/NFP-Enabling-Network-Function-Parallelism-in-NFV%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</loc>
-    <lastmod>2018-07-02T03:51:17.383Z</lastmod>
-    <data>
-        <display>
-        <title>NFP: Enabling Network Function Parallelism in NFV论文阅读</title>
-        <pubTime>2018-07-02T00:53:56.000Z</pubTime>
-        
-        <tag>论文阅读</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2018/07/01/ClickOS-and-the-Art-of-Network-Function-Virtualization%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</loc>
-    <lastmod>2018-07-01T13:10:05.484Z</lastmod>
-    <data>
-        <display>
-        <title>ClickOS and the Art of Network Function Virtualization论文阅读</title>
-        <pubTime>2018-07-01T10:00:46.000Z</pubTime>
-        
-        <tag>论文阅读</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2018/07/01/Making-Middleboxes-Someone-Else%E2%80%99s-Problem-Network-Processing-as-a-Cloud-Service%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</loc>
-    <lastmod>2018-07-01T10:34:14.811Z</lastmod>
-    <data>
-        <display>
-        <title>Making Middleboxes Someone Else’s Problem: Network Processing as a Cloud Service论文阅读</title>
-        <pubTime>2018-07-01T05:54:57.000Z</pubTime>
-        
-        <tag>论文阅读</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2018/07/01/Hedera-Dynamic-Flow-Scheduling-for-Data-Center-Networks%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</loc>
-    <lastmod>2018-07-01T05:29:19.075Z</lastmod>
-    <data>
-        <display>
-        <title>Hedera: Dynamic Flow Scheduling for Data Center Networks论文阅读</title>
-        <pubTime>2018-07-01T05:28:26.000Z</pubTime>
-        
-        <tag>论文阅读</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://datawine.coding.me/2018/07/01/NOX-Towards-an-Operating-System-for-Networks%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</loc>
-    <lastmod>2018-07-01T05:27:42.165Z</lastmod>
-    <data>
-        <display>
-        <title>NOX: Towards an Operating System for Networks论文阅读</title>
-        <pubTime>2018-07-01T05:26:21.000Z</pubTime>
-        
-        <tag>论文阅读</tag>
-         
          
            
         </display>
