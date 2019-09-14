@@ -1,5 +1,4 @@
 http://datawine.coding.me/2019/09/14/同步服务器时间/
-http://datawine.coding.me/2019/04/06/软件框架实验/
 http://datawine.coding.me/2019/03/31/linux查看线程状态/
 http://datawine.coding.me/2019/03/15/change-python-default-version/
 http://datawine.coding.me/2019/03/15/修改或删除git-submodule/
