@@ -1,3 +1,4 @@
+http://datawine.coding.me/2019/09/22/关于将动态链接库函数拷贝到共享存储中运行的调研历程/
 http://datawine.coding.me/2019/09/14/同步服务器时间/
 http://datawine.coding.me/2019/03/31/linux查看线程状态/
 http://datawine.coding.me/2019/03/15/change-python-default-version/
