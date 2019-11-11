@@ -1,3 +1,5 @@
+http://datawine.coding.me/2019/11/11/glibc-dynamic-load相关移植全纪录/
+http://datawine.coding.me/2019/11/04/ubuntu-apt换源tuna/
 http://datawine.coding.me/2019/10/13/memsentry项目源码注释/
 http://datawine.coding.me/2019/10/11/llvm入门/
 http://datawine.coding.me/2019/10/02/dlopen源码解析/
