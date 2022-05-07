@@ -29,15 +29,6 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/hello-world/</loc>
-    
-    <lastmod>2022-05-07</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://datawine.github.io/tags/index.html</loc>
     
     <lastmod>2022-05-07</lastmod>
@@ -73,13 +64,6 @@
   
   <url>
     <loc>https://datawine.github.io/tags/docker/</loc>
-    <lastmod>2022-05-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://datawine.github.io/tags/%E5%85%B6%E4%BB%96/</loc>
     <lastmod>2022-05-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
