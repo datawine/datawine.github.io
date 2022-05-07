@@ -1,28 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>2018年网络攻防小学期</title>
-    <url>/network-attack-and-defense-semester.html</url>
-    <content><![CDATA[<p>收录2018年网络攻防小学期的一些东西</p>
-<span id="more"></span> 
-
-<ul>
-<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%B8%80%EF%BC%89%E7%BD%91%E7%BB%9C%E4%BE%A6%E6%9F%A5%E4%B8%8E%E5%8F%96%E8%AF%81%E5%88%86%E6%9E%90.html">网络攻防小学期（一）网络侦查与取证分析</a></li>
-<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%BA%8C%EF%BC%89%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F%E4%B8%8E%E4%BF%9D%E5%AF%86-%E5%AF%86%E7%A0%81.html">网络攻防小学期（二）信息隐藏与保密&#x2F;密码</a></li>
-<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%B8%89%EF%BC%89%E7%BD%91%E7%AB%99%E5%AE%89%E5%85%A8.html">网络攻防小学期（三）网站安全</a></li>
-<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E5%9B%9B%EF%BC%89%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E4%B8%8E%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%BC%8F%E6%B4%9E.html">网络攻防小学期（四）逆向工程与二进制漏洞</a></li>
-<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%EF%BC%9AM1%E5%8D%A1%E5%B0%8F%E5%AE%9E%E9%AA%8C.html">网络攻防：M1卡小实验</a></li>
-<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%EF%BC%9AM1%E5%8D%A1%E5%A4%A7%E5%AE%9E%E9%AA%8C.html">网络攻防：M1卡大实验</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>网络攻防</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>DPDK Pktgen+Docker搭建VNF环境及验证</title>
     <url>/dpdk-pktgen-docker-vnf-test.html</url>
     <content><![CDATA[<p>主要是搭建一个DPDK+docker的环境，然而docker上次用是在软工的时候，重新学还花了一些功夫，改日写篇docker总结好了。</p>
@@ -92,53 +70,25 @@
       </tags>
   </entry>
   <entry>
-    <title>dpdk安装踩坑实录</title>
-    <url>/dpdk-install.html</url>
-    <content><![CDATA[<p>本次安装的版本是dpdk18.02.2，在ubuntu 14.04.5上安装，内核版本为4.4.0-31-generic。</p>
-<span id="more"></span>
+    <title>2018年网络攻防小学期</title>
+    <url>/network-attack-and-defense-semester.html</url>
+    <content><![CDATA[<p>收录2018年网络攻防小学期的一些东西</p>
+<span id="more"></span> 
 
-<h1 id="系统配置"><a href="#系统配置" class="headerlink" title="系统配置"></a>系统配置</h1><p>需要：</p>
 <ul>
-<li>python、libnuma-dev等库（libnuma-dev直接通过<code>apt-get install libnuma-dev</code>）</li>
-<li>大页内存（并mount）</li>
+<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%B8%80%EF%BC%89%E7%BD%91%E7%BB%9C%E4%BE%A6%E6%9F%A5%E4%B8%8E%E5%8F%96%E8%AF%81%E5%88%86%E6%9E%90.html">网络攻防小学期（一）网络侦查与取证分析</a></li>
+<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%BA%8C%EF%BC%89%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F%E4%B8%8E%E4%BF%9D%E5%AF%86-%E5%AF%86%E7%A0%81.html">网络攻防小学期（二）信息隐藏与保密&#x2F;密码</a></li>
+<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%B8%89%EF%BC%89%E7%BD%91%E7%AB%99%E5%AE%89%E5%85%A8.html">网络攻防小学期（三）网站安全</a></li>
+<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E5%9B%9B%EF%BC%89%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E4%B8%8E%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%BC%8F%E6%B4%9E.html">网络攻防小学期（四）逆向工程与二进制漏洞</a></li>
+<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%EF%BC%9AM1%E5%8D%A1%E5%B0%8F%E5%AE%9E%E9%AA%8C.html">网络攻防：M1卡小实验</a></li>
+<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%EF%BC%9AM1%E5%8D%A1%E5%A4%A7%E5%AE%9E%E9%AA%8C.html">网络攻防：M1卡大实验</a></li>
 </ul>
-<h1 id="dpdk的安装与下载"><a href="#dpdk的安装与下载" class="headerlink" title="dpdk的安装与下载"></a>dpdk的安装与下载</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget http://fast.dpdk.org/rel/dpdk-18.02.2.tar.xz</span><br><span class="line">tar -xvf dpdk-18.02.2.tar.xz</span><br><span class="line">cd dpdk-stable-18.02.2</span><br><span class="line">echo export RTE_SDK=$(pwd) &gt;&gt; ~/.bashrc</span><br><span class="line">echo export RTE_TARGET=x86_64-native-linuxapp-gcc &gt;&gt; ~/.bashrc</span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
-
-<p>如果需要用到vhost-user驱动，要修改<code>config/common_base</code>，另其中的<code>CONFIG_RTE_LIBRTE_VHOST=y</code>。</p>
-<p>安装dpdk</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">make config T=$RTE_TARGET</span><br><span class="line">make T=$RTE_TARGET -j8</span><br><span class="line">make install T=$RTE_TARGET</span><br></pre></td></tr></table></figure>
-
-<h1 id="配置大页内存"><a href="#配置大页内存" class="headerlink" title="配置大页内存"></a>配置大页内存</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改/etc/default/grub</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在 GRUB_CMDLINE_LINUX_DEFAULT= 项中添加</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">default_hugepagesz=1GB hugepagesz=1G hugepages=8</span></span><br><span class="line">sudo update-grub</span><br><span class="line"></span><br><span class="line">mkdir -p /mnt/huge_1GB</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">可以直接mount，但每次重启都要重新配置</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">方法我就不写了</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">也可以让重启后有效</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">vim /etc/fstab</span></span><br><span class="line">nodev /mnt/huge_1GB hugetlbfs pagesize=1GB 0 0</span><br></pre></td></tr></table></figure>
-
-<h1 id="加载驱动"><a href="#加载驱动" class="headerlink" title="加载驱动"></a>加载驱动</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo modprobe uio</span><br><span class="line">sudo insmod $RTE_SDK/x86_64-native-linuxapp-gcc/kmod/igb_uio.ko</span><br></pre></td></tr></table></figure>
-
-<h1 id="绑定端口"><a href="#绑定端口" class="headerlink" title="绑定端口"></a>绑定端口</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看网卡信息，确定要绑定的网卡</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">RTE_SDK/usertools/dpdk-devbind.py -s</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">绑定网卡</span></span><br><span class="line">sudo $RTE_SDK/usertools/dpdk-devbind.py --bind=igb_uio 0000:82:00.0</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">后面的参数写-s出来的网卡信息最左边一行，当然也可以写名字之类的</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="一些注意事项"><a href="#一些注意事项" class="headerlink" title="一些注意事项"></a>一些注意事项</h1><p>按上面方法配置，大页内存不会因为重启而要重新配置，但是模块和端口需要重新配置，<code>~/.bashrc</code>也需要重新<code>source</code>。</p>
 ]]></content>
       <categories>
-        <category>工具</category>
+        <category>学习</category>
       </categories>
       <tags>
-        <tag>dpdk</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>linux查看线程状态</title>
-    <url>/linux-thread-state.html</url>
-    <content><![CDATA[<p>查看线程状态的简单方法。</p>
-<span id="more"></span>
-
-<h1 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ps -T -p &lt;pid&gt;</span><br></pre></td></tr></table></figure>
-
-<h1 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">top -H</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看某一个特定进程的线程</span></span><br><span class="line">top -H -p &lt;pid&gt;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
+        <tag>网络攻防</tag>
       </tags>
   </entry>
   <entry>
@@ -249,6 +199,56 @@
         <tag>dpdk</tag>
         <tag>docker</tag>
         <tag>ovs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>linux查看线程状态</title>
+    <url>/linux-thread-state.html</url>
+    <content><![CDATA[<p>查看线程状态的简单方法。</p>
+<span id="more"></span>
+
+<h1 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ps -T -p &lt;pid&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">top -H</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看某一个特定进程的线程</span></span><br><span class="line">top -H -p &lt;pid&gt;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>dpdk安装踩坑实录</title>
+    <url>/dpdk-install.html</url>
+    <content><![CDATA[<p>本次安装的版本是dpdk18.02.2，在ubuntu 14.04.5上安装，内核版本为4.4.0-31-generic。</p>
+<span id="more"></span>
+
+<h1 id="系统配置"><a href="#系统配置" class="headerlink" title="系统配置"></a>系统配置</h1><p>需要：</p>
+<ul>
+<li>python、libnuma-dev等库（libnuma-dev直接通过<code>apt-get install libnuma-dev</code>）</li>
+<li>大页内存（并mount）</li>
+</ul>
+<h1 id="dpdk的安装与下载"><a href="#dpdk的安装与下载" class="headerlink" title="dpdk的安装与下载"></a>dpdk的安装与下载</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget http://fast.dpdk.org/rel/dpdk-18.02.2.tar.xz</span><br><span class="line">tar -xvf dpdk-18.02.2.tar.xz</span><br><span class="line">cd dpdk-stable-18.02.2</span><br><span class="line">echo export RTE_SDK=$(pwd) &gt;&gt; ~/.bashrc</span><br><span class="line">echo export RTE_TARGET=x86_64-native-linuxapp-gcc &gt;&gt; ~/.bashrc</span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>如果需要用到vhost-user驱动，要修改<code>config/common_base</code>，另其中的<code>CONFIG_RTE_LIBRTE_VHOST=y</code>。</p>
+<p>安装dpdk</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">make config T=$RTE_TARGET</span><br><span class="line">make T=$RTE_TARGET -j8</span><br><span class="line">make install T=$RTE_TARGET</span><br></pre></td></tr></table></figure>
+
+<h1 id="配置大页内存"><a href="#配置大页内存" class="headerlink" title="配置大页内存"></a>配置大页内存</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改/etc/default/grub</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在 GRUB_CMDLINE_LINUX_DEFAULT= 项中添加</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">default_hugepagesz=1GB hugepagesz=1G hugepages=8</span></span><br><span class="line">sudo update-grub</span><br><span class="line"></span><br><span class="line">mkdir -p /mnt/huge_1GB</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">可以直接mount，但每次重启都要重新配置</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">方法我就不写了</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">也可以让重启后有效</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">vim /etc/fstab</span></span><br><span class="line">nodev /mnt/huge_1GB hugetlbfs pagesize=1GB 0 0</span><br></pre></td></tr></table></figure>
+
+<h1 id="加载驱动"><a href="#加载驱动" class="headerlink" title="加载驱动"></a>加载驱动</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo modprobe uio</span><br><span class="line">sudo insmod $RTE_SDK/x86_64-native-linuxapp-gcc/kmod/igb_uio.ko</span><br></pre></td></tr></table></figure>
+
+<h1 id="绑定端口"><a href="#绑定端口" class="headerlink" title="绑定端口"></a>绑定端口</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看网卡信息，确定要绑定的网卡</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">RTE_SDK/usertools/dpdk-devbind.py -s</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">绑定网卡</span></span><br><span class="line">sudo $RTE_SDK/usertools/dpdk-devbind.py --bind=igb_uio 0000:82:00.0</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">后面的参数写-s出来的网卡信息最左边一行，当然也可以写名字之类的</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="一些注意事项"><a href="#一些注意事项" class="headerlink" title="一些注意事项"></a>一些注意事项</h1><p>按上面方法配置，大页内存不会因为重启而要重新配置，但是模块和端口需要重新配置，<code>~/.bashrc</code>也需要重新<code>source</code>。</p>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>dpdk</tag>
       </tags>
   </entry>
   <entry>
@@ -507,6 +507,30 @@
       </tags>
   </entry>
   <entry>
+    <title>mac清理磁盘空间</title>
+    <url>/mac-clear-disk-space.html</url>
+    <content><![CDATA[<p>今天在clone git的时候居然提示我mac磁盘满了，我也是惊了。</p>
+<span id="more"></span>
+
+<h1 id="工具使用"><a href="#工具使用" class="headerlink" title="工具使用"></a>工具使用</h1><p>用的是知乎上推荐的一款程序：OmniDiskSweeper。（后来看到据说可以终端上<code>du -sh *</code>就行）</p>
+<p><img src="/img/2018-10-11.png"></p>
+<p>然后选要扫的磁盘就行了，具体就不截图了，太麻烦。</p>
+<h1 id="进阶问题"><a href="#进阶问题" class="headerlink" title="进阶问题"></a>进阶问题</h1><p>通过扫除居然发现显示的占用空间和实际磁盘工具给出的空间不一样，很神奇，一度以为自己中毒了。</p>
+<p>后面发现是mac的时间机器的自动备份没有关。</p>
+<p>一方面进到preference关掉mac的时间机器自动备份。</p>
+<p>另一方面删除快照。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示所有snapshots</span></span><br><span class="line">sudo tmutil listlocalsnapshots /</span><br><span class="line"></span><br><span class="line">com.apple.TimeMachine.2018-10-11-113833</span><br><span class="line">com.apple.TimeMachine.2018-10-11-133802</span><br><span class="line">com.apple.TimeMachine.2018-10-11-143851</span><br><span class="line">com.apple.TimeMachine.2018-10-11-153801</span><br><span class="line">com.apple.TimeMachine.2018-10-11-163801</span><br><span class="line">com.apple.TimeMachine.2018-10-11-192918</span><br><span class="line">com.apple.TimeMachine.2018-10-11-205829</span><br><span class="line">com.apple.TimeMachine.2018-10-11-213912</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删掉相应的</span></span><br><span class="line">tmutil deletelocalsnapshots 2018-10-11-213912</span><br></pre></td></tr></table></figure>
+
+<p>问题解决！</p>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>mac</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>p4学习</title>
     <url>/p4-learning.html</url>
     <content><![CDATA[<p>因为最近用到p4，总结一下p4的学习</p>
@@ -585,6 +609,72 @@
       </tags>
   </entry>
   <entry>
+    <title>moongen学习</title>
+    <url>/moongen-learning.html</url>
+    <content><![CDATA[<p>学习了一下MoonGen，主要参考官网和tutorial。</p>
+<span id="more"></span>
+
+<h1 id="usage-introduction"><a href="#usage-introduction" class="headerlink" title="usage introduction"></a>usage introduction</h1><h2 id="Device-setup"><a href="#Device-setup" class="headerlink" title="Device setup"></a>Device setup</h2><p><code>master</code>函数是必须的，用来进行设备的配置，一个简单的设置如下</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> device = <span class="built_in">require</span> <span class="string">&quot;device&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">master</span><span class="params">(txNum)</span></span></span><br><span class="line">    <span class="comment">-- use specified NIC number with</span></span><br><span class="line">    <span class="comment">-- no listening and one transmission queues</span></span><br><span class="line">    txDev = device.<span class="built_in">config</span>&#123;</span><br><span class="line">        port = txNum,</span><br><span class="line">        rxQueues = <span class="number">0</span>,</span><br><span class="line">        txQueues = <span class="number">1</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    device.waitForLinks()</span><br><span class="line">    send(txDev:getTxQueue(<span class="number">0</span>))</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>如果要用到receive filter configuration，要在创建的时候设置设备。在<code>device.config</code>中，设置<code>rssNQueues = N</code>，来创建<code>N</code>个队列。此外，还可以通过<code>rssFunctions</code>来控制hash值，选项有<code>RSS_FUNCTION_IPV4</code>，<code>.._IPV6</code>，<code>.._IPVX_TCP</code>，<code>.._IPVX_UDP</code>。示例如下：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> device = <span class="built_in">require</span> <span class="string">&quot;device&quot;</span></span><br><span class="line">txDev = device.<span class="built_in">config</span>&#123;</span><br><span class="line">    port = <span class="number">0</span>,</span><br><span class="line">    rxQueues = <span class="number">4</span>,</span><br><span class="line">    rssNQueues = <span class="number">4</span>,</span><br><span class="line">    rssFunctions = &#123;</span><br><span class="line">        device.RSS_FUNCTION_IPV4,</span><br><span class="line">        device.RSS_FUNCTION_IPV4_TCP,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="packet-generation"><a href="#packet-generation" class="headerlink" title="packet generation"></a>packet generation</h2><p>packets是异步发送、在memory buffer中生成的，所以需要一个在memory pool中的buffer array。</p>
+<p>因为大多数packets应该是一样的，所以一般通过一个函数定义。</p>
+<p>注意：应该在memory pool中定义packet的值，而不是在generation loop中，否则性能会大大下降。</p>
+<p>最简单的方法就是在char buffer中手动设置一个ethernet header，示例如下：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> dpdk = <span class="built_in">require</span> <span class="string">&quot;dpdk&quot;</span></span><br><span class="line"><span class="keyword">local</span> memory = <span class="built_in">require</span> <span class="string">&quot;memory&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">send</span><span class="params">(queue)</span></span></span><br><span class="line">    <span class="keyword">local</span> mem = memory.createMemPool(<span class="function"><span class="keyword">function</span><span class="params">(buf)</span></span></span><br><span class="line">        <span class="keyword">local</span> data = ffi.cast(<span class="string">&quot;uint8_t*&quot;</span>, buf.pkt.data)</span><br><span class="line">        <span class="keyword">for</span> i = <span class="number">0</span>, <span class="number">11</span> <span class="keyword">do</span></span><br><span class="line">            data[i] = i <span class="comment">-- fill in mac addresses</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        data[<span class="number">12</span>] = <span class="number">0x12</span> <span class="comment">-- set type to ethernet</span></span><br><span class="line">        data[<span class="number">13</span>] = <span class="number">0x34</span></span><br><span class="line">    <span class="keyword">end</span>)</span><br><span class="line">    <span class="keyword">local</span> bufs = mem:bufArray()</span><br><span class="line">    <span class="keyword">while</span> dpdk.<span class="built_in">running</span>()</span><br><span class="line">        bufs:alloc(<span class="number">60</span>) <span class="comment">-- size of each packet</span></span><br><span class="line">        <span class="comment">-- ⇑ sets up each packet with the function above</span></span><br><span class="line">        <span class="comment">-- ← here, single packets could be modified</span></span><br><span class="line">        queue:send(bufs) <span class="comment">-- schedule sending</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>简单一点，raw buffer可以先被转换成各种包的格式，然后直接填就可以了。在<code>lua/include/proto/</code>中可以找到定义的相应格式。比如：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> mem = memory.createMemPool(<span class="function"><span class="keyword">function</span><span class="params">(buf)</span></span></span><br><span class="line">    buf:getEthernetPacket():fill&#123;</span><br><span class="line">        ethSrc = txDev, <span class="comment">-- use device mac</span></span><br><span class="line">        ethDst = <span class="string">&quot;00:01:02:03:04:05&quot;</span>,</span><br><span class="line">        ethType = <span class="number">0x1234</span>,</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">end</span>)</span><br></pre></td></tr></table></figure>
+
+<p>如果要定义一种新的格式，按照<code>lua/include/proto/newProtocolTemplate.lua</code>的方式，拷贝并修改。</p>
+<p>如果要修改某一种特定的包，在分配buffer后和enqueue之前修改，方法类似。</p>
+<p>如果需要控制发包器的速度，通过调用函数<code>queue:setRate(MBit/s)</code></p>
+<p>如果需要暂停LuaJIT VM，通过<code>dpdk.sleepMillis(time)</code></p>
+<h2 id="running-parallel-tasks"><a href="#running-parallel-tasks" class="headerlink" title="running parallel tasks"></a>running parallel tasks</h2><p>为了支持并行，通过引入<code>dpdk.lauchLua(&quot;funcname&quot;, arg0, ...)</code>来用一个新的LuaJIT VM跑一个新的slave task。一般的调用方法为</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> dpdk = <span class="built_in">require</span> <span class="string">&quot;dpdk&quot;</span></span><br><span class="line">dpdk.launchLua(<span class="string">&quot;funcname&quot;</span>, arg0, ...)</span><br><span class="line">dpdk.waitForSlaves() <span class="comment">-- wait for child termination</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="statistics"><a href="#statistics" class="headerlink" title="statistics"></a>statistics</h2><p><code>stats</code>模块提供了统计功能，收集完数据之后，可以被写到<code>stdout</code>或者一些其他的文件中。支持的输出类型有<code>plain</code>，<code>csv</code>和<code>ini</code>。</p>
+<p>packet counter是和device绑定的，要创建一个新的packet counter，可以使用<code>rxCtr = stats:newDevRxCounter(device, &quot;plain&quot;)</code>或者<code>newDevTxCounter(..)</code>。</p>
+<p><code>newPktRxCounter(&quot;your counter name&quot;, &quot;plain&quot;)</code>或者<code>newPktTxCounter(..)</code>可以通过调用它的<code>countPacket(singleBuffer)</code>来将packet buffer传递给它们来实现更新。</p>
+<p><code>newManualTxCounter(&quot;your counter name&quot;, &quot;plain&quot;)</code>可以手动计数。可以通过<code>updateWithSize(packet_count, each_size)</code>来更新。</p>
+<p>对于所有counter，<code>update()</code>方法都可以频繁调用，可以显示当前数据。</p>
+<p><code>histogram</code>模块可以收集频率方面的数据。</p>
+<p>下面的示例使用了device和package两种计数器，packet size记在histogram里。</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> dpdk = <span class="built_in">require</span> <span class="string">&quot;dpdk&quot;</span></span><br><span class="line"><span class="keyword">local</span> device = <span class="built_in">require</span> <span class="string">&quot;device&quot;</span></span><br><span class="line"><span class="keyword">local</span> histogram = <span class="built_in">require</span> <span class="string">&quot;histogram&quot;</span></span><br><span class="line"><span class="keyword">local</span> memory = <span class="built_in">require</span> <span class="string">&quot;memory&quot;</span></span><br><span class="line"><span class="keyword">local</span> stats = <span class="built_in">require</span> <span class="string">&quot;stats&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">master</span><span class="params">(rxPort, saveInterval)</span></span></span><br><span class="line">    <span class="keyword">local</span> saveInterval = saveInterval <span class="keyword">or</span> <span class="number">60</span></span><br><span class="line">    <span class="keyword">local</span> rxDev = device.<span class="built_in">config</span>&#123;</span><br><span class="line">        port = rxPort,</span><br><span class="line">        dropEnable = <span class="literal">false</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    device.waitForLinks()</span><br><span class="line">    <span class="keyword">local</span> queue = rxDev:getRxQueue(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">local</span> bufs = memory.bufArray()</span><br><span class="line">    <span class="comment">-- create the device receive counter</span></span><br><span class="line">    <span class="keyword">local</span> rxCtr = stats:newDevRxCounter(queue.dev)</span><br><span class="line">    <span class="comment">-- and the packet receive counter to detect</span></span><br><span class="line">    <span class="comment">-- packets that were dropped on the NICNIC</span></span><br><span class="line">    <span class="keyword">local</span> pktCtr = stats:newPktRxCounter(<span class="string">&quot;pkts&quot;</span>, <span class="string">&quot;plain&quot;</span>)</span><br><span class="line">    <span class="keyword">local</span> hist = histogram:<span class="built_in">create</span>()</span><br><span class="line">    <span class="keyword">local</span> timer = timer:new(saveInterval)</span><br><span class="line">    <span class="keyword">while</span> dpdk.<span class="built_in">running</span>() <span class="keyword">do</span></span><br><span class="line">        <span class="comment">-- wait max 100ms for new data</span></span><br><span class="line">        <span class="keyword">local</span> rx = queue:tryRecv(bufs, <span class="number">100</span>)</span><br><span class="line">        <span class="keyword">for</span> i = <span class="number">1</span>, rx <span class="keyword">do</span></span><br><span class="line">            <span class="keyword">local</span> buf = bufs[i]</span><br><span class="line">            <span class="keyword">local</span> size = buf:getSize()</span><br><span class="line">            hist:update(size)</span><br><span class="line">            pktCtr:countPacket(buf)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        bufs:free(rx)</span><br><span class="line">        rxCtr:update()</span><br><span class="line">        pktCtr:update()</span><br><span class="line">        <span class="keyword">if</span> timer:expired() <span class="keyword">then</span></span><br><span class="line">            timer:reset()</span><br><span class="line">            hist:<span class="built_in">print</span>()</span><br><span class="line">            hist:save(<span class="string">&quot;packet_sizes.csv&quot;</span>)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="comment">-- and print statistics, those should be the same.</span></span><br><span class="line">    rxCtr:finalize()</span><br><span class="line">    pktCtr:finalize()</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>如果要使用manual counter，可以通过<code>queue:send()</code>的返回值来实时更新。注意到发送动作是异步的，但是返回值仍然可以用来做计数。和之前的一样，<code>finalize()</code>函数可以用来输出最终结果。而<code>updateWithSize()</code>输出每一秒的实时结果。示例如下：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">send</span><span class="params">(queue)</span></span></span><br><span class="line">    <span class="keyword">local</span> mem = ...</span><br><span class="line">    <span class="keyword">local</span> packetSize = <span class="number">250</span></span><br><span class="line">    <span class="comment">-- create manual counter</span></span><br><span class="line">    <span class="keyword">local</span> txCtr = stats:newManualTxCounter(port, <span class="string">&quot;plain&quot;</span>)</span><br><span class="line">    <span class="keyword">local</span> bufs = mem:bufArray()</span><br><span class="line">    <span class="keyword">while</span> dpdk.<span class="built_in">running</span>() <span class="keyword">do</span></span><br><span class="line">        bufs:alloc(packetSize)</span><br><span class="line">        bufs:offloadUdpChecksums()</span><br><span class="line">        <span class="keyword">local</span> sentCount = queue:send(bufs)</span><br><span class="line">        <span class="comment">-- register new data: sentCount * packetSize</span></span><br><span class="line">        txCtr:updateWithSize(sentCount, packetSize)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">	txCtr:finalize()</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>同时也可以在接收包的时候，可以对包的一些特定内容进行统计。示例如下：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">recv</span><span class="params">(queue)</span></span></span><br><span class="line">    <span class="keyword">local</span> bufs = memory.bufArray()</span><br><span class="line">    <span class="keyword">local</span> counters = &#123;&#125;</span><br><span class="line">    <span class="keyword">while</span> dpdk.<span class="built_in">running</span>() <span class="keyword">do</span></span><br><span class="line">        <span class="comment">-- block until some data was received</span></span><br><span class="line">        <span class="keyword">local</span> rx = queue:recv(bufs)</span><br><span class="line">        <span class="keyword">for</span> i = <span class="number">1</span>, rx <span class="keyword">do</span></span><br><span class="line">            <span class="keyword">local</span> buf = bufs[i]</span><br><span class="line">            <span class="comment">-- cast the buffer to a known protocol</span></span><br><span class="line">            <span class="keyword">local</span> port = buf:getUdpPacket().udp:getDstPort()</span><br><span class="line">            <span class="keyword">local</span> ctr = counters[port]</span><br><span class="line">            <span class="comment">-- create counters dynamically</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> ctr <span class="keyword">then</span></span><br><span class="line">                ctr = stats:newPktRxCounter(port, <span class="string">&quot;plain&quot;</span>)</span><br><span class="line">                counters[port] = ctr</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="comment">-- record the packet</span></span><br><span class="line">            ctr:countPacket(buf)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        bufs:freeAll()</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="comment">-- for each observed destination port, print stats:</span></span><br><span class="line">    <span class="keyword">for</span> _, ctr <span class="keyword">in</span> <span class="built_in">pairs</span>(counters) <span class="keyword">do</span></span><br><span class="line">        ctr:finalize()</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="timestamping"><a href="#timestamping" class="headerlink" title="timestamping"></a>timestamping</h2><p>用来测时间戳的包定义在<code>lua/include/proto/ptp.lua</code>。可以通过<code>timestamping:newTimestamper(txq, rxq)</code>来创造一个新的timestamper。创建的timestamper可以在l2层使用，或者也可以通过udp传输。</p>
+<p>以下的例子在两个queue之间每隔0.01s测量一次延迟。</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> ts = <span class="built_in">require</span> <span class="string">&quot;timestamping&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">timerTask</span><span class="params">(txq, rxq, size)</span></span></span><br><span class="line">    <span class="comment">-- create the timestamper for measuring</span></span><br><span class="line">    <span class="comment">-- between those queues</span></span><br><span class="line">    <span class="keyword">local</span> timestamper = ts:newTimestamper(txq, rxq)</span><br><span class="line">    <span class="keyword">local</span> hist = histogram:new()</span><br><span class="line">    <span class="keyword">local</span> rateLimiter = timer:new(<span class="number">0.01</span>)</span><br><span class="line">    <span class="keyword">while</span> dpdk.<span class="built_in">running</span>() <span class="keyword">do</span></span><br><span class="line">        rateLimiter:reset()</span><br><span class="line">        hist:update(timestamper:measureLatency(size))</span><br><span class="line">        rateLimiter:busyWait()</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    hist:<span class="built_in">print</span>()</span><br><span class="line">    hist:save(<span class="string">&quot;histogram.csv&quot;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="task-communication"><a href="#task-communication" class="headerlink" title="task communication"></a>task communication</h2><p>moongen提供两种交流的方法。</p>
+<p>一种是pipes。一般在一个公共背景下创建pipe，比如master函数。以下就是一个示例：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> pipe = <span class="built_in">require</span> <span class="string">&quot;pipe&quot;</span></span><br><span class="line"><span class="comment">-- create a new pipe in the parent task</span></span><br><span class="line"><span class="keyword">local</span> p = pipe:newSlowPipe()</span><br><span class="line">p:send(<span class="number">0</span>, <span class="number">13</span>, <span class="number">37</span>, <span class="number">42</span>) <span class="comment">-- send array</span></span><br><span class="line">p:send(<span class="string">&quot;the cake is a lie&quot;</span>) <span class="comment">-- send string</span></span><br><span class="line"><span class="comment">-- or send a table</span></span><br><span class="line">p:send(&#123;<span class="number">235</span>, lol = <span class="string">&quot;rofl&quot;</span>, subtable = &#123;<span class="number">1</span>&#125;&#125;)</span><br><span class="line"><span class="comment">-- number of waiting messages</span></span><br><span class="line"><span class="keyword">local</span> enqueued = p:count()</span><br><span class="line"><span class="comment">-- receiving</span></span><br><span class="line"><span class="keyword">local</span> a, b, c, d = p:recv() <span class="comment">-- equals tryRecv(10)</span></span><br><span class="line"><span class="keyword">local</span> txt = p:tryRecv(<span class="number">100</span>) <span class="comment">-- wait time microseconds</span></span><br><span class="line"><span class="comment">-- and return answer</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- pass this pipe when creating another task</span></span><br><span class="line"><span class="comment">-- it can then access it like above.</span></span><br><span class="line">dpdk.launchLua(<span class="string">&quot;somefunnction&quot;</span>, p)</span><br><span class="line">dpdk.waitForSlaves()</span><br></pre></td></tr></table></figure>
+
+<p>另一种是namespace，就是在LuaJIT VM之间声明用lua table表示的全局变量。</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> dpdk = <span class="built_in">require</span> <span class="string">&quot;dpdk&quot;</span></span><br><span class="line"><span class="keyword">local</span> namespaces = <span class="built_in">require</span> <span class="string">&quot;namespaces&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">master</span><span class="params">()</span></span></span><br><span class="line">    <span class="keyword">local</span> space = namespaces:get(<span class="string">&quot;mine&quot;</span>)</span><br><span class="line">    space.<span class="built_in">string</span> = <span class="string">&quot;data!&quot;</span></span><br><span class="line">    space.answer = <span class="number">42</span></span><br><span class="line">    space.<span class="built_in">table</span> = &#123; black = <span class="string">&quot;mesa&quot;</span>, &#123; <span class="number">1</span> &#125; &#125;</span><br><span class="line">    dpdk.launchLua(<span class="string">&quot;slave&quot;</span>):wait()</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">slave</span><span class="params">()</span></span></span><br><span class="line">    <span class="comment">-- can access the same namespace!</span></span><br><span class="line">    <span class="keyword">local</span> slavespace = namespaces:get(<span class="string">&quot;mine&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;data? &quot;</span> .. slavespace.<span class="built_in">string</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="traffic-patterns"><a href="#traffic-patterns" class="headerlink" title="traffic patterns"></a>traffic patterns</h2><p>有的时候网卡只支持固定速度，而却需要人为降速，这个时候moongen会通过在包之间添加gap（就是在空隙发送损坏的包）来达到降速的效果。</p>
+<p>可以通过<code>buf.setDelay(bytes)</code>来设置延时，如果要设置随机延时，有泊松分布的延时产生<code>poissonDelay(average_wait)</code>。示例如下：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">send</span><span class="params">(txDev)</span></span></span><br><span class="line">    <span class="keyword">local</span> mem = ...</span><br><span class="line">    <span class="keyword">local</span> bufs = mem:bufArray()</span><br><span class="line">    <span class="keyword">while</span> dpdk.<span class="built_in">running</span>() <span class="keyword">do</span></span><br><span class="line">        bufs:alloc(size)</span><br><span class="line">        <span class="keyword">for</span> _, buf <span class="keyword">in</span> <span class="built_in">ipairs</span>(bufs) <span class="keyword">do</span></span><br><span class="line">            <span class="keyword">local</span> avg = rateToByteDelay(rate, size)</span><br><span class="line">            <span class="keyword">local</span> delay = poissonDelay(avg)</span><br><span class="line">            buf:setDelay(delay)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        queue:sendWithDelay(bufs)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>moongen</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>memsentry项目源码注释</title>
     <url>/memsentry-source-code.html</url>
     <content><![CDATA[<p>memsentry github地址：<a href="https://github.com/vusec/memsentry">https://github.com/vusec/memsentry</a></p>
@@ -603,30 +693,6 @@
       </categories>
       <tags>
         <tag>llvm</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>mac清理磁盘空间</title>
-    <url>/mac-clear-disk-space.html</url>
-    <content><![CDATA[<p>今天在clone git的时候居然提示我mac磁盘满了，我也是惊了。</p>
-<span id="more"></span>
-
-<h1 id="工具使用"><a href="#工具使用" class="headerlink" title="工具使用"></a>工具使用</h1><p>用的是知乎上推荐的一款程序：OmniDiskSweeper。（后来看到据说可以终端上<code>du -sh *</code>就行）</p>
-<p><img src="/img/2018-10-11.png"></p>
-<p>然后选要扫的磁盘就行了，具体就不截图了，太麻烦。</p>
-<h1 id="进阶问题"><a href="#进阶问题" class="headerlink" title="进阶问题"></a>进阶问题</h1><p>通过扫除居然发现显示的占用空间和实际磁盘工具给出的空间不一样，很神奇，一度以为自己中毒了。</p>
-<p>后面发现是mac的时间机器的自动备份没有关。</p>
-<p>一方面进到preference关掉mac的时间机器自动备份。</p>
-<p>另一方面删除快照。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示所有snapshots</span></span><br><span class="line">sudo tmutil listlocalsnapshots /</span><br><span class="line"></span><br><span class="line">com.apple.TimeMachine.2018-10-11-113833</span><br><span class="line">com.apple.TimeMachine.2018-10-11-133802</span><br><span class="line">com.apple.TimeMachine.2018-10-11-143851</span><br><span class="line">com.apple.TimeMachine.2018-10-11-153801</span><br><span class="line">com.apple.TimeMachine.2018-10-11-163801</span><br><span class="line">com.apple.TimeMachine.2018-10-11-192918</span><br><span class="line">com.apple.TimeMachine.2018-10-11-205829</span><br><span class="line">com.apple.TimeMachine.2018-10-11-213912</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删掉相应的</span></span><br><span class="line">tmutil deletelocalsnapshots 2018-10-11-213912</span><br></pre></td></tr></table></figure>
-
-<p>问题解决！</p>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>mac</tag>
       </tags>
   </entry>
   <entry>
@@ -747,72 +813,6 @@
       </tags>
   </entry>
   <entry>
-    <title>moongen学习</title>
-    <url>/moongen-learning.html</url>
-    <content><![CDATA[<p>学习了一下MoonGen，主要参考官网和tutorial。</p>
-<span id="more"></span>
-
-<h1 id="usage-introduction"><a href="#usage-introduction" class="headerlink" title="usage introduction"></a>usage introduction</h1><h2 id="Device-setup"><a href="#Device-setup" class="headerlink" title="Device setup"></a>Device setup</h2><p><code>master</code>函数是必须的，用来进行设备的配置，一个简单的设置如下</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> device = <span class="built_in">require</span> <span class="string">&quot;device&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">master</span><span class="params">(txNum)</span></span></span><br><span class="line">    <span class="comment">-- use specified NIC number with</span></span><br><span class="line">    <span class="comment">-- no listening and one transmission queues</span></span><br><span class="line">    txDev = device.<span class="built_in">config</span>&#123;</span><br><span class="line">        port = txNum,</span><br><span class="line">        rxQueues = <span class="number">0</span>,</span><br><span class="line">        txQueues = <span class="number">1</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    device.waitForLinks()</span><br><span class="line">    send(txDev:getTxQueue(<span class="number">0</span>))</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>如果要用到receive filter configuration，要在创建的时候设置设备。在<code>device.config</code>中，设置<code>rssNQueues = N</code>，来创建<code>N</code>个队列。此外，还可以通过<code>rssFunctions</code>来控制hash值，选项有<code>RSS_FUNCTION_IPV4</code>，<code>.._IPV6</code>，<code>.._IPVX_TCP</code>，<code>.._IPVX_UDP</code>。示例如下：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> device = <span class="built_in">require</span> <span class="string">&quot;device&quot;</span></span><br><span class="line">txDev = device.<span class="built_in">config</span>&#123;</span><br><span class="line">    port = <span class="number">0</span>,</span><br><span class="line">    rxQueues = <span class="number">4</span>,</span><br><span class="line">    rssNQueues = <span class="number">4</span>,</span><br><span class="line">    rssFunctions = &#123;</span><br><span class="line">        device.RSS_FUNCTION_IPV4,</span><br><span class="line">        device.RSS_FUNCTION_IPV4_TCP,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="packet-generation"><a href="#packet-generation" class="headerlink" title="packet generation"></a>packet generation</h2><p>packets是异步发送、在memory buffer中生成的，所以需要一个在memory pool中的buffer array。</p>
-<p>因为大多数packets应该是一样的，所以一般通过一个函数定义。</p>
-<p>注意：应该在memory pool中定义packet的值，而不是在generation loop中，否则性能会大大下降。</p>
-<p>最简单的方法就是在char buffer中手动设置一个ethernet header，示例如下：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> dpdk = <span class="built_in">require</span> <span class="string">&quot;dpdk&quot;</span></span><br><span class="line"><span class="keyword">local</span> memory = <span class="built_in">require</span> <span class="string">&quot;memory&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">send</span><span class="params">(queue)</span></span></span><br><span class="line">    <span class="keyword">local</span> mem = memory.createMemPool(<span class="function"><span class="keyword">function</span><span class="params">(buf)</span></span></span><br><span class="line">        <span class="keyword">local</span> data = ffi.cast(<span class="string">&quot;uint8_t*&quot;</span>, buf.pkt.data)</span><br><span class="line">        <span class="keyword">for</span> i = <span class="number">0</span>, <span class="number">11</span> <span class="keyword">do</span></span><br><span class="line">            data[i] = i <span class="comment">-- fill in mac addresses</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        data[<span class="number">12</span>] = <span class="number">0x12</span> <span class="comment">-- set type to ethernet</span></span><br><span class="line">        data[<span class="number">13</span>] = <span class="number">0x34</span></span><br><span class="line">    <span class="keyword">end</span>)</span><br><span class="line">    <span class="keyword">local</span> bufs = mem:bufArray()</span><br><span class="line">    <span class="keyword">while</span> dpdk.<span class="built_in">running</span>()</span><br><span class="line">        bufs:alloc(<span class="number">60</span>) <span class="comment">-- size of each packet</span></span><br><span class="line">        <span class="comment">-- ⇑ sets up each packet with the function above</span></span><br><span class="line">        <span class="comment">-- ← here, single packets could be modified</span></span><br><span class="line">        queue:send(bufs) <span class="comment">-- schedule sending</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>简单一点，raw buffer可以先被转换成各种包的格式，然后直接填就可以了。在<code>lua/include/proto/</code>中可以找到定义的相应格式。比如：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> mem = memory.createMemPool(<span class="function"><span class="keyword">function</span><span class="params">(buf)</span></span></span><br><span class="line">    buf:getEthernetPacket():fill&#123;</span><br><span class="line">        ethSrc = txDev, <span class="comment">-- use device mac</span></span><br><span class="line">        ethDst = <span class="string">&quot;00:01:02:03:04:05&quot;</span>,</span><br><span class="line">        ethType = <span class="number">0x1234</span>,</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">end</span>)</span><br></pre></td></tr></table></figure>
-
-<p>如果要定义一种新的格式，按照<code>lua/include/proto/newProtocolTemplate.lua</code>的方式，拷贝并修改。</p>
-<p>如果要修改某一种特定的包，在分配buffer后和enqueue之前修改，方法类似。</p>
-<p>如果需要控制发包器的速度，通过调用函数<code>queue:setRate(MBit/s)</code></p>
-<p>如果需要暂停LuaJIT VM，通过<code>dpdk.sleepMillis(time)</code></p>
-<h2 id="running-parallel-tasks"><a href="#running-parallel-tasks" class="headerlink" title="running parallel tasks"></a>running parallel tasks</h2><p>为了支持并行，通过引入<code>dpdk.lauchLua(&quot;funcname&quot;, arg0, ...)</code>来用一个新的LuaJIT VM跑一个新的slave task。一般的调用方法为</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> dpdk = <span class="built_in">require</span> <span class="string">&quot;dpdk&quot;</span></span><br><span class="line">dpdk.launchLua(<span class="string">&quot;funcname&quot;</span>, arg0, ...)</span><br><span class="line">dpdk.waitForSlaves() <span class="comment">-- wait for child termination</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="statistics"><a href="#statistics" class="headerlink" title="statistics"></a>statistics</h2><p><code>stats</code>模块提供了统计功能，收集完数据之后，可以被写到<code>stdout</code>或者一些其他的文件中。支持的输出类型有<code>plain</code>，<code>csv</code>和<code>ini</code>。</p>
-<p>packet counter是和device绑定的，要创建一个新的packet counter，可以使用<code>rxCtr = stats:newDevRxCounter(device, &quot;plain&quot;)</code>或者<code>newDevTxCounter(..)</code>。</p>
-<p><code>newPktRxCounter(&quot;your counter name&quot;, &quot;plain&quot;)</code>或者<code>newPktTxCounter(..)</code>可以通过调用它的<code>countPacket(singleBuffer)</code>来将packet buffer传递给它们来实现更新。</p>
-<p><code>newManualTxCounter(&quot;your counter name&quot;, &quot;plain&quot;)</code>可以手动计数。可以通过<code>updateWithSize(packet_count, each_size)</code>来更新。</p>
-<p>对于所有counter，<code>update()</code>方法都可以频繁调用，可以显示当前数据。</p>
-<p><code>histogram</code>模块可以收集频率方面的数据。</p>
-<p>下面的示例使用了device和package两种计数器，packet size记在histogram里。</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> dpdk = <span class="built_in">require</span> <span class="string">&quot;dpdk&quot;</span></span><br><span class="line"><span class="keyword">local</span> device = <span class="built_in">require</span> <span class="string">&quot;device&quot;</span></span><br><span class="line"><span class="keyword">local</span> histogram = <span class="built_in">require</span> <span class="string">&quot;histogram&quot;</span></span><br><span class="line"><span class="keyword">local</span> memory = <span class="built_in">require</span> <span class="string">&quot;memory&quot;</span></span><br><span class="line"><span class="keyword">local</span> stats = <span class="built_in">require</span> <span class="string">&quot;stats&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">master</span><span class="params">(rxPort, saveInterval)</span></span></span><br><span class="line">    <span class="keyword">local</span> saveInterval = saveInterval <span class="keyword">or</span> <span class="number">60</span></span><br><span class="line">    <span class="keyword">local</span> rxDev = device.<span class="built_in">config</span>&#123;</span><br><span class="line">        port = rxPort,</span><br><span class="line">        dropEnable = <span class="literal">false</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    device.waitForLinks()</span><br><span class="line">    <span class="keyword">local</span> queue = rxDev:getRxQueue(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">local</span> bufs = memory.bufArray()</span><br><span class="line">    <span class="comment">-- create the device receive counter</span></span><br><span class="line">    <span class="keyword">local</span> rxCtr = stats:newDevRxCounter(queue.dev)</span><br><span class="line">    <span class="comment">-- and the packet receive counter to detect</span></span><br><span class="line">    <span class="comment">-- packets that were dropped on the NICNIC</span></span><br><span class="line">    <span class="keyword">local</span> pktCtr = stats:newPktRxCounter(<span class="string">&quot;pkts&quot;</span>, <span class="string">&quot;plain&quot;</span>)</span><br><span class="line">    <span class="keyword">local</span> hist = histogram:<span class="built_in">create</span>()</span><br><span class="line">    <span class="keyword">local</span> timer = timer:new(saveInterval)</span><br><span class="line">    <span class="keyword">while</span> dpdk.<span class="built_in">running</span>() <span class="keyword">do</span></span><br><span class="line">        <span class="comment">-- wait max 100ms for new data</span></span><br><span class="line">        <span class="keyword">local</span> rx = queue:tryRecv(bufs, <span class="number">100</span>)</span><br><span class="line">        <span class="keyword">for</span> i = <span class="number">1</span>, rx <span class="keyword">do</span></span><br><span class="line">            <span class="keyword">local</span> buf = bufs[i]</span><br><span class="line">            <span class="keyword">local</span> size = buf:getSize()</span><br><span class="line">            hist:update(size)</span><br><span class="line">            pktCtr:countPacket(buf)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        bufs:free(rx)</span><br><span class="line">        rxCtr:update()</span><br><span class="line">        pktCtr:update()</span><br><span class="line">        <span class="keyword">if</span> timer:expired() <span class="keyword">then</span></span><br><span class="line">            timer:reset()</span><br><span class="line">            hist:<span class="built_in">print</span>()</span><br><span class="line">            hist:save(<span class="string">&quot;packet_sizes.csv&quot;</span>)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="comment">-- and print statistics, those should be the same.</span></span><br><span class="line">    rxCtr:finalize()</span><br><span class="line">    pktCtr:finalize()</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>如果要使用manual counter，可以通过<code>queue:send()</code>的返回值来实时更新。注意到发送动作是异步的，但是返回值仍然可以用来做计数。和之前的一样，<code>finalize()</code>函数可以用来输出最终结果。而<code>updateWithSize()</code>输出每一秒的实时结果。示例如下：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">send</span><span class="params">(queue)</span></span></span><br><span class="line">    <span class="keyword">local</span> mem = ...</span><br><span class="line">    <span class="keyword">local</span> packetSize = <span class="number">250</span></span><br><span class="line">    <span class="comment">-- create manual counter</span></span><br><span class="line">    <span class="keyword">local</span> txCtr = stats:newManualTxCounter(port, <span class="string">&quot;plain&quot;</span>)</span><br><span class="line">    <span class="keyword">local</span> bufs = mem:bufArray()</span><br><span class="line">    <span class="keyword">while</span> dpdk.<span class="built_in">running</span>() <span class="keyword">do</span></span><br><span class="line">        bufs:alloc(packetSize)</span><br><span class="line">        bufs:offloadUdpChecksums()</span><br><span class="line">        <span class="keyword">local</span> sentCount = queue:send(bufs)</span><br><span class="line">        <span class="comment">-- register new data: sentCount * packetSize</span></span><br><span class="line">        txCtr:updateWithSize(sentCount, packetSize)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">	txCtr:finalize()</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>同时也可以在接收包的时候，可以对包的一些特定内容进行统计。示例如下：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">recv</span><span class="params">(queue)</span></span></span><br><span class="line">    <span class="keyword">local</span> bufs = memory.bufArray()</span><br><span class="line">    <span class="keyword">local</span> counters = &#123;&#125;</span><br><span class="line">    <span class="keyword">while</span> dpdk.<span class="built_in">running</span>() <span class="keyword">do</span></span><br><span class="line">        <span class="comment">-- block until some data was received</span></span><br><span class="line">        <span class="keyword">local</span> rx = queue:recv(bufs)</span><br><span class="line">        <span class="keyword">for</span> i = <span class="number">1</span>, rx <span class="keyword">do</span></span><br><span class="line">            <span class="keyword">local</span> buf = bufs[i]</span><br><span class="line">            <span class="comment">-- cast the buffer to a known protocol</span></span><br><span class="line">            <span class="keyword">local</span> port = buf:getUdpPacket().udp:getDstPort()</span><br><span class="line">            <span class="keyword">local</span> ctr = counters[port]</span><br><span class="line">            <span class="comment">-- create counters dynamically</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> ctr <span class="keyword">then</span></span><br><span class="line">                ctr = stats:newPktRxCounter(port, <span class="string">&quot;plain&quot;</span>)</span><br><span class="line">                counters[port] = ctr</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="comment">-- record the packet</span></span><br><span class="line">            ctr:countPacket(buf)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        bufs:freeAll()</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="comment">-- for each observed destination port, print stats:</span></span><br><span class="line">    <span class="keyword">for</span> _, ctr <span class="keyword">in</span> <span class="built_in">pairs</span>(counters) <span class="keyword">do</span></span><br><span class="line">        ctr:finalize()</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="timestamping"><a href="#timestamping" class="headerlink" title="timestamping"></a>timestamping</h2><p>用来测时间戳的包定义在<code>lua/include/proto/ptp.lua</code>。可以通过<code>timestamping:newTimestamper(txq, rxq)</code>来创造一个新的timestamper。创建的timestamper可以在l2层使用，或者也可以通过udp传输。</p>
-<p>以下的例子在两个queue之间每隔0.01s测量一次延迟。</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> ts = <span class="built_in">require</span> <span class="string">&quot;timestamping&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">timerTask</span><span class="params">(txq, rxq, size)</span></span></span><br><span class="line">    <span class="comment">-- create the timestamper for measuring</span></span><br><span class="line">    <span class="comment">-- between those queues</span></span><br><span class="line">    <span class="keyword">local</span> timestamper = ts:newTimestamper(txq, rxq)</span><br><span class="line">    <span class="keyword">local</span> hist = histogram:new()</span><br><span class="line">    <span class="keyword">local</span> rateLimiter = timer:new(<span class="number">0.01</span>)</span><br><span class="line">    <span class="keyword">while</span> dpdk.<span class="built_in">running</span>() <span class="keyword">do</span></span><br><span class="line">        rateLimiter:reset()</span><br><span class="line">        hist:update(timestamper:measureLatency(size))</span><br><span class="line">        rateLimiter:busyWait()</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    hist:<span class="built_in">print</span>()</span><br><span class="line">    hist:save(<span class="string">&quot;histogram.csv&quot;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="task-communication"><a href="#task-communication" class="headerlink" title="task communication"></a>task communication</h2><p>moongen提供两种交流的方法。</p>
-<p>一种是pipes。一般在一个公共背景下创建pipe，比如master函数。以下就是一个示例：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> pipe = <span class="built_in">require</span> <span class="string">&quot;pipe&quot;</span></span><br><span class="line"><span class="comment">-- create a new pipe in the parent task</span></span><br><span class="line"><span class="keyword">local</span> p = pipe:newSlowPipe()</span><br><span class="line">p:send(<span class="number">0</span>, <span class="number">13</span>, <span class="number">37</span>, <span class="number">42</span>) <span class="comment">-- send array</span></span><br><span class="line">p:send(<span class="string">&quot;the cake is a lie&quot;</span>) <span class="comment">-- send string</span></span><br><span class="line"><span class="comment">-- or send a table</span></span><br><span class="line">p:send(&#123;<span class="number">235</span>, lol = <span class="string">&quot;rofl&quot;</span>, subtable = &#123;<span class="number">1</span>&#125;&#125;)</span><br><span class="line"><span class="comment">-- number of waiting messages</span></span><br><span class="line"><span class="keyword">local</span> enqueued = p:count()</span><br><span class="line"><span class="comment">-- receiving</span></span><br><span class="line"><span class="keyword">local</span> a, b, c, d = p:recv() <span class="comment">-- equals tryRecv(10)</span></span><br><span class="line"><span class="keyword">local</span> txt = p:tryRecv(<span class="number">100</span>) <span class="comment">-- wait time microseconds</span></span><br><span class="line"><span class="comment">-- and return answer</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- pass this pipe when creating another task</span></span><br><span class="line"><span class="comment">-- it can then access it like above.</span></span><br><span class="line">dpdk.launchLua(<span class="string">&quot;somefunnction&quot;</span>, p)</span><br><span class="line">dpdk.waitForSlaves()</span><br></pre></td></tr></table></figure>
-
-<p>另一种是namespace，就是在LuaJIT VM之间声明用lua table表示的全局变量。</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> dpdk = <span class="built_in">require</span> <span class="string">&quot;dpdk&quot;</span></span><br><span class="line"><span class="keyword">local</span> namespaces = <span class="built_in">require</span> <span class="string">&quot;namespaces&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">master</span><span class="params">()</span></span></span><br><span class="line">    <span class="keyword">local</span> space = namespaces:get(<span class="string">&quot;mine&quot;</span>)</span><br><span class="line">    space.<span class="built_in">string</span> = <span class="string">&quot;data!&quot;</span></span><br><span class="line">    space.answer = <span class="number">42</span></span><br><span class="line">    space.<span class="built_in">table</span> = &#123; black = <span class="string">&quot;mesa&quot;</span>, &#123; <span class="number">1</span> &#125; &#125;</span><br><span class="line">    dpdk.launchLua(<span class="string">&quot;slave&quot;</span>):wait()</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">slave</span><span class="params">()</span></span></span><br><span class="line">    <span class="comment">-- can access the same namespace!</span></span><br><span class="line">    <span class="keyword">local</span> slavespace = namespaces:get(<span class="string">&quot;mine&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;data? &quot;</span> .. slavespace.<span class="built_in">string</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="traffic-patterns"><a href="#traffic-patterns" class="headerlink" title="traffic patterns"></a>traffic patterns</h2><p>有的时候网卡只支持固定速度，而却需要人为降速，这个时候moongen会通过在包之间添加gap（就是在空隙发送损坏的包）来达到降速的效果。</p>
-<p>可以通过<code>buf.setDelay(bytes)</code>来设置延时，如果要设置随机延时，有泊松分布的延时产生<code>poissonDelay(average_wait)</code>。示例如下：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">send</span><span class="params">(txDev)</span></span></span><br><span class="line">    <span class="keyword">local</span> mem = ...</span><br><span class="line">    <span class="keyword">local</span> bufs = mem:bufArray()</span><br><span class="line">    <span class="keyword">while</span> dpdk.<span class="built_in">running</span>() <span class="keyword">do</span></span><br><span class="line">        bufs:alloc(size)</span><br><span class="line">        <span class="keyword">for</span> _, buf <span class="keyword">in</span> <span class="built_in">ipairs</span>(bufs) <span class="keyword">do</span></span><br><span class="line">            <span class="keyword">local</span> avg = rateToByteDelay(rate, size)</span><br><span class="line">            <span class="keyword">local</span> delay = poissonDelay(avg)</span><br><span class="line">            buf:setDelay(delay)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        queue:sendWithDelay(bufs)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>工具</category>
-      </categories>
-      <tags>
-        <tag>moongen</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>route add报错SIOCADDRT:Network is unreachable解决方案</title>
     <url>/route%20add-siocaddrt-network-is-unreachable.html</url>
     <content><![CDATA[<p>服务器 重启后无法通过外网访问，此时需要添加路由表项。</p>
@@ -844,28 +844,23 @@
       </tags>
   </entry>
   <entry>
-    <title>ssh-permissions-are-too-open解决方法</title>
-    <url>/ssh-permissions-are-too-open-error.html</url>
-    <content><![CDATA[<p>前几天跑S6的框架，然后在一个ssh的环节报错。</p>
+    <title>too many open files解决方法</title>
+    <url>/too-many-open-files-error.html</url>
+    <content><![CDATA[<p>解决一下linux系统同时打开过多文件的问题。</p>
 <span id="more"></span>
 
-<h1 id="具体错误"><a href="#具体错误" class="headerlink" title="具体错误"></a>具体错误</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Permissions 0777 for &#x27;/Users/username/.ssh/id_rsa&#x27; are too open.</span><br><span class="line">It is recommended that your private key files are NOT accessible by others.</span><br><span class="line">This private key will be ignored.</span><br></pre></td></tr></table></figure>
+<h1 id="方法一：命令方式"><a href="#方法一：命令方式" class="headerlink" title="方法一：命令方式"></a>方法一：命令方式</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这样就可以把当前用户的最大允许打开文件数量设置为2048了，但这种设置方法在重启后会还原为默认值。</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">ulimit</span> -n命令非root用户只能设置到4096。</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">想要设置到8192需要sudo权限或者root用户。</span></span><br><span class="line">ulimit -n 2048</span><br></pre></td></tr></table></figure>
 
-<p>大概意思就是权限太松了。</p>
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>只需要将<code>~/.ssh/id_rsa</code>的权限调整为只有自己可读就好了。</p>
-<p>众所周知，<code>r=4</code>为可读，<code>w=2</code>为可写，<code>x=1</code>为可执行。三个分别是<code>user</code>、<code>group</code>和<code>other</code>。权限位相或即可。</p>
-<p>所以</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod 400 ~/.ssh/id_rsa</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">或者</span></span><br><span class="line">chmod 600 ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
+<h1 id="方法二：修改配置文件"><a href="#方法二：修改配置文件" class="headerlink" title="方法二：修改配置文件"></a>方法二：修改配置文件</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /etc/security/limits.conf  </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">在最后加入</span>  </span><br><span class="line">* soft nofile 4096  </span><br><span class="line">* hard nofile 4096 </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">或者只加入</span></span><br><span class="line">* - nofile 8192</span><br></pre></td></tr></table></figure>
 
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
-<li><a href="https://stackoverflow.com/questions/9270734/ssh-permissions-are-too-open-error">https://stackoverflow.com/questions/9270734/ssh-permissions-are-too-open-error</a></li>
-</ul>
+<p><code>*</code>代表所有用户，可根据需要设置某一用户</p>
+<h1 id="检查程序文件数"><a href="#检查程序文件数" class="headerlink" title="检查程序文件数"></a>检查程序文件数</h1><p>如果你对你的程序有一定的解的话，应该对程序打开文件数(链接数)上限有一定的估算，如果感觉数字异常，请使用第一步的<strong>lsof -p 进程id &gt; openfiles.log</strong>命令，获得当前占用句柄的全部详情进行分析。</p>
 ]]></content>
       <categories>
         <category>其他</category>
       </categories>
       <tags>
-        <tag>ssh</tag>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -906,26 +901,6 @@
       </tags>
   </entry>
   <entry>
-    <title>too many open files解决方法</title>
-    <url>/too-many-open-files-error.html</url>
-    <content><![CDATA[<p>解决一下linux系统同时打开过多文件的问题。</p>
-<span id="more"></span>
-
-<h1 id="方法一：命令方式"><a href="#方法一：命令方式" class="headerlink" title="方法一：命令方式"></a>方法一：命令方式</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这样就可以把当前用户的最大允许打开文件数量设置为2048了，但这种设置方法在重启后会还原为默认值。</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">ulimit</span> -n命令非root用户只能设置到4096。</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">想要设置到8192需要sudo权限或者root用户。</span></span><br><span class="line">ulimit -n 2048</span><br></pre></td></tr></table></figure>
-
-<h1 id="方法二：修改配置文件"><a href="#方法二：修改配置文件" class="headerlink" title="方法二：修改配置文件"></a>方法二：修改配置文件</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /etc/security/limits.conf  </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">在最后加入</span>  </span><br><span class="line">* soft nofile 4096  </span><br><span class="line">* hard nofile 4096 </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">或者只加入</span></span><br><span class="line">* - nofile 8192</span><br></pre></td></tr></table></figure>
-
-<p><code>*</code>代表所有用户，可根据需要设置某一用户</p>
-<h1 id="检查程序文件数"><a href="#检查程序文件数" class="headerlink" title="检查程序文件数"></a>检查程序文件数</h1><p>如果你对你的程序有一定的解的话，应该对程序打开文件数(链接数)上限有一定的估算，如果感觉数字异常，请使用第一步的<strong>lsof -p 进程id &gt; openfiles.log</strong>命令，获得当前占用句柄的全部详情进行分析。</p>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>同步服务器时间</title>
     <url>/sync-server-time.html</url>
     <content><![CDATA[<p>最近在make的时候发现server上的时间落后于我本地的时间，查了一下发现只要一条命令就能巧妙把server时间和互联网时间同步。</p>
@@ -938,6 +913,156 @@
       </categories>
       <tags>
         <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ycsb学习</title>
+    <url>/ycsb-learning.html</url>
+    <content><![CDATA[<p>主要总结Yahoo的数据库测试项目YCSB的使用（针对redis）。</p>
+<span id="more"></span>
+
+<p>github网址：<a href="https://github.com/brianfrankcooper/YCSB">https://github.com/brianfrankcooper/YCSB</a></p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ul>
+<li><p>需要安装</p>
+<ul>
+<li>java</li>
+<li>maven</li>
+</ul>
+</li>
+<li><p>直接下载编译好的版本（不推荐）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl -O --location https://github.com/brianfrankcooper/YCSB/releases/download/0.15.0/ycsb-0.15.0.tar.gz</span><br><span class="line">tar xfvz ycsb-0.15.0.tar.gz</span><br><span class="line">cd ycsb-0.15.0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用java或者maven编译</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone http://github.com/brianfrankcooper/YCSB.git</span><br><span class="line">cd YCSB</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">只安装redis测试部分</span></span><br><span class="line">mvn -pl com.yahoo.ycsb:redis-binding -am clean package</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装全部测试功能</span></span><br><span class="line">mvn clean package</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>详细说明：<a href="https://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload">https://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload</a></p>
+<p>运行workload一共有六个部分</p>
+<ul>
+<li>设置数据库</li>
+<li>选择合适的DB interface</li>
+<li>选择合适的负载</li>
+<li>选择合适的runtime parameters</li>
+<li>load选择好的workload</li>
+<li>run选择好的workload</li>
+</ul>
+<h2 id="设置数据库"><a href="#设置数据库" class="headerlink" title="设置数据库"></a>设置数据库</h2><p>简要的说，就是创建名为<code>usertable</code>的表，因为ycsb默认的是对<code>usertable</code>进行相关操作。</p>
+<p>而对于redis，则不需要相关的操作。</p>
+<h2 id="选择合适的DB-interface"><a href="#选择合适的DB-interface" class="headerlink" title="选择合适的DB interface"></a>选择合适的DB interface</h2><p>YCSB的操作是通过DB interface来实现的。最基本的DB interface是<code>com.yahoo.ycsb.BasicDB</code>，会将输出输出到<code>System.out</code>里。可以通过继承DB interface来自定义DB interface，也可以使用原有的DB interface。</p>
+<h2 id="选择合适的workload"><a href="#选择合适的workload" class="headerlink" title="选择合适的workload"></a>选择合适的workload</h2><p>当前版本提供了六种workload</p>
+<h3 id="Workload-A-Update-heavy-workload"><a href="#Workload-A-Update-heavy-workload" class="headerlink" title="Workload A: Update heavy workload"></a>Workload A: Update heavy workload</h3><p>This workload has a mix of 50&#x2F;50 reads and writes. An application example is a session store recording recent actions.</p>
+<h3 id="Workload-B-Read-mostly-workload"><a href="#Workload-B-Read-mostly-workload" class="headerlink" title="Workload B: Read mostly workload"></a>Workload B: Read mostly workload</h3><p>This workload has a 95&#x2F;5 reads&#x2F;write mix. Application example: photo tagging; add a tag is an update, but most operations are to read tags.</p>
+<h3 id="Workload-C-Read-only"><a href="#Workload-C-Read-only" class="headerlink" title="Workload C: Read only"></a>Workload C: Read only</h3><p>This workload is 100% read. Application example: user profile cache, where profiles are constructed elsewhere (e.g., Hadoop).</p>
+<h3 id="Workload-D-Read-latest-workload"><a href="#Workload-D-Read-latest-workload" class="headerlink" title="Workload D: Read latest workload"></a>Workload D: Read latest workload</h3><p>In this workload, new records are inserted, and the most recently inserted records are the most popular. Application example: user status updates; people want to read the latest.</p>
+<h3 id="Workload-E-Short-ranges"><a href="#Workload-E-Short-ranges" class="headerlink" title="Workload E: Short ranges"></a>Workload E: Short ranges</h3><p>In this workload, short ranges of records are queried, instead of individual records. Application example: threaded conversations, where each scan is for the posts in a given thread (assumed to be clustered by thread id).</p>
+<h3 id="Workload-F-Read-modify-write"><a href="#Workload-F-Read-modify-write" class="headerlink" title="Workload F: Read-modify-write"></a>Workload F: Read-modify-write</h3><p>In this workload, the client will read a record, modify it, and write back the changes. Application example: user database, where user records are read and modified by the user or to record user activity.</p>
+<h3 id="自定义Workload"><a href="#自定义Workload" class="headerlink" title="自定义Workload"></a>自定义Workload</h3><p>当然也可以自定义workload：<a href="https://github.com/brianfrankcooper/YCSB/wiki/Implementing-New-Workloads">https://github.com/brianfrankcooper/YCSB/wiki/Implementing-New-Workloads</a></p>
+<p>一般常用的workload property如<code>fieldcount</code>，<code>fieldlength</code>，<code>requestdistribution</code>等。</p>
+<p>全部properties如下：</p>
+<p>The property files used with the core workload generator can specify values for the following properties:</p>
+<ul>
+<li><strong>fieldcount</strong>: the number of fields in a record (default: 10)</li>
+<li><strong>fieldlength</strong>: the size of each field (default: 100)</li>
+<li><strong>readallfields</strong>: should reads read all fields (true) or just one (false) (default: true)</li>
+<li><strong>readproportion</strong>: what proportion of operations should be reads (default: 0.95)</li>
+<li><strong>updateproportion</strong>: what proportion of operations should be updates (default: 0.05)</li>
+<li><strong>insertproportion</strong>: what proportion of operations should be inserts (default: 0)</li>
+<li><strong>scanproportion</strong>: what proportion of operations should be scans (default: 0)</li>
+<li><strong>readmodifywriteproportion</strong>: what proportion of operations should be read a record, modify it, write it back (default: 0)</li>
+<li><strong>requestdistribution</strong>: what distribution should be used to select the records to operate on – uniform, zipfian or latest (default: uniform)</li>
+<li><strong>maxscanlength</strong>: for scans, what is the maximum number of records to scan (default: 1000)</li>
+<li><strong>scanlengthdistribution</strong>: for scans, what distribution should be used to choose the number of records to scan, for each scan, between 1 and maxscanlength (default: uniform)</li>
+<li><strong>insertorder</strong>: should records be inserted in order by key (“ordered”), or in hashed order (“hashed”) (default: hashed)</li>
+<li><strong>operationcount</strong>: number of operations to perform. If set to zero then YCSB will run until maxexecutiontime is reached (which by default is indefinitely). Note that if your workload or command line parameters do not specify an operation count it will defualt to zero.</li>
+<li><strong>maxexecutiontime</strong>: maximum execution time in seconds. The benchmark runs until either the operation count has exhausted or the maximum specified time has elapsed, whichever is earlier. If unspecified the defualt is to run indefinitely.</li>
+<li><strong>table</strong>: the name of the table (default: usertable)</li>
+<li><strong>recordcount</strong>: number of records to load into the database initially (default: 0)</li>
+<li><strong>core_workload_insertion_retry_limit</strong>: number of attempts for any failed insert operation (default: 0)</li>
+<li><strong>core_workload_insertion_retry_interval</strong>: interval between retries, in seconds (default: 3)</li>
+</ul>
+<h2 id="选择合适的runtime-parameter"><a href="#选择合适的runtime-parameter" class="headerlink" title="选择合适的runtime parameter"></a>选择合适的runtime parameter</h2><p>主要是</p>
+<ul>
+<li><code>-threads</code> : <strong>the number of client threads</strong>.</li>
+<li><code>-target</code> : <strong>the target number of operations per second</strong>.</li>
+<li><code>-s</code> : <strong>status</strong>.十秒打印一次状态</li>
+</ul>
+<h2 id="load-data"><a href="#load-data" class="headerlink" title="load data"></a>load data</h2><p>需要指定<code>redis.host</code>，<code>redis.port</code>。（可以指定<code>redis.password</code>和<code>redis.cluster</code>）</p>
+<p>以上参数也可以在命令中指定，比如</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./bin/ycsb load redis -s -P workloads/workloada -p &quot;redis.host=127.0.0.1&quot; -p &quot;redis.port=6379&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="run-data"><a href="#run-data" class="headerlink" title="run data"></a>run data</h2><p>同理</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./bin/ycsb run redis -s -P workloads/workloada -p &quot;redis.host=127.0.0.1&quot; -p &quot;redis.port=6379&quot;</span><br></pre></td></tr></table></figure>
+
+<h1 id="一些注意事项"><a href="#一些注意事项" class="headerlink" title="一些注意事项"></a>一些注意事项</h1><h2 id="ycsb不支持对key的长度的修改"><a href="#ycsb不支持对key的长度的修改" class="headerlink" title="ycsb不支持对key的长度的修改"></a>ycsb不支持对key的长度的修改</h2><p>issue网址：<a href="https://github.com/brianfrankcooper/YCSB/issues/587">https://github.com/brianfrankcooper/YCSB/issues/587</a></p>
+<p>ycsb对key命名规则是两种，<code>hashed</code>模式会生成<code>user</code>加固定长度的一串hash值，而<code>ordered</code>模式会按照<code>user</code>加顺序的方式来命名。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">insertorder=hashed      # user6284781860667377211, user8517097267634966620, user1820151046732198393</span><br><span class="line">insertorder=ordered     # user1, user2, user3032</span><br></pre></td></tr></table></figure>
+
+<h2 id="ycsb运行时错误：Read-time-out"><a href="#ycsb运行时错误：Read-time-out" class="headerlink" title="ycsb运行时错误：Read time out"></a>ycsb运行时错误：Read time out</h2><p>错误类似于</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">redis.clients.jedis.exceptions.JedisConnectionException: java.net.SocketTimeoutException: Read timed out</span><br><span class="line"></span><br><span class="line">at redis.clients.jedis.Protocol.process(Protocol.java:79)</span><br><span class="line">at redis.clients.jedis.Protocol.read(Protocol.java:131)</span><br><span class="line">at redis.clients.jedis.Connection.getIntegerReply(Connection.java:188)</span><br><span class="line">at redis.clients.jedis.Jedis.sismember(Jedis.java:1266)</span><br></pre></td></tr></table></figure>
+
+<p>当数据量变大之后，延时可能会变成几秒，而Jedis默认的是<code>2</code>秒的超时限制。</p>
+<p>修改redis的src文件夹的RedisClient.java</p>
+<p>将</p>
+<p><code>jedis = new Jedis(host, port);</code></p>
+<p>修改为</p>
+<p><code>jedis = new Jedis(host, port, 10000);</code></p>
+<p>即从默认的2秒上升为10秒。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li>ycsb github地址：<a href="https://github.com/brianfrankcooper/YCSB">https://github.com/brianfrankcooper/YCSB</a></li>
+<li>ycsb 流程介绍：<a href="https://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload">https://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload</a></li>
+<li>ycsb workload介绍：<a href="https://github.com/brianfrankcooper/YCSB/wiki/Implementing-New-Workloads">https://github.com/brianfrankcooper/YCSB/wiki/Implementing-New-Workloads</a></li>
+<li>ycsb 不支持对key长度的修改 issue网址：<a href="https://github.com/brianfrankcooper/YCSB/issues/587">https://github.com/brianfrankcooper/YCSB/issues/587</a></li>
+<li>ycsb 运行时错误：read time out 解决方法博客网址：<a href="https://github.com/brianfrankcooper/YCSB/issues/587">https://github.com/brianfrankcooper/YCSB/issues/587</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>ycsb</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>修改或删除git submodule</title>
+    <url>/git-submodule-modify.html</url>
+    <content><![CDATA[<p>因为国外google代码仓库的东西访问不到，有可能导致submodule失效，需要修改 或者删除git子模块</p>
+<span id="more"></span>
+
+<h1 id="删除子模块"><a href="#删除子模块" class="headerlink" title="删除子模块"></a>删除子模块</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">逆初始化模块，其中&#123;MOD_NAME&#125;为模块目录，执行后可发现模块目录被清空</span></span><br><span class="line">git submodule deinit &#123;MOD_NAME&#125; </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除.gitmodules中记录的模块信息（--cached选项清除.git/modules中的缓存）</span></span><br><span class="line">git rm --cached &#123;MOD_NAME&#125; </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">提交更改到代码库，可观察到<span class="string">&#x27;.gitmodules&#x27;</span>内容发生变更</span></span><br><span class="line">git commit -am &quot;Remove a submodule.&quot; </span><br></pre></td></tr></table></figure>
+
+<h1 id="更改子模块url"><a href="#更改子模块url" class="headerlink" title="更改子模块url"></a>更改子模块url</h1><p>修改<code>.gitmodules</code>文件中对应模块的<code>url</code>属性，然后更新到<code>.git/config</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git submodule sync</span><br><span class="line">git commit -am &quot;Update submodule url.&quot;</span><br></pre></td></tr></table></figure>
+
+<p>更低版本可能会不能自动更行<code>.git/config</code>，这时需要手动更新。</p>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>更换python默认版本</title>
+    <url>/change-python-default-version.html</url>
+    <content><![CDATA[<p>服务器上用的python默认是python3，需要改成python2</p>
+<span id="more"></span>
+
+<h1 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h1><p>修改别名，在<code>~/.bashrc</code>中修改</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alias python=python2</span><br></pre></td></tr></table></figure>
+
+<h1 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h1><p>但是如果是在程序中调用有可能仍然是原来的python(具体我不太清楚，但是在跑一个项目的时候，他调用的python仍然是python3)。而且别的地方也找不到别名了。按理说python的默认版本应该是python2才对，但是也没有办法，只能硬着头皮改，毕竟项目还是要跑的啊。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">sudo update-alternatives --install &lt;<span class="built_in">link</span>&gt; &lt;name&gt; &lt;path&gt; &lt;priority&gt;</span></span><br><span class="line">sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 10</span><br></pre></td></tr></table></figure>
+
+<p>搞定。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a href="https://stackoverflow.com/questions/41986507/unable-to-set-default-python-version-to-python3-in-ubuntu">https://stackoverflow.com/questions/41986507/unable-to-set-default-python-version-to-python3-in-ubuntu</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
       </tags>
   </entry>
   <entry>
@@ -970,26 +1095,6 @@
       </categories>
       <tags>
         <tag>docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>修改或删除git submodule</title>
-    <url>/git-submodule-modify.html</url>
-    <content><![CDATA[<p>因为国外google代码仓库的东西访问不到，有可能导致submodule失效，需要修改 或者删除git子模块</p>
-<span id="more"></span>
-
-<h1 id="删除子模块"><a href="#删除子模块" class="headerlink" title="删除子模块"></a>删除子模块</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">逆初始化模块，其中&#123;MOD_NAME&#125;为模块目录，执行后可发现模块目录被清空</span></span><br><span class="line">git submodule deinit &#123;MOD_NAME&#125; </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除.gitmodules中记录的模块信息（--cached选项清除.git/modules中的缓存）</span></span><br><span class="line">git rm --cached &#123;MOD_NAME&#125; </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">提交更改到代码库，可观察到<span class="string">&#x27;.gitmodules&#x27;</span>内容发生变更</span></span><br><span class="line">git commit -am &quot;Remove a submodule.&quot; </span><br></pre></td></tr></table></figure>
-
-<h1 id="更改子模块url"><a href="#更改子模块url" class="headerlink" title="更改子模块url"></a>更改子模块url</h1><p>修改<code>.gitmodules</code>文件中对应模块的<code>url</code>属性，然后更新到<code>.git/config</code></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git submodule sync</span><br><span class="line">git commit -am &quot;Update submodule url.&quot;</span><br></pre></td></tr></table></figure>
-
-<p>更低版本可能会不能自动更行<code>.git/config</code>，这时需要手动更新。</p>
-]]></content>
-      <categories>
-        <category>工具</category>
-      </categories>
-      <tags>
-        <tag>git</tag>
       </tags>
   </entry>
   <entry>
@@ -1108,136 +1213,6 @@
       </tags>
   </entry>
   <entry>
-    <title>更换python默认版本</title>
-    <url>/change-python-default-version.html</url>
-    <content><![CDATA[<p>服务器上用的python默认是python3，需要改成python2</p>
-<span id="more"></span>
-
-<h1 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h1><p>修改别名，在<code>~/.bashrc</code>中修改</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alias python=python2</span><br></pre></td></tr></table></figure>
-
-<h1 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h1><p>但是如果是在程序中调用有可能仍然是原来的python(具体我不太清楚，但是在跑一个项目的时候，他调用的python仍然是python3)。而且别的地方也找不到别名了。按理说python的默认版本应该是python2才对，但是也没有办法，只能硬着头皮改，毕竟项目还是要跑的啊。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">sudo update-alternatives --install &lt;<span class="built_in">link</span>&gt; &lt;name&gt; &lt;path&gt; &lt;priority&gt;</span></span><br><span class="line">sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 10</span><br></pre></td></tr></table></figure>
-
-<p>搞定。</p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
-<li><a href="https://stackoverflow.com/questions/41986507/unable-to-set-default-python-version-to-python3-in-ubuntu">https://stackoverflow.com/questions/41986507/unable-to-set-default-python-version-to-python3-in-ubuntu</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ycsb学习</title>
-    <url>/ycsb-learning.html</url>
-    <content><![CDATA[<p>主要总结Yahoo的数据库测试项目YCSB的使用（针对redis）。</p>
-<span id="more"></span>
-
-<p>github网址：<a href="https://github.com/brianfrankcooper/YCSB">https://github.com/brianfrankcooper/YCSB</a></p>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ul>
-<li><p>需要安装</p>
-<ul>
-<li>java</li>
-<li>maven</li>
-</ul>
-</li>
-<li><p>直接下载编译好的版本（不推荐）</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl -O --location https://github.com/brianfrankcooper/YCSB/releases/download/0.15.0/ycsb-0.15.0.tar.gz</span><br><span class="line">tar xfvz ycsb-0.15.0.tar.gz</span><br><span class="line">cd ycsb-0.15.0</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用java或者maven编译</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone http://github.com/brianfrankcooper/YCSB.git</span><br><span class="line">cd YCSB</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">只安装redis测试部分</span></span><br><span class="line">mvn -pl com.yahoo.ycsb:redis-binding -am clean package</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装全部测试功能</span></span><br><span class="line">mvn clean package</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>详细说明：<a href="https://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload">https://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload</a></p>
-<p>运行workload一共有六个部分</p>
-<ul>
-<li>设置数据库</li>
-<li>选择合适的DB interface</li>
-<li>选择合适的负载</li>
-<li>选择合适的runtime parameters</li>
-<li>load选择好的workload</li>
-<li>run选择好的workload</li>
-</ul>
-<h2 id="设置数据库"><a href="#设置数据库" class="headerlink" title="设置数据库"></a>设置数据库</h2><p>简要的说，就是创建名为<code>usertable</code>的表，因为ycsb默认的是对<code>usertable</code>进行相关操作。</p>
-<p>而对于redis，则不需要相关的操作。</p>
-<h2 id="选择合适的DB-interface"><a href="#选择合适的DB-interface" class="headerlink" title="选择合适的DB interface"></a>选择合适的DB interface</h2><p>YCSB的操作是通过DB interface来实现的。最基本的DB interface是<code>com.yahoo.ycsb.BasicDB</code>，会将输出输出到<code>System.out</code>里。可以通过继承DB interface来自定义DB interface，也可以使用原有的DB interface。</p>
-<h2 id="选择合适的workload"><a href="#选择合适的workload" class="headerlink" title="选择合适的workload"></a>选择合适的workload</h2><p>当前版本提供了六种workload</p>
-<h3 id="Workload-A-Update-heavy-workload"><a href="#Workload-A-Update-heavy-workload" class="headerlink" title="Workload A: Update heavy workload"></a>Workload A: Update heavy workload</h3><p>This workload has a mix of 50&#x2F;50 reads and writes. An application example is a session store recording recent actions.</p>
-<h3 id="Workload-B-Read-mostly-workload"><a href="#Workload-B-Read-mostly-workload" class="headerlink" title="Workload B: Read mostly workload"></a>Workload B: Read mostly workload</h3><p>This workload has a 95&#x2F;5 reads&#x2F;write mix. Application example: photo tagging; add a tag is an update, but most operations are to read tags.</p>
-<h3 id="Workload-C-Read-only"><a href="#Workload-C-Read-only" class="headerlink" title="Workload C: Read only"></a>Workload C: Read only</h3><p>This workload is 100% read. Application example: user profile cache, where profiles are constructed elsewhere (e.g., Hadoop).</p>
-<h3 id="Workload-D-Read-latest-workload"><a href="#Workload-D-Read-latest-workload" class="headerlink" title="Workload D: Read latest workload"></a>Workload D: Read latest workload</h3><p>In this workload, new records are inserted, and the most recently inserted records are the most popular. Application example: user status updates; people want to read the latest.</p>
-<h3 id="Workload-E-Short-ranges"><a href="#Workload-E-Short-ranges" class="headerlink" title="Workload E: Short ranges"></a>Workload E: Short ranges</h3><p>In this workload, short ranges of records are queried, instead of individual records. Application example: threaded conversations, where each scan is for the posts in a given thread (assumed to be clustered by thread id).</p>
-<h3 id="Workload-F-Read-modify-write"><a href="#Workload-F-Read-modify-write" class="headerlink" title="Workload F: Read-modify-write"></a>Workload F: Read-modify-write</h3><p>In this workload, the client will read a record, modify it, and write back the changes. Application example: user database, where user records are read and modified by the user or to record user activity.</p>
-<h3 id="自定义Workload"><a href="#自定义Workload" class="headerlink" title="自定义Workload"></a>自定义Workload</h3><p>当然也可以自定义workload：<a href="https://github.com/brianfrankcooper/YCSB/wiki/Implementing-New-Workloads">https://github.com/brianfrankcooper/YCSB/wiki/Implementing-New-Workloads</a></p>
-<p>一般常用的workload property如<code>fieldcount</code>，<code>fieldlength</code>，<code>requestdistribution</code>等。</p>
-<p>全部properties如下：</p>
-<p>The property files used with the core workload generator can specify values for the following properties:</p>
-<ul>
-<li><strong>fieldcount</strong>: the number of fields in a record (default: 10)</li>
-<li><strong>fieldlength</strong>: the size of each field (default: 100)</li>
-<li><strong>readallfields</strong>: should reads read all fields (true) or just one (false) (default: true)</li>
-<li><strong>readproportion</strong>: what proportion of operations should be reads (default: 0.95)</li>
-<li><strong>updateproportion</strong>: what proportion of operations should be updates (default: 0.05)</li>
-<li><strong>insertproportion</strong>: what proportion of operations should be inserts (default: 0)</li>
-<li><strong>scanproportion</strong>: what proportion of operations should be scans (default: 0)</li>
-<li><strong>readmodifywriteproportion</strong>: what proportion of operations should be read a record, modify it, write it back (default: 0)</li>
-<li><strong>requestdistribution</strong>: what distribution should be used to select the records to operate on – uniform, zipfian or latest (default: uniform)</li>
-<li><strong>maxscanlength</strong>: for scans, what is the maximum number of records to scan (default: 1000)</li>
-<li><strong>scanlengthdistribution</strong>: for scans, what distribution should be used to choose the number of records to scan, for each scan, between 1 and maxscanlength (default: uniform)</li>
-<li><strong>insertorder</strong>: should records be inserted in order by key (“ordered”), or in hashed order (“hashed”) (default: hashed)</li>
-<li><strong>operationcount</strong>: number of operations to perform. If set to zero then YCSB will run until maxexecutiontime is reached (which by default is indefinitely). Note that if your workload or command line parameters do not specify an operation count it will defualt to zero.</li>
-<li><strong>maxexecutiontime</strong>: maximum execution time in seconds. The benchmark runs until either the operation count has exhausted or the maximum specified time has elapsed, whichever is earlier. If unspecified the defualt is to run indefinitely.</li>
-<li><strong>table</strong>: the name of the table (default: usertable)</li>
-<li><strong>recordcount</strong>: number of records to load into the database initially (default: 0)</li>
-<li><strong>core_workload_insertion_retry_limit</strong>: number of attempts for any failed insert operation (default: 0)</li>
-<li><strong>core_workload_insertion_retry_interval</strong>: interval between retries, in seconds (default: 3)</li>
-</ul>
-<h2 id="选择合适的runtime-parameter"><a href="#选择合适的runtime-parameter" class="headerlink" title="选择合适的runtime parameter"></a>选择合适的runtime parameter</h2><p>主要是</p>
-<ul>
-<li><code>-threads</code> : <strong>the number of client threads</strong>.</li>
-<li><code>-target</code> : <strong>the target number of operations per second</strong>.</li>
-<li><code>-s</code> : <strong>status</strong>.十秒打印一次状态</li>
-</ul>
-<h2 id="load-data"><a href="#load-data" class="headerlink" title="load data"></a>load data</h2><p>需要指定<code>redis.host</code>，<code>redis.port</code>。（可以指定<code>redis.password</code>和<code>redis.cluster</code>）</p>
-<p>以上参数也可以在命令中指定，比如</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./bin/ycsb load redis -s -P workloads/workloada -p &quot;redis.host=127.0.0.1&quot; -p &quot;redis.port=6379&quot;</span><br></pre></td></tr></table></figure>
-
-<h2 id="run-data"><a href="#run-data" class="headerlink" title="run data"></a>run data</h2><p>同理</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./bin/ycsb run redis -s -P workloads/workloada -p &quot;redis.host=127.0.0.1&quot; -p &quot;redis.port=6379&quot;</span><br></pre></td></tr></table></figure>
-
-<h1 id="一些注意事项"><a href="#一些注意事项" class="headerlink" title="一些注意事项"></a>一些注意事项</h1><h2 id="ycsb不支持对key的长度的修改"><a href="#ycsb不支持对key的长度的修改" class="headerlink" title="ycsb不支持对key的长度的修改"></a>ycsb不支持对key的长度的修改</h2><p>issue网址：<a href="https://github.com/brianfrankcooper/YCSB/issues/587">https://github.com/brianfrankcooper/YCSB/issues/587</a></p>
-<p>ycsb对key命名规则是两种，<code>hashed</code>模式会生成<code>user</code>加固定长度的一串hash值，而<code>ordered</code>模式会按照<code>user</code>加顺序的方式来命名。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">insertorder=hashed      # user6284781860667377211, user8517097267634966620, user1820151046732198393</span><br><span class="line">insertorder=ordered     # user1, user2, user3032</span><br></pre></td></tr></table></figure>
-
-<h2 id="ycsb运行时错误：Read-time-out"><a href="#ycsb运行时错误：Read-time-out" class="headerlink" title="ycsb运行时错误：Read time out"></a>ycsb运行时错误：Read time out</h2><p>错误类似于</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">redis.clients.jedis.exceptions.JedisConnectionException: java.net.SocketTimeoutException: Read timed out</span><br><span class="line"></span><br><span class="line">at redis.clients.jedis.Protocol.process(Protocol.java:79)</span><br><span class="line">at redis.clients.jedis.Protocol.read(Protocol.java:131)</span><br><span class="line">at redis.clients.jedis.Connection.getIntegerReply(Connection.java:188)</span><br><span class="line">at redis.clients.jedis.Jedis.sismember(Jedis.java:1266)</span><br></pre></td></tr></table></figure>
-
-<p>当数据量变大之后，延时可能会变成几秒，而Jedis默认的是<code>2</code>秒的超时限制。</p>
-<p>修改redis的src文件夹的RedisClient.java</p>
-<p>将</p>
-<p><code>jedis = new Jedis(host, port);</code></p>
-<p>修改为</p>
-<p><code>jedis = new Jedis(host, port, 10000);</code></p>
-<p>即从默认的2秒上升为10秒。</p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
-<li>ycsb github地址：<a href="https://github.com/brianfrankcooper/YCSB">https://github.com/brianfrankcooper/YCSB</a></li>
-<li>ycsb 流程介绍：<a href="https://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload">https://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload</a></li>
-<li>ycsb workload介绍：<a href="https://github.com/brianfrankcooper/YCSB/wiki/Implementing-New-Workloads">https://github.com/brianfrankcooper/YCSB/wiki/Implementing-New-Workloads</a></li>
-<li>ycsb 不支持对key长度的修改 issue网址：<a href="https://github.com/brianfrankcooper/YCSB/issues/587">https://github.com/brianfrankcooper/YCSB/issues/587</a></li>
-<li>ycsb 运行时错误：read time out 解决方法博客网址：<a href="https://github.com/brianfrankcooper/YCSB/issues/587">https://github.com/brianfrankcooper/YCSB/issues/587</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>工具</category>
-      </categories>
-      <tags>
-        <tag>ycsb</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>比较docker默认网络模式、dpdk、ovs+dpdk三种网络性能测试</title>
     <url>/compare-docker-dpdk-ovs+dpdk.html</url>
     <content><![CDATA[<p>将前面的工作整合了一下，比较docker默认的网桥模式、dpdk和dpdk+ovs三种网络的网络性能</p>
@@ -1316,6 +1291,31 @@
       <tags>
         <tag>python</tag>
         <tag>matplotlib</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ssh-permissions-are-too-open解决方法</title>
+    <url>/ssh-permissions-are-too-open-error.html</url>
+    <content><![CDATA[<p>前几天跑S6的框架，然后在一个ssh的环节报错。</p>
+<span id="more"></span>
+
+<h1 id="具体错误"><a href="#具体错误" class="headerlink" title="具体错误"></a>具体错误</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Permissions 0777 for &#x27;/Users/username/.ssh/id_rsa&#x27; are too open.</span><br><span class="line">It is recommended that your private key files are NOT accessible by others.</span><br><span class="line">This private key will be ignored.</span><br></pre></td></tr></table></figure>
+
+<p>大概意思就是权限太松了。</p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>只需要将<code>~/.ssh/id_rsa</code>的权限调整为只有自己可读就好了。</p>
+<p>众所周知，<code>r=4</code>为可读，<code>w=2</code>为可写，<code>x=1</code>为可执行。三个分别是<code>user</code>、<code>group</code>和<code>other</code>。权限位相或即可。</p>
+<p>所以</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod 400 ~/.ssh/id_rsa</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">或者</span></span><br><span class="line">chmod 600 ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
+
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a href="https://stackoverflow.com/questions/9270734/ssh-permissions-are-too-open-error">https://stackoverflow.com/questions/9270734/ssh-permissions-are-too-open-error</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>ssh</tag>
       </tags>
   </entry>
 </search>

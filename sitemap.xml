@@ -254,13 +254,6 @@
 
   
   <url>
-    <loc>https://datawine.github.io/tags/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/</loc>
-    <lastmod>2022-05-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://datawine.github.io/tags/%E5%85%B6%E4%BB%96/</loc>
     <lastmod>2022-05-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -268,14 +261,14 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/dpdk/</loc>
+    <loc>https://datawine.github.io/tags/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2/</loc>
     <lastmod>2022-05-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/linux/</loc>
+    <loc>https://datawine.github.io/tags/dpdk/</loc>
     <lastmod>2022-05-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -296,6 +289,13 @@
   </url>
   
   <url>
+    <loc>https://datawine.github.io/tags/linux/</loc>
+    <lastmod>2022-05-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://datawine.github.io/tags/dlopen/</loc>
     <lastmod>2022-05-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -304,6 +304,13 @@
   
   <url>
     <loc>https://datawine.github.io/tags/lua/</loc>
+    <lastmod>2022-05-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://datawine.github.io/tags/mac/</loc>
     <lastmod>2022-05-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -324,14 +331,14 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/llvm/</loc>
+    <loc>https://datawine.github.io/tags/moongen/</loc>
     <lastmod>2022-05-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/mac/</loc>
+    <loc>https://datawine.github.io/tags/llvm/</loc>
     <lastmod>2022-05-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -345,14 +352,7 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/moongen/</loc>
-    <lastmod>2022-05-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://datawine.github.io/tags/ssh/</loc>
+    <loc>https://datawine.github.io/tags/ycsb/</loc>
     <lastmod>2022-05-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -360,6 +360,13 @@
   
   <url>
     <loc>https://datawine.github.io/tags/git/</loc>
+    <lastmod>2022-05-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://datawine.github.io/tags/python/</loc>
     <lastmod>2022-05-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -380,20 +387,6 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/python/</loc>
-    <lastmod>2022-05-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://datawine.github.io/tags/ycsb/</loc>
-    <lastmod>2022-05-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://datawine.github.io/tags/iperf/</loc>
     <lastmod>2022-05-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -407,17 +400,24 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>https://datawine.github.io/tags/ssh/</loc>
+    <lastmod>2022-05-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
-    <loc>https://datawine.github.io/categories/%E5%AD%A6%E4%B9%A0/</loc>
+    <loc>https://datawine.github.io/categories/%E5%85%B6%E4%BB%96/</loc>
     <lastmod>2022-05-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://datawine.github.io/categories/%E5%85%B6%E4%BB%96/</loc>
+    <loc>https://datawine.github.io/categories/%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2022-05-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
