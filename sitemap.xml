@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://datawine.github.io/docker-cgroup/</loc>
+    
+    <lastmod>2022-05-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://datawine.github.io/hello-world/</loc>
     
     <lastmod>2022-05-07</lastmod>
@@ -44,10 +53,24 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>https://datawine.github.io/tags/docker/</loc>
+    <lastmod>2022-05-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
     <loc>https://datawine.github.io/categories/%E5%85%B6%E4%BB%96/</loc>
+    <lastmod>2022-05-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://datawine.github.io/categories/%E5%B7%A5%E5%85%B7/</loc>
     <lastmod>2022-05-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
