@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="dlopen," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="研究一下dlopen的源码。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dlopen源码分析">
+<meta property="og:url" content="https://datawine.github.io/dlopen-source-code.html">
+<meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="研究一下dlopen的源码。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-05-07T14:27:38.000Z">
+<meta property="article:modified_time" content="2022-05-07T14:28:03.886Z">
+<meta property="article:author" content="Datawine">
+<meta property="article:tag" content="dlopen">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://datawine.github.io/dlopen-source-code.html"/>
+
+
+
+
+
+  <title>dlopen源码分析 | Datawine's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Datawine's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/dlopen-source-code.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">dlopen源码分析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-07T22:27:38+08:00">
+                2022-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index">
+                    <span itemprop="name">系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/dlopen-source-code.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="dlopen-source-code.html" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>研究一下dlopen的源码。</p>
+<span id="more"></span>
+
+<p>通过调用链的形式分析dlopen源码。</p>
+<p>首先，函数的入口是<code>dlopen (const char *file, int mode)</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> *</span><br><span class="line"><span class="title function_">dlopen</span> <span class="params">(<span class="type">const</span> <span class="type">char</span> *file, <span class="type">int</span> mode)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> __dlopen (file, mode, RETURN_ADDRESS (<span class="number">0</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>函数跳转到了<code>__dlopen</code>，这个函数实际上做了两件事情，将<code>struct dlopen_args args</code>赋值，然后运行<code>dlopen_doit</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> *</span><br><span class="line">__dlopen (<span class="type">const</span> <span class="type">char</span> *file, <span class="type">int</span> mode DL_CALLER_DECL)</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line"> </span><br><span class="line"><span class="meta"># <span class="keyword">ifdef</span> SHARED</span></span><br><span class="line">  <span class="keyword">return</span> _dlerror_run (dlopen_doit, &amp;args) ? <span class="literal">NULL</span> : args.new;</span><br><span class="line"><span class="meta"># <span class="keyword">else</span></span></span><br><span class="line">  <span class="keyword">if</span> (_dlerror_run (dlopen_doit, &amp;args))</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">return</span> args.new;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中结构体<code>struct dlopen_args</code>是这样的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">dlopen_args</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *file; <span class="comment">/* The arguments for dlopen_doit.  */</span></span><br><span class="line">  <span class="type">int</span> mode;</span><br><span class="line">  <span class="type">void</span> *new; <span class="comment">/* The return value of dlopen_doit.  */</span></span><br><span class="line">  <span class="type">const</span> <span class="type">void</span> *caller; <span class="comment">/* The return value of dlopen_doit.  */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>然后<code>dlopen_doit</code>的函数则是调用了<code>__dl_open</code>函数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span></span><br><span class="line"><span class="title function_">dlopen_doit</span> <span class="params">(<span class="type">void</span> *a)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">dlopen_args</span> *<span class="title">args</span> =</span> (<span class="keyword">struct</span> dlopen_args *) a;</span><br><span class="line">	... </span><br><span class="line">  args-&gt;new = GLRO(dl_open) (args-&gt;file ?: <span class="string">&quot;&quot;</span>, args-&gt;mode | __RTLD_DLOPEN,</span><br><span class="line">			     args-&gt;caller,</span><br><span class="line">			     args-&gt;file == <span class="literal">NULL</span> ? LM_ID_BASE : NS,</span><br><span class="line">			     __dlfcn_argc, __dlfcn_argv, __environ);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于<code>__dl_open</code>函数，实际上调用了<code>dl_open_worker</code>函数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> *</span><br><span class="line">_dl_open (<span class="type">const</span> <span class="type">char</span> *file, <span class="type">int</span> mode, <span class="type">const</span> <span class="type">void</span> *caller_dlopen, Lmid_t nsid,</span><br><span class="line">	  <span class="type">int</span> argc, <span class="type">char</span> *argv[], <span class="type">char</span> *env[])</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">dl_open_args</span> <span class="title">args</span>;</span></span><br><span class="line">  args.file = file;</span><br><span class="line">  args.mode = mode;</span><br><span class="line">  args.caller_dlopen = caller_dlopen;</span><br><span class="line">  args.caller_dl_open = RETURN_ADDRESS (<span class="number">0</span>);</span><br><span class="line">  args.<span class="built_in">map</span> = <span class="literal">NULL</span>;</span><br><span class="line">  args.nsid = nsid;</span><br><span class="line">  args.argc = argc;</span><br><span class="line">  args.argv = argv;</span><br><span class="line">  args.env = env;</span><br><span class="line"> </span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *objname;</span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *errstring;</span><br><span class="line">  <span class="type">bool</span> malloced;</span><br><span class="line">  <span class="type">int</span> errcode = _dl_catch_error (&amp;objname, &amp;errstring, &amp;malloced,</span><br><span class="line">				 dl_open_worker, &amp;args);</span><br><span class="line">	... </span><br><span class="line">  <span class="keyword">return</span> args.<span class="built_in">map</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中关键的数据存储在<code>struct dl_open_args</code>内，它的结构如下所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">dl_open_args</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *file;</span><br><span class="line">  <span class="type">int</span> mode;</span><br><span class="line">  <span class="type">const</span> <span class="type">void</span> *caller_dlopen; <span class="comment">/* This is the caller of dlopen().  */</span></span><br><span class="line">  <span class="type">const</span> <span class="type">void</span> *caller_dl_open; <span class="comment">/* This is the caller of _dl_open().  */</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">link_map</span> *<span class="title">map</span>;</span></span><br><span class="line">  Lmid_t nsid; <span class="comment">/* Namespace ID.  */</span></span><br><span class="line">  <span class="type">int</span> argc;</span><br><span class="line">  <span class="type">char</span> **argv;</span><br><span class="line">  <span class="type">char</span> **env;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>dl_open_worker</code>函数中，最重要的加载数据一步是通过调用<code>_dl_map_object</code>实现的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Load the named object.  */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">link_map</span> *<span class="title">new</span>;</span></span><br><span class="line">args-&gt;<span class="built_in">map</span> = new = _dl_map_object (call_map, file, lt_loaded, <span class="number">0</span>,</span><br><span class="line">		    mode | __RTLD_CALLMAP, args-&gt;nsid);</span><br></pre></td></tr></table></figure>
+
+<p>接下来就是<code>_dl_map_object</code>函数，其主要的内容如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">link_map</span> *</span></span><br><span class="line"><span class="class"><span class="title">internal_function</span></span></span><br><span class="line"><span class="class">_<span class="title">dl_map_object</span> (<span class="keyword">struct</span> <span class="title">link_map</span> *<span class="title">loader</span>, <span class="title">const</span> <span class="title">char</span> *<span class="title">name</span>,</span></span><br><span class="line"><span class="class">		<span class="title">int</span> <span class="title">type</span>, <span class="title">int</span> <span class="title">trace_mode</span>, <span class="title">int</span> <span class="title">mode</span>, <span class="title">Lmid_t</span> <span class="title">nsid</span>)</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="type">int</span> fd;</span><br><span class="line">  <span class="type">char</span> *realname;</span><br><span class="line">  <span class="type">char</span> *name_copy;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">link_map</span> *<span class="title">l</span>;</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">filebuf</span> <span class="title">fb</span>;</span></span><br><span class="line">	...</span><br><span class="line">  <span class="comment">/* Look for this name among those already loaded.  */</span></span><br><span class="line">  <span class="keyword">for</span> (l = GL(dl_ns)[nsid]._ns_loaded; l; l = l-&gt;l_next)</span><br><span class="line">  &#123;</span><br><span class="line">      <span class="comment">/* If the requested name matches the soname of a loaded object,</span></span><br><span class="line"><span class="comment">	 use that object.  Elide this check for names that have not</span></span><br><span class="line"><span class="comment">	 yet been opened.  */</span></span><br><span class="line">      <span class="keyword">if</span> (__builtin_expect (l-&gt;l_faked, <span class="number">0</span>) != <span class="number">0</span> </span><br><span class="line">          || __builtin_expect (l-&gt;l_removed, <span class="number">0</span>) != <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">      <span class="keyword">if</span> (!_dl_name_match_p (name, l))</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="type">const</span> <span class="type">char</span> *soname;</span><br><span class="line"> 				<span class="keyword">if</span> (__builtin_expect (l-&gt;l_soname_added, <span class="number">1</span>) </span><br><span class="line">            || l-&gt;l_info[DT_SONAME] == <span class="literal">NULL</span>)</span><br><span class="line">	    	<span class="keyword">continue</span>;</span><br><span class="line"> </span><br><span class="line">	  		soname = ((<span class="type">const</span> <span class="type">char</span> *) D_PTR (l, l_info[DT_STRTAB])</span><br><span class="line">		    	+ l-&gt;l_info[DT_SONAME]-&gt;d_un.d_val);</span><br><span class="line">	  		<span class="keyword">if</span> (<span class="built_in">strcmp</span> (name, soname) != <span class="number">0</span>)</span><br><span class="line">	    		<span class="keyword">continue</span>;</span><br><span class="line"> </span><br><span class="line">        <span class="comment">/* We have a match on a new name -- cache it.  */</span></span><br><span class="line">        add_name_to_object (l, soname);</span><br><span class="line">        l-&gt;l_soname_added = <span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line"> </span><br><span class="line">      <span class="comment">/* We have a match.  */</span></span><br><span class="line">      <span class="keyword">return</span> l;</span><br><span class="line">  &#125;</span><br><span class="line"> 	</span><br><span class="line">  ...</span><br><span class="line">  fd = open_path (name, namelen, mode &amp; __RTLD_SECURE, </span><br><span class="line">                  &amp;main_map-&gt;l_rpath_dirs, &amp;realname, &amp;fb, </span><br><span class="line">                  loader ?: main_map, LA_SER_RUNPATH, &amp;found_other_class);</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">  l = _dl_new_object (name_copy, name, type, loader,</span><br><span class="line">				      mode, nsid)) </span><br><span class="line">	</span><br><span class="line">   <span class="keyword">return</span> _dl_map_object_from_fd (name, fd, &amp;fb, realname, loader, type, mode, &amp;stack_end, nsid);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中文件是通过<code>open_path</code>调用的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span></span><br><span class="line"><span class="title function_">open_path</span> <span class="params">(<span class="type">const</span> <span class="type">char</span> *name, <span class="type">size_t</span> namelen, <span class="type">int</span> secure,</span></span><br><span class="line"><span class="params">	   <span class="keyword">struct</span> r_search_path_struct *sps, <span class="type">char</span> **realname,</span></span><br><span class="line"><span class="params">	   <span class="keyword">struct</span> filebuf *fbp, <span class="keyword">struct</span> link_map *loader, <span class="type">int</span> whatcode,</span></span><br><span class="line"><span class="params">	   <span class="type">bool</span> *found_other_class)</span></span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">for</span> (cnt = <span class="number">0</span>; fd == <span class="number">-1</span> &amp;&amp; cnt &lt; ncapstr; ++cnt) &#123;</span><br><span class="line"> 			fd = open_verify (buf, fbp, loader, whatcode, found_other_class, </span><br><span class="line">                        <span class="literal">false</span>);</span><br><span class="line">			...</span><br><span class="line">		&#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> (fd != <span class="number">-1</span>) &#123;</span><br><span class="line">	  	*realname = (<span class="type">char</span> *) <span class="built_in">malloc</span> (buflen);</span><br><span class="line">	  	<span class="keyword">if</span> (*realname != <span class="literal">NULL</span>)</span><br><span class="line">	    &#123;</span><br><span class="line">	      <span class="built_in">memcpy</span> (*realname, buf, buflen);</span><br><span class="line">	      <span class="keyword">return</span> fd; <span class="comment">// here return the fd</span></span><br><span class="line">	    &#125;</span><br><span class="line">	  	<span class="keyword">else</span></span><br><span class="line">	    &#123;</span><br><span class="line">	      <span class="comment">/* No memory for the name, we certainly won&#x27;t be able</span></span><br><span class="line"><span class="comment">		 to load and link it.  */</span></span><br><span class="line">	      __close (fd);</span><br><span class="line">	      <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	    &#125;</span><br><span class="line">		&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* Remember whether we found anything.  */</span></span><br><span class="line">    any |= here_any;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span> (*++dirs != <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>open_verify</code>函数通过调用<code>__libc_read</code>对ELF文件的文件头实现了读写。</p>
+<p>接下来是<code>_dl_new_object</code>函数，它主要初始化一个新的<code>struct link_map*</code>数据结构，并把它加入到<code>loader</code>对应的单链中（猜测）。</p>
+<p>最重要的是函数<code>_dl_map_object_from_fd</code>。这个函数包括了</p>
+<ul>
+<li>对<code>link_map</code>的二次查找，是否已经存在映射了.so文件的</li>
+<li>提取ELF头文件信息（程序入口地址，头文件信息等）</li>
+<li>对phdr（程序头表进行遍历），根据每个程序头的type类型做具体的操作</li>
+<li>进行映射</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">maplength = loadcmds[nloadcmds - <span class="number">1</span>].allocend - loadcmds[<span class="number">0</span>].mapstart;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Now process the load commands and map segments into memory.</span></span><br><span class="line"><span class="comment">   This is responsible for filling in:</span></span><br><span class="line"><span class="comment">   l_map_start, l_map_end, l_addr, l_contiguous, l_text_end, l_phdr</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">errstring = _dl_map_segments (l, fd, header, type, loadcmds, nloadcmds,</span><br><span class="line">  maplength, has_holes, loader);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>调用<code>mprotect</code>修改内存权限</li>
+<li>修改TLS等设置</li>
+<li>修改符号表</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Set up the symbol hash table.  */</span></span><br><span class="line">_dl_setup_hash (l);</span><br></pre></td></tr></table></figure>
+
+<p>最后，是<code>_dl_map_segments</code>函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* This is a position-independent shared object.  We can let the</span></span><br><span class="line"><span class="comment">   kernel map it anywhere it likes, but we must have space for all</span></span><br><span class="line"><span class="comment">   the segments in their specified positions relative to the first.</span></span><br><span class="line"><span class="comment">   So we map the first segment without MAP_FIXED, but with its</span></span><br><span class="line"><span class="comment">   extent increased to cover all the segments.  Then we remove</span></span><br><span class="line"><span class="comment">   access from excess portion, and there is known sufficient space</span></span><br><span class="line"><span class="comment">   there to remap from the later segments.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">   As a refinement, sometimes we have an address that we would</span></span><br><span class="line"><span class="comment">   prefer to map such objects at; but this is only a preference,</span></span><br><span class="line"><span class="comment">   the OS can do whatever it likes. */</span></span><br><span class="line">ElfW(Addr) mappref</span><br><span class="line">  = (ELF_PREFERRED_ADDRESS (loader, maplength,</span><br><span class="line">                            c-&gt;mapstart &amp; GLRO(dl_use_load_bias))</span><br><span class="line">     - MAP_BASE_ADDR (l));</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Remember which part of the address space this object uses.  */</span></span><br><span class="line">l-&gt;l_map_start = (ElfW(Addr)) __mmap ((<span class="type">void</span> *) mappref, maplength,</span><br><span class="line">                                      c-&gt;prot,</span><br><span class="line">                                      MAP_COPY|MAP_FILE,</span><br><span class="line">                                      fd, c-&gt;mapoff);</span><br><span class="line"><span class="keyword">if</span> (__glibc_unlikely ((<span class="type">void</span> *) l-&gt;l_map_start == MAP_FAILED))</span><br><span class="line">  <span class="keyword">return</span> DL_MAP_SEGMENTS_ERROR_MAP_SEGMENT;</span><br><span class="line"></span><br><span class="line">l-&gt;l_map_end = l-&gt;l_map_start + maplength;</span><br><span class="line">l-&gt;l_addr = l-&gt;l_map_start - c-&gt;mapstart;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (has_holes)</span><br><span class="line">  <span class="comment">/* Change protection on the excess portion to disallow all access;</span></span><br><span class="line"><span class="comment">     the portions we do not remap later will be inaccessible as if</span></span><br><span class="line"><span class="comment">     unallocated.  Then jump into the normal segment-mapping loop to</span></span><br><span class="line"><span class="comment">     handle the portion of the segment past the end of the file</span></span><br><span class="line"><span class="comment">     mapping.  */</span></span><br><span class="line">  __mprotect ((<span class="type">caddr_t</span>) (l-&gt;l_addr + c-&gt;mapend),</span><br><span class="line">              loadcmds[nloadcmds - <span class="number">1</span>].mapstart - c-&gt;mapend,</span><br><span class="line">              PROT_NONE);</span><br><span class="line"></span><br><span class="line">l-&gt;l_contiguous = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">goto</span> postmap;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/dlopen/" rel="tag"># dlopen</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/network-attack-and-defense-semester.html" rel="next" title="2018年网络攻防小学期">
+                <i class="fa fa-chevron-left"></i> 2018年网络攻防小学期
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7Carchive">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/datawine" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Datawine</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">1.5k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user">本站访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye">本站总访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cyw3QwzdC';
+      var conf = 'cbf53c79ec118123e02b0e1a5676be66';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
