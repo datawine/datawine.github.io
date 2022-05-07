@@ -1,8 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>dlopen-source-code</title>
+    <url>/index.html</url>
+    <content><![CDATA[<p>研究一下dlopen的源码。</p>
+<span id="more"></span>
+
+<p>通过调用链的形式分析dlopen源码。</p>
+<p>首先，函数的入口是<code>dlopen (const char *file, int mode)</code></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> *</span><br><span class="line"><span class="title function_">dlopen</span> <span class="params">(<span class="type">const</span> <span class="type">char</span> *file, <span class="type">int</span> mode)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> __dlopen (file, mode, RETURN_ADDRESS (<span class="number">0</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>函数跳转到了<code>__dlopen</code>，这个函数实际上做了两件事情，将<code>struct dlopen_args args</code>赋值，然后运行<code>dlopen_doit</code>。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> *</span><br><span class="line">__dlopen (<span class="type">const</span> <span class="type">char</span> *file, <span class="type">int</span> mode DL_CALLER_DECL)</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line"> </span><br><span class="line"><span class="meta"># <span class="keyword">ifdef</span> SHARED</span></span><br><span class="line">  <span class="keyword">return</span> _dlerror_run (dlopen_doit, &amp;args) ? <span class="literal">NULL</span> : args.new;</span><br><span class="line"><span class="meta"># <span class="keyword">else</span></span></span><br><span class="line">  <span class="keyword">if</span> (_dlerror_run (dlopen_doit, &amp;args))</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">return</span> args.new;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中结构体<code>struct dlopen_args</code>是这样的：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">dlopen_args</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *file; <span class="comment">/* The arguments for dlopen_doit.  */</span></span><br><span class="line">  <span class="type">int</span> mode;</span><br><span class="line">  <span class="type">void</span> *new; <span class="comment">/* The return value of dlopen_doit.  */</span></span><br><span class="line">  <span class="type">const</span> <span class="type">void</span> *caller; <span class="comment">/* The return value of dlopen_doit.  */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>然后<code>dlopen_doit</code>的函数则是调用了<code>__dl_open</code>函数。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span></span><br><span class="line"><span class="title function_">dlopen_doit</span> <span class="params">(<span class="type">void</span> *a)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">dlopen_args</span> *<span class="title">args</span> =</span> (<span class="keyword">struct</span> dlopen_args *) a;</span><br><span class="line">	... </span><br><span class="line">  args-&gt;new = GLRO(dl_open) (args-&gt;file ?: <span class="string">&quot;&quot;</span>, args-&gt;mode | __RTLD_DLOPEN,</span><br><span class="line">			     args-&gt;caller,</span><br><span class="line">			     args-&gt;file == <span class="literal">NULL</span> ? LM_ID_BASE : NS,</span><br><span class="line">			     __dlfcn_argc, __dlfcn_argv, __environ);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于<code>__dl_open</code>函数，实际上调用了<code>dl_open_worker</code>函数。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> *</span><br><span class="line">_dl_open (<span class="type">const</span> <span class="type">char</span> *file, <span class="type">int</span> mode, <span class="type">const</span> <span class="type">void</span> *caller_dlopen, Lmid_t nsid,</span><br><span class="line">	  <span class="type">int</span> argc, <span class="type">char</span> *argv[], <span class="type">char</span> *env[])</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">dl_open_args</span> <span class="title">args</span>;</span></span><br><span class="line">  args.file = file;</span><br><span class="line">  args.mode = mode;</span><br><span class="line">  args.caller_dlopen = caller_dlopen;</span><br><span class="line">  args.caller_dl_open = RETURN_ADDRESS (<span class="number">0</span>);</span><br><span class="line">  args.<span class="built_in">map</span> = <span class="literal">NULL</span>;</span><br><span class="line">  args.nsid = nsid;</span><br><span class="line">  args.argc = argc;</span><br><span class="line">  args.argv = argv;</span><br><span class="line">  args.env = env;</span><br><span class="line"> </span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *objname;</span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *errstring;</span><br><span class="line">  <span class="type">bool</span> malloced;</span><br><span class="line">  <span class="type">int</span> errcode = _dl_catch_error (&amp;objname, &amp;errstring, &amp;malloced,</span><br><span class="line">				 dl_open_worker, &amp;args);</span><br><span class="line">	... </span><br><span class="line">  <span class="keyword">return</span> args.<span class="built_in">map</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中关键的数据存储在<code>struct dl_open_args</code>内，它的结构如下所示</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">dl_open_args</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *file;</span><br><span class="line">  <span class="type">int</span> mode;</span><br><span class="line">  <span class="type">const</span> <span class="type">void</span> *caller_dlopen; <span class="comment">/* This is the caller of dlopen().  */</span></span><br><span class="line">  <span class="type">const</span> <span class="type">void</span> *caller_dl_open; <span class="comment">/* This is the caller of _dl_open().  */</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">link_map</span> *<span class="title">map</span>;</span></span><br><span class="line">  Lmid_t nsid; <span class="comment">/* Namespace ID.  */</span></span><br><span class="line">  <span class="type">int</span> argc;</span><br><span class="line">  <span class="type">char</span> **argv;</span><br><span class="line">  <span class="type">char</span> **env;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>dl_open_worker</code>函数中，最重要的加载数据一步是通过调用<code>_dl_map_object</code>实现的。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Load the named object.  */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">link_map</span> *<span class="title">new</span>;</span></span><br><span class="line">args-&gt;<span class="built_in">map</span> = new = _dl_map_object (call_map, file, lt_loaded, <span class="number">0</span>,</span><br><span class="line">		    mode | __RTLD_CALLMAP, args-&gt;nsid);</span><br></pre></td></tr></table></figure>
+
+<p>接下来就是<code>_dl_map_object</code>函数，其主要的内容如下：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">link_map</span> *</span></span><br><span class="line"><span class="class"><span class="title">internal_function</span></span></span><br><span class="line"><span class="class">_<span class="title">dl_map_object</span> (<span class="keyword">struct</span> <span class="title">link_map</span> *<span class="title">loader</span>, <span class="title">const</span> <span class="title">char</span> *<span class="title">name</span>,</span></span><br><span class="line"><span class="class">		<span class="title">int</span> <span class="title">type</span>, <span class="title">int</span> <span class="title">trace_mode</span>, <span class="title">int</span> <span class="title">mode</span>, <span class="title">Lmid_t</span> <span class="title">nsid</span>)</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="type">int</span> fd;</span><br><span class="line">  <span class="type">char</span> *realname;</span><br><span class="line">  <span class="type">char</span> *name_copy;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">link_map</span> *<span class="title">l</span>;</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">filebuf</span> <span class="title">fb</span>;</span></span><br><span class="line">	...</span><br><span class="line">  <span class="comment">/* Look for this name among those already loaded.  */</span></span><br><span class="line">  <span class="keyword">for</span> (l = GL(dl_ns)[nsid]._ns_loaded; l; l = l-&gt;l_next)</span><br><span class="line">  &#123;</span><br><span class="line">      <span class="comment">/* If the requested name matches the soname of a loaded object,</span></span><br><span class="line"><span class="comment">	 use that object.  Elide this check for names that have not</span></span><br><span class="line"><span class="comment">	 yet been opened.  */</span></span><br><span class="line">      <span class="keyword">if</span> (__builtin_expect (l-&gt;l_faked, <span class="number">0</span>) != <span class="number">0</span> </span><br><span class="line">          || __builtin_expect (l-&gt;l_removed, <span class="number">0</span>) != <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">      <span class="keyword">if</span> (!_dl_name_match_p (name, l))</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="type">const</span> <span class="type">char</span> *soname;</span><br><span class="line"> 				<span class="keyword">if</span> (__builtin_expect (l-&gt;l_soname_added, <span class="number">1</span>) </span><br><span class="line">            || l-&gt;l_info[DT_SONAME] == <span class="literal">NULL</span>)</span><br><span class="line">	    	<span class="keyword">continue</span>;</span><br><span class="line"> </span><br><span class="line">	  		soname = ((<span class="type">const</span> <span class="type">char</span> *) D_PTR (l, l_info[DT_STRTAB])</span><br><span class="line">		    	+ l-&gt;l_info[DT_SONAME]-&gt;d_un.d_val);</span><br><span class="line">	  		<span class="keyword">if</span> (<span class="built_in">strcmp</span> (name, soname) != <span class="number">0</span>)</span><br><span class="line">	    		<span class="keyword">continue</span>;</span><br><span class="line"> </span><br><span class="line">        <span class="comment">/* We have a match on a new name -- cache it.  */</span></span><br><span class="line">        add_name_to_object (l, soname);</span><br><span class="line">        l-&gt;l_soname_added = <span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line"> </span><br><span class="line">      <span class="comment">/* We have a match.  */</span></span><br><span class="line">      <span class="keyword">return</span> l;</span><br><span class="line">  &#125;</span><br><span class="line"> 	</span><br><span class="line">  ...</span><br><span class="line">  fd = open_path (name, namelen, mode &amp; __RTLD_SECURE, </span><br><span class="line">                  &amp;main_map-&gt;l_rpath_dirs, &amp;realname, &amp;fb, </span><br><span class="line">                  loader ?: main_map, LA_SER_RUNPATH, &amp;found_other_class);</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">  l = _dl_new_object (name_copy, name, type, loader,</span><br><span class="line">				      mode, nsid)) </span><br><span class="line">	</span><br><span class="line">   <span class="keyword">return</span> _dl_map_object_from_fd (name, fd, &amp;fb, realname, loader, type, mode, &amp;stack_end, nsid);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中文件是通过<code>open_path</code>调用的。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span></span><br><span class="line"><span class="title function_">open_path</span> <span class="params">(<span class="type">const</span> <span class="type">char</span> *name, <span class="type">size_t</span> namelen, <span class="type">int</span> secure,</span></span><br><span class="line"><span class="params">	   <span class="keyword">struct</span> r_search_path_struct *sps, <span class="type">char</span> **realname,</span></span><br><span class="line"><span class="params">	   <span class="keyword">struct</span> filebuf *fbp, <span class="keyword">struct</span> link_map *loader, <span class="type">int</span> whatcode,</span></span><br><span class="line"><span class="params">	   <span class="type">bool</span> *found_other_class)</span></span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">for</span> (cnt = <span class="number">0</span>; fd == <span class="number">-1</span> &amp;&amp; cnt &lt; ncapstr; ++cnt) &#123;</span><br><span class="line"> 			fd = open_verify (buf, fbp, loader, whatcode, found_other_class, </span><br><span class="line">                        <span class="literal">false</span>);</span><br><span class="line">			...</span><br><span class="line">		&#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> (fd != <span class="number">-1</span>) &#123;</span><br><span class="line">	  	*realname = (<span class="type">char</span> *) <span class="built_in">malloc</span> (buflen);</span><br><span class="line">	  	<span class="keyword">if</span> (*realname != <span class="literal">NULL</span>)</span><br><span class="line">	    &#123;</span><br><span class="line">	      <span class="built_in">memcpy</span> (*realname, buf, buflen);</span><br><span class="line">	      <span class="keyword">return</span> fd; <span class="comment">// here return the fd</span></span><br><span class="line">	    &#125;</span><br><span class="line">	  	<span class="keyword">else</span></span><br><span class="line">	    &#123;</span><br><span class="line">	      <span class="comment">/* No memory for the name, we certainly won&#x27;t be able</span></span><br><span class="line"><span class="comment">		 to load and link it.  */</span></span><br><span class="line">	      __close (fd);</span><br><span class="line">	      <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	    &#125;</span><br><span class="line">		&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* Remember whether we found anything.  */</span></span><br><span class="line">    any |= here_any;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span> (*++dirs != <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>open_verify</code>函数通过调用<code>__libc_read</code>对ELF文件的文件头实现了读写。</p>
+<p>接下来是<code>_dl_new_object</code>函数，它主要初始化一个新的<code>struct link_map*</code>数据结构，并把它加入到<code>loader</code>对应的单链中（猜测）。</p>
+<p>最重要的是函数<code>_dl_map_object_from_fd</code>。这个函数包括了</p>
+<ul>
+<li>对<code>link_map</code>的二次查找，是否已经存在映射了.so文件的</li>
+<li>提取ELF头文件信息（程序入口地址，头文件信息等）</li>
+<li>对phdr（程序头表进行遍历），根据每个程序头的type类型做具体的操作</li>
+<li>进行映射</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">maplength = loadcmds[nloadcmds - <span class="number">1</span>].allocend - loadcmds[<span class="number">0</span>].mapstart;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Now process the load commands and map segments into memory.</span></span><br><span class="line"><span class="comment">   This is responsible for filling in:</span></span><br><span class="line"><span class="comment">   l_map_start, l_map_end, l_addr, l_contiguous, l_text_end, l_phdr</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">errstring = _dl_map_segments (l, fd, header, type, loadcmds, nloadcmds,</span><br><span class="line">  maplength, has_holes, loader);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>调用<code>mprotect</code>修改内存权限</li>
+<li>修改TLS等设置</li>
+<li>修改符号表</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Set up the symbol hash table.  */</span></span><br><span class="line">_dl_setup_hash (l);</span><br></pre></td></tr></table></figure>
+
+<p>最后，是<code>_dl_map_segments</code>函数</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* This is a position-independent shared object.  We can let the</span></span><br><span class="line"><span class="comment">   kernel map it anywhere it likes, but we must have space for all</span></span><br><span class="line"><span class="comment">   the segments in their specified positions relative to the first.</span></span><br><span class="line"><span class="comment">   So we map the first segment without MAP_FIXED, but with its</span></span><br><span class="line"><span class="comment">   extent increased to cover all the segments.  Then we remove</span></span><br><span class="line"><span class="comment">   access from excess portion, and there is known sufficient space</span></span><br><span class="line"><span class="comment">   there to remap from the later segments.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">   As a refinement, sometimes we have an address that we would</span></span><br><span class="line"><span class="comment">   prefer to map such objects at; but this is only a preference,</span></span><br><span class="line"><span class="comment">   the OS can do whatever it likes. */</span></span><br><span class="line">ElfW(Addr) mappref</span><br><span class="line">  = (ELF_PREFERRED_ADDRESS (loader, maplength,</span><br><span class="line">                            c-&gt;mapstart &amp; GLRO(dl_use_load_bias))</span><br><span class="line">     - MAP_BASE_ADDR (l));</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Remember which part of the address space this object uses.  */</span></span><br><span class="line">l-&gt;l_map_start = (ElfW(Addr)) __mmap ((<span class="type">void</span> *) mappref, maplength,</span><br><span class="line">                                      c-&gt;prot,</span><br><span class="line">                                      MAP_COPY|MAP_FILE,</span><br><span class="line">                                      fd, c-&gt;mapoff);</span><br><span class="line"><span class="keyword">if</span> (__glibc_unlikely ((<span class="type">void</span> *) l-&gt;l_map_start == MAP_FAILED))</span><br><span class="line">  <span class="keyword">return</span> DL_MAP_SEGMENTS_ERROR_MAP_SEGMENT;</span><br><span class="line"></span><br><span class="line">l-&gt;l_map_end = l-&gt;l_map_start + maplength;</span><br><span class="line">l-&gt;l_addr = l-&gt;l_map_start - c-&gt;mapstart;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (has_holes)</span><br><span class="line">  <span class="comment">/* Change protection on the excess portion to disallow all access;</span></span><br><span class="line"><span class="comment">     the portions we do not remap later will be inaccessible as if</span></span><br><span class="line"><span class="comment">     unallocated.  Then jump into the normal segment-mapping loop to</span></span><br><span class="line"><span class="comment">     handle the portion of the segment past the end of the file</span></span><br><span class="line"><span class="comment">     mapping.  */</span></span><br><span class="line">  __mprotect ((<span class="type">caddr_t</span>) (l-&gt;l_addr + c-&gt;mapend),</span><br><span class="line">              loadcmds[nloadcmds - <span class="number">1</span>].mapstart - c-&gt;mapend,</span><br><span class="line">              PROT_NONE);</span><br><span class="line"></span><br><span class="line">l-&gt;l_contiguous = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">goto</span> postmap;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>dlopen</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>too-many-open-files-error</title>
+    <url>/index.html</url>
+    <content><![CDATA[<p>解决一下linux系统同时打开过多文件的问题。</p>
+<span id="more"></span>
+
+<h1 id="方法一：命令方式"><a href="#方法一：命令方式" class="headerlink" title="方法一：命令方式"></a>方法一：命令方式</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这样就可以把当前用户的最大允许打开文件数量设置为2048了，但这种设置方法在重启后会还原为默认值。</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">ulimit</span> -n命令非root用户只能设置到4096。</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">想要设置到8192需要sudo权限或者root用户。</span></span><br><span class="line">ulimit -n 2048</span><br></pre></td></tr></table></figure>
+
+<h1 id="方法二：修改配置文件"><a href="#方法二：修改配置文件" class="headerlink" title="方法二：修改配置文件"></a>方法二：修改配置文件</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /etc/security/limits.conf  </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">在最后加入</span>  </span><br><span class="line">* soft nofile 4096  </span><br><span class="line">* hard nofile 4096 </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">或者只加入</span></span><br><span class="line">* - nofile 8192</span><br></pre></td></tr></table></figure>
+
+<p><code>*</code>代表所有用户，可根据需要设置某一用户</p>
+<h1 id="检查程序文件数"><a href="#检查程序文件数" class="headerlink" title="检查程序文件数"></a>检查程序文件数</h1><p>如果你对你的程序有一定的解的话，应该对程序打开文件数(链接数)上限有一定的估算，如果感觉数字异常，请使用第一步的<strong>lsof -p 进程id &gt; openfiles.log</strong>命令，获得当前占用句柄的全部详情进行分析。</p>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>git-submodule-modify</title>
-    <url>/git-submodule-modify/</url>
+    <url>/index.html</url>
     <content><![CDATA[<p>因为国外google代码仓库的东西访问不到，有可能导致submodule失效，需要修改 或者删除git子模块</p>
 <span id="more"></span>
 
@@ -22,7 +105,7 @@
   </entry>
   <entry>
     <title>dylib-to-sharemem</title>
-    <url>/dylib-to-sharemem/</url>
+    <url>/index.html</url>
     <content><![CDATA[<p>想要将动态链接库拷贝到共享存储里运行。</p>
 <span id="more"></span>
 
@@ -137,7 +220,7 @@
   </entry>
   <entry>
     <title>matplotlib-chinese-font</title>
-    <url>/matplotlib-chinese-font/</url>
+    <url>/index.html</url>
     <content><![CDATA[<p>matplotlib原生是不支持中文的，但是因为画图中文方便一点，所以解决了一下这个问题。</p>
 <span id="more"></span>
 
@@ -174,7 +257,7 @@
   </entry>
   <entry>
     <title>smartnic-learning</title>
-    <url>/smartnic-learning/</url>
+    <url>/index.html</url>
     <content><![CDATA[<p>总结smartNIC的相关知识，虽然没啥用（因为很多东西都是基于netdev interface，而实验上好像是虚拟端口，所以不是一个东西），但是为了以后可能会用，还是记一下。</p>
 <span id="more"></span>
 
@@ -291,7 +374,7 @@
   </entry>
   <entry>
     <title>ycsb-learning</title>
-    <url>/ycsb-learning/</url>
+    <url>/index.html</url>
     <content><![CDATA[<p>主要总结Yahoo的数据库测试项目YCSB的使用（针对redis）。</p>
 <span id="more"></span>
 
@@ -397,7 +480,7 @@
   </entry>
   <entry>
     <title>sync-server-time</title>
-    <url>/sync-server-time/</url>
+    <url>/index.html</url>
     <content><![CDATA[<p>最近在make的时候发现server上的时间落后于我本地的时间，查了一下发现只要一条命令就能巧妙把server时间和互联网时间同步。</p>
 <span id="more"></span>
 
@@ -412,7 +495,7 @@
   </entry>
   <entry>
     <title>2018年网络攻防小学期</title>
-    <url>/2018%E5%B9%B4%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F/</url>
+    <url>/index.html</url>
     <content><![CDATA[<p>收录2018年网络攻防小学期的一些东西</p>
 <span id="more"></span>
 
@@ -434,7 +517,7 @@
   </entry>
   <entry>
     <title>change-python-default-version</title>
-    <url>/change-python-default-version/</url>
+    <url>/index.html</url>
     <content><![CDATA[<p>服务器上用的python默认是python3，需要改成python2</p>
 <span id="more"></span>
 
@@ -458,7 +541,7 @@
   </entry>
   <entry>
     <title>docker-cgroup</title>
-    <url>/docker-cgroup/</url>
+    <url>/docker-cgroup.html</url>
     <content><![CDATA[<p>好像默认的只有<code>sudo</code>有docker相关权限，普通用户<code>docker run hello-world</code>会有权限报错，解决方法如下</p>
 <span id="more"></span>
 

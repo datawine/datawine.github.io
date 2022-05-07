@@ -1,39 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://datawine.github.io/git-submodule-modify/</loc>
+    <loc>https://datawine.github.io/docker-cgroup.html</loc>
     <lastmod>2022-05-07</lastmod>
   </url>
   <url>
-    <loc>https://datawine.github.io/dylib-to-sharemem/</loc>
+    <loc>https://datawine.github.io/index.html</loc>
     <lastmod>2022-05-07</lastmod>
   </url>
   <url>
-    <loc>https://datawine.github.io/matplotlib-chinese-font/</loc>
+    <loc>https://datawine.github.io/index.html</loc>
     <lastmod>2022-05-07</lastmod>
   </url>
   <url>
-    <loc>https://datawine.github.io/smartnic-learning/</loc>
+    <loc>https://datawine.github.io/index.html</loc>
     <lastmod>2022-05-07</lastmod>
   </url>
   <url>
-    <loc>https://datawine.github.io/ycsb-learning/</loc>
+    <loc>https://datawine.github.io/index.html</loc>
     <lastmod>2022-05-07</lastmod>
   </url>
   <url>
-    <loc>https://datawine.github.io/2018%E5%B9%B4%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F/</loc>
+    <loc>https://datawine.github.io/index.html</loc>
     <lastmod>2022-05-07</lastmod>
   </url>
   <url>
-    <loc>https://datawine.github.io/sync-server-time/</loc>
+    <loc>https://datawine.github.io/index.html</loc>
     <lastmod>2022-05-07</lastmod>
   </url>
   <url>
-    <loc>https://datawine.github.io/change-python-default-version/</loc>
+    <loc>https://datawine.github.io/index.html</loc>
     <lastmod>2022-05-07</lastmod>
   </url>
   <url>
-    <loc>https://datawine.github.io/docker-cgroup/</loc>
+    <loc>https://datawine.github.io/index.html</loc>
+    <lastmod>2022-05-07</lastmod>
+  </url>
+  <url>
+    <loc>https://datawine.github.io/index.html</loc>
+    <lastmod>2022-05-07</lastmod>
+  </url>
+  <url>
+    <loc>https://datawine.github.io/index.html</loc>
     <lastmod>2022-05-07</lastmod>
   </url>
 </urlset> 

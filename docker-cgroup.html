@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="git," />
+  <meta name="keywords" content="docker," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="因为国外google代码仓库的东西访问不到，有可能导致submodule失效，需要修改 或者删除git子模块">
+<meta name="description" content="好像默认的只有sudo有docker相关权限，普通用户docker run hello-world会有权限报错，解决方法如下">
 <meta property="og:type" content="article">
-<meta property="og:title" content="git-submodule-modify">
-<meta property="og:url" content="https://datawine.github.io/git-submodule-modify/index.html">
+<meta property="og:title" content="docker-cgroup">
+<meta property="og:url" content="https://datawine.github.io/docker-cgroup.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="因为国外google代码仓库的东西访问不到，有可能导致submodule失效，需要修改 或者删除git子模块">
+<meta property="og:description" content="好像默认的只有sudo有docker相关权限，普通用户docker run hello-world会有权限报错，解决方法如下">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-05-07T13:55:01.000Z">
-<meta property="article:modified_time" content="2022-05-07T13:55:27.071Z">
+<meta property="article:published_time" content="2022-05-07T12:08:43.000Z">
+<meta property="article:modified_time" content="2022-05-07T14:05:49.589Z">
 <meta property="article:author" content="Datawine">
-<meta property="article:tag" content="git">
+<meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/git-submodule-modify/"/>
+  <link rel="canonical" href="https://datawine.github.io/docker-cgroup.html"/>
 
 
 
 
 
-  <title>git-submodule-modify | Datawine's Blog</title>
+  <title>docker-cgroup | Datawine's Blog</title>
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/git-submodule-modify/">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/docker-cgroup.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">git-submodule-modify</h1>
+          <h1 class="post-title" itemprop="name headline">docker-cgroup</h1>
         
 
         <div class="post-meta">
@@ -326,7 +326,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-07T21:55:01+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-07T20:08:43+08:00">
                 2022-05-07
               </time>
             
@@ -368,8 +368,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/git-submodule-modify/#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="git-submodule-modify/" itemprop="commentsCount"></span>
+                <a href="/docker-cgroup.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="docker-cgroup.html" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  193
+                  154
                 </span>
               
 
@@ -433,15 +433,27 @@
       
 
       
-        <p>因为国外google代码仓库的东西访问不到，有可能导致submodule失效，需要修改 或者删除git子模块</p>
+        <p>好像默认的只有<code>sudo</code>有docker相关权限，普通用户<code>docker run hello-world</code>会有权限报错，解决方法如下</p>
 <span id="more"></span>
 
-<h1 id="删除子模块"><a href="#删除子模块" class="headerlink" title="删除子模块"></a>删除子模块</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">逆初始化模块，其中&#123;MOD_NAME&#125;为模块目录，执行后可发现模块目录被清空</span></span><br><span class="line">git submodule deinit &#123;MOD_NAME&#125; </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除.gitmodules中记录的模块信息（--cached选项清除.git/modules中的缓存）</span></span><br><span class="line">git rm --cached &#123;MOD_NAME&#125; </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">提交更改到代码库，可观察到<span class="string">&#x27;.gitmodules&#x27;</span>内容发生变更</span></span><br><span class="line">git commit -am &quot;Remove a submodule.&quot; </span><br></pre></td></tr></table></figure>
+<h1 id="具体错误"><a href="#具体错误" class="headerlink" title="具体错误"></a>具体错误</h1><p>如果直接运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
 
-<h1 id="更改子模块url"><a href="#更改子模块url" class="headerlink" title="更改子模块url"></a>更改子模块url</h1><p>修改<code>.gitmodules</code>文件中对应模块的<code>url</code>属性，然后更新到<code>.git/config</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git submodule sync</span><br><span class="line">git commit -am &quot;Update submodule url.&quot;</span><br></pre></td></tr></table></figure>
+<p>产生错误</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker: Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post http://%2Fvar%2Frun%2Fdocker.sock/v1.35/containers/create: dial unix /var/run/docker.sock: connect: permission denied.See &#x27;docker run --help&#x27;.</span><br></pre></td></tr></table></figure>
 
-<p>更低版本可能会不能自动更行<code>.git/config</code>，这时需要手动更新。</p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>创建docker group</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo groupadd docker</span><br></pre></td></tr></table></figure>
+
+<p>把当前用户加入docker group</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo usermod -aG docker $USER</span><br></pre></td></tr></table></figure>
+
+<p>登出再登入，此时可以直接运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
+
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue">https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue</a></li>
+</ul>
 
       
     </div>
@@ -459,7 +471,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/git/" rel="tag"># git</a>
+            <a href="/tags/docker/" rel="tag"># docker</a>
           
         </div>
       
@@ -472,15 +484,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/dylib-to-sharemem/" rel="next" title="dylib-to-sharemem">
-                <i class="fa fa-chevron-left"></i> dylib-to-sharemem
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/index.html" rel="prev" title="change-python-default-version">
+                change-python-default-version <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -562,7 +574,7 @@
               
                 <a href="/archives/%7C%7Carchive">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -573,7 +585,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -584,7 +596,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -627,7 +639,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E5%AD%90%E6%A8%A1%E5%9D%97"><span class="nav-number">1.</span> <span class="nav-text">删除子模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E5%AD%90%E6%A8%A1%E5%9D%97url"><span class="nav-number">2.</span> <span class="nav-text">更改子模块url</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E9%94%99%E8%AF%AF"><span class="nav-number">1.</span> <span class="nav-text">具体错误</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">解决方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>
@@ -668,7 +680,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">7.8k</span>
+    <span title="Site words total count">9.3k</span>
   
 </div>
 
