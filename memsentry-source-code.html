@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="llvm," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="memsentry github地址：https:&#x2F;&#x2F;github.com&#x2F;vusec&#x2F;memsentry">
+<meta property="og:type" content="article">
+<meta property="og:title" content="memsentry项目源码注释">
+<meta property="og:url" content="https://datawine.github.io/memsentry-source-code.html">
+<meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="memsentry github地址：https:&#x2F;&#x2F;github.com&#x2F;vusec&#x2F;memsentry">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-05-07T14:49:31.000Z">
+<meta property="article:modified_time" content="2022-05-07T14:50:10.932Z">
+<meta property="article:author" content="Datawine">
+<meta property="article:tag" content="llvm">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://datawine.github.io/memsentry-source-code.html"/>
+
+
+
+
+
+  <title>memsentry项目源码注释 | Datawine's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Datawine's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/memsentry-source-code.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">memsentry项目源码注释</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-07T22:49:31+08:00">
+                2022-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index">
+                    <span itemprop="name">工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/memsentry-source-code.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="memsentry-source-code.html" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.8k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  20
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>memsentry github地址：<a target="_blank" rel="noopener" href="https://github.com/vusec/memsentry">https://github.com/vusec/memsentry</a></p>
+<span id="more"></span>
+
+<p>主要是三个文件<code>BenchDomain.cpp</code>,<code>BenchDomainPost.cpp</code>和<code>MenSentry.cpp</code>。分别为向某些特定地方添加memory access实现bench的目的，去掉之前的memory access来达到不修改源文件的目的，和mensentry pass主体。</p>
+<h1 id="BenchDomain-cpp"><a href="#BenchDomain-cpp" class="headerlink" title="BenchDomain.cpp"></a>BenchDomain.cpp</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Benchmark performance of domain-based methods by inserting</span></span><br><span class="line"><span class="comment"> * domain-switches at specified points. For benchmarking address-based methods,</span></span><br><span class="line"><span class="comment"> * this pass is not needed.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Usage:</span></span><br><span class="line"><span class="comment"> * This pass inserts memory accesses (tagged as &#x27;safe&#x27;) at the specified points</span></span><br><span class="line"><span class="comment"> * (e.g., at every call/ret). The MemSentry pass will then insert domain</span></span><br><span class="line"><span class="comment"> * switches for these memory accesses. Finally, the MemSentryBenchDomainPost</span></span><br><span class="line"><span class="comment"> * pass will remove the memory accesses, but leave the domain switches. This can</span></span><br><span class="line"><span class="comment"> * thus be used to benchmark the performance of domain-based approaches at</span></span><br><span class="line"><span class="comment"> * different frequencies of required switches.</span></span><br><span class="line"><span class="comment"> * Passes should thus be used as follows:</span></span><br><span class="line"><span class="comment"> *  -memsentry-benchdomain -memsentry -memsentry-benchdomain-post</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * -memsentry-benchdomain-points=[call-ret,icall,libfunc]</span></span><br><span class="line"><span class="comment"> * -memsentry-benchdomain-libfunc-file=&lt;file&gt;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * call-ret: insert mem access before every call and return</span></span><br><span class="line"><span class="comment"> * icall:    insert mem access before every indirect call</span></span><br><span class="line"><span class="comment"> * libfunc:  insert mem access before every library function call from</span></span><br><span class="line"><span class="comment"> *           specified list.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DEBUG_TYPE <span class="string">&quot;memsentry-benchdomain&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;utils.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;types.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;memsentry-pass.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> llvm;</span><br><span class="line"></span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">points</span> &#123;</span><br><span class="line">    CALLRET,</span><br><span class="line">    ICALL,</span><br><span class="line">    LIBFUNC,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化名为Points的opt示例，用以在命令行中显示选项</span></span><br><span class="line"><span class="function">cl::opt&lt;points&gt; <span class="title">Points</span><span class="params">(<span class="string">&quot;memsentry-benchdomain-points&quot;</span>, <span class="comment">// name</span></span></span></span><br><span class="line"><span class="params"><span class="function">    cl::desc(<span class="string">&quot;What points should be treated as safe-region accesses:&quot;</span>), <span class="comment">// description</span></span></span></span><br><span class="line"><span class="params"><span class="function">    cl::values( <span class="comment">// listed values</span></span></span></span><br><span class="line"><span class="params"><span class="function">        clEnumValN(CALLRET, <span class="string">&quot;call-ret&quot;</span>, <span class="string">&quot;Every call and return&quot;</span>),</span></span></span><br><span class="line"><span class="params"><span class="function">        clEnumValN(ICALL,   <span class="string">&quot;icall&quot;</span>,    <span class="string">&quot;Indirect calls&quot;</span>),</span></span></span><br><span class="line"><span class="params"><span class="function">        clEnumValN(LIBFUNC, <span class="string">&quot;libfunc&quot;</span>,  <span class="string">&quot;Library functions (syscalls), specify list with -memsentry-benchdomain-libfunc-file.&quot;</span>),</span></span></span><br><span class="line"><span class="params"><span class="function">        clEnumValEnd), cl::init(CALLRET) <span class="comment">// default value</span></span></span></span><br><span class="line"><span class="params"><span class="function">        )</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化名为LibFuncFile的opt示例，存放文件路径。文件中每一行包含一个函数名，被直接调用时被pass instrument</span></span><br><span class="line"><span class="function"><span class="type">static</span> cl::opt&lt;std::string&gt; <span class="title">LibFuncFile</span><span class="params">(<span class="string">&quot;memsentry-benchdomain-libfunc-file&quot;</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">        cl::desc(<span class="string">&quot;Path to file containing (per line) functions that, when called, should be instrumented.&quot;</span>))</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 继承ModulePass</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">MemSentryBenchDomain</span> : <span class="keyword">public</span> ModulePass &#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="type">static</span> <span class="type">char</span> ID;</span><br><span class="line">        <span class="built_in">MemSentryBenchDomain</span>() : <span class="built_in">ModulePass</span>(ID) &#123;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">virtual</span> <span class="type">bool</span> <span class="title">runOnModule</span><span class="params">(Module &amp;M)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        std::set&lt;std::string&gt; libFuncSet;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">initLibFuncs</span><span class="params">()</span></span>;</span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">handleInst</span><span class="params">(Instruction *I)</span></span>;</span><br><span class="line">        <span class="function"><span class="type">bool</span> <span class="title">shouldInstrCallRet</span><span class="params">(Instruction *I)</span></span>;</span><br><span class="line">        <span class="function"><span class="type">bool</span> <span class="title">shouldInstrICall</span><span class="params">(Instruction *I)</span></span>;</span><br><span class="line">        <span class="function"><span class="type">bool</span> <span class="title">shouldInstrLibFunc</span><span class="params">(Instruction *I)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 判断：</span></span><br><span class="line"><span class="comment"> * 当前指令call或者invoke直接调用了一个&quot;原文件中没有显式要求ignore的本地函数&quot;</span></span><br><span class="line"><span class="comment"> * 或者当前指令是一个return指令</span></span><br><span class="line"><span class="comment"> * 则返回true</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">MemSentryBenchDomain::shouldInstrCallRet</span><span class="params">(Instruction *I)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 判断是否为Call指令或者Invoke指令</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">isa</span>&lt;CallInst&gt;(I) || <span class="built_in">isa</span>&lt;InvokeInst&gt;(I)) &#123;</span><br><span class="line">        <span class="comment">/* Try to only instrument calls where we can also insert the</span></span><br><span class="line"><span class="comment">         * corresponding switch at the return, to better simulate what a defense</span></span><br><span class="line"><span class="comment">         * could do. */</span></span><br><span class="line">        <span class="comment">// CallSite是CallInst和InvokeInst的一层封装，保留了两者的一些共有特征。</span></span><br><span class="line">        <span class="function">CallSite <span class="title">CS</span><span class="params">(I)</span></span>;</span><br><span class="line">        <span class="comment">// 拿到这条指令调用的函数</span></span><br><span class="line">        Function *F = CS.<span class="built_in">getCalledFunction</span>();</span><br><span class="line">        <span class="keyword">return</span> !F || <span class="built_in">shouldInstrument</span>(*F);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// return指令</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">isa</span>&lt;ReturnInst&gt;(I))</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 当前指令为间接调用（即不通过函数指针？）</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">MemSentryBenchDomain::shouldInstrICall</span><span class="params">(Instruction *I)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">isa</span>&lt;CallInst&gt;(I) || <span class="built_in">isa</span>&lt;InvokeInst&gt;(I)) &#123;</span><br><span class="line">        <span class="function">CallSite <span class="title">CS</span><span class="params">(I)</span></span>;</span><br><span class="line">        Function *F = CS.<span class="built_in">getCalledFunction</span>();</span><br><span class="line">        <span class="keyword">return</span> F == <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 当前指令直接调用了一个FuncLib中的函数</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">MemSentryBenchDomain::shouldInstrLibFunc</span><span class="params">(Instruction *I)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">isa</span>&lt;CallInst&gt;(I) || <span class="built_in">isa</span>&lt;InvokeInst&gt;(I)) &#123;</span><br><span class="line">        <span class="function">CallSite <span class="title">CS</span><span class="params">(I)</span></span>;</span><br><span class="line">        Function *F = CS.<span class="built_in">getCalledFunction</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!F)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (libFuncSet.<span class="built_in">find</span>(F-&gt;<span class="built_in">getName</span>()) != libFuncSet.<span class="built_in">end</span>())</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 处理每条指令</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MemSentryBenchDomain::handleInst</span><span class="params">(Instruction *I)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 根据Points的类型，判断是否需要处理</span></span><br><span class="line">    <span class="keyword">switch</span> (Points) &#123;</span><br><span class="line">        <span class="keyword">case</span> CALLRET: <span class="keyword">if</span> (!<span class="built_in">shouldInstrCallRet</span>(I)) <span class="keyword">return</span>; <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> ICALL:   <span class="keyword">if</span> (!<span class="built_in">shouldInstrICall</span>(I))   <span class="keyword">return</span>; <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> LIBFUNC: <span class="keyword">if</span> (!<span class="built_in">shouldInstrLibFunc</span>(I)) <span class="keyword">return</span>; <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>: <span class="built_in">assert</span>(<span class="number">0</span>); <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在I前面插入读取和储存指令</span></span><br><span class="line">    <span class="comment">// IRBuilder的主要功能是构建一系列IR，具体的语法以后再学习</span></span><br><span class="line">    IRBuilder&lt;&gt; <span class="built_in">B</span>(I);</span><br><span class="line">    Value *Val = B.<span class="built_in">getInt8</span>(<span class="number">0</span>);</span><br><span class="line">    Value *Ptr = Constant::<span class="built_in">getNullValue</span>(B.<span class="built_in">getInt8PtrTy</span>());</span><br><span class="line">    StoreInst *Dummy = B.<span class="built_in">CreateStore</span>(Val, Ptr, <span class="literal">true</span>);</span><br><span class="line">    Dummy-&gt;<span class="built_in">setMetadata</span>(<span class="string">&quot;memsentry.benchdomain.dummy&quot;</span>, MDNode::<span class="built_in">get</span>(I-&gt;<span class="built_in">getContext</span>(), &#123;&#125;));</span><br><span class="line"></span><br><span class="line">    <span class="built_in">memsentry_saferegion_access</span>(Dummy);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从LibFuncFile中按行载入需要instrument的函数名称的字符串</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MemSentryBenchDomain::initLibFuncs</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">std::ifstream <span class="title">input</span><span class="params">(LibFuncFile)</span></span>;</span><br><span class="line">    std::string line;</span><br><span class="line">    <span class="keyword">while</span> (std::<span class="built_in">getline</span>(input, line))</span><br><span class="line">        libFuncSet.<span class="built_in">insert</span>(line);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (std::string a : libFuncSet)</span><br><span class="line">        <span class="built_in">errs</span>() &lt;&lt; <span class="string">&quot; F: &quot;</span> &lt;&lt; a &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 重载runOnModule，对每一个Module，</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">MemSentryBenchDomain::runOnModule</span><span class="params">(Module &amp;M)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 如果命令行里选择了LIBFUNC，则需要加载LibFunc文件</span></span><br><span class="line">    <span class="keyword">if</span> (Points == LIBFUNC)</span><br><span class="line">        <span class="built_in">initLibFuncs</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遍历Module中函数</span></span><br><span class="line">    <span class="keyword">for</span> (Function &amp;F : M) &#123;</span><br><span class="line">        <span class="comment">// 是否是原文件中没有显式要求ignore的本地函数</span></span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">shouldInstrument</span>(F))</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        <span class="comment">// 遍历函数中instruction</span></span><br><span class="line">        <span class="keyword">for</span> (inst_iterator II = <span class="built_in">inst_begin</span>(&amp;F), E = <span class="built_in">inst_end</span>(&amp;F); II != E; ++II) &#123;</span><br><span class="line">            <span class="comment">// 通过dereference拿到</span></span><br><span class="line">            Instruction *I = &amp;*II;</span><br><span class="line">            <span class="built_in">handleInst</span>(I);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">char</span> MemSentryBenchDomain::ID = <span class="number">0</span>; <span class="comment">// ID会按照pass地址赋值，所以值不重要</span></span><br><span class="line"><span class="comment">// 通过初试化实例X的方法，注册pass</span></span><br><span class="line"><span class="function"><span class="type">static</span> RegisterPass&lt;MemSentryBenchDomain&gt; <span class="title">X</span><span class="params">(<span class="string">&quot;memsentry-benchdomain&quot;</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">        <span class="string">&quot;MemSentry benchmarking pass for domain-based methods&quot;</span>)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="BenchDomainPost-cpp"><a href="#BenchDomainPost-cpp" class="headerlink" title="BenchDomainPost.cpp"></a>BenchDomainPost.cpp</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Should be used in conjuction with -memsentry-benchdomain, and should run</span></span><br><span class="line"><span class="comment"> * after -memsentry.</span></span><br><span class="line"><span class="comment"> * See BenchDomain.cpp for more details.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DEBUG_TYPE <span class="string">&quot;memsentry-benchdomain-post&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;utils.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;types.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> llvm;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 继承FunctionPass</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">MemSentryBenchDomainPost</span> : <span class="keyword">public</span> FunctionPass &#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="type">static</span> <span class="type">char</span> ID;</span><br><span class="line">        <span class="built_in">MemSentryBenchDomainPost</span>() : <span class="built_in">FunctionPass</span>(ID) &#123;&#125;</span><br><span class="line">        <span class="function"><span class="keyword">virtual</span> <span class="type">bool</span> <span class="title">runOnFunction</span><span class="params">(Function &amp;F)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除之前benchdomain插入的新的instruction，只保留mensentry插入的instruction</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">MemSentryBenchDomainPost::runOnFunction</span><span class="params">(Function &amp;F)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 如果是原文件中没有显式要求ignore的本地函数，就处理，否则返回false</span></span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">shouldInstrument</span>(F))</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    SmallVector&lt;Instruction *, <span class="number">16</span>&gt; DummyInstructions;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遍历instruction</span></span><br><span class="line">    <span class="keyword">for</span> (inst_iterator II = <span class="built_in">inst_begin</span>(&amp;F), E = <span class="built_in">inst_end</span>(&amp;F); II != E; ++II) &#123;</span><br><span class="line">        Instruction *I = &amp;*II;</span><br><span class="line">        <span class="comment">// 拿到metadata，如果是benchdomain插入的，添加到smallvector中</span></span><br><span class="line">        MDNode *MD = I-&gt;<span class="built_in">getMetadata</span>(<span class="string">&quot;memsentry.benchdomain.dummy&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (MD)</span><br><span class="line">            DummyInstructions.<span class="built_in">push_back</span>(I);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">bool</span> changed = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span> (Instruction *I : DummyInstructions) &#123;</span><br><span class="line">        changed = <span class="literal">true</span>;</span><br><span class="line">        <span class="comment">// 删除指令</span></span><br><span class="line">        I-&gt;<span class="built_in">eraseFromParent</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回值代表函数被修改过</span></span><br><span class="line">    <span class="keyword">return</span> changed;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">char</span> MemSentryBenchDomainPost::ID = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// 注册pass</span></span><br><span class="line"><span class="function"><span class="type">static</span> RegisterPass&lt;MemSentryBenchDomainPost&gt; <span class="title">X</span><span class="params">(<span class="string">&quot;memsentry-benchdomain-post&quot;</span>, <span class="string">&quot;MemSentry benchmarking pass for domain-based methods - cleanup pass&quot;</span>)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="MenSentry-cpp"><a href="#MenSentry-cpp" class="headerlink" title="MenSentry.cpp"></a>MenSentry.cpp</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * MemSentry: protecting safe regions on commodity hardware.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This pass applies a specified protection to a program. The points that are</span></span><br><span class="line"><span class="comment"> * allowed access should be specified by a previous pass (e.g., BenchDomain or a</span></span><br><span class="line"><span class="comment"> * defense). An alternative to this is to place all code accessing the safe</span></span><br><span class="line"><span class="comment"> * region in its own section, and specify the name of this section to this pass.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * For address-based approaches, all read, all writes or both read and writes</span></span><br><span class="line"><span class="comment"> * can be instrumented, as specified by the compile-time flag.</span></span><br><span class="line"><span class="comment"> * For certain domain-based approaches the safe-region is pre-allocated, and the</span></span><br><span class="line"><span class="comment"> * size of this region should be specified at compile time.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * -memsentry-prot-feature=[sfi*,mpx,vmfunc,crypt]</span></span><br><span class="line"><span class="comment"> * -memsentry-whitelist-section=memsentry_functions</span></span><br><span class="line"><span class="comment"> * -memsentry-rw=[r,w,rw*]                           # For sfi/mpx</span></span><br><span class="line"><span class="comment"> * -memsentry-verify-external-call-args=true         # For sfi/mpx</span></span><br><span class="line"><span class="comment"> * -memsentry-max-region-size=4096                   # For crypt</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DEBUG_TYPE <span class="string">&quot;memsentry&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;utils.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;types.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;memsentry-pass.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> llvm;</span><br><span class="line"></span><br><span class="line"><span class="function">cl::opt&lt;prot_method&gt; <span class="title">ProtMethod</span><span class="params">(<span class="string">&quot;memsentry-prot-method&quot;</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">    cl::desc(<span class="string">&quot;Method of protecting safe region:&quot;</span>),</span></span></span><br><span class="line"><span class="params"><span class="function">    cl::values(</span></span></span><br><span class="line"><span class="params"><span class="function">        clEnumValN(SFI,    <span class="string">&quot;sfi&quot;</span>,    <span class="string">&quot;Software fault isolation (pointer masking)&quot;</span>),</span></span></span><br><span class="line"><span class="params"><span class="function">        clEnumValN(MPX,    <span class="string">&quot;mpx&quot;</span>,    <span class="string">&quot;Intel MPX (memory protection extensions)&quot;</span>),</span></span></span><br><span class="line"><span class="params"><span class="function">        clEnumValN(VMFUNC, <span class="string">&quot;vmfunc&quot;</span>, <span class="string">&quot;VM-Functions (requires vmfunc-enabled hypervisor like MemSentry&#x27;s Dune)&quot;</span>),</span></span></span><br><span class="line"><span class="params"><span class="function">        clEnumValN(MPK,    <span class="string">&quot;mpk&quot;</span>,    <span class="string">&quot;Intel MPK (memory protection keys). Upcoming, implemented as simulation&quot;</span>),</span></span></span><br><span class="line"><span class="params"><span class="function">        clEnumValN(CRYPT,  <span class="string">&quot;crypt&quot;</span>,  <span class="string">&quot;Encryption (using Intel AES-NI)&quot;</span>),</span></span></span><br><span class="line"><span class="params"><span class="function">        clEnumValEnd), cl::init(SFI))</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">cl::opt&lt;readwrite&gt; <span class="title">ReadWrite</span><span class="params">(<span class="string">&quot;memsentry-rw&quot;</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">    cl::desc(<span class="string">&quot;What type of memory accesses to protect when using address-based approaches:&quot;</span>),</span></span></span><br><span class="line"><span class="params"><span class="function">    cl::values(</span></span></span><br><span class="line"><span class="params"><span class="function">        clEnumValN(READWRITE, <span class="string">&quot;rw&quot;</span>, <span class="string">&quot;Reads and writes&quot;</span>),</span></span></span><br><span class="line"><span class="params"><span class="function">        clEnumValN(READ,      <span class="string">&quot;r&quot;</span>,  <span class="string">&quot;Reads only&quot;</span>),</span></span></span><br><span class="line"><span class="params"><span class="function">        clEnumValN(WRITE,     <span class="string">&quot;w&quot;</span>,  <span class="string">&quot;Writes only&quot;</span>),</span></span></span><br><span class="line"><span class="params"><span class="function">        clEnumValEnd), cl::init(READWRITE))</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 指定白名单section</span></span><br><span class="line"><span class="function"><span class="type">static</span> cl::opt&lt;std::string&gt; <span class="title">WhitelistSection</span><span class="params">(<span class="string">&quot;memsentry-whitelist-section&quot;</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">        cl::desc(<span class="string">&quot;Functions in this section are allowed access to the safe region&quot;</span>),</span></span></span><br><span class="line"><span class="params"><span class="function">        cl::init(<span class="string">&quot;memsentry_functions&quot;</span>))</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> cl::opt&lt;<span class="type">bool</span>&gt; <span class="title">VerifyExternalCallArguments</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">        <span class="string">&quot;memsentry-verify-external-call-args&quot;</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">        cl::desc(<span class="string">&quot;For address-based methods, add checks to all pointer-type &quot;</span></span></span></span><br><span class="line"><span class="params"><span class="function">            <span class="string">&quot;arguments to external functions (make sure uninstrumented &quot;</span></span></span></span><br><span class="line"><span class="params"><span class="function">            <span class="string">&quot;libraries cannot use invalid pointers.&quot;</span>),</span></span></span><br><span class="line"><span class="params"><span class="function">        cl::init(<span class="literal">true</span>))</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> cl::opt&lt;<span class="type">unsigned</span>&gt; <span class="title">MaxRegionSize</span><span class="params">(<span class="string">&quot;memsentry-max-region-size&quot;</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">        cl::desc(<span class="string">&quot;For methods that need to pre-allocate the entire safe-region,&quot;</span></span></span></span><br><span class="line"><span class="params"><span class="function">            <span class="string">&quot; the maximum size that should be supported.&quot;</span>),</span></span></span><br><span class="line"><span class="params"><span class="function">        cl::init(<span class="number">4096</span>))</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * External function, used to mark instruction as safe from other passes.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">memsentry_saferegion_access</span><span class="params">(Instruction *I)</span> </span>&#123;</span><br><span class="line">    I-&gt;<span class="built_in">setMetadata</span>(MemSentrySafeMDName, MDNode::<span class="built_in">get</span>(I-&gt;<span class="built_in">getContext</span>(), &#123;&#125;));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从module中查找名为name的函数</span></span><br><span class="line"><span class="function"><span class="type">static</span> Function *<span class="title">getHelperFunc</span><span class="params">(Module *M, std::string name)</span> </span>&#123;</span><br><span class="line">    Function *F = M-&gt;<span class="built_in">getFunction</span>(name);</span><br><span class="line">    <span class="keyword">if</span> (!F) &#123;</span><br><span class="line">        <span class="built_in">errs</span>() &lt;&lt; <span class="string">&quot;Cannot find func &#x27;&quot;</span> &lt;&lt; name &lt;&lt; <span class="string">&quot;&#x27;\n&quot;</span>;</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> F;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 把module中名为name的全局变量的初始值设为value</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setGV</span><span class="params">(Module &amp;M, StringRef name, <span class="type">size_t</span> value)</span> </span>&#123;</span><br><span class="line">    GlobalVariable* GV = M.<span class="built_in">getNamedGlobal</span>(name);</span><br><span class="line">    <span class="keyword">if</span>(!GV) &#123;</span><br><span class="line">        <span class="built_in">errs</span>() &lt;&lt; <span class="string">&quot;Error: no &quot;</span> &lt;&lt; name &lt;&lt; <span class="string">&quot; global variable found\n&quot;</span>;</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    Type *Ty = GV-&gt;<span class="built_in">getType</span>()-&gt;<span class="built_in">getPointerElementType</span>();</span><br><span class="line">    Constant *Val = ConstantInt::<span class="built_in">get</span>(Ty, value);</span><br><span class="line">    GV-&gt;<span class="built_in">setInitializer</span>(Val);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数参数是否有指针类型</span></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">bool</span> <span class="title">hasPointerArg</span><span class="params">(Function *F)</span> </span>&#123;</span><br><span class="line">    FunctionType *FT = F-&gt;<span class="built_in">getFunctionType</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">unsigned</span> i = <span class="number">0</span>, n = FT-&gt;<span class="built_in">getNumParams</span>(); i &lt; n; i++) &#123;</span><br><span class="line">        Type *type = FT-&gt;<span class="built_in">getParamType</span>(i);</span><br><span class="line">        <span class="keyword">if</span> (type-&gt;<span class="built_in">isPointerTy</span>())</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回是否直接调用了白名单section中的函数</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">callsIntoWhitelistedFunction</span><span class="params">(CallSite &amp;CS)</span> </span>&#123;</span><br><span class="line">    Function *F = CS.<span class="built_in">getCalledFunction</span>();</span><br><span class="line">    <span class="keyword">if</span> (!F) <span class="comment">// Indirect call</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">return</span> F-&gt;<span class="built_in">getSection</span>() == WhitelistSection;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Determines whether an instruction should be allowed access to the safe region</span></span><br><span class="line"><span class="comment"> * (i.e., a previous pass has marked it as such).</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">isAllowedAccess</span><span class="params">(Instruction *I)</span> </span>&#123;</span><br><span class="line">    MDNode *MD = I-&gt;<span class="built_in">getMetadata</span>(MemSentrySafeMDName);</span><br><span class="line">    <span class="keyword">return</span> MD != <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Protection</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">MemSentryPass</span> : <span class="keyword">public</span> ModulePass &#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="type">static</span> <span class="type">char</span> ID;</span><br><span class="line">        <span class="built_in">MemSentryPass</span>() : <span class="built_in">ModulePass</span>(ID) &#123;&#125;</span><br><span class="line">        <span class="function"><span class="keyword">virtual</span> <span class="type">bool</span> <span class="title">runOnModule</span><span class="params">(Module &amp;M)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        Protection *prot;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">handleInst</span><span class="params">(Instruction *I)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Protection</span> &#123;</span><br><span class="line">    <span class="keyword">protected</span>:</span><br><span class="line">        Module *M;</span><br><span class="line">        InlineFunctionInfo *inliningInfo;</span><br><span class="line">        <span class="keyword">enum</span> <span class="title class_">prot_method</span> protMethod;</span><br><span class="line">        std::string protMethodStr;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="built_in">Protection</span>(Module *M, <span class="keyword">enum</span> prot_method protMethod) &#123;</span><br><span class="line">            <span class="keyword">this</span>-&gt;M = M;</span><br><span class="line">            <span class="keyword">this</span>-&gt;inliningInfo = <span class="keyword">new</span> <span class="built_in">InlineFunctionInfo</span>();</span><br><span class="line">            <span class="keyword">this</span>-&gt;protMethod = protMethod;</span><br><span class="line">            <span class="keyword">this</span>-&gt;protMethodStr = prot_method_strings[protMethod];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">virtual</span> ~<span class="built_in">Protection</span>() &#123; &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">handleLoadInst</span><span class="params">(LoadInst *LI)</span> </span>&#123;</span><br><span class="line">            <span class="built_in">handleMemInst</span>(LI);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">handleStoreInst</span><span class="params">(StoreInst *SI)</span> </span>&#123;</span><br><span class="line">            <span class="built_in">handleMemInst</span>(SI);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">handleLoadIntrinsic</span><span class="params">(MemTransferInst *MTI)</span> </span>&#123;</span><br><span class="line">            <span class="built_in">handleMemInst</span>(MTI);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">handleStoreIntrinsic</span><span class="params">(MemIntrinsic *MI)</span> </span>&#123;</span><br><span class="line">            <span class="built_in">handleMemInst</span>(MI);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">handleMemInst</span><span class="params">(Instruction *I)</span> </span>&#123;</span><br><span class="line">            <span class="built_in">assert</span>(<span class="number">0</span> &amp;&amp; <span class="string">&quot;Not implemented&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">handleCallInst</span><span class="params">(CallSite &amp;CS)</span> </span>= <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * Inline calls to _memsentry_&lt;protMethod&gt;*. This is done afterwards,</span></span><br><span class="line"><span class="comment">         * instead of immediately, so the optimizeBB function can more easily</span></span><br><span class="line"><span class="comment">         * see (and optimize) region changes.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">inlineHelperCalls</span><span class="params">(Function &amp;F)</span> </span>&#123;</span><br><span class="line">            <span class="type">bool</span> has_changed;</span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                has_changed = <span class="literal">false</span>;</span><br><span class="line">                <span class="keyword">for</span> (inst_iterator it = <span class="built_in">inst_begin</span>(F), E = <span class="built_in">inst_end</span>(F); it != E; ++it) &#123;</span><br><span class="line">                    Instruction *I = &amp;(*it);</span><br><span class="line">                    CallInst *CI = <span class="built_in">dyn_cast</span>&lt;CallInst&gt;(I);</span><br><span class="line">                    <span class="comment">// 不是call指令</span></span><br><span class="line">                    <span class="keyword">if</span> (!CI)</span><br><span class="line">                        <span class="keyword">continue</span>;</span><br><span class="line">                    Function *F = CI-&gt;<span class="built_in">getCalledFunction</span>();</span><br><span class="line">                    <span class="keyword">if</span> (!F)</span><br><span class="line">                        <span class="keyword">continue</span>;</span><br><span class="line">                    <span class="comment">// 是memsentry插入的指令</span></span><br><span class="line">                    <span class="keyword">if</span> (F-&gt;<span class="built_in">getName</span>().<span class="built_in">startswith</span>(<span class="string">&quot;_memsentry_&quot;</span> + protMethodStr)) &#123;</span><br><span class="line">                        <span class="built_in">InlineFunction</span>(CI, *inliningInfo);</span><br><span class="line">                        has_changed = <span class="literal">true</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">while</span> (has_changed);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 将应该处理的函数中的_memsentry_&lt;protMethod&gt;*全部inline</span></span><br><span class="line">        <span class="comment">// 此方法在domainprotection中被重载</span></span><br><span class="line">        <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">postInstrumentation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">for</span> (Function &amp;F : *M) &#123;</span><br><span class="line">                <span class="keyword">if</span> (!<span class="built_in">shouldInstrument</span>(F, &amp;WhitelistSection))</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                <span class="built_in">inlineHelperCalls</span>(F);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// addressprotection即通过把地址空间分开，访问时通过pass对指针加mask的方式保护sensitive region</span></span><br><span class="line"><span class="comment">// 在static文件夹中inline实现了两个方法，分别是mpx和sfi</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AddressProtection</span> : <span class="keyword">public</span> Protection &#123;</span><br><span class="line">    <span class="keyword">protected</span>:</span><br><span class="line">        Function *checkFunc; <span class="comment">// 具体mpx/sfi函数，其参数为一个指针</span></span><br><span class="line"></span><br><span class="line">        <span class="function">Value* <span class="title">verifyPtr</span><span class="params">(Value *ptrVal, Instruction *I)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// 不处理</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">isa</span>&lt;Constant&gt;(ptrVal)) &#123;</span><br><span class="line">                <span class="comment">//LOG_LINE(&quot;+ Ignoring constant &quot; &lt;&lt; *I);</span></span><br><span class="line">                <span class="keyword">return</span> ptrVal;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//LOG_LINE(&quot;Masking &quot; &lt;&lt; *I);</span></span><br><span class="line">            <span class="comment">// 使用IRBuilder在I前插入语句块</span></span><br><span class="line">            IRBuilder&lt;&gt; <span class="built_in">B</span>(I);</span><br><span class="line">            <span class="comment">// 把ptrVal转换成checkFunc的第一个参数的类型</span></span><br><span class="line">            Value *funcArg = B.<span class="built_in">CreateBitCast</span>(ptrVal, checkFunc-&gt;<span class="built_in">getFunctionType</span>()-&gt;<span class="built_in">getParamType</span>(<span class="number">0</span>));</span><br><span class="line">            <span class="comment">// 即语句masked = checkFunc(funcArg)</span></span><br><span class="line">            Value *masked = B.<span class="built_in">CreateCall</span>(checkFunc, &#123; funcArg &#125;);</span><br><span class="line">            <span class="comment">// 把masked转换成ptrVal的值</span></span><br><span class="line">            Value *casted = B.<span class="built_in">CreateBitCast</span>(masked, ptrVal-&gt;<span class="built_in">getType</span>());</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 这里有个问题，不需要把ptrVal赋值为casted吗？</span></span><br><span class="line">            <span class="comment">// 最后ptrVal的值肯定被修改了（否则这个函数就没用了）</span></span><br><span class="line">            <span class="comment">// 但是怎么修改的呢？</span></span><br><span class="line">            <span class="keyword">return</span> casted;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="comment">// 复用protection构造函数</span></span><br><span class="line">        <span class="comment">// checkFunc从module中找_memsentry_xxx，如_memsentry_mpx</span></span><br><span class="line">        <span class="built_in">AddressProtection</span>(Module *M, <span class="keyword">enum</span> prot_method protMethod)</span><br><span class="line">            : <span class="built_in">Protection</span>(M, protMethod) &#123;</span><br><span class="line">                std::string checkFuncName = <span class="string">&quot;_memsentry_&quot;</span> + protMethodStr;</span><br><span class="line">                checkFunc = <span class="built_in">getHelperFunc</span>(M, checkFuncName);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 下面四个函数很简单，将访问地址的相应指针通过调用verifyPtr加上mask</span></span><br><span class="line">        <span class="comment">// 加上mask的指针就能够访问sensitive region了</span></span><br><span class="line">        <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">handleLoadInst</span><span class="params">(LoadInst *LI)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="built_in">isAllowedAccess</span>(LI))</span><br><span class="line">                LI-&gt;<span class="built_in">setOperand</span>(<span class="number">0</span>, <span class="built_in">verifyPtr</span>(LI-&gt;<span class="built_in">getOperand</span>(<span class="number">0</span>), LI));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">handleStoreInst</span><span class="params">(StoreInst *SI)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="built_in">isAllowedAccess</span>(SI))</span><br><span class="line">                SI-&gt;<span class="built_in">setOperand</span>(<span class="number">1</span>, <span class="built_in">verifyPtr</span>(SI-&gt;<span class="built_in">getOperand</span>(<span class="number">1</span>), SI));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">handleLoadIntrinsic</span><span class="params">(MemTransferInst *MTI)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="built_in">isAllowedAccess</span>(MTI))</span><br><span class="line">                MTI-&gt;<span class="built_in">setSource</span>(<span class="built_in">verifyPtr</span>(MTI-&gt;<span class="built_in">getRawSource</span>(), MTI));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">handleStoreIntrinsic</span><span class="params">(MemIntrinsic *MI)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="built_in">isAllowedAccess</span>(MI))</span><br><span class="line">                MI-&gt;<span class="built_in">setDest</span>(<span class="built_in">verifyPtr</span>(MI-&gt;<span class="built_in">getRawDest</span>(), MI));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* Verify pointer args to external functions if flag is set. */</span></span><br><span class="line">        <span class="comment">// 处理call/invoke函数</span></span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">handleCallInst</span><span class="params">(CallSite &amp;CS)</span> </span>&#123;</span><br><span class="line">            Function *F = CS.<span class="built_in">getCalledFunction</span>();</span><br><span class="line">            <span class="comment">// 用户指定不处理</span></span><br><span class="line">            <span class="keyword">if</span> (!VerifyExternalCallArguments)</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            <span class="comment">// 调用了白名单中的函数</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">callsIntoWhitelistedFunction</span>(CS))</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            <span class="comment">// 不处理内联asm</span></span><br><span class="line">            <span class="keyword">if</span> (CS.<span class="built_in">isInlineAsm</span>())</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            <span class="comment">// 简洁调用</span></span><br><span class="line">            <span class="keyword">if</span> (!F)</span><br><span class="line">                <span class="keyword">return</span>; <span class="comment">/* Indirect call */</span></span><br><span class="line">            <span class="comment">// 不处理内部函数</span></span><br><span class="line">            <span class="keyword">if</span> (!F-&gt;<span class="built_in">isDeclaration</span>() &amp;&amp; !F-&gt;<span class="built_in">isDeclarationForLinker</span>())</span><br><span class="line">                <span class="keyword">return</span>; <span class="comment">/* Not external */</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 是intrinsic函数而且函数参数有指针，则需要判断</span></span><br><span class="line">            <span class="comment">// 只处理memcpy,memmove,memset,vastart,vacopy,vaend</span></span><br><span class="line">            <span class="keyword">if</span> (F-&gt;<span class="built_in">isIntrinsic</span>() &amp;&amp; <span class="built_in">hasPointerArg</span>(F)) &#123;</span><br><span class="line">                <span class="keyword">switch</span> (F-&gt;<span class="built_in">getIntrinsicID</span>()) &#123;</span><br><span class="line">                    <span class="keyword">case</span> Intrinsic::dbg_declare:</span><br><span class="line">                    <span class="keyword">case</span> Intrinsic::dbg_value:</span><br><span class="line">                    <span class="keyword">case</span> Intrinsic::lifetime_start:</span><br><span class="line">                    <span class="keyword">case</span> Intrinsic::lifetime_end:</span><br><span class="line">                    <span class="keyword">case</span> Intrinsic::invariant_start:</span><br><span class="line">                    <span class="keyword">case</span> Intrinsic::invariant_end:</span><br><span class="line">                    <span class="keyword">case</span> Intrinsic::eh_typeid_for:</span><br><span class="line">                    <span class="keyword">case</span> Intrinsic::eh_return_i32:</span><br><span class="line">                    <span class="keyword">case</span> Intrinsic::eh_return_i64:</span><br><span class="line">                    <span class="keyword">case</span> Intrinsic::eh_sjlj_functioncontext:</span><br><span class="line">                    <span class="keyword">case</span> Intrinsic::eh_sjlj_setjmp:</span><br><span class="line">                    <span class="keyword">case</span> Intrinsic::eh_sjlj_longjmp:</span><br><span class="line">                        <span class="keyword">return</span>; <span class="comment">/* No masking */</span></span><br><span class="line">                    <span class="keyword">case</span> Intrinsic::memcpy:</span><br><span class="line">                    <span class="keyword">case</span> Intrinsic::memmove:</span><br><span class="line">                    <span class="keyword">case</span> Intrinsic::memset:</span><br><span class="line">                    <span class="keyword">case</span> Intrinsic::vastart:</span><br><span class="line">                    <span class="keyword">case</span> Intrinsic::vacopy:</span><br><span class="line">                    <span class="keyword">case</span> Intrinsic::vaend:</span><br><span class="line">                        <span class="keyword">break</span>; <span class="comment">/* Continue with masking */</span></span><br><span class="line">                    <span class="keyword">default</span>:</span><br><span class="line">                        <span class="built_in">errs</span>() &lt;&lt; <span class="string">&quot;Unhandled intrinsic that takes pointer: &quot;</span> &lt;&lt; *F &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">                        <span class="keyword">break</span>; <span class="comment">/* Do mask to be sure. */</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 对所有参数中的指针执行verifyPtr进行mask</span></span><br><span class="line">            Instruction *I = CS.<span class="built_in">getInstruction</span>();</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">unsigned</span> i = <span class="number">0</span>, n = CS.<span class="built_in">getNumArgOperands</span>(); i &lt; n; i++) &#123;</span><br><span class="line">                Value *Arg = CS.<span class="built_in">getArgOperand</span>(i);</span><br><span class="line">                <span class="keyword">if</span> (Arg-&gt;<span class="built_in">getType</span>()-&gt;<span class="built_in">isPointerTy</span>())&#123;</span><br><span class="line">                    Value *MaskedArg = <span class="built_in">verifyPtr</span>(Arg, I);</span><br><span class="line">                    CS.<span class="built_in">getInstruction</span>()-&gt;<span class="built_in">setOperand</span>(i, MaskedArg);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// domainprotection在调用是设置相关区域有效（论文是这么说的）</span></span><br><span class="line"><span class="comment">// 通用的接口需要包括begin和end两个函数，一般是用于控制相应区域的active程度，类似于switch开关的实现</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DomainProtection</span> : <span class="keyword">public</span> Protection &#123;</span><br><span class="line">    <span class="keyword">protected</span>:</span><br><span class="line">        Function *beginFunc, *endFunc;</span><br><span class="line">        std::string beginFuncName, endFuncName;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 在instruction前后插入beginFunc和endFunc</span></span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">changeDomain</span><span class="params">(Instruction *I)</span> </span>&#123;</span><br><span class="line">            CallInst *CIb = CallInst::<span class="built_in">Create</span>(beginFunc);</span><br><span class="line">            CIb-&gt;<span class="built_in">insertBefore</span>(I);</span><br><span class="line">            CallInst *CIe = CallInst::<span class="built_in">Create</span>(endFunc);</span><br><span class="line">            CIe-&gt;<span class="built_in">insertAfter</span>(I);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * Optimizes a basicblock by merging regions which have no mem accesses</span></span><br><span class="line"><span class="comment">         * or so in between, thus eliminating needless switching of regions.</span></span><br><span class="line"><span class="comment">         * Returns true if the function needs to be called again: when a</span></span><br><span class="line"><span class="comment">         * modification to a BB is made, it cannot continue iterating over that</span></span><br><span class="line"><span class="comment">         * BB.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="comment">// 像上面说的，如果两组beginFunc/endFunc之间没有meminst，那么去掉中间的endFunc和beginFunc</span></span><br><span class="line">        <span class="function"><span class="type">bool</span> <span class="title">optimizeBB</span><span class="params">(BasicBlock &amp;BB)</span> </span>&#123;</span><br><span class="line">            <span class="type">bool</span> inMap = <span class="literal">false</span>; <span class="comment">// 是否在beginFunc和endFunc之间</span></span><br><span class="line">            <span class="type">bool</span> noMemSinceUnmap = <span class="literal">false</span>;</span><br><span class="line">            Instruction *lastUnmap = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (Instruction &amp;II : BB) &#123;</span><br><span class="line">                Instruction *I = &amp;II;</span><br><span class="line">                LoadInst *LI = <span class="built_in">dyn_cast</span>&lt;LoadInst&gt;(I);</span><br><span class="line">                StoreInst *SI = <span class="built_in">dyn_cast</span>&lt;StoreInst&gt;(I);</span><br><span class="line">                MemIntrinsic *MI = <span class="built_in">dyn_cast</span>&lt;MemIntrinsic&gt;(I);</span><br><span class="line">                CallInst *CI = <span class="built_in">dyn_cast</span>&lt;CallInst&gt;(I);</span><br><span class="line">                <span class="keyword">if</span> (LI || SI || MI)</span><br><span class="line">                    noMemSinceUnmap = <span class="literal">false</span>;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (CI) &#123;</span><br><span class="line">                    Function *F = CI-&gt;<span class="built_in">getCalledFunction</span>();</span><br><span class="line">                    <span class="keyword">if</span> (!F)</span><br><span class="line">                        <span class="keyword">continue</span>;</span><br><span class="line">                    <span class="keyword">if</span> (F-&gt;<span class="built_in">getName</span>() == beginFuncName) &#123;</span><br><span class="line">                        <span class="built_in">assert</span>(!inMap);</span><br><span class="line">                        inMap = <span class="literal">true</span>;</span><br><span class="line">                        <span class="comment">// 之前有一个endFunc，存在lastUnmap中，并且没有LI/SI/MI</span></span><br><span class="line">                        <span class="comment">// 则把这个beginFunc和上一个endFunc去掉</span></span><br><span class="line">                        <span class="comment">// 然后直接返回</span></span><br><span class="line">                        <span class="keyword">if</span> (noMemSinceUnmap) &#123;</span><br><span class="line">                            lastUnmap-&gt;<span class="built_in">eraseFromParent</span>();</span><br><span class="line">                            I-&gt;<span class="built_in">eraseFromParent</span>();</span><br><span class="line">                            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span> (F-&gt;<span class="built_in">getName</span>() == endFuncName) &#123;</span><br><span class="line">                        <span class="built_in">assert</span>(inMap);</span><br><span class="line">                        inMap = <span class="literal">false</span>;</span><br><span class="line">                        noMemSinceUnmap = <span class="literal">true</span>;</span><br><span class="line">                        lastUnmap = I;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span> &#123;</span><br><span class="line">                        noMemSinceUnmap = <span class="literal">false</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            (<span class="type">void</span>)inMap; <span class="comment">/* Silence compiler, assert doesn&#x27;t count as use. */</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">        <span class="built_in">DomainProtection</span>(Module *M, <span class="keyword">enum</span> prot_method protMethod)</span><br><span class="line">            : <span class="built_in">Protection</span>(M, protMethod) &#123;</span><br><span class="line">                beginFuncName = <span class="string">&quot;_memsentry_&quot;</span> + protMethodStr + <span class="string">&quot;_begin&quot;</span>;</span><br><span class="line">                endFuncName = <span class="string">&quot;_memsentry_&quot;</span> + protMethodStr + <span class="string">&quot;_end&quot;</span>;</span><br><span class="line">                beginFunc = <span class="built_in">getHelperFunc</span>(M, beginFuncName);</span><br><span class="line">                endFunc = <span class="built_in">getHelperFunc</span>(M, endFuncName);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对domain来说load/store/intrinsic都是调用meminst</span></span><br><span class="line">        <span class="comment">// 对于每一条需要修改的instruction，调用changedomain</span></span><br><span class="line">        <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">handleMemInst</span><span class="params">(Instruction *I)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">isAllowedAccess</span>(I))</span><br><span class="line">                <span class="built_in">changeDomain</span>(I);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">handleCallInst</span><span class="params">(CallSite &amp;CS)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">callsIntoWhitelistedFunction</span>(CS))</span><br><span class="line">                <span class="built_in">changeDomain</span>(CS.<span class="built_in">getInstruction</span>());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">        <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">postInstrumentation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="comment">// Optimize domain-based instrumentation by removing unnecessary</span></span><br><span class="line">            <span class="comment">// switches back and forth.</span></span><br><span class="line">            <span class="keyword">for</span> (Function &amp;F : *M) &#123;</span><br><span class="line">                <span class="keyword">if</span> (!<span class="built_in">shouldInstrument</span>(F, &amp;WhitelistSection))</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">for</span> (BasicBlock &amp;BB : F) &#123;</span><br><span class="line">                    <span class="type">unsigned</span> cnt = <span class="number">0</span>;</span><br><span class="line">                    <span class="comment">// 优化直到没有需要合并的domain switch</span></span><br><span class="line">                    <span class="keyword">while</span> (<span class="built_in">optimizeBB</span>(BB)) cnt++;</span><br><span class="line">                    <span class="comment">//LOG_LINE(&quot;Optimized away &quot; &lt;&lt; cnt &lt;&lt; &quot; domain switches in &quot; &lt;&lt; F.getName());</span></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="built_in">inlineHelperCalls</span>(F);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 根据prot_method返回新建protection实例指针</span></span><br><span class="line"><span class="function"><span class="type">static</span> Protection* <span class="title">getProtectionInstance</span><span class="params">(Module *M, <span class="keyword">enum</span> prot_method protMethod)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span>(protMethod) &#123;</span><br><span class="line">        <span class="keyword">case</span> SFI:</span><br><span class="line">        <span class="keyword">case</span> MPX:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">AddressProtection</span>(M, protMethod);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> VMFUNC:</span><br><span class="line">        <span class="keyword">case</span> MPK:</span><br><span class="line">        <span class="keyword">case</span> CRYPT:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">DomainProtection</span>(M, protMethod);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="built_in">assert</span>(<span class="number">0</span> &amp;&amp; <span class="string">&quot;Not implemented!&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 处理四种指令：load、store、memintrinsic、call/invoke</span></span><br><span class="line"><span class="comment"> * 具体处理指令的步骤交给protection实例prot完成</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MemSentryPass::handleInst</span><span class="params">(Instruction *I)</span> </span>&#123;</span><br><span class="line">    ifcast(LoadInst, LI, I) &#123;</span><br><span class="line">        <span class="keyword">if</span> (ReadWrite != WRITE)</span><br><span class="line">            prot-&gt;<span class="built_in">handleLoadInst</span>(LI);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> ifcast(StoreInst, SI, I) &#123;</span><br><span class="line">        <span class="keyword">if</span> (ReadWrite != READ)</span><br><span class="line">            prot-&gt;<span class="built_in">handleStoreInst</span>(SI);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> ifcast(MemIntrinsic, MI, I) &#123;</span><br><span class="line">        MemTransferInst *MTI = <span class="built_in">dyn_cast</span>&lt;MemTransferInst&gt;(MI);</span><br><span class="line">        <span class="keyword">if</span> (MTI &amp;&amp; ReadWrite != WRITE)</span><br><span class="line">            prot-&gt;<span class="built_in">handleLoadIntrinsic</span>(MTI);</span><br><span class="line">        <span class="keyword">if</span> (ReadWrite != READ)</span><br><span class="line">            prot-&gt;<span class="built_in">handleStoreIntrinsic</span>(MI);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">isa</span>&lt;CallInst&gt;(I) || <span class="built_in">isa</span>&lt;InvokeInst&gt;(I)) &#123;</span><br><span class="line">        CallSite <span class="built_in">CS</span>(I);</span><br><span class="line">        prot-&gt;<span class="built_in">handleCallInst</span>(CS);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 重载的runOnModule方法</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">MemSentryPass::runOnModule</span><span class="params">(Module &amp;M)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">LOG_LINE</span>(<span class="string">&quot;Starting, ProtMethod=&quot;</span> &lt;&lt; prot_method_strings[ProtMethod]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Fix up tracking variables so static lib knows compilation params</span></span><br><span class="line">    <span class="built_in">setGV</span>(M, <span class="string">&quot;_memsentry_prot_method&quot;</span>, ProtMethod);</span><br><span class="line">    <span class="built_in">setGV</span>(M, <span class="string">&quot;_memsentry_max_region_size&quot;</span>, MaxRegionSize);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Get right instrumentation class (address-based or domain-based)</span></span><br><span class="line">    <span class="keyword">this</span>-&gt;prot = <span class="built_in">getProtectionInstance</span>(&amp;M, ProtMethod);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遍历module中function</span></span><br><span class="line">    <span class="keyword">for</span> (Function &amp;F : M) &#123;</span><br><span class="line">        <span class="comment">// 在白名单则跳过</span></span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">shouldInstrument</span>(F, &amp;WhitelistSection))</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        <span class="built_in">LOG_LINE</span>(<span class="string">&quot;Instrumenting &quot;</span> &lt;&lt; F.<span class="built_in">getName</span>());</span><br><span class="line">        <span class="keyword">for</span> (inst_iterator II = <span class="built_in">inst_begin</span>(&amp;F), E = <span class="built_in">inst_end</span>(&amp;F); II != E; ++II) &#123;</span><br><span class="line">            Instruction *I = &amp;*II;</span><br><span class="line">            <span class="comment">// 正式处理</span></span><br><span class="line">            <span class="built_in">handleInst</span>(I);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Optimize inserted instrumentation further if need be.</span></span><br><span class="line">    <span class="built_in">LOG_LINE</span>(<span class="string">&quot;Optimizing...&quot;</span>);</span><br><span class="line">    <span class="keyword">this</span>-&gt;prot-&gt;<span class="built_in">postInstrumentation</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">char</span> MemSentryPass::ID = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// 注册</span></span><br><span class="line"><span class="function"><span class="type">static</span> RegisterPass&lt;MemSentryPass&gt; <span class="title">X</span><span class="params">(<span class="string">&quot;memsentry&quot;</span>, <span class="string">&quot;MemSentry pass&quot;</span>)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/llvm/" rel="tag"># llvm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/ssh-permissions-are-too-open-error.html" rel="next" title="ssh-permissions-are-too-open解决方法">
+                <i class="fa fa-chevron-left"></i> ssh-permissions-are-too-open解决方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/p4-learning.html" rel="prev" title="p4学习">
+                p4学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7Carchive">
+              
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/datawine" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#BenchDomain-cpp"><span class="nav-number">1.</span> <span class="nav-text">BenchDomain.cpp</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BenchDomainPost-cpp"><span class="nav-number">2.</span> <span class="nav-text">BenchDomainPost.cpp</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MenSentry-cpp"><span class="nav-number">3.</span> <span class="nav-text">MenSentry.cpp</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Datawine</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">23.1k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user">本站访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye">本站总访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cyw3QwzdC';
+      var conf = 'cbf53c79ec118123e02b0e1a5676be66';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

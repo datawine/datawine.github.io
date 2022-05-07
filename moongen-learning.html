@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="moongen," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="学习了一下MoonGen，主要参考官网和tutorial。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="moongen学习">
+<meta property="og:url" content="https://datawine.github.io/moongen-learning.html">
+<meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="学习了一下MoonGen，主要参考官网和tutorial。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-05-07T14:51:40.000Z">
+<meta property="article:modified_time" content="2022-05-07T14:51:59.321Z">
+<meta property="article:author" content="Datawine">
+<meta property="article:tag" content="moongen">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://datawine.github.io/moongen-learning.html"/>
+
+
+
+
+
+  <title>moongen学习 | Datawine's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Datawine's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/moongen-learning.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">moongen学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-07T22:51:40+08:00">
+                2022-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index">
+                    <span itemprop="name">工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/moongen-learning.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="moongen-learning.html" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>学习了一下MoonGen，主要参考官网和tutorial。</p>
+<span id="more"></span>
+
+<h1 id="usage-introduction"><a href="#usage-introduction" class="headerlink" title="usage introduction"></a>usage introduction</h1><h2 id="Device-setup"><a href="#Device-setup" class="headerlink" title="Device setup"></a>Device setup</h2><p><code>master</code>函数是必须的，用来进行设备的配置，一个简单的设置如下</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> device = <span class="built_in">require</span> <span class="string">&quot;device&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">master</span><span class="params">(txNum)</span></span></span><br><span class="line">    <span class="comment">-- use specified NIC number with</span></span><br><span class="line">    <span class="comment">-- no listening and one transmission queues</span></span><br><span class="line">    txDev = device.<span class="built_in">config</span>&#123;</span><br><span class="line">        port = txNum,</span><br><span class="line">        rxQueues = <span class="number">0</span>,</span><br><span class="line">        txQueues = <span class="number">1</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    device.waitForLinks()</span><br><span class="line">    send(txDev:getTxQueue(<span class="number">0</span>))</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>如果要用到receive filter configuration，要在创建的时候设置设备。在<code>device.config</code>中，设置<code>rssNQueues = N</code>，来创建<code>N</code>个队列。此外，还可以通过<code>rssFunctions</code>来控制hash值，选项有<code>RSS_FUNCTION_IPV4</code>，<code>.._IPV6</code>，<code>.._IPVX_TCP</code>，<code>.._IPVX_UDP</code>。示例如下：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> device = <span class="built_in">require</span> <span class="string">&quot;device&quot;</span></span><br><span class="line">txDev = device.<span class="built_in">config</span>&#123;</span><br><span class="line">    port = <span class="number">0</span>,</span><br><span class="line">    rxQueues = <span class="number">4</span>,</span><br><span class="line">    rssNQueues = <span class="number">4</span>,</span><br><span class="line">    rssFunctions = &#123;</span><br><span class="line">        device.RSS_FUNCTION_IPV4,</span><br><span class="line">        device.RSS_FUNCTION_IPV4_TCP,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="packet-generation"><a href="#packet-generation" class="headerlink" title="packet generation"></a>packet generation</h2><p>packets是异步发送、在memory buffer中生成的，所以需要一个在memory pool中的buffer array。</p>
+<p>因为大多数packets应该是一样的，所以一般通过一个函数定义。</p>
+<p>注意：应该在memory pool中定义packet的值，而不是在generation loop中，否则性能会大大下降。</p>
+<p>最简单的方法就是在char buffer中手动设置一个ethernet header，示例如下：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> dpdk = <span class="built_in">require</span> <span class="string">&quot;dpdk&quot;</span></span><br><span class="line"><span class="keyword">local</span> memory = <span class="built_in">require</span> <span class="string">&quot;memory&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">send</span><span class="params">(queue)</span></span></span><br><span class="line">    <span class="keyword">local</span> mem = memory.createMemPool(<span class="function"><span class="keyword">function</span><span class="params">(buf)</span></span></span><br><span class="line">        <span class="keyword">local</span> data = ffi.cast(<span class="string">&quot;uint8_t*&quot;</span>, buf.pkt.data)</span><br><span class="line">        <span class="keyword">for</span> i = <span class="number">0</span>, <span class="number">11</span> <span class="keyword">do</span></span><br><span class="line">            data[i] = i <span class="comment">-- fill in mac addresses</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        data[<span class="number">12</span>] = <span class="number">0x12</span> <span class="comment">-- set type to ethernet</span></span><br><span class="line">        data[<span class="number">13</span>] = <span class="number">0x34</span></span><br><span class="line">    <span class="keyword">end</span>)</span><br><span class="line">    <span class="keyword">local</span> bufs = mem:bufArray()</span><br><span class="line">    <span class="keyword">while</span> dpdk.<span class="built_in">running</span>()</span><br><span class="line">        bufs:alloc(<span class="number">60</span>) <span class="comment">-- size of each packet</span></span><br><span class="line">        <span class="comment">-- ⇑ sets up each packet with the function above</span></span><br><span class="line">        <span class="comment">-- ← here, single packets could be modified</span></span><br><span class="line">        queue:send(bufs) <span class="comment">-- schedule sending</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>简单一点，raw buffer可以先被转换成各种包的格式，然后直接填就可以了。在<code>lua/include/proto/</code>中可以找到定义的相应格式。比如：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> mem = memory.createMemPool(<span class="function"><span class="keyword">function</span><span class="params">(buf)</span></span></span><br><span class="line">    buf:getEthernetPacket():fill&#123;</span><br><span class="line">        ethSrc = txDev, <span class="comment">-- use device mac</span></span><br><span class="line">        ethDst = <span class="string">&quot;00:01:02:03:04:05&quot;</span>,</span><br><span class="line">        ethType = <span class="number">0x1234</span>,</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">end</span>)</span><br></pre></td></tr></table></figure>
+
+<p>如果要定义一种新的格式，按照<code>lua/include/proto/newProtocolTemplate.lua</code>的方式，拷贝并修改。</p>
+<p>如果要修改某一种特定的包，在分配buffer后和enqueue之前修改，方法类似。</p>
+<p>如果需要控制发包器的速度，通过调用函数<code>queue:setRate(MBit/s)</code></p>
+<p>如果需要暂停LuaJIT VM，通过<code>dpdk.sleepMillis(time)</code></p>
+<h2 id="running-parallel-tasks"><a href="#running-parallel-tasks" class="headerlink" title="running parallel tasks"></a>running parallel tasks</h2><p>为了支持并行，通过引入<code>dpdk.lauchLua(&quot;funcname&quot;, arg0, ...)</code>来用一个新的LuaJIT VM跑一个新的slave task。一般的调用方法为</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> dpdk = <span class="built_in">require</span> <span class="string">&quot;dpdk&quot;</span></span><br><span class="line">dpdk.launchLua(<span class="string">&quot;funcname&quot;</span>, arg0, ...)</span><br><span class="line">dpdk.waitForSlaves() <span class="comment">-- wait for child termination</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="statistics"><a href="#statistics" class="headerlink" title="statistics"></a>statistics</h2><p><code>stats</code>模块提供了统计功能，收集完数据之后，可以被写到<code>stdout</code>或者一些其他的文件中。支持的输出类型有<code>plain</code>，<code>csv</code>和<code>ini</code>。</p>
+<p>packet counter是和device绑定的，要创建一个新的packet counter，可以使用<code>rxCtr = stats:newDevRxCounter(device, &quot;plain&quot;)</code>或者<code>newDevTxCounter(..)</code>。</p>
+<p><code>newPktRxCounter(&quot;your counter name&quot;, &quot;plain&quot;)</code>或者<code>newPktTxCounter(..)</code>可以通过调用它的<code>countPacket(singleBuffer)</code>来将packet buffer传递给它们来实现更新。</p>
+<p><code>newManualTxCounter(&quot;your counter name&quot;, &quot;plain&quot;)</code>可以手动计数。可以通过<code>updateWithSize(packet_count, each_size)</code>来更新。</p>
+<p>对于所有counter，<code>update()</code>方法都可以频繁调用，可以显示当前数据。</p>
+<p><code>histogram</code>模块可以收集频率方面的数据。</p>
+<p>下面的示例使用了device和package两种计数器，packet size记在histogram里。</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> dpdk = <span class="built_in">require</span> <span class="string">&quot;dpdk&quot;</span></span><br><span class="line"><span class="keyword">local</span> device = <span class="built_in">require</span> <span class="string">&quot;device&quot;</span></span><br><span class="line"><span class="keyword">local</span> histogram = <span class="built_in">require</span> <span class="string">&quot;histogram&quot;</span></span><br><span class="line"><span class="keyword">local</span> memory = <span class="built_in">require</span> <span class="string">&quot;memory&quot;</span></span><br><span class="line"><span class="keyword">local</span> stats = <span class="built_in">require</span> <span class="string">&quot;stats&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">master</span><span class="params">(rxPort, saveInterval)</span></span></span><br><span class="line">    <span class="keyword">local</span> saveInterval = saveInterval <span class="keyword">or</span> <span class="number">60</span></span><br><span class="line">    <span class="keyword">local</span> rxDev = device.<span class="built_in">config</span>&#123;</span><br><span class="line">        port = rxPort,</span><br><span class="line">        dropEnable = <span class="literal">false</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    device.waitForLinks()</span><br><span class="line">    <span class="keyword">local</span> queue = rxDev:getRxQueue(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">local</span> bufs = memory.bufArray()</span><br><span class="line">    <span class="comment">-- create the device receive counter</span></span><br><span class="line">    <span class="keyword">local</span> rxCtr = stats:newDevRxCounter(queue.dev)</span><br><span class="line">    <span class="comment">-- and the packet receive counter to detect</span></span><br><span class="line">    <span class="comment">-- packets that were dropped on the NICNIC</span></span><br><span class="line">    <span class="keyword">local</span> pktCtr = stats:newPktRxCounter(<span class="string">&quot;pkts&quot;</span>, <span class="string">&quot;plain&quot;</span>)</span><br><span class="line">    <span class="keyword">local</span> hist = histogram:<span class="built_in">create</span>()</span><br><span class="line">    <span class="keyword">local</span> timer = timer:new(saveInterval)</span><br><span class="line">    <span class="keyword">while</span> dpdk.<span class="built_in">running</span>() <span class="keyword">do</span></span><br><span class="line">        <span class="comment">-- wait max 100ms for new data</span></span><br><span class="line">        <span class="keyword">local</span> rx = queue:tryRecv(bufs, <span class="number">100</span>)</span><br><span class="line">        <span class="keyword">for</span> i = <span class="number">1</span>, rx <span class="keyword">do</span></span><br><span class="line">            <span class="keyword">local</span> buf = bufs[i]</span><br><span class="line">            <span class="keyword">local</span> size = buf:getSize()</span><br><span class="line">            hist:update(size)</span><br><span class="line">            pktCtr:countPacket(buf)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        bufs:free(rx)</span><br><span class="line">        rxCtr:update()</span><br><span class="line">        pktCtr:update()</span><br><span class="line">        <span class="keyword">if</span> timer:expired() <span class="keyword">then</span></span><br><span class="line">            timer:reset()</span><br><span class="line">            hist:<span class="built_in">print</span>()</span><br><span class="line">            hist:save(<span class="string">&quot;packet_sizes.csv&quot;</span>)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="comment">-- and print statistics, those should be the same.</span></span><br><span class="line">    rxCtr:finalize()</span><br><span class="line">    pktCtr:finalize()</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>如果要使用manual counter，可以通过<code>queue:send()</code>的返回值来实时更新。注意到发送动作是异步的，但是返回值仍然可以用来做计数。和之前的一样，<code>finalize()</code>函数可以用来输出最终结果。而<code>updateWithSize()</code>输出每一秒的实时结果。示例如下：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">send</span><span class="params">(queue)</span></span></span><br><span class="line">    <span class="keyword">local</span> mem = ...</span><br><span class="line">    <span class="keyword">local</span> packetSize = <span class="number">250</span></span><br><span class="line">    <span class="comment">-- create manual counter</span></span><br><span class="line">    <span class="keyword">local</span> txCtr = stats:newManualTxCounter(port, <span class="string">&quot;plain&quot;</span>)</span><br><span class="line">    <span class="keyword">local</span> bufs = mem:bufArray()</span><br><span class="line">    <span class="keyword">while</span> dpdk.<span class="built_in">running</span>() <span class="keyword">do</span></span><br><span class="line">        bufs:alloc(packetSize)</span><br><span class="line">        bufs:offloadUdpChecksums()</span><br><span class="line">        <span class="keyword">local</span> sentCount = queue:send(bufs)</span><br><span class="line">        <span class="comment">-- register new data: sentCount * packetSize</span></span><br><span class="line">        txCtr:updateWithSize(sentCount, packetSize)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">	txCtr:finalize()</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>同时也可以在接收包的时候，可以对包的一些特定内容进行统计。示例如下：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">recv</span><span class="params">(queue)</span></span></span><br><span class="line">    <span class="keyword">local</span> bufs = memory.bufArray()</span><br><span class="line">    <span class="keyword">local</span> counters = &#123;&#125;</span><br><span class="line">    <span class="keyword">while</span> dpdk.<span class="built_in">running</span>() <span class="keyword">do</span></span><br><span class="line">        <span class="comment">-- block until some data was received</span></span><br><span class="line">        <span class="keyword">local</span> rx = queue:recv(bufs)</span><br><span class="line">        <span class="keyword">for</span> i = <span class="number">1</span>, rx <span class="keyword">do</span></span><br><span class="line">            <span class="keyword">local</span> buf = bufs[i]</span><br><span class="line">            <span class="comment">-- cast the buffer to a known protocol</span></span><br><span class="line">            <span class="keyword">local</span> port = buf:getUdpPacket().udp:getDstPort()</span><br><span class="line">            <span class="keyword">local</span> ctr = counters[port]</span><br><span class="line">            <span class="comment">-- create counters dynamically</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> ctr <span class="keyword">then</span></span><br><span class="line">                ctr = stats:newPktRxCounter(port, <span class="string">&quot;plain&quot;</span>)</span><br><span class="line">                counters[port] = ctr</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="comment">-- record the packet</span></span><br><span class="line">            ctr:countPacket(buf)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        bufs:freeAll()</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="comment">-- for each observed destination port, print stats:</span></span><br><span class="line">    <span class="keyword">for</span> _, ctr <span class="keyword">in</span> <span class="built_in">pairs</span>(counters) <span class="keyword">do</span></span><br><span class="line">        ctr:finalize()</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="timestamping"><a href="#timestamping" class="headerlink" title="timestamping"></a>timestamping</h2><p>用来测时间戳的包定义在<code>lua/include/proto/ptp.lua</code>。可以通过<code>timestamping:newTimestamper(txq, rxq)</code>来创造一个新的timestamper。创建的timestamper可以在l2层使用，或者也可以通过udp传输。</p>
+<p>以下的例子在两个queue之间每隔0.01s测量一次延迟。</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> ts = <span class="built_in">require</span> <span class="string">&quot;timestamping&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">timerTask</span><span class="params">(txq, rxq, size)</span></span></span><br><span class="line">    <span class="comment">-- create the timestamper for measuring</span></span><br><span class="line">    <span class="comment">-- between those queues</span></span><br><span class="line">    <span class="keyword">local</span> timestamper = ts:newTimestamper(txq, rxq)</span><br><span class="line">    <span class="keyword">local</span> hist = histogram:new()</span><br><span class="line">    <span class="keyword">local</span> rateLimiter = timer:new(<span class="number">0.01</span>)</span><br><span class="line">    <span class="keyword">while</span> dpdk.<span class="built_in">running</span>() <span class="keyword">do</span></span><br><span class="line">        rateLimiter:reset()</span><br><span class="line">        hist:update(timestamper:measureLatency(size))</span><br><span class="line">        rateLimiter:busyWait()</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    hist:<span class="built_in">print</span>()</span><br><span class="line">    hist:save(<span class="string">&quot;histogram.csv&quot;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="task-communication"><a href="#task-communication" class="headerlink" title="task communication"></a>task communication</h2><p>moongen提供两种交流的方法。</p>
+<p>一种是pipes。一般在一个公共背景下创建pipe，比如master函数。以下就是一个示例：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> pipe = <span class="built_in">require</span> <span class="string">&quot;pipe&quot;</span></span><br><span class="line"><span class="comment">-- create a new pipe in the parent task</span></span><br><span class="line"><span class="keyword">local</span> p = pipe:newSlowPipe()</span><br><span class="line">p:send(<span class="number">0</span>, <span class="number">13</span>, <span class="number">37</span>, <span class="number">42</span>) <span class="comment">-- send array</span></span><br><span class="line">p:send(<span class="string">&quot;the cake is a lie&quot;</span>) <span class="comment">-- send string</span></span><br><span class="line"><span class="comment">-- or send a table</span></span><br><span class="line">p:send(&#123;<span class="number">235</span>, lol = <span class="string">&quot;rofl&quot;</span>, subtable = &#123;<span class="number">1</span>&#125;&#125;)</span><br><span class="line"><span class="comment">-- number of waiting messages</span></span><br><span class="line"><span class="keyword">local</span> enqueued = p:count()</span><br><span class="line"><span class="comment">-- receiving</span></span><br><span class="line"><span class="keyword">local</span> a, b, c, d = p:recv() <span class="comment">-- equals tryRecv(10)</span></span><br><span class="line"><span class="keyword">local</span> txt = p:tryRecv(<span class="number">100</span>) <span class="comment">-- wait time microseconds</span></span><br><span class="line"><span class="comment">-- and return answer</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- pass this pipe when creating another task</span></span><br><span class="line"><span class="comment">-- it can then access it like above.</span></span><br><span class="line">dpdk.launchLua(<span class="string">&quot;somefunnction&quot;</span>, p)</span><br><span class="line">dpdk.waitForSlaves()</span><br></pre></td></tr></table></figure>
+
+<p>另一种是namespace，就是在LuaJIT VM之间声明用lua table表示的全局变量。</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> dpdk = <span class="built_in">require</span> <span class="string">&quot;dpdk&quot;</span></span><br><span class="line"><span class="keyword">local</span> namespaces = <span class="built_in">require</span> <span class="string">&quot;namespaces&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">master</span><span class="params">()</span></span></span><br><span class="line">    <span class="keyword">local</span> space = namespaces:get(<span class="string">&quot;mine&quot;</span>)</span><br><span class="line">    space.<span class="built_in">string</span> = <span class="string">&quot;data!&quot;</span></span><br><span class="line">    space.answer = <span class="number">42</span></span><br><span class="line">    space.<span class="built_in">table</span> = &#123; black = <span class="string">&quot;mesa&quot;</span>, &#123; <span class="number">1</span> &#125; &#125;</span><br><span class="line">    dpdk.launchLua(<span class="string">&quot;slave&quot;</span>):wait()</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">slave</span><span class="params">()</span></span></span><br><span class="line">    <span class="comment">-- can access the same namespace!</span></span><br><span class="line">    <span class="keyword">local</span> slavespace = namespaces:get(<span class="string">&quot;mine&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;data? &quot;</span> .. slavespace.<span class="built_in">string</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="traffic-patterns"><a href="#traffic-patterns" class="headerlink" title="traffic patterns"></a>traffic patterns</h2><p>有的时候网卡只支持固定速度，而却需要人为降速，这个时候moongen会通过在包之间添加gap（就是在空隙发送损坏的包）来达到降速的效果。</p>
+<p>可以通过<code>buf.setDelay(bytes)</code>来设置延时，如果要设置随机延时，有泊松分布的延时产生<code>poissonDelay(average_wait)</code>。示例如下：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">send</span><span class="params">(txDev)</span></span></span><br><span class="line">    <span class="keyword">local</span> mem = ...</span><br><span class="line">    <span class="keyword">local</span> bufs = mem:bufArray()</span><br><span class="line">    <span class="keyword">while</span> dpdk.<span class="built_in">running</span>() <span class="keyword">do</span></span><br><span class="line">        bufs:alloc(size)</span><br><span class="line">        <span class="keyword">for</span> _, buf <span class="keyword">in</span> <span class="built_in">ipairs</span>(bufs) <span class="keyword">do</span></span><br><span class="line">            <span class="keyword">local</span> avg = rateToByteDelay(rate, size)</span><br><span class="line">            <span class="keyword">local</span> delay = poissonDelay(avg)</span><br><span class="line">            buf:setDelay(delay)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        queue:sendWithDelay(bufs)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/moongen/" rel="tag"># moongen</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/p4-learning.html" rel="next" title="p4学习">
+                <i class="fa fa-chevron-left"></i> p4学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/lua-learning.html" rel="prev" title="lua学习">
+                lua学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7Carchive">
+              
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/datawine" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#usage-introduction"><span class="nav-number">1.</span> <span class="nav-text">usage introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Device-setup"><span class="nav-number">1.1.</span> <span class="nav-text">Device setup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#packet-generation"><span class="nav-number">1.2.</span> <span class="nav-text">packet generation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#running-parallel-tasks"><span class="nav-number">1.3.</span> <span class="nav-text">running parallel tasks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#statistics"><span class="nav-number">1.4.</span> <span class="nav-text">statistics</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#timestamping"><span class="nav-number">1.5.</span> <span class="nav-text">timestamping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#task-communication"><span class="nav-number">1.6.</span> <span class="nav-text">task communication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#traffic-patterns"><span class="nav-number">1.7.</span> <span class="nav-text">traffic patterns</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Datawine</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">23.1k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user">本站访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye">本站总访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cyw3QwzdC';
+      var conf = 'cbf53c79ec118123e02b0e1a5676be66';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
