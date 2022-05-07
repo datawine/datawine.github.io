@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/cl2vss00k0002gi02glda0q0h/</url>
+    <title>Hello-World</title>
+    <url>/hello-world/</url>
     <content><![CDATA[<p>重新搭建博客的第一篇blog</p>
-<span id="more"></span>
-
-<p>hidden: true</p>
-]]></content>
+<span id="more"></span>]]></content>
       <categories>
         <category>其他</category>
       </categories>
