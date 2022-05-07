@@ -13,9 +13,439 @@
       </tags>
   </entry>
   <entry>
+    <title>网络攻防：M1卡大实验</title>
+    <url>/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%EF%BC%9AM1%E5%8D%A1%E5%A4%A7%E5%AE%9E%E9%AA%8C/</url>
+    <content><![CDATA[<p>主要内容是校园一卡通系统的设计和实现，主要用到了arduino、electron、django、python实现。因为git上有详细的设计文档和实现，所以这里只是粘贴相应资源和最终报告。</p>
+<span id="more"></span>
+
+<h1 id="传送门"><a href="#传送门" class="headerlink" title="传送门"></a>传送门</h1><ul>
+<li>github仓库：<a href="https://github.com/datawine/arduino_m1_project">https://github.com/datawine/arduino_m1_project</a></li>
+<li>答辩幻灯片：<a href="https://github.com/datawine/arduino_m1_project/blob/master/%E7%AD%94%E8%BE%A9%E5%B9%BB%E7%81%AF%E7%89%87.pdf">https://github.com/datawine/arduino_m1_project/blob/master/%E7%AD%94%E8%BE%A9%E5%B9%BB%E7%81%AF%E7%89%87.pdf</a></li>
+</ul>
+<h1 id="智能卡大作业报告"><a href="#智能卡大作业报告" class="headerlink" title="智能卡大作业报告"></a>智能卡大作业报告</h1><h4 id="沈俊贤-计52-2015011258"><a href="#沈俊贤-计52-2015011258" class="headerlink" title="沈俊贤 计52 2015011258"></a>沈俊贤 计52 2015011258</h4><h4 id="周京汉-计52-2015011245"><a href="#周京汉-计52-2015011245" class="headerlink" title="周京汉 计52 2015011245"></a>周京汉 计52 2015011245</h4><h4 id="李睿燮-计55-2015080062"><a href="#李睿燮-计55-2015080062" class="headerlink" title="李睿燮 计55 2015080062"></a>李睿燮 计55 2015080062</h4><h2 id="一、背景与问题分析"><a href="#一、背景与问题分析" class="headerlink" title="一、背景与问题分析"></a>一、背景与问题分析</h2><h3 id="1、背景描述"><a href="#1、背景描述" class="headerlink" title="1、背景描述"></a>1、背景描述</h3><p>MIFARE MF1是符合ISO&#x2F;IEC 14443A的非接触智能卡。其通讯层（MIFARE RF 接口）符合ISO&#x2F;IEC 14443A标准的第2和第3部分。其安全层支持域检验的CRYPTO1数据流加密。因为其安全性、可靠性和简易性，常常使用M1卡进行个人信息的存储。</p>
+<h3 id="2、重点难点"><a href="#2、重点难点" class="headerlink" title="2、重点难点"></a>2、重点难点</h3><p>本实验的主要重点和难点在于：</p>
+<ul>
+<li>如何形成一套完整的系统，并且让子系统之间的通信和协作能够顺利和流畅的运行。</li>
+<li>如何形成用户友好的机制，因为这套系统最终的目标用户是可能完全不了解计算机的人群，所以如何让界面变得容易操作、让不规范操作变得能够容忍，也是非常重要的一件事情。</li>
+<li>由于涉及到了需要在M1卡上存储相关的学生信息，而这是一个完全独立的信息存储单元，必须保证信息的安全性和不被篡改的要求，所以对安全方面的考虑就变得格外重要。</li>
+</ul>
+<h2 id="二、实验原理与方案"><a href="#二、实验原理与方案" class="headerlink" title="二、实验原理与方案"></a>二、实验原理与方案</h2><h3 id="1、实验设计与问题解决"><a href="#1、实验设计与问题解决" class="headerlink" title="1、实验设计与问题解决"></a>1、实验设计与问题解决</h3><h4 id="M1卡压力读取："><a href="#M1卡压力读取：" class="headerlink" title="M1卡压力读取："></a>M1卡压力读取：</h4><p>我们设计了以下的情景来进行M1卡压力读取的测试：</p>
+<ul>
+<li>卡一直放在读卡器上的情况<ul>
+<li>解决方案：由arduino部分的硬件模块检测，每次在loop循环开始的时候检测是否是新卡，如果不是新卡，不进行任何操作。</li>
+</ul>
+</li>
+<li>卡连续短暂拿开放回<ul>
+<li>解决方案：主要的问题是会导致串口发送的信息重叠，无法分别是哪次读取的，为此我们引入了延迟，强制串口的信号在读取不同卡的时候相距0.5s。</li>
+</ul>
+</li>
+<li>卡在读&#x2F;写一半的时候拿开<ul>
+<li>解决方案：两侧的串口会监测串口中发送的内容，当卡移开的时候arduino会向客户端发送关闭信号，两侧都停止工作，等待下一次检测到卡的活动。</li>
+</ul>
+</li>
+<li>卡刚放上去就拿开<ul>
+<li>解决方案：在实验中，这种情况包含在了上一种情况之中。</li>
+</ul>
+</li>
+<li>门禁系统要求能够连续读卡<ul>
+<li>解决方案：门禁系统的连续读卡的要求令我们对一些可能产生错误的情况进行了宽松处理——如果发生错误不会退出程序，而是会发送门禁进入失败的信号，并且开始下一次检测。</li>
+</ul>
+</li>
+</ul>
+<h4 id="M1卡内加密："><a href="#M1卡内加密：" class="headerlink" title="M1卡内加密："></a>M1卡内加密：</h4><p>M1卡本身带有的安全机制是每扇区(四个块区)有一个trail block负责该扇区的读写权限. trail block的结构是keyA(6字节), access bits(4字节), keyB(6字节).<br>这个安全机制有两个问题:</p>
+<ul>
+<li>如果access bits中写入无效值, M1卡的该扇区就不能访问, 相当于故障.</li>
+<li>M1卡的keyA,keyB只有6字节, 有暴力破解的危险. 目前的M1卡的漏洞研究说明M1卡还有克隆卡片, 重放攻击, 密钥窃听, 验证漏洞的危险. 因此不能只依靠M1卡安全机制.<br>我们选择的方法是AES128. 16字节密钥. 16字节的输入和输出.<br>恰好每个块区的容量也是16字节. 当前AES128在非量子计算环境下, 保证安全.</li>
+</ul>
+<p>简单的设置密钥和用AES128加密还是不能避免克隆卡片攻击. 所以采用了M1卡固有的uid和特定的密码做异或得到密钥. 这样可以避免克隆卡片攻击.</p>
+<p>听说还有一个M1卡叫万能卡可以修改其uid. 对于这个攻击, 有一个策略是让学生每次使用学生卡的时候, 输入密码, 然后再把输入的密码和特定的密码做运算得到密钥. 但考虑到学生卡的方便性, 放弃了这个策略.</p>
+<h3 id="2、实验实现："><a href="#2、实验实现：" class="headerlink" title="2、实验实现："></a>2、实验实现：</h3><h4 id="M1卡读写："><a href="#M1卡读写：" class="headerlink" title="M1卡读写："></a>M1卡读写：</h4><p>在python应用中需要M1卡操作时, 在arduino完成此操作,然后 把返回值通过串口给python的. 依旧是python是发送命令, arduino是发送返回值. 分别是在tool.py和对应的ino文件中实现.</p>
+<p>python发送到arduino的命令, 如下</p>
+<ul>
+<li>读第i块区 – “r i”</li>
+<li>写第i块区 – “w i 16字节数据”</li>
+<li>清空 – “clear”</li>
+</ul>
+<p>arduino收到上面的命令后, 执行相应的操作并返回结果.</p>
+<p>实现此功能的时候遇到过一个问题: 通过一次认证以后, 只能访问一个扇区. 不管别的扇区的密钥相等, 都不能访问.<br>第一次发现此bug时, 以为M1卡坏了, 试了别的M1卡, 还是不行. 最后发现不管扇区的密钥相等, 访问另一个扇区之前要更新认证.</p>
+<h4 id="底层读卡接口："><a href="#底层读卡接口：" class="headerlink" title="底层读卡接口："></a>底层读卡接口：</h4><p>对于底层接口，我们采用了mfrc522的接口，主要包括读写某个块，认证，我们在地城读卡接口之上进行了封装和重用，让整个接口能够更加灵活的使用。</p>
+<h4 id="服务器："><a href="#服务器：" class="headerlink" title="服务器："></a>服务器：</h4><p>我们我服务器是用django框架搭建的。在服务器端，我们主要是拥有两大功能：第一个是能够完成注册中心的功能；可以创建新的卡片信息以及可以为旧用户进行注册，即延长有效期；与注销卡片信息。第二个是服务器功能，可以用数据库存储所有用户的信息。</p>
+<p>第一部分，在注册中心功能这里，我们应用了之前来自M1卡读写的接口，在调用之下可以直接对指定的block进行读和写的操作。在进行创建的时候，可以在服务器中访问<code>/testdb</code>，来进行创建和对于卡片的读写；在进行注销的时候，可以访问<code>/clear</code>来进行消除。</p>
+<p>第二部分，在服务器中，每一次对应的读取卡操作，或者外面传来的对卡操作的请求，在通过判断之后都会对其中数据库的信息产生修改。在服务器的数据库之中，外面存储了一下信息：</p>
+<ul>
+<li>姓名 – name</li>
+<li>学号 – idnumber</li>
+<li>院系 – department</li>
+<li>身份 – identifier</li>
+<li>性别 – sex</li>
+<li>有效期 – validdate</li>
+<li>余额 – money</li>
+</ul>
+<p>服务器应用了django原生的sqlite3数据库，代码结构使用了软工当中的分层结构，在最底层为中支持对数据库进行多种多样的读写操作；并且在上面一层增加了各种判定，保证输入的操作请求和返回的数据全部是合法，符合我们格式规定的数据，增加了安全性。再上面一层为将数据库与Arduino读卡接口连接的程序，最上面一层为支持url操作的代码。</p>
+<p>另外，在安全方面，我们后面的设想是加入一个新的table表项在数据库之中，这个表项为由卡片的UID与系统中的16为key等信息进行异或操作得到的标识码，来增加对于卡的识别度，但是由于时间原因没有完成。</p>
+<h4 id="客户端："><a href="#客户端：" class="headerlink" title="客户端："></a>客户端：</h4><p>客户端我们依然使用的是python3进行书写，其代码结构仍然使用了分层机构，包括和Arduino进行串口交流，调用交流接口，对客户端输入进行解析和对于接口的调用。</p>
+<p>在客户端中每次启动的时候，系统都会自动向服务器端请求全部学生当前的信息，并存储起来，同时自动生成（或者）读取一份门禁信息。</p>
+<p>在客户端，我们总共有三个模块：注册中心，零钱包，门禁。</p>
+<p>首先注册中心这边的功能有：</p>
+<ul>
+<li>创建新卡</li>
+<li>延长旧卡有效期（注册）</li>
+<li>获得卡片信息（丢卡做新的）</li>
+<li>注销旧卡：分为只删除卡片和同时删除数据库中的信息</li>
+<li>添加门禁信息</li>
+<li>删除门禁信息</li>
+</ul>
+<p>其功能完全覆盖了服务器端，甚至还多出来一些。其中在门禁这一块，我们的设定为：每次判断门禁，都会先读取卡内的基本信息，然后在本地进行学号判断，如果本地添加了该学号的信息，则可以进入下一环节；随后判断服务器状态，如果服务器可以连接，便联网询问服务器其信息时候有效，否则则在本地对其信息进行判断。</p>
+<p>随后的是零钱包功能有：</p>
+<ul>
+<li>查询余额</li>
+<li>圈存</li>
+<li>消费</li>
+<li>查询消费记录</li>
+</ul>
+<p>其为四个基本功能，在每次开启零钱包的时候就先读取其基本信息，获得余额和消费记录的显示。并且在每次花钱之后在本地更新余额等信息。</p>
+<p>最后是门禁部分，本部分包括：</p>
+<ul>
+<li>联网门禁</li>
+<li>断网门禁</li>
+</ul>
+<p>本部分由于界面并不是十分需要，因此没有写图形界面，是用shell进行启动和信息返回的。并且，其中的联网和断网是在每次进行门禁的时候进行判断的，只有在发现服务器不可用的时候才会进入相对不安全一点的断网门禁。</p>
+<h4 id="客户端界面："><a href="#客户端界面：" class="headerlink" title="客户端界面："></a>客户端界面：</h4><p>客户端是python写的, 而python提供的GUI模块Tkinter是比较丑.<br>则选择了electron和zerorpc. electron是通过html, css, js实现桌面应用的工具. zerorpc是通过客户端和服务器的形式连接不同应用的工具.<br>zerorpc一边在javascript可以用, 一边在python也可以用. 这样可以用html, css, js等完成前端. 通过zerorpc把前端和python连接. 提高实现前端的效率和美观性. 按照客户端的要求添加按钮,输入框,输出框就可以了.</p>
+<h2 id="三、实验结果与结论"><a href="#三、实验结果与结论" class="headerlink" title="三、实验结果与结论"></a>三、实验结果与结论</h2><h3 id="1、客户端shell模式测试"><a href="#1、客户端shell模式测试" class="headerlink" title="1、客户端shell模式测试"></a>1、客户端shell模式测试</h3><p>由于其他的测试基本都在图形界面当中，客户端shell的主要测试部分为门禁。在实验展示的视频当中的5，6两部分可以看到这一部分的测试。测试结果十分流畅，可以自动判断服务器是否可用，并会正确的返回门禁是否通过。</p>
+<p>其余部分的功能实际上也都可以通过shell进行操作，实际实验当中，由于没有Electron的通信延迟，shell操作速度反而更快，更加流畅！</p>
+<h3 id="2、客户端界面测试"><a href="#2、客户端界面测试" class="headerlink" title="2、客户端界面测试"></a>2、客户端界面测试</h3><p>客户端界面测试良好，可以完成全部功能，但是存在问题。在Electron与python的通信环节，会出现丢包现象，两边的信息可能会出现无法接收的情况，比如python返回的alert，主界面就会有时候无法收到，导致界面有时无法显示“操作成功”。</p>
+<h3 id="3、服务器创建注册"><a href="#3、服务器创建注册" class="headerlink" title="3、服务器创建注册"></a>3、服务器创建注册</h3><p>服务器可以流畅完成全部的注册功能，但是其操作种类有限，不能完全作为一个客户端进行操作。</p>
+<h3 id="4、读卡遇见的问题与解决"><a href="#4、读卡遇见的问题与解决" class="headerlink" title="4、读卡遇见的问题与解决"></a>4、读卡遇见的问题与解决</h3><p>除了之前提到的M1卡压力读取问题，我们还遇到了M1卡读写中文的问题，因为中文无法用ascii码简单表示，同时utf-8的字节表示也不在0-128之间，同样无法用ascii码表示。而且utf-8一个汉字占用三个字节，不方便字节对齐，所以我们最后选用了unicode的方式存储，两个字节存储一个汉字。</p>
+<h2 id="四、思考与总结"><a href="#四、思考与总结" class="headerlink" title="四、思考与总结"></a>四、思考与总结</h2><p>李睿燮: 研究学生卡系统的安全机制时, 发现不能只依靠一个部分的安全机制. 比如, 对于一个既不能暴力破解既加密数据的绝对安全的M1卡, 只依靠卡本身的保护机制的话, 刷卡机是不能判断此卡是已挂失的卡还是正常的卡. 这种情况需要服务器的协助. 而且对于万能卡的克隆危险, 还需要依靠用户输入自己的密码. 这个让我联想到2018年初公布的meltdown漏洞, 类似地intel CPU漏洞导致要么重头改CPU结构或者要操作系统的协助. 因此, 在开发一个系统的安全机制, 在每个部分的开发者需要经常交流. 如果发现不能在自己负责的部分解决漏洞, 需要请求相应部分的开发者的协助.</p>
+<p>沈俊贤: 我在做整个实验的过程中，一直认为这个项目的开发和软工项目的开发更加类似，因为M1卡的读写并不是一个特别大的难点，但是如何让整个系统更加易用则比这个更加难。我们在界面的设计、功能的实现等方面都考虑到了这些，同时通过这个实验，我也对平常习以为常的学生卡的设计产生了新的体会。</p>
+<p>周京汉：这个实验是在小实验的基础上做的一个大拓展开发，在技术层面上其并不是一个很大的技术难关，我认为其难点更多的存在与如何利用一个更好的系统去能够流畅，安全的完成其所需要的全部功能。这即涉及硬件的问题（能流畅的完成其硬件功能），也涉及软件工程方面的知识（让整个系统鲁棒的运行起来）。这种综合考虑的需求让我们在完成大实验的过程中对多方面知识有了更加深刻的了解。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>网络攻防</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>网络攻防：M1卡小实验</title>
+    <url>/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%EF%BC%9AM1%E5%8D%A1%E5%B0%8F%E5%AE%9E%E9%AA%8C/</url>
+    <content><![CDATA[<p>这几周一边刷ctf题一边学习实验室的东西，既然做题之中都掌握了，就把小学期的总结先鸽了，八月中旬在写吧</p>
+<p>把刚写完的M1卡实验的报告贴上</p>
+<span id="more"></span>
+
+<h1 id="智能卡基础实验报告"><a href="#智能卡基础实验报告" class="headerlink" title="智能卡基础实验报告"></a>智能卡基础实验报告</h1><h3 id="名字"><a href="#名字" class="headerlink" title="名字"></a>名字</h3><p>沈俊贤</p>
+<p>周京汉</p>
+<p>李睿燮</p>
+<h2 id="一、实验原理与步骤"><a href="#一、实验原理与步骤" class="headerlink" title="一、实验原理与步骤"></a>一、实验原理与步骤</h2><h4 id="实验用具简介"><a href="#实验用具简介" class="headerlink" title="实验用具简介"></a>实验用具简介</h4><h5 id="（1）RFID系统组成"><a href="#（1）RFID系统组成" class="headerlink" title="（1）RFID系统组成"></a>（1）RFID系统组成</h5><p>RFID 技术利用无线射频方式在阅读器和射频卡之间进行非接触双向数据传输，以达到目标识别和数据交换的目的。最基本的 RFID 系统由三部分组成：</p>
+<ul>
+<li>标签(Tag，即射频卡)：由耦合元件及芯片组成，标签含有内置天线，用于和射频天线间进行通信。</li>
+<li>阅读器：读取(在读写卡中还可以写入)标签信息的设备。</li>
+<li>天线：在标签和读取器间传递射频信号。</li>
+</ul>
+<h5 id="（2）读卡器工作原理"><a href="#（2）读卡器工作原理" class="headerlink" title="（2）读卡器工作原理"></a>（2）读卡器工作原理</h5><p>MCU通过对读卡器芯片内寄存器的读写来控制读卡器芯片，读卡器芯片收到MCU发来的命令后，按照非接触式射频卡协议格式，通过天线及其匹配电路向附近发出一组固定频率的调制信号(13.56 MHz)进行寻卡，若此范围内有卡片存在，卡片内部的LC谐振电路(谐振频率与读卡器发送的电磁波频率相同)在电磁波的激励下，产生共振，在卡片内部电压泵的作用下不断为其另一端的电容充电，获得能量，当该电容电压达到2 V时，即可作为电源为卡片的其他电路提供工作电压。 当有卡片处在读卡器的有效工作范围内时，MCU向卡片发出寻卡命令，卡片将回复卡片类型，建立卡片与读卡器的第一步联系，若同时有多张卡片在天线的工作范围内，读卡器通过启动防冲撞机制，根据卡片序列号来选定一张卡片，被选中的卡片再与读卡器进行密码校验,确保读卡器对卡片有操作权限以及卡片的合法性，而未被选中的则仍然处在闲置状态，等待下一次寻卡命令。密码验证通过之后，就可以对卡片进行读写等应用操作。</p>
+<h5 id="（3）RC522模块"><a href="#（3）RC522模块" class="headerlink" title="（3）RC522模块"></a>（3）RC522模块</h5><p>MF RC522提供了3种接口模式：高达10 Mb&#x2F;s的SPI、I2C总线模式(快速模式下能达400 kb&#x2F;s，而高速模式下能达3.4 Mb&#x2F;s)、最高达1228.8 kb&#x2F;s的UART模式。买来的模块采用了第一种模式——四线制SPI，通信中的时钟信号由 Arduino 产生，MF RC522芯片设置为从机模式，接收来自 Arduino 的数据以设置寄存器，并负责射频接口通信中相关数据的收发。</p>
+<p>数据的传输路径为：Arduino 通过 MOSI 线将数据发到 MF RC522，MF RC522 通过 MISO 线发回至 Arduino。</p>
+<h5 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h5><p>利用 Arduino UNO 和 RFID-RC522 模块自制读卡器，读取非接触式智能卡的类型和序列号，尝试输出卡 中各区块存储的数据内容。通过实验，了解身份证、校园一卡通、公交一卡通、带闪付功能的银行卡、打水 卡、洗澡卡、门禁卡等日常接触或使用的非接触式智能卡的类型，分析比较各种卡的安全性。测试自制读卡 器可读取多远距离内的卡，隔着钱包、口袋是否仍能读取;把卡放在安全卡套内，测试是否能被读取。</p>
+<h4 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h4><ul>
+<li>硬件连接与接线</li>
+<li>完成代码的编写</li>
+<li>完成代码的编译与上传</li>
+<li>打开串口监视器，并对不同的智能卡进行识别</li>
+</ul>
+<h2 id="二、硬件与接线"><a href="#二、硬件与接线" class="headerlink" title="二、硬件与接线"></a>二、硬件与接线</h2><p>各个引脚的功能介绍如下：</p>
+<ul>
+<li>SDA – 串行数据线（IIC接口时的I&#x2F;O线）；在SPI接口中为NSS（从机标志管脚）</li>
+<li>SCK – 连接MCU的SCK信号</li>
+<li>MOSI – MCU输出，RC522接收（即主设备输出，从设备输入）</li>
+<li>MISO – RC522输出，MCU接收（即从设备输出，主设备输入）</li>
+<li>IRQ – 中断请求输出</li>
+<li>GND – 接地</li>
+<li>RST – 复位</li>
+<li>3.3V – VSS，工作电压，若使用的事5V的MCU，注意分压</li>
+</ul>
+<p>因此实验的连线如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">RFID</th>
+<th align="center">Arduino UNO</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">VCC</td>
+<td align="center">3.3V</td>
+</tr>
+<tr>
+<td align="center">RST</td>
+<td align="center">5V</td>
+</tr>
+<tr>
+<td align="center">GND</td>
+<td align="center">GND</td>
+</tr>
+<tr>
+<td align="center">MISO</td>
+<td align="center">12</td>
+</tr>
+<tr>
+<td align="center">MOSI</td>
+<td align="center">11</td>
+</tr>
+<tr>
+<td align="center">SCK</td>
+<td align="center">13</td>
+</tr>
+<tr>
+<td align="center">NSS</td>
+<td align="center">10</td>
+</tr>
+<tr>
+<td align="center">IRQ</td>
+<td align="center">(不接)</td>
+</tr>
+</tbody></table>
+<h2 id="三、实验程序设计"><a href="#三、实验程序设计" class="headerlink" title="三、实验程序设计"></a>三、实验程序设计</h2><p>我们首先引入了MFRC522的库，在程序的最开始<code>#include &lt;MFRC522.h&gt;</code>，来应用其提供的接口去进行操作。使用<code>MFRC522 mfrc522(SS_PIN, RST_PIN);</code>创建好一个，然后用<code>mfrc522.PCD_Init();	</code>来进行初始化。</p>
+<p>然后在loop段，调用mfrc522中的三个函数完成。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if ( ! mfrc522.PICC_IsNewCardPresent()) &#123;</span><br><span class="line">	return;</span><br><span class="line">&#125;</span><br><span class="line">if ( ! mfrc522.PICC_ReadCardSerial()) &#123;</span><br><span class="line">	return;</span><br><span class="line">&#125;</span><br><span class="line">mfrc522.PICC_DumpToSerial(&amp;(mfrc522.uid));</span><br></pre></td></tr></table></figure>
+
+<p>代码如上，上面三个函数的功能分别为：寻找新卡，选中一个卡，然后获得里面的信息。</p>
+<h2 id="四、实验结果与总结"><a href="#四、实验结果与总结" class="headerlink" title="四、实验结果与总结"></a>四、实验结果与总结</h2><p>对试验箱中包含的白卡、蓝色门禁卡，以及水卡、洗澡卡，我们的程序能够有效的识别卡内的信息，并逐块读取，但是对于二代身份证和学生卡，没有办法识别卡内的信息，通过了解得知，无法识别的这两种卡属于B型卡，协议是ISO 15693B，无法被RC522识别。</p>
+<p>对能识别的卡的部分结果截图如下：</p>
+<p>白卡</p>
+<p><img src="/img/2018-7-22-1-1.png"></p>
+<p>蓝色门禁卡</p>
+<p><img src="/img/2018-7-22-1-2.png"></p>
+<p>水卡</p>
+<p><img src="/img/2018-7-22-1-3.png"></p>
+<p>洗澡卡</p>
+<p><img src="/img/2018-7-22-1-4.png"></p>
+<p>而对于识别距离的实验，我们发现一般来说不同的卡有不同的最远识别距离，但是相差并不太大，主要是在4cm-5cm处，再多就无法识别了。</p>
+<p>只要是满足这个距离，无论是隔着钱包还是隔着口袋都能够读取信息，但是放在安全卡套内，就无法被读取了。</p>
+<h2 id="五、关于智能卡安全的心得体会"><a href="#五、关于智能卡安全的心得体会" class="headerlink" title="五、关于智能卡安全的心得体会"></a>五、关于智能卡安全的心得体会</h2><p>智能卡的信息还是非常容易被读取、复制和篡改的，所以平常在放置智能卡的时候最好还是将他们储存在安全卡套之中。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>网络攻防</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>网络攻防小学期（四）逆向工程与二进制漏洞</title>
+    <url>/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E5%9B%9B%EF%BC%89%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E4%B8%8E%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%BC%8F%E6%B4%9E/</url>
+    <content><![CDATA[<p>逆向工程指通过反汇编、反编译来阅读源代码，分析软件的数据结构等。找出漏洞。</p>
+<span id="more"></span>
+
+<h1 id="第一章-基础知识"><a href="#第一章-基础知识" class="headerlink" title="第一章 基础知识"></a>第一章 基础知识</h1><h2 id="内存布局"><a href="#内存布局" class="headerlink" title="内存布局"></a>内存布局</h2><p>从内存低地址到内存高地址依次是</p>
+<ul>
+<li>保留区</li>
+<li>代码区</li>
+<li>已初始化数据区</li>
+<li>未初始化数据区</li>
+<li>堆区</li>
+<li>栈区</li>
+<li>内核区</li>
+</ul>
+<h2 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h2><p>寄存器是 CPU 中的高速存贮组件，可以用于暂存指令、数据和地址。在 16 位 CPU 中，<br>有 8 个 16 位的通用寄存器，其中有 4 个数据寄存器 AX、BX、CX 和 DX，2 个指针寄存器 SP<br>和 BP，还有 2 个变址寄存器 SI 和 DI。在 32 位 CPU 中，有 8 个 32 位的通用寄存器，分别与<br>16 位 CPU 的寄存器相对应，称为 EAX、EBX、ECX、EDX、ESP、EBP、ESI、EDI。在 64 位<br>CPU 中，除了 8 个相对应的 64 位通用寄存器 RAX、RBX、RCX、RDX、RSP、RBP、RSI、<br>RDI 外，还增加了 R8、R9、R10、R11、R12、R13、R14 和 R15 这 8 个通用寄存器。ARM 处<br>理器有 7 种不同的工作模式，这些工作模式共享 32 位的 R0、R1、R2、R3、R4、R5、R6、R7、<br>这 8 个通用寄存器，另外的 32 位通用寄存器 R8、R9、R10、R11、R12、R13、R14 情况比较<br>复杂，有些工作模式共享某些寄存器，有些工作模式有自己的一组寄存器。也就是说，虽然名<br>称都是 R8-R14，但实际上有不止 7 个寄存器。ARM 中的 R15 寄存器用作程序计数器。</p>
+<p>从寄存器名称可以看出，数据寄存器 AX、EAX、RAX 是同一命名系列的寄存器，实际上<br>多位的寄存器也支持直接访问低位寄存器对应的部分。</p>
+<p>以RAX举例，RAX为64位寄存器，EAX为32位寄存器（RAX的低32位），AX为16位寄存器（EAX的低16位），AH、AL为8位寄存器，其中AH为AX的高8位，AL为AX的低8位。</p>
+<h2 id="函数调用"><a href="#函数调用" class="headerlink" title="函数调用"></a>函数调用</h2><p>调用函数的时候，先压入实际参数，对C语言来说默认从右往左压栈。然后将当前EIP（即函数的返回地址）压栈，并且将EIP设为调用函数的起始地址。</p>
+<p>进入调用函数之后，压入当前的EBP指针，然后将EBP设为ESP。</p>
+<h1 id="第二章-分析工具"><a href="#第二章-分析工具" class="headerlink" title="第二章 分析工具"></a>第二章 分析工具</h1><ul>
+<li>IDA pro</li>
+<li>gdb</li>
+</ul>
+<h2 id="花指令与壳"><a href="#花指令与壳" class="headerlink" title="花指令与壳"></a>花指令与壳</h2><p>静态分析工具直接基于二进制的机器指令进行反汇编，如果精心设计一段汇编指令，可以 让静态分析工具犯错误，这样的指令称为花指令。</p>
+<p>一种简单的花指令设计方法是在某段程序的正常入口地址前留出一段空间，空间的第一句 指令是跳转指令，跳转到正常入口地址，这样程序在执行时与没有花指令前的效果一样。跳转 指令后的内容在运行时并不会执行到，所以是无效的，但静态分析工具会试图将这些内容也进 行反汇编。如果填写一些内容，使空间末尾处的无效数据与正常入口地址处指令的部分二进制 数据刚好能够拼接起来，被解释成某条指令，就能够影响后续正常指令的反汇编，造成整个程 序的反汇编错误或失败，无法进行静态分析。</p>
+<p>还有一种保护程序不被反编译或非法修改的方法是加壳。壳其实是一段程序，它先于实际的程序被执行。实际程序在加壳时，经过某种处理变得无法直接执行，而壳运行起来后，在内 存中通过逆操作，使得处理后的实际程序恢复正常状态，再继续执行。对实际程序的处理通常 是压缩和加密，压缩的主要目的是减小程序的大小，附带起到加密作用。软件加壳的同时，还 能够附带实现软件注册、限制使用时间和次数等功能。</p>
+<p>加壳是一种软件加密的手段，如果知道了加壳的方法，就可以生成有针对性的脱壳工具。</p>
+<h1 id="第三章-缓冲区溢出漏洞"><a href="#第三章-缓冲区溢出漏洞" class="headerlink" title="第三章 缓冲区溢出漏洞"></a>第三章 缓冲区溢出漏洞</h1><p>漏洞特指软件中影响安全性的缺陷(bug)，发现二进制漏洞是网络安全领域逆向工程的<br>主要目的。最常见的二进制漏洞是缓冲区溢出漏洞。缓冲区溢出漏洞在操作系统和各类应用软<br>件中普遍存在，针对缓冲区溢出漏洞的攻击轻则使程序运行崩溃、系统死机，重则使攻击者获<br>得系统控制权，进而进行各种非法操作和破坏。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>网络攻防</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>网络攻防小学期（二）信息隐藏与保密/密码</title>
+    <url>/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%BA%8C%EF%BC%89%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F%E4%B8%8E%E4%BF%9D%E5%AF%86-%E5%AF%86%E7%A0%81/</url>
+    <content><![CDATA[<p>编码与解码，加密法学习与分析工具，单码替换加密法，多码替换加密法，多图替换加密法，换位加密法，现代加密法</p>
+<!-- more  -->
+
+<p>(to be continued)</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>网络攻防</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>网络攻防小学期（三）网站安全</title>
+    <url>/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%B8%89%EF%BC%89%E7%BD%91%E7%AB%99%E5%AE%89%E5%85%A8/</url>
+    <content><![CDATA[<p>HTTP协议，常见的网站攻击</p>
+<span id="more"></span>
+
+<h1 id="第一章-HTTP协议"><a href="#第一章-HTTP协议" class="headerlink" title="第一章 HTTP协议"></a>第一章 HTTP协议</h1><h2 id="HTTP请求"><a href="#HTTP请求" class="headerlink" title="HTTP请求"></a>HTTP请求</h2><p>在客户端的浏览器中发起 HTTP 请求，通常是在地址栏里输入以 HTTP 开头的 URL</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://主机[:端口][路径]</span><br></pre></td></tr></table></figure>
+
+<p>其中主机可以是 IP 地址，也可以是域名;如果不填写端口，则默认为 80;如果不填写路径， 浏览器会自动补充为“&#x2F;”。</p>
+<p>访问<code>http://www.tsinghua.edu.cn/publish/newthu/index.html</code>，用wireshark捕获并追踪HTTP流所看到的内容</p>
+<p><img src="/img/2018-7-9-1-1.png"></p>
+<p>第一行给出了这条 HTTP 请求的方法、URL 和协议版本。HTTP 请求有多种方法，常用的 是GET和POST。GET常用于从服务端获取资源和查询数据，POST常用于向服务端提交表单 数据。GET 方法可以通过 URL 向服务端提交数据，但 URL 长度是受限的，并且只允许是 ASCII 字符;相反 POST 方法允许使用二进制数据，对数据长度也没有限制。由于 URL 常会显示在 浏览器中，因此 GET 方法的安全性不如 POST 方法。在这条 HTTP 请求中，URL 是 “&#x2F;publish&#x2F;newthu&#x2F;index.html”，协议版本是“HTTP&#x2F;1.1”</p>
+<p>从第二行开始是这条 HTTP 请求的头信息。头信息之后是请求的正文，这条 HTTP 请求的正文为空。</p>
+<p>通过 HTTP 请求向服务端提交的数据称为 HTTP 请求的参数，其格式是:参数名&#x3D;参数值。 如果有多个参数，则各参数项用&amp;连接起来，例如:param1&#x3D;value1&amp;param2&#x3D;value2。如果使用GET 方法，则在参数前加问号并紧接在 URL 后，这时提交的数据也称为 URL 参数，例如 <a href="http://host_name_or_ip/order.html?color=red&amp;amount=5">http://host_name_or_IP/order.html?color=red&amp;amount=5</a></p>
+<p>就在请求 order.html 资源时提交了 color 和 amount 两个参数值。如果使用 POST 方法，则参数 放在 HTTP 请求正文中。</p>
+<h2 id="HTTP响应"><a href="#HTTP响应" class="headerlink" title="HTTP响应"></a>HTTP响应</h2><table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>200</td>
+<td>成功</td>
+</tr>
+<tr>
+<td>302</td>
+<td>重定向</td>
+</tr>
+<tr>
+<td>400</td>
+<td>请求有语法错误</td>
+</tr>
+<tr>
+<td>401</td>
+<td>请求未经授权</td>
+</tr>
+<tr>
+<td>403</td>
+<td>拒绝提供服务</td>
+</tr>
+<tr>
+<td>404</td>
+<td>请求资源不存在</td>
+</tr>
+<tr>
+<td>500</td>
+<td>服务端发生不可预期的错误</td>
+</tr>
+<tr>
+<td>503</td>
+<td>目前无法处理请求</td>
+</tr>
+</tbody></table>
+<h1 id="常见的网站攻击"><a href="#常见的网站攻击" class="headerlink" title="常见的网站攻击"></a>常见的网站攻击</h1><h2 id="拒绝服务攻击"><a href="#拒绝服务攻击" class="headerlink" title="拒绝服务攻击"></a>拒绝服务攻击</h2><p>拒绝服务攻击(Deny of Service, DoS)的目的是让网站不能提供正常服务。由于服务端不 管是网络带宽，还是 CPU 和内存，其资源总是有限的，拒绝服务攻击除了让服务端系统崩溃 或死机外，通过大量恶意访问和服务请求就能够使服务端网站出现资源不够的情况，从而影响 正常服务。</p>
+<p>拒绝服务攻击中最有代表性的可能就是 SYN Flood 攻击了，该攻击利用了 TCP 协议通过 三次握手来建立连接的机制。攻击者(客户端)向服务端发送 SYN 报文请求建立 TCP 连接， 服务端将发出 SYN+ACK 应答并等待客户端发回第三次握手的 ACK 报文。但实际上攻击者发 出 SYN 报文后就不再与服务端通讯了，而不知情的服务端仍在内存中维护着这个等待建立的 连接，直到一定时间之后才会丢弃。如果攻击者在短时间内大量向服务端发送这种 SYN 报文， 服务端就容易出现堆栈溢出，或者 CPU 忙于处理这种无用的连接请求，而没有能力处理正常 用户的正常服务请求。<br>类似 SYN Flood 的攻击利用了协议本身的缺陷，所以并没有办法阻止。通过增加服务端的 带宽和处理能力，能够使服务端不容易被攻陷。于是又出现了分布式拒绝服务攻击(Distributed Deny of Service, DDoS)，攻击者先通过黑客手段获得大量计算机(傀儡机、肉机)的控制权， 甚至直接租赁大量计算机资源，再组织这些计算机同时向服务端发起 DoS 攻击。</p>
+<h2 id="跨站脚本攻击"><a href="#跨站脚本攻击" class="headerlink" title="跨站脚本攻击"></a>跨站脚本攻击</h2><p>跨站脚本攻击(Cross-Site Scripting, XSS)利用网页漏洞，往网页中插入恶意的脚本代码， 当用户浏览含有恶意脚本代码的网页时就受到攻击。</p>
+<h2 id="SQL注入攻击"><a href="#SQL注入攻击" class="headerlink" title="SQL注入攻击"></a>SQL注入攻击</h2><p>后台使用数据库的网站是非常普遍的，用户管理、数据管理都需要用到数据库，网站通常 需要将固定的字符串与用户提交的数据组合为 SQL 语句以便执行数据库操作。如果不对用户 提交的数据进行严格检查，就存在被攻击的可能。</p>
+<h2 id="目录遍历与文件包含攻击"><a href="#目录遍历与文件包含攻击" class="headerlink" title="目录遍历与文件包含攻击"></a>目录遍历与文件包含攻击</h2><p>客户端通过 URL 访问服务端的资源，如果服务端不注意控制本地资源的可访问权限，就 可能受到目录遍历攻击。</p>
+<h2 id="命令注入攻击"><a href="#命令注入攻击" class="headerlink" title="命令注入攻击"></a>命令注入攻击</h2><p>程序员在进行网站开发时，有些功能可以通过调用已有的程序或系统命令来实现，例如获取指定目录下的文件列表。如果没有同样功能的函数，自己实现相同功能函数又较麻烦时，有些程序员就会通过 system()、exec()等类似的函数来调用外部程序或命令，这使得命令注入攻击有个机会。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>网络攻防</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>网络攻防小学期（一）网络侦查与取证分析</title>
+    <url>/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%B8%80%EF%BC%89%E7%BD%91%E7%BB%9C%E4%BE%A6%E6%9F%A5%E4%B8%8E%E5%8F%96%E8%AF%81%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<p>网络踩点、网络扫描、网络嗅探与协议分析</p>
+<span id="more"></span>
+
+<h1 id="网络踩点"><a href="#网络踩点" class="headerlink" title="网络踩点"></a>网络踩点</h1><ul>
+<li>查询IP地址的注册信息 whois 166.111.4.100</li>
+<li>通过域名查找IP地址 nslookup <a href="http://www.baidu.com/">www.baidu.com</a></li>
+<li>通过域名查找注册信息 whois baidu.com</li>
+<li>根据IP地址查询地理位置 <a href="http://www.maxmind.com/">www.maxmind.com</a></li>
+</ul>
+<h1 id="网络扫描"><a href="#网络扫描" class="headerlink" title="网络扫描"></a>网络扫描</h1><p>Nmap</p>
+<h2 id="发现活跃主机"><a href="#发现活跃主机" class="headerlink" title="发现活跃主机"></a>发现活跃主机</h2><p>活跃主机指连接在网络上、处于运行状态且网络功能正常的计算机主机。如果对一台主机 进行扫描，只需要指定相应的 IP 地址或域名。如果同时扫描多台主机，可以用逗号分隔开各 主机的 IP 地址。如果 IP 地址是连续的，可以使用连字符号“-”，例如 192.168.1.1-100，或者 使用无类别域间路由(Classless Inter-Domain Routing, CIDR)地址块的方式来表示，例如 192.168.1.0&#x2F;24(表示 IP 地址的前 24 位是固定的，即 IP 地址范围为 192.168.1.0<del>192.168.1.255)。<br>如果只是想在一个内部网络中发现活跃主机，可以使用-sn 选项。这个选项会使用 ICMP (Internet 控制报文协议)的 ping 来扫描网络中的主机，但不会进一步探测端口信息。如果是 在 Internet 环境中，可以使用-PU 选项对开放的 UDP 端口进行探测来发现活跃主机。例如，仅 探测 IP 地址范围为 166.111.69.50</del>166.111.69.70 的网络中的活跃主机，使用命令:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">nmap -PU -sn 166.111.69.50-70</span><br></pre></td></tr></table></figure>
+
+<h2 id="识别操作系统"><a href="#识别操作系统" class="headerlink" title="识别操作系统"></a>识别操作系统</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">nmap -O  166.111.69.60</span><br></pre></td></tr></table></figure>
+
+<h2 id="扫描端口与识别服务"><a href="#扫描端口与识别服务" class="headerlink" title="扫描端口与识别服务"></a>扫描端口与识别服务</h2><p>Nmap默认会对主机的TCP端口进行扫描，例如命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">nmap 166.111.69.66</span><br></pre></td></tr></table></figure>
+
+<p>Nmap的端口扫描功能很强大，可以通过选项来指定探测端口状态的方法</p>
+<ul>
+<li>-sT:使用TCPconnect进行扫描，这是最基本的通过TCP连接来进行扫描的方式，很 容易被目标主机检测到并写入日志中。</li>
+<li>-sS:使用 TCP SYN 进行扫描，这是默认且最受欢迎的方式，速度快且不容易被目标 主机检测到。</li>
+<li>-sA:使用 TCP ACK 进行扫描，这种方式并不能探测出端口的开放状态，主要用于探 测防火墙对哪些端口进行了保护。</li>
+<li>-sF&#x2F;-sX&#x2F;-sN:这几种扫描都会发送一些特殊的标志位以避开防火墙或包过滤软件的限 制。</li>
+<li>-sU:扫描目标主机的UDP端口。</li>
+</ul>
+<p>Nmap返回的端口扫描结果有6种可能的状态：</p>
+<ul>
+<li>open:端口开放，有应用程序正在此端口上进行监听，接收TCP连接或UDP报文。</li>
+<li>closed:该端口对Nmap探测作出了响应，但是没有应用程序监听此端口。</li>
+<li>filtered:不能确认端口是否开放，Nmap的探测可能被防火墙或路由规则过滤。</li>
+<li>unfiltered:当使用ACK扫描时，如果Nmap无法确定端口是否开放，就会把端口状态<br>归为 unfiltered。这时可以使用其它类型的扫描来确认端口的信息。</li>
+<li>open|filtered:Nmap无法分辨端口处于open状态还是filtered状态，这种状态只会出现<br>在 open 端口对报文不做回应的扫描类型中。</li>
+<li>closed|filtered:Nmap无法分辨端口处于closed状态还是filtered状态。</li>
+</ul>
+<p>在 Nmap 中使用-sV 选项可以进一步识别端口的服务与版本。由于一些特定版本的服务通 常只会运行在特定的操作系统上，辨认服务与版本也会有助于更加准确地得到操作系统的类型。</p>
+<h1 id="网络嗅探与协议分析"><a href="#网络嗅探与协议分析" class="headerlink" title="网络嗅探与协议分析"></a>网络嗅探与协议分析</h1><h2 id="Tcpdump"><a href="#Tcpdump" class="headerlink" title="Tcpdump"></a>Tcpdump</h2><p>Tcpdump 是运行在 Linux 操作系统上的网络嗅探与数据包分析程序(在 Windows 操作系 统下有类似的 WinDUMP)。Tcpdump 有若干可选的命令行选项，其中主要的选项有:</p>
+<ul>
+<li>-c 数量:抓取的数据包达到指定数量后自动退出。</li>
+<li>-r 文件名:从文件中而不是网络中抓取数据包。</li>
+<li>-w 文件名:将网络数据包保存到文件中。</li>
+<li>-C 文件大小:设置保存文件时每个文件的大小(单位为百万字节)。</li>
+<li>-i 网络接口:指定抓取数据的网络接口。如果不指定的话，则自动搜索系统已配置好<br>的编号最小的接口。</li>
+<li>-s 数据包长度:设置抓取的数据包长度(单位为字节)。长度越大，Tcpdump 处理数<br>据包所花的时间越长，缓存的数据包数量越少，越容易引起丢包。建议设置为刚好容<br>纳所关注的协议数据包即可。</li>
+</ul>
+<p>通常会为 Tcpdump 设置一个表达式来过滤数据包，只有满足表达式的数据包才被输出。<br>表达式可由一个或多个原子表达式组成，原子表达式的核心参数是一个名称或一个数字，在名 称或数字前可以有一个或多个修饰符。共有三类修饰符:</p>
+<ul>
+<li>类别修饰符:指明原子表达式核心参数的意义，可以是 host(主机)、net(网络)、 port(端口)和 portrange(端口范围)，默认为 host。</li>
+<li>方向修饰符:指明数据包的传输方向，可以是 src(传输源)、dst(传输目标)、src or dst(传输源或传输目标)、src and dst(既是传输源也是传输目标)，默认为 src or dst。此外，还有一些方向修饰符专用于 IEEE 802.11 无线网，或者其他链路层协议。</li>
+<li>协议修饰符:指明数据包所属协议，可以是 ether(以太网)、tcp、udp、ip、ip6 等等。</li>
+</ul>
+<h2 id="Wireshark"><a href="#Wireshark" class="headerlink" title="Wireshark"></a>Wireshark</h2><p>没什么好说的。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>网络攻防</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>change-python-default-version</title>
+    <url>/change-python-default-version/</url>
+    <content><![CDATA[<p>服务器上用的python默认是python3，需要改成python2</p>
+<span id="more"></span>
+
+<h1 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h1><p>修改别名，在<code>~/.bashrc</code>中修改</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alias python=python2</span><br></pre></td></tr></table></figure>
+
+<h1 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h1><p>但是如果是在程序中调用有可能仍然是原来的python(具体我不太清楚，但是在跑一个项目的时候，他调用的python仍然是python3)。而且别的地方也找不到别名了。按理说python的默认版本应该是python2才对，但是也没有办法，只能硬着头皮改，毕竟项目还是要跑的啊。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">sudo update-alternatives --install &lt;<span class="built_in">link</span>&gt; &lt;name&gt; &lt;path&gt; &lt;priority&gt;</span></span><br><span class="line">sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 10</span><br></pre></td></tr></table></figure>
+
+<p>搞定。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a href="https://stackoverflow.com/questions/41986507/unable-to-set-default-python-version-to-python3-in-ubuntu">https://stackoverflow.com/questions/41986507/unable-to-set-default-python-version-to-python3-in-ubuntu</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>docker-cgroup</title>
     <url>/docker-cgroup/</url>
-    <content><![CDATA[<span id="more"></span>
+    <content><![CDATA[<p>好像默认的只有<code>sudo</code>有docker相关权限，普通用户<code>docker run hello-world</code>会有权限报错，解决方法如下</p>
+<span id="more"></span>
 
 <h1 id="具体错误"><a href="#具体错误" class="headerlink" title="具体错误"></a>具体错误</h1><p>如果直接运行</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
