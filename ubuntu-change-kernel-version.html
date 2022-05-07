@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="linux," />
 
 
 
@@ -79,12 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Datawine&#39;s Blog">
-<meta property="og:url" content="https://datawine.github.io/categories/%E5%AD%A6%E4%B9%A0/index.html">
+<meta name="description" content="因为dpdk的驱动、docker等等要求，必须重装服务器的linux kernel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ubuntu 服务器升降linux kernel踩坑实录">
+<meta property="og:url" content="https://datawine.github.io/ubuntu-change-kernel-version.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="因为dpdk的驱动、docker等等要求，必须重装服务器的linux kernel">
 <meta property="og:locale">
+<meta property="article:published_time" content="2022-05-07T14:29:59.000Z">
+<meta property="article:modified_time" content="2022-05-07T14:30:36.963Z">
 <meta property="article:author" content="Datawine">
+<meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/categories/学习/"/>
+  <link rel="canonical" href="https://datawine.github.io/ubuntu-change-kernel-version.html"/>
 
 
 
 
 
-  <title>分类: 学习 | Datawine's Blog</title>
+  <title>ubuntu 服务器升降linux kernel踩坑实录 | Datawine's Blog</title>
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -278,55 +283,241 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>学习<small>分类</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/ubuntu-change-kernel-version.html">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/network-attack-and-defense-semester.html" itemprop="url">
-              
-                <span itemprop="name">2018年网络攻防小学期</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">ubuntu 服务器升降linux kernel踩坑实录</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T21:27:10+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-07T22:29:59+08:00">
+                2022-05-07
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index">
+                    <span itemprop="name">其他</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/ubuntu-change-kernel-version.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="ubuntu-change-kernel-version.html" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  242
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>因为dpdk的驱动、docker等等要求，必须重装服务器的linux kernel</p>
+<span id="more"></span>
+
+<h1 id="安装linux-kernel并更新grub"><a href="#安装linux-kernel并更新grub" class="headerlink" title="安装linux kernel并更新grub"></a>安装linux kernel并更新grub</h1><p>先看看自己的linux kernel是什么版本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -r</span><br></pre></td></tr></table></figure>
+
+<p>先前天舒帮我装了一个4.16的，太新了，apt里啥都没有，所以以后装的时候先<code>apt-cache search linux-generic</code>一下，不然真要命。</p>
+<p>然后选一个看起来image和kernel header都有的版本吧。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install linux-image-4.13.0-45-generic</span><br></pre></td></tr></table></figure>
+
+<p>装完之后别急着重启……把grub改了！</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -A100 submenu  /boot/grub/grub.cfg |grep menuentry</span><br></pre></td></tr></table></figure>
+
+<p>从输出的信息中选择需要的启动条目（从0开始）</p>
+<p>然后修改<code>/etc/default/grub</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRUB_DEFAULT=”1&gt;3″</span><br></pre></td></tr></table></figure>
+
+<p>1指的是进入高级选项，3指的是第三个启动项，如果不知道说什么的话 ，重启的时候按shift看一下就懂了。</p>
+<p>然后更新grub</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /usr/sbin/update-grub</span><br></pre></td></tr></table></figure>
+
+<p>最后重启</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo reboot</span><br></pre></td></tr></table></figure>
+
+<h1 id="安装kernel-header"><a href="#安装kernel-header" class="headerlink" title="安装kernel header"></a>安装kernel header</h1><p>没什么好说的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install linux-headers-$(uname -r)</span><br></pre></td></tr></table></figure>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/mac-clear-disk-space.html" rel="next" title="mac清理磁盘空间">
+                <i class="fa fa-chevron-left"></i> mac清理磁盘空间
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -334,6 +525,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -354,8 +554,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -425,6 +634,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85linux-kernel%E5%B9%B6%E6%9B%B4%E6%96%B0grub"><span class="nav-number">1.</span> <span class="nav-text">安装linux kernel并更新grub</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85kernel-header"><span class="nav-number">2.</span> <span class="nav-text">安装kernel header</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -609,6 +834,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
