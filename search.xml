@@ -3,11 +3,14 @@
   <entry>
     <title>论文阅读</title>
     <url>/paper-reading.html</url>
-    <content><![CDATA[<ul>
+    <content><![CDATA[<p>论文阅读列表</p>
+<span id="more"></span>
+
+<ul>
 <li>NSDI<ul>
 <li>2022<ul>
 <li><a href="https://datawine.github.io/nsdi22-Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks.html">Efficient Scheduling Policies for Microsecond-Scale Tasks</a>：开源。模拟。对比load balancing策略和core allocation策略对1us级别任务的性能影响。</li>
-<li><a href="">Buffer-based End-to-end Request Event Monitoring in the Cloud</a>：以请求粒度捕获请求延迟异常（RLA）相关的事件：缓冲区建模和请求级别的数据包注入</li>
+<li><a href="https://datawine.github.io/nsdi22-Buffer-based-End-to-end-Request-Event-Monitoring-in-the-Cloud.html">Buffer-based End-to-end Request Event Monitoring in the Cloud</a>：以请求粒度捕获请求延迟异常（RLA）相关的事件：缓冲区建模和请求级别的数据包注入</li>
 </ul>
 </li>
 </ul>
@@ -24,103 +27,13 @@
   <entry>
     <title>孟德尔随机化</title>
     <url>/mendelian-randomization.html</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<p>- </p>
+]]></content>
       <categories>
         <category>学习</category>
       </categories>
       <tags>
         <tag>孟德尔随机化</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>nsdi22-Buffer-based End-to-end Request Event Monitoring in the Cloud</title>
-    <url>/nsdi22-Buffer-based-End-to-end-Request-Event-Monitoring-in-the-Cloud.html</url>
-    <content><![CDATA[<h1 id="核心贡献"><a href="#核心贡献" class="headerlink" title="核心贡献"></a>核心贡献</h1><ul>
-<li>BufScope，一个高覆盖率的请求事件监测系统，其目的是在请求的端到端数据路径中以一致的请求级语义捕获大多数与请求延迟异常（RLA）相关的事件。</li>
-<li>缓冲区建模：BufScope将请求的数据路径建模为一个缓冲区链。并根据缓冲区的不同属性来定义RLA相关的事件，实现端到端（跨缓冲区）。</li>
-<li>为了实现捕获事件的一致语义，BufScope设计了一个简洁的请求级语义注入机制，使网络中捕获的事件具有受害者请求的ID（在数据包头的末尾插入第一个请求头（如果它在有效载荷中）的偏移量）。offload到智能网卡上，以降低开销。</li>
-</ul>
-<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>现有的性能或延迟监测工具远远不能满足前面诊断RLA的要求。具体来说，尽管分布式应用性能跟踪工具[9-16]可以提供任何请求级的时序数据，但它们不能捕获应用层以下的请求事件；网络性能监测工具[8, 17-25]可以捕获发生在网络堆栈或底层网络的流级事件，如延迟ACK、丢包和路径改变，但捕获的事件没有请求级的信息，因此在应用和网络中捕获的事件不能被关联。</p>
-<p>BufScope的主要思想是将大多数RLA转化为缓冲区相关的异常事件，监控请求端到端数据路径中的所有缓冲区，并以一致的请求级语义捕获所有缓冲区相关的异常事件。</p>
-<p>RLA会严重影响应用性能的原因是，一旦逻辑处理RPC的速度慢于网卡带宽（本实验中为50Gbps），大量的数据包就会堵塞网卡缓冲区并被丢弃，导致网络堆栈重新传输大量数据包并放慢速度，从而导致性能严重下降。</p>
-<h1 id="buffer-chain建模"><a href="#buffer-chain建模" class="headerlink" title="buffer chain建模"></a>buffer chain建模</h1><p>挑战：将各种Layer-7框架的数据通路建模为统一的缓冲区组成。<br>建模为：</p>
-<ul>
-<li>host buffer：维护来自&#x2F;到应用程序的消息，以及分解消息形成的数据包（或将被构建成消息的数据包）。此外，一些应用程序也有缓冲区，如MessageQueue</li>
-<li>nic buffer：发送端网卡缓冲区保持从传输层交付的数据包，并定期将数据包排入网络。同时，接收端网卡缓冲区经常存储来自网络的数据包，并等待终端主机网络堆栈拉取数据包或主动将数据包写进主机内存</li>
-<li>switch buffer： 网络交换机缓冲区保留数据包进行交换，一旦数据包不能即时转发，即数据包将在连接所选下一跳的端口的出口队列中被缓冲或丢弃。</li>
-</ul>
-<h1 id="事件定义和生成"><a href="#事件定义和生成" class="headerlink" title="事件定义和生成"></a>事件定义和生成</h1><p>挑战：如何彻底分析所有类型的缓冲区，并分别为它们定义事件。<br>虽然存在各种类型的缓冲区，但它们可以根据三个关键属性进行分类：priority awareness、order sensitivity和enqueue feature。</p>
-<ul>
-<li>priority contention：一个具有多个队列的缓冲区，是否在不同的队列中保持严格的优先级。低优先级队列中的数据包将不得不等待高优先级队列的耗尽。否则，数据包的排队遵循FIFO原则（即优先级无意识）。</li>
-<li>order sensitivity：缓冲区在弹出数据包进行后续处理之前，是否保持到达数据包的强顺序。</li>
-<li>enqueue feature：主要是对后续数据包的处理上。有损和无损缓冲区的Enqueue feature是不同的，一个丢掉了后续包，另一个会暂停上游交换机。</li>
-</ul>
-<p>定义了几种事件，这些事件并不是相互排斥的</p>
-<ul>
-<li>优先权争夺。这种类型的事件在优先级感知缓冲区（即多级优先级队列）中被触发，当较高优先级队列的长度超过一定的阈值，长时间阻塞低优先级队列的数据包。不适当的优先权分配可能会导致RLA[46]。相反，FIFO缓冲区总是先转发较早到达的数据包，不会出现这种事件。</li>
-<li>失序。这种类型的事件是在顺序敏感的缓冲区中触发的，如TCP接收缓冲区。数据包必须按照发送时的顺序传递给应用程序。也就是说，顺序敏感缓冲区已经收到的数据包必须在收到先前发送的数据包之前被延迟。相比之下，对顺序不敏感的缓冲区没有失序的事件。</li>
-<li>丢弃。这个事件发生在有损缓冲区，当队列即将满员或已经满员时。数据包掉落会招致数据包重传，并可能导致RLA。</li>
-<li>暂停。这种类型的事件发生在无损缓冲区。一旦下游交换机的缓冲区占用率超过一个特定的阈值，那么下游交换机就会向上游交换机发送一个暂停信号。后者将暂停数据包的转发，直到收到RESUME信号。这增加了暂停的数据包的延迟。</li>
-<li>拥塞。这种类型的事件可能发生在任何种类的缓冲区。拥塞被定义为排队延迟超过阈值的情况，而不是由于PAUSE。这可能是由上游和下游处理或传输速率不匹配造成的。</li>
-</ul>
-<p>事件的生成：主动监测</p>
-<ul>
-<li>在终端主机和SmartNIC中，软件中的事件检测是直接的。为了减少事件检测对应用性能的影响，BufScope的代理守护进程以异步方式执行磁盘写入。然后，代理守护进程将事件日志批量发送给事件收集器。</li>
-<li>在可编程交换机中，事件检测需要完全在数据平面中实现。遇到暂停或丢弃的数据包分别在入口管道和MMU中检测。对于优先权争夺和拥堵，我们通过INT（带内网络遥测）[47]记录队列的长度、入口和出口的时间戳，并判断数据包的排队延迟和长度是否超过阈值。在检测到受害者数据包后，出口代理利用绽放过滤器将其汇总为请求级事件，以流量的5元组和请求ID（第3.4节）作为关键。然后，请求事件通过数据平面生成的数据包被发送到交换机控制平面。最后，控制平面将消除收到的事件中的假阳性，并将它们批量报告给事件收集器。数据平面中事件生成的大部分设计是在NetSeer[8]中提出的，我们只是将监测事件的粒度从流量改为请求。我们在此并不要求有什么新意。</li>
-</ul>
-<h1 id="request-level的语义注入"><a href="#request-level的语义注入" class="headerlink" title="request-level的语义注入"></a>request-level的语义注入</h1><p>因为请求和数据包的拆分&#x2F;合并关系，请求头可能在数据包有效载荷的任何地方，这使得商品交换机无法解析请求ID。</p>
-<p>我们利用了请求ID和长度已经被打包在请求头中的事实。因此，我们选择在数据包有效载荷的开头插入第一个完整请求头的偏移字段（2字节）</p>
-<p>此外，有效载荷的第一个数据段，即图4中的Req#1数据段，可能在当前数据包中没有相应的头，因为大的请求可能由多个数据包承载。因此，我们也应该保持Req#1数据的标识符。为此，我们总是在数据包有效载荷的开头插入ID字段（8字节），记录Req#1的ID。这要求我们保持一个有状态的变量，记录最近请求的ID。 </p>
-<h1 id="诊断"><a href="#诊断" class="headerlink" title="诊断"></a>诊断</h1><p>首先，BufScope通过请求ID对事件进行关联，并向运营商报告开始和结束事件（可能是有罪的）。然后，由于阻塞时间也被记录在事件中，操作人员可以清楚地看到哪个事件是罪魁祸首，即使一个请求经历了多个事件。我们还阐述了应用程序如何从这些请求事件中获益。</p>
-<ul>
-<li>优先权争夺。这种类型的事件表明RLA直接发生在当前的缓冲区。它表明具有较高优先级的队列被堵塞了。为了缓解这种类型的RLA，应用程序所有者可以提升其请求的优先级，或者尝试减少进入高优先级队列的其他应用程序的流量。 </li>
-<li>失序。这种类型的事件表明，数据包在以前的缓冲区或逻辑中被丢弃或迂回。例如，网络丢包和路径改变可能导致TCP接收缓冲区的失序。应用程序所有者可以向网络运营商寻求帮助，以调试网络去副故障、黑洞或随机丢包。另外，如果伴有丢包事件，请参考下一项。 </li>
-<li>丢弃。丢弃事件导致耗时的重传，这可能直接导致RLA。MMU掉线通常是由突发和乱发引起的。应用程序所有者可以考虑通过调度来优化流量模式，以减少TCP incast或拥堵的可能性。 </li>
-<li>暂停和拥堵。这些事件的发生是由于当前缓冲区或下游缓冲区的数据包调度缓慢。在这种情况下，BufScope可以识别对拥堵贡献最大的请求，即重度请求，因为重度请求会经历更多的拥堵事件。然后，云提供商需要评估网络结构和应用混合模型。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>论文</category>
-      </categories>
-      <tags>
-        <tag>nsdi</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>nsdi22-Efficient Scheduling Policies for Microsecond-Scale Tasks</title>
-    <url>/nsdi22-Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks.html</url>
-    <content><![CDATA[<h1 id="Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks"><a href="#Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks" class="headerlink" title="Efficient Scheduling Policies for Microsecond-Scale Tasks"></a>Efficient Scheduling Policies for Microsecond-Scale Tasks</h1><p>开源 [代码](<a href="https://github.com/smcclure20/">https://github.com/smcclure20/</a> scheduling-policies-sim)</p>
-<p>对负载均衡策略和cpu core的分配策略的比较，得到了几个结论</p>
-<ul>
-<li>总的来说，在给定与其他方法相同的周期数时，即使开销和工作负载参数不同，work-stealing始终是性能最好的负载平衡策略。</li>
-<li>即使是在平均负载不变的情况下，想比于静态core分配，核心分配可能不会为短任务提供性能优势（中位数或tail latency）。</li>
-<li>然而，即使核心分配可能不会为短任务提供性能优势，但人们可以采用核心分配策略，以确保应用程序能够适应负载的变化。。</li>
-</ul>
-<h1 id="对比方案"><a href="#对比方案" class="headerlink" title="对比方案"></a>对比方案</h1><ul>
-<li>load balancing策略<ul>
-<li>单一队列：shinjuku和ram-cloud。一个大队列，但是实践中可能因为对于单一队列的争夺而限制吞吐量</li>
-<li>没有负载平衡：任务由它们首先到达的核心来处理</li>
-<li>enqueue choice：任务在创建时决定在哪运行，并且保持不动。现在的系统通常是二选一，选两个随机抽样的core中负载较低的那个。这是有开销的，“看别的core的负载”这件事情需要创建任务的core来干</li>
-<li>work stealing，当core idle时，从别的有queued work的core里拿一半task过来，它产生的开销是检查其他核心的排队工作并将工作转移到其本地队列。</li>
-<li>work shedding。过载的核心可以将负载转移给其他核心，或者要求其他核心承担他们的一些负载。我们考虑一种工作脱落策略，在这种策略中，一个任务排队时间超过指定阈值的核心会随机选择一个核心，并表示它已经过载。然后，该核心将通过窃取过载核心的一半任务来作出回应；这是该策略的主要开销来源。</li>
-</ul>
-</li>
-<li>core-allocation策略<ul>
-<li>静态的。通过静态核心分配，每个应用的核心数量不能随时间变化，正如一些研究系统[42, 64, 66]。这不会产生核心重新分配的开销。然而，每个应用程序必须有足够的核心来应对峰值负载，当负载随时间变化时，会浪费大量的CPU资源，这是数据中心工作负载的典型情况[11, 35]。</li>
-<li>per-task。诸如Fred[40]这样的系统具有按任务分配核心的功能，每次任务到来时都会给应用程序分配一个核心。这就产生了为每个任务分配核心的开销，除非所有核心都在使用。</li>
-<li>queueing-based。基于队列延迟的策略，如果队列–以线程、数据包或存储完成的数量或延迟来衡量–超过了某个阈值，则授予应用程序一个额外的内核。这些策略的不同之处在于它们是基于跨核心的最大排队量触发的[26, 60]还是使用平均数[12, 67]。</li>
-<li>基于CPU利用率。基于利用率的策略是根据空闲核心的数量[35]或核心在任务上花费的平均时间（而不是闲置或忙于旋转）[12, 67]来增加或重新启用核心。</li>
-<li>failure to find work。在一些系统中，当核心无法找到任何任务时，应用程序将产生一个核心。这可能发生在一个核心找不到另一个有排队工作的核心来偷取[26,60,76]，或者当它完成了当前的任务，有一个每个任务的核心分配政策[40]。<h1 id="建模细节"><a href="#建模细节" class="headerlink" title="建模细节"></a>建模细节</h1></li>
-<li>我们对负载平衡所需的跨核通信进行建模，一般需要100ns的时间。我们将内核分配的开销（包括分配内核的延迟和浪费的CPU周期）建模为每个内核分配5μs。</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>论文</category>
-      </categories>
-      <tags>
-        <tag>nsdi</tag>
       </tags>
   </entry>
   <entry>

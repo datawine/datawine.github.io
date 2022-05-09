@@ -11,27 +11,9 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/nsdi22-Buffer-based-End-to-end-Request-Event-Monitoring-in-the-Cloud.html</loc>
-    
-    <lastmod>2022-05-09</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://datawine.github.io/nsdi22-Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks.html</loc>
-    
-    <lastmod>2022-05-09</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://datawine.github.io/mendelian-randomization.html</loc>
     
-    <lastmod>2022-05-08</lastmod>
+    <lastmod>2022-05-09</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -438,13 +420,6 @@
   
   <url>
     <loc>https://datawine.github.io/tags/ssh/</loc>
-    <lastmod>2022-05-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://datawine.github.io/tags/nsdi/</loc>
     <lastmod>2022-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
