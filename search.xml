@@ -1,94 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>DPDK Pktgen+Docker搭建VNF环境及验证</title>
-    <url>/dpdk-pktgen-docker-vnf-test.html</url>
-    <content><![CDATA[<p>主要是搭建一个DPDK+docker的环境，然而docker上次用是在软工的时候，重新学还花了一些功夫，改日写篇docker总结好了。</p>
-<span id="more"></span>
-
-<h1 id="最终能够运行的版本信息"><a href="#最终能够运行的版本信息" class="headerlink" title="最终能够运行的版本信息"></a>最终能够运行的版本信息</h1><p>注 ：dpdk、pktgen是wget下载安装的，docker是apt install安装的</p>
-<ul>
-<li>Linux kernel 4.4.0-131-generic</li>
-<li>Ubuntu 16.04.5 LTS</li>
-<li>dpdk-stable-16.11.1</li>
-<li>pktgen-dpdk-pktgen-3.1.1</li>
-<li>Docker version 17.03.2-ce</li>
+    <title>孟德尔随机化</title>
+    <url>/mendelian-randomization.html</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>孟德尔随机化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>nsdi22-Buffer-based End-to-end Request Event Monitoring in the Cloud</title>
+    <url>/null.html</url>
+    <content><![CDATA[<h1 id="核心贡献"><a href="#核心贡献" class="headerlink" title="核心贡献"></a>核心贡献</h1><ul>
+<li>BufScope，一个高覆盖率的请求事件监测系统，其目的是在请求的端到端数据路径中以一致的请求级语义捕获大多数与请求延迟异常（RLA）相关的事件。</li>
+<li>缓冲区建模：BufScope将请求的数据路径建模为一个缓冲区链。并根据缓冲区的不同属性来定义RLA相关的事件，实现端到端（跨缓冲区）。</li>
+<li>为了实现捕获事件的一致语义，BufScope设计了一个简洁的请求级语义注入机制，使网络中捕获的事件具有受害者请求的ID（在数据包头的末尾插入第一个请求头（如果它在有效载荷中）的偏移量）。offload到智能网卡上，以降低开销。</li>
 </ul>
-<h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><ul>
-<li>安装dpdk</li>
-<li>安装docker</li>
-<li>安装pktgen</li>
-<li>配置hugepages<ul>
-<li>注意！本实验中由于我们需要使用virtio-user这种连接方式，由于实现时的一些限制导致使用vhost-user时同时最多只能使用8个hugepages无论2M还是1G大小的hugepagesize。所以这里必须使用1G大小的hugepagesize同时最多分配8个。</li>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>现有的性能或延迟监测工具远远不能满足前面诊断RLA的要求。具体来说，尽管分布式应用性能跟踪工具[9-16]可以提供任何请求级的时序数据，但它们不能捕获应用层以下的请求事件；网络性能监测工具[8, 17-25]可以捕获发生在网络堆栈或底层网络的流级事件，如延迟ACK、丢包和路径改变，但捕获的事件没有请求级的信息，因此在应用和网络中捕获的事件不能被关联。</p>
+<p>BufScope的主要思想是将大多数RLA转化为缓冲区相关的异常事件，监控请求端到端数据路径中的所有缓冲区，并以一致的请求级语义捕获所有缓冲区相关的异常事件。</p>
+<p>RLA会严重影响应用性能的原因是，一旦逻辑处理RPC的速度慢于网卡带宽（本实验中为50Gbps），大量的数据包就会堵塞网卡缓冲区并被丢弃，导致网络堆栈重新传输大量数据包并放慢速度，从而导致性能严重下降。</p>
+<h1 id="buffer-chain建模"><a href="#buffer-chain建模" class="headerlink" title="buffer chain建模"></a>buffer chain建模</h1><p>挑战：将各种Layer-7框架的数据通路建模为统一的缓冲区组成。<br>建模为：</p>
+<ul>
+<li>host buffer：维护来自&#x2F;到应用程序的消息，以及分解消息形成的数据包（或将被构建成消息的数据包）。此外，一些应用程序也有缓冲区，如MessageQueue</li>
+<li>nic buffer：发送端网卡缓冲区保持从传输层交付的数据包，并定期将数据包排入网络。同时，接收端网卡缓冲区经常存储来自网络的数据包，并等待终端主机网络堆栈拉取数据包或主动将数据包写进主机内存</li>
+<li>switch buffer： 网络交换机缓冲区保留数据包进行交换，一旦数据包不能即时转发，即数据包将在连接所选下一跳的端口的出口队列中被缓冲或丢弃。</li>
+</ul>
+<h1 id="事件定义和生成"><a href="#事件定义和生成" class="headerlink" title="事件定义和生成"></a>事件定义和生成</h1><p>挑战：如何彻底分析所有类型的缓冲区，并分别为它们定义事件。<br>虽然存在各种类型的缓冲区，但它们可以根据三个关键属性进行分类：priority awareness、order sensitivity和enqueue feature。</p>
+<ul>
+<li>priority contention：一个具有多个队列的缓冲区，是否在不同的队列中保持严格的优先级。低优先级队列中的数据包将不得不等待高优先级队列的耗尽。否则，数据包的排队遵循FIFO原则（即优先级无意识）。</li>
+<li>order sensitivity：缓冲区在弹出数据包进行后续处理之前，是否保持到达数据包的强顺序。</li>
+<li>enqueue feature：主要是对后续数据包的处理上。有损和无损缓冲区的Enqueue feature是不同的，一个丢掉了后续包，另一个会暂停上游交换机。</li>
+</ul>
+<p>定义了几种事件，这些事件并不是相互排斥的</p>
+<ul>
+<li>优先权争夺。这种类型的事件在优先级感知缓冲区（即多级优先级队列）中被触发，当较高优先级队列的长度超过一定的阈值，长时间阻塞低优先级队列的数据包。不适当的优先权分配可能会导致RLA[46]。相反，FIFO缓冲区总是先转发较早到达的数据包，不会出现这种事件。</li>
+<li>失序。这种类型的事件是在顺序敏感的缓冲区中触发的，如TCP接收缓冲区。数据包必须按照发送时的顺序传递给应用程序。也就是说，顺序敏感缓冲区已经收到的数据包必须在收到先前发送的数据包之前被延迟。相比之下，对顺序不敏感的缓冲区没有失序的事件。</li>
+<li>丢弃。这个事件发生在有损缓冲区，当队列即将满员或已经满员时。数据包掉落会招致数据包重传，并可能导致RLA。</li>
+<li>暂停。这种类型的事件发生在无损缓冲区。一旦下游交换机的缓冲区占用率超过一个特定的阈值，那么下游交换机就会向上游交换机发送一个暂停信号。后者将暂停数据包的转发，直到收到RESUME信号。这增加了暂停的数据包的延迟。</li>
+<li>拥塞。这种类型的事件可能发生在任何种类的缓冲区。拥塞被定义为排队延迟超过阈值的情况，而不是由于PAUSE。这可能是由上游和下游处理或传输速率不匹配造成的。</li>
+</ul>
+<p>事件的生成：主动监测</p>
+<ul>
+<li>在终端主机和SmartNIC中，软件中的事件检测是直接的。为了减少事件检测对应用性能的影响，BufScope的代理守护进程以异步方式执行磁盘写入。然后，代理守护进程将事件日志批量发送给事件收集器。</li>
+<li>在可编程交换机中，事件检测需要完全在数据平面中实现。遇到暂停或丢弃的数据包分别在入口管道和MMU中检测。对于优先权争夺和拥堵，我们通过INT（带内网络遥测）[47]记录队列的长度、入口和出口的时间戳，并判断数据包的排队延迟和长度是否超过阈值。在检测到受害者数据包后，出口代理利用绽放过滤器将其汇总为请求级事件，以流量的5元组和请求ID（第3.4节）作为关键。然后，请求事件通过数据平面生成的数据包被发送到交换机控制平面。最后，控制平面将消除收到的事件中的假阳性，并将它们批量报告给事件收集器。数据平面中事件生成的大部分设计是在NetSeer[8]中提出的，我们只是将监测事件的粒度从流量改为请求。我们在此并不要求有什么新意。</li>
+</ul>
+<h1 id="request-level的语义注入"><a href="#request-level的语义注入" class="headerlink" title="request-level的语义注入"></a>request-level的语义注入</h1><p>因为请求和数据包的拆分&#x2F;合并关系，请求头可能在数据包有效载荷的任何地方，这使得商品交换机无法解析请求ID。</p>
+<p>我们利用了请求ID和长度已经被打包在请求头中的事实。因此，我们选择在数据包有效载荷的开头插入第一个完整请求头的偏移字段（2字节）</p>
+<p>此外，有效载荷的第一个数据段，即图4中的Req#1数据段，可能在当前数据包中没有相应的头，因为大的请求可能由多个数据包承载。因此，我们也应该保持Req#1数据的标识符。为此，我们总是在数据包有效载荷的开头插入ID字段（8字节），记录Req#1的ID。这要求我们保持一个有状态的变量，记录最近请求的ID。 </p>
+<h1 id="诊断"><a href="#诊断" class="headerlink" title="诊断"></a>诊断</h1><p>首先，BufScope通过请求ID对事件进行关联，并向运营商报告开始和结束事件（可能是有罪的）。然后，由于阻塞时间也被记录在事件中，操作人员可以清楚地看到哪个事件是罪魁祸首，即使一个请求经历了多个事件。我们还阐述了应用程序如何从这些请求事件中获益。</p>
+<ul>
+<li>优先权争夺。这种类型的事件表明RLA直接发生在当前的缓冲区。它表明具有较高优先级的队列被堵塞了。为了缓解这种类型的RLA，应用程序所有者可以提升其请求的优先级，或者尝试减少进入高优先级队列的其他应用程序的流量。 </li>
+<li>失序。这种类型的事件表明，数据包在以前的缓冲区或逻辑中被丢弃或迂回。例如，网络丢包和路径改变可能导致TCP接收缓冲区的失序。应用程序所有者可以向网络运营商寻求帮助，以调试网络去副故障、黑洞或随机丢包。另外，如果伴有丢包事件，请参考下一项。 </li>
+<li>丢弃。丢弃事件导致耗时的重传，这可能直接导致RLA。MMU掉线通常是由突发和乱发引起的。应用程序所有者可以考虑通过调度来优化流量模式，以减少TCP incast或拥堵的可能性。 </li>
+<li>暂停和拥堵。这些事件的发生是由于当前缓冲区或下游缓冲区的数据包调度缓慢。在这种情况下，BufScope可以识别对拥堵贡献最大的请求，即重度请求，因为重度请求会经历更多的拥堵事件。然后，云提供商需要评估网络结构和应用混合模型。</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>论文阅读</title>
+    <url>/paper-reading.html</url>
+    <content><![CDATA[<ul>
+<li>NSDI<ul>
+<li>2022<ul>
+<li>Efficient Scheduling Policies for Microsecond-Scale Tasks：开源。模拟。对比load balancing策略和core allocation策略对1us级别任务的性能影响。</li>
+<li>Buffer-based End-to-end Request Event Monitoring in the Cloud：以请求粒度捕获请求延迟异常（RLA）相关的事件：缓冲区建模和请求级别的数据包注入</li>
 </ul>
 </li>
 </ul>
-<h1 id="拓扑搭建"><a href="#拓扑搭建" class="headerlink" title="拓扑搭建"></a>拓扑搭建</h1><h2 id="拓扑"><a href="#拓扑" class="headerlink" title="拓扑"></a>拓扑</h2><p>预建立的简单拓扑</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+--------+---------------+               +-------------------+---------------+</span><br><span class="line">|        | socket file 1 |&lt;-------------&gt;| vhost-user port 1 |               |</span><br><span class="line">|        +---------------+               +-------------------+               |</span><br><span class="line">| host   |     pktgen    |               |      testpmd      |     container |</span><br><span class="line">|        +---------------+               +-------------------+               |</span><br><span class="line">|        | socket file 0 |&lt;-------------&gt;| vhost-user port 0 |               |</span><br><span class="line">+--------+---------------+               +-------------------+---------------+</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>论文</category>
+      </categories>
+      <tags>
+        <tag>论文汇总</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>nsdi22-Efficient Scheduling Policies for Microsecond-Scale Tasks</title>
+    <url>/nsdi22-Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks.html</url>
+    <content><![CDATA[<h1 id="Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks"><a href="#Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks" class="headerlink" title="Efficient Scheduling Policies for Microsecond-Scale Tasks"></a>Efficient Scheduling Policies for Microsecond-Scale Tasks</h1><p>开源 [代码](<a href="https://github.com/smcclure20/">https://github.com/smcclure20/</a> scheduling-policies-sim)</p>
+<p>对负载均衡策略和cpu core的分配策略的比较，得到了几个结论</p>
+<ul>
+<li>总的来说，在给定与其他方法相同的周期数时，即使开销和工作负载参数不同，work-stealing始终是性能最好的负载平衡策略。</li>
+<li>即使是在平均负载不变的情况下，想比于静态core分配，核心分配可能不会为短任务提供性能优势（中位数或tail latency）。</li>
+<li>然而，即使核心分配可能不会为短任务提供性能优势，但人们可以采用核心分配策略，以确保应用程序能够适应负载的变化。。</li>
+</ul>
+<h1 id="对比方案"><a href="#对比方案" class="headerlink" title="对比方案"></a>对比方案</h1><ul>
+<li>load balancing策略<ul>
+<li>单一队列：shinjuku和ram-cloud。一个大队列，但是实践中可能因为对于单一队列的争夺而限制吞吐量</li>
+<li>没有负载平衡：任务由它们首先到达的核心来处理</li>
+<li>enqueue choice：任务在创建时决定在哪运行，并且保持不动。现在的系统通常是二选一，选两个随机抽样的core中负载较低的那个。这是有开销的，“看别的core的负载”这件事情需要创建任务的core来干</li>
+<li>work stealing，当core idle时，从别的有queued work的core里拿一半task过来，它产生的开销是检查其他核心的排队工作并将工作转移到其本地队列。</li>
+<li>work shedding。过载的核心可以将负载转移给其他核心，或者要求其他核心承担他们的一些负载。我们考虑一种工作脱落策略，在这种策略中，一个任务排队时间超过指定阈值的核心会随机选择一个核心，并表示它已经过载。然后，该核心将通过窃取过载核心的一半任务来作出回应；这是该策略的主要开销来源。</li>
+</ul>
+</li>
+<li>core-allocation策略<ul>
+<li>静态的。通过静态核心分配，每个应用的核心数量不能随时间变化，正如一些研究系统[42, 64, 66]。这不会产生核心重新分配的开销。然而，每个应用程序必须有足够的核心来应对峰值负载，当负载随时间变化时，会浪费大量的CPU资源，这是数据中心工作负载的典型情况[11, 35]。</li>
+<li>per-task。诸如Fred[40]这样的系统具有按任务分配核心的功能，每次任务到来时都会给应用程序分配一个核心。这就产生了为每个任务分配核心的开销，除非所有核心都在使用。</li>
+<li>queueing-based。基于队列延迟的策略，如果队列–以线程、数据包或存储完成的数量或延迟来衡量–超过了某个阈值，则授予应用程序一个额外的内核。这些策略的不同之处在于它们是基于跨核心的最大排队量触发的[26, 60]还是使用平均数[12, 67]。</li>
+<li>基于CPU利用率。基于利用率的策略是根据空闲核心的数量[35]或核心在任务上花费的平均时间（而不是闲置或忙于旋转）[12, 67]来增加或重新启用核心。</li>
+<li>failure to find work。在一些系统中，当核心无法找到任何任务时，应用程序将产生一个核心。这可能发生在一个核心找不到另一个有排队工作的核心来偷取[26,60,76]，或者当它完成了当前的任务，有一个每个任务的核心分配政策[40]。<h1 id="建模细节"><a href="#建模细节" class="headerlink" title="建模细节"></a>建模细节</h1></li>
+<li>我们对负载平衡所需的跨核通信进行建模，一般需要100ns的时间。我们将内核分配的开销（包括分配内核的延迟和浪费的CPU周期）建模为每个内核分配5μs。</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>论文</category>
+      </categories>
+      <tags>
+        <tag>nsdi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>route add报错SIOCADDRT:Network is unreachable解决方案</title>
+    <url>/route%20add-siocaddrt-network-is-unreachable.html</url>
+    <content><![CDATA[<p>服务器 重启后无法通过外网访问，此时需要添加路由表项。</p>
+<p>添加时出现错误：SIOCADDRT:Network is unreachable</p>
+<span id="more"></span>
 
-<p>testpmd是DPDK提供的一个通过数据包转发进行DPDK测试的工具，也是一个非常好的DPDK应用开发示例。如果想进行简单的DPDK开发实验推荐修改<code>$RTE_SDK/app/test-pmd/iofwd.c</code>后编译testpmd应用，之后在同一目录<code>$RTE_SDK/app/test-pmd/</code>下可以找到下编译后的testpmd应用。</p>
-<p>pktgen运行在主机中，testpmd运行在容器中，两个应用之间通过建立的socket文件以及vhost-user进行通信，相当于虚拟网卡。</p>
-<h2 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h2><p>创建Dockerfile</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat &lt;&lt;EOT &gt;&gt; $RTE_SDK/../Dockerfile</span><br><span class="line">FROM ubuntu:latest</span><br><span class="line">WORKDIR /root/dpdk</span><br><span class="line">COPY dpdk /root/dpdk/.</span><br><span class="line">ENV PATH &quot;$PATH:/root/dpdk/$RTE_TARGET/app/&quot;</span><br><span class="line">EOT</span><br></pre></td></tr></table></figure>
+<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>错误信息：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">SIOCADDRT:Network is unreachable</span><br></pre></td></tr></table></figure>
 
-<p>使用创建的dockerfile建立docker镜像</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd $RTE_SDK/..</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">-t为镜像名，可以以name:tag的格式来写，不加tag默认tag为latest</span></span><br><span class="line">sudo docker build -t dpdk .</span><br></pre></td></tr></table></figure>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>这个错误的原因是因为gateway和IP不在一个网段内。</p>
+<p>通过ifconfig查找相应添加的device的网段。</p>
+<p>如：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">eth0      Link encap:Ethernet  HWaddr 0c:c4:7a:dc:76:aa  </span><br><span class="line">          inet addr:202.112.237.33  Bcast:202.112.237.255  Mask:255.255.255.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:226265 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:15405 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000 </span><br><span class="line">          RX bytes:18275659 (18.2 MB)  TX bytes:3133390 (3.1 MB)</span><br><span class="line">          Memory:c7220000-c723ffff</span><br></pre></td></tr></table></figure>
 
-<p>运行容器</p>
-<p>注：这里一开始没把libnuma.so.1共享-v加进去，结果进去报错</p>
-<p>注2：但是在后来的可跑的版本中，不加又没有关系</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir -p /tmp/virtio</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-ti 提供一个PTY交互界面并保持STDIN持续可用</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-v /dev/... 将主机的hugepages通过数据卷挂载到容器内，从而可以与主机共享hugepages</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-v /tmp/... 挂载一个数据卷到容器中用于共享virtio_user的sockets</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--privilege 不启用特权可能导致无法共享hugepages和sockets</span></span><br><span class="line">sudo docker run -ti --rm --name=test \</span><br><span class="line">-v /dev/hugepages:/dev/hugepages \</span><br><span class="line">-v /tmp/virtio/:/tmp/virtio/ \</span><br><span class="line">--privileged dpdk</span><br></pre></td></tr></table></figure>
+<p>那么gateway的数值就应该是<code>202.112.237.1</code></p>
+<p>route命令为：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo route add default gw 202.112.237.1 dev eth0</span><br></pre></td></tr></table></figure>
 
-<h3 id="虚拟机上的初步结果"><a href="#虚拟机上的初步结果" class="headerlink" title="虚拟机上的初步结果"></a>虚拟机上的初步结果</h3><p>因为硬件受限还没法添加1G的hugepage，为了测试testpmd的可用性，我暂时直接在容器中运行</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">testpmd</span><br></pre></td></tr></table></figure>
-
-<p>截图如下</p>
-<p><img src="/img/2018-7-16-1-1.png"></p>
-<h2 id="启动应用"><a href="#启动应用" class="headerlink" title="启动应用"></a>启动应用</h2><p>在容器中运行testpmd</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">以下命令在容器中运行</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">DPDK的参数</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-l 列出所使用的CPU核</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-n 给出memory channels的数量</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--socket-mem 限制用于每个socket的内存量</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--vdev 创建vhost的socket文件用于进行网络连接，可以理解为虚拟网卡</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--file-prefix hugepages字首，用于区分所使用的hugepage</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">testpmd的参数</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--forward-mode=io 对两个端口情况从一个端口进来的包直接从另一个端口发出</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在~/dpdk文件夹下运行</span></span><br><span class="line">./x86_64-native-linuxapp-gcc/app/testpmd -l 0-1 -n 1 --socket-mem 1024,1024 --vdev &#x27;eth_vhost0,iface=/tmp/virtio/sock1&#x27; --vdev &#x27;eth_vhost1,iface=/tmp/virtio/sock2&#x27; --file-prefix=test --no-pci -- -i --forward-mode=io --auto-start</span><br></pre></td></tr></table></figure>
-
-<p>在主机上运行pktgen</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">以下命令在主机中运行</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">DPDK的参数同上，--vdev在这里用来连接到socket文件</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">pktgen的参数</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-P 在所有端口启用混杂模式</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-m 定义CPU核到端口的绑定，在这里core5绑定到prot0，core6绑定到port1</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">pktgen的运行目录应在Pktgen.lua同一文件夹下运行</span></span><br><span class="line"></span><br><span class="line">sudo pktgen -l 2-6 -n 3 --socket-mem 1024,1024 --vdev=&#x27;virtio_user0,path=/tmp/virtio/sock1&#x27; --vdev=&#x27;virtio_user1,path=/tmp/virtio/sock2&#x27; -- -P -m &quot;5.0,6.1&quot;</span><br></pre></td></tr></table></figure>
-
-<h1 id="最终结果"><a href="#最终结果" class="headerlink" title="最终结果"></a>最终结果</h1><p>在pktgen中进行简单设置，并在testpmd中查看结果</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Pktgen:/&gt;set all rate 10</span><br><span class="line">Pktgen:/&gt;set 0 count 100</span><br><span class="line">Pktgen:/&gt;set 1 count 200</span><br><span class="line">Pktgen:/&gt;str</span><br></pre></td></tr></table></figure>
-
-<h2 id="pktgen上截图"><a href="#pktgen上截图" class="headerlink" title="pktgen上截图"></a>pktgen上截图</h2><p><img src="/img/2018-8-15-2.png"></p>
-<h2 id="testpmd上截图"><a href="#testpmd上截图" class="headerlink" title="testpmd上截图"></a>testpmd上截图</h2><p><img src="/img/2018-8-15-1.png"></p>
+<p>PS: 当初就是<code>eth0</code>写成了<code>eth1</code>导致这个错误的发生</p>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
-<li><a href="https://www.sdnlab.com/20112.html">https://www.sdnlab.com/20112.html</a></li>
-<li><a href="https://segmentfault.com/q/1010000003036379">https://segmentfault.com/q/1010000003036379</a></li>
-<li><a href="http://pktgen-dpdk.readthedocs.io/en/latest/getting_started.html">http://pktgen-dpdk.readthedocs.io/en/latest/getting_started.html</a></li>
-<li><a href="http://www.voidcn.com/article/p-fmqewmwt-bqu.html">http://www.voidcn.com/article/p-fmqewmwt-bqu.html</a></li>
+<li><a href="https://www.jianshu.com/p/0bd0c0c7bc73">https://www.jianshu.com/p/0bd0c0c7bc73</a></li>
 </ul>
 ]]></content>
       <categories>
         <category>其他</category>
       </categories>
       <tags>
-        <tag>其他</tag>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
-    <title>2018年网络攻防小学期</title>
-    <url>/network-attack-and-defense-semester.html</url>
-    <content><![CDATA[<p>收录2018年网络攻防小学期的一些东西</p>
-<span id="more"></span> 
+    <title>比较docker默认网络模式、dpdk、ovs+dpdk三种网络性能测试</title>
+    <url>/compare-docker-dpdk-ovs+dpdk.html</url>
+    <content><![CDATA[<p>将前面的工作整合了一下，比较docker默认的网桥模式、dpdk和dpdk+ovs三种网络的网络性能</p>
+<span id="more"></span>
 
-<ul>
-<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%B8%80%EF%BC%89%E7%BD%91%E7%BB%9C%E4%BE%A6%E6%9F%A5%E4%B8%8E%E5%8F%96%E8%AF%81%E5%88%86%E6%9E%90.html">网络攻防小学期（一）网络侦查与取证分析</a></li>
-<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%BA%8C%EF%BC%89%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F%E4%B8%8E%E4%BF%9D%E5%AF%86-%E5%AF%86%E7%A0%81.html">网络攻防小学期（二）信息隐藏与保密&#x2F;密码</a></li>
-<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%B8%89%EF%BC%89%E7%BD%91%E7%AB%99%E5%AE%89%E5%85%A8.html">网络攻防小学期（三）网站安全</a></li>
-<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E5%9B%9B%EF%BC%89%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E4%B8%8E%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%BC%8F%E6%B4%9E.html">网络攻防小学期（四）逆向工程与二进制漏洞</a></li>
-<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%EF%BC%9AM1%E5%8D%A1%E5%B0%8F%E5%AE%9E%E9%AA%8C.html">网络攻防：M1卡小实验</a></li>
-<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%EF%BC%9AM1%E5%8D%A1%E5%A4%A7%E5%AE%9E%E9%AA%8C.html">网络攻防：M1卡大实验</a></li>
+<h1 id="前期工作"><a href="#前期工作" class="headerlink" title="前期工作"></a>前期工作</h1><ul>
+<li>docker + dpdk：<a href="https://datawine.github.io/2018/07/15/DPDK-Pktgen-Docker%E6%90%AD%E5%BB%BAVNF%E7%8E%AF%E5%A2%83%E5%8F%8A%E9%AA%8C%E8%AF%81/">https://datawine.github.io/2018/07/15/DPDK-Pktgen-Docker%E6%90%AD%E5%BB%BAVNF%E7%8E%AF%E5%A2%83%E5%8F%8A%E9%AA%8C%E8%AF%81/</a></li>
+<li>docker + dpdk + ovs：<a href="https://datawine.github.io/2018/07/22/Docker-DPDK-OVS/">https://datawine.github.io/2018/07/22/Docker-DPDK-OVS/</a></li>
+</ul>
+<h1 id="docker默认的网桥performance"><a href="#docker默认的网桥performance" class="headerlink" title="docker默认的网桥performance"></a>docker默认的网桥performance</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">运行docker，使用iperf3 server监听5201端口</span></span><br><span class="line">sudo docker run -it --rm --name=iperf3-server -p 5201:5201 networkstatic/iperf3 -s</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">启动iperf3 client，发包</span></span><br><span class="line">docker run  -it --rm networkstatic/iperf3 -c $(docker inspect --format &quot;&#123;&#123; .NetworkSettings.IPAddress &#125;&#125;&quot; $(docker ps -ql))</span><br></pre></td></tr></table></figure>
+
+<h1 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h1><p>因为没有查到如何iperf3监听建好的virtio_user或者是virtio_host端口，而iperf3对ovs的监听好像也是针对网桥（见参考资料[1]），不支持手动添加ovs port和流表的方法，而且在查资料中，据说iperf在dpdk的实验中没有办法达到峰值（？见参考资料[2]），所以后面两种用pktgen测速。</p>
+<h2 id="docker默认网桥性能"><a href="#docker默认网桥性能" class="headerlink" title="docker默认网桥性能"></a>docker默认网桥性能</h2><p>性能</p>
+<p><img src="/img/2018-8-20.jpg"></p>
+<h2 id="docker-dpdk性能"><a href="#docker-dpdk性能" class="headerlink" title="docker + dpdk性能"></a>docker + dpdk性能</h2><p>拓扑结构</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+--------+---------------+               +-------------------+---------------+</span><br><span class="line">|        | socket file 1 |&lt;-------------&gt;| vhost-user port 1 |               |</span><br><span class="line">|        +---------------+               +-------------------+               |</span><br><span class="line">| host   |     pktgen    |               |      testpmd      |     container |</span><br><span class="line">|        +---------------+               +-------------------+               |</span><br><span class="line">|        | socket file 0 |&lt;-------------&gt;| vhost-user port 0 |               |</span><br><span class="line">+--------+---------------+               +-------------------+---------------+</span><br></pre></td></tr></table></figure>
+
+<p>性能</p>
+<p><img src="/img/2018-8-20-1.jpg"></p>
+<h2 id="docker-dpdk-ovs性能"><a href="#docker-dpdk-ovs性能" class="headerlink" title="docker + dpdk + ovs性能"></a>docker + dpdk + ovs性能</h2><p>拓扑结构</p>
+<p><img src="/img/2018-8-17-1.jpg"></p>
+<p>性能</p>
+<p><img src="/img/2018-8-20-2.jpg"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>由上面可知，docker默认的网桥带宽能够达到<code>1.98GB/s</code>，docker+dpdk的模式下，带宽能够达到<code>4150MB/s</code>即<code>4.05GB.s</code>左右，而docker+dpdk+ovs的模式下，带宽能够达到<code>1350MB/s</code>即<code>1.32GB/s</code>左右，且发现Rx速率要小于Tx速率，猜测是ovs处发生堵塞。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li>[1] <a href="https://software.intel.com/en-us/articles/using-docker-containers-with-open-vswitch-and-dpdk-on-ubuntu-1710">https://software.intel.com/en-us/articles/using-docker-containers-with-open-vswitch-and-dpdk-on-ubuntu-1710</a></li>
+<li>[2] <a href="http://www.qingpingshan.com/jb/lua/322243.html">http://www.qingpingshan.com/jb/lua/322243.html</a></li>
+<li>[3] <a href="http://networkstatic.net/measuring-network-bandwidth-using-iperf-and-docker/">http://networkstatic.net/measuring-network-bandwidth-using-iperf-and-docker/</a></li>
+<li>[4] <a href="https://www.cnblogs.com/gispathfinder/p/5871043.html">https://www.cnblogs.com/gispathfinder/p/5871043.html</a></li>
+<li>[5] <a href="https://my.oschina.net/LastRitter/blog/1807032">https://my.oschina.net/LastRitter/blog/1807032</a></li>
 </ul>
 ]]></content>
       <categories>
-        <category>学习</category>
+        <category>其他</category>
       </categories>
       <tags>
-        <tag>网络攻防</tag>
+        <tag>dpdk</tag>
+        <tag>docker</tag>
+        <tag>ovs</tag>
+        <tag>pktgen</tag>
+        <tag>iperf</tag>
       </tags>
   </entry>
   <entry>
@@ -202,6 +303,95 @@
       </tags>
   </entry>
   <entry>
+    <title>DPDK Pktgen+Docker搭建VNF环境及验证</title>
+    <url>/dpdk-pktgen-docker-vnf-test.html</url>
+    <content><![CDATA[<p>主要是搭建一个DPDK+docker的环境，然而docker上次用是在软工的时候，重新学还花了一些功夫，改日写篇docker总结好了。</p>
+<span id="more"></span>
+
+<h1 id="最终能够运行的版本信息"><a href="#最终能够运行的版本信息" class="headerlink" title="最终能够运行的版本信息"></a>最终能够运行的版本信息</h1><p>注 ：dpdk、pktgen是wget下载安装的，docker是apt install安装的</p>
+<ul>
+<li>Linux kernel 4.4.0-131-generic</li>
+<li>Ubuntu 16.04.5 LTS</li>
+<li>dpdk-stable-16.11.1</li>
+<li>pktgen-dpdk-pktgen-3.1.1</li>
+<li>Docker version 17.03.2-ce</li>
+</ul>
+<h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><ul>
+<li>安装dpdk</li>
+<li>安装docker</li>
+<li>安装pktgen</li>
+<li>配置hugepages<ul>
+<li>注意！本实验中由于我们需要使用virtio-user这种连接方式，由于实现时的一些限制导致使用vhost-user时同时最多只能使用8个hugepages无论2M还是1G大小的hugepagesize。所以这里必须使用1G大小的hugepagesize同时最多分配8个。</li>
+</ul>
+</li>
+</ul>
+<h1 id="拓扑搭建"><a href="#拓扑搭建" class="headerlink" title="拓扑搭建"></a>拓扑搭建</h1><h2 id="拓扑"><a href="#拓扑" class="headerlink" title="拓扑"></a>拓扑</h2><p>预建立的简单拓扑</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+--------+---------------+               +-------------------+---------------+</span><br><span class="line">|        | socket file 1 |&lt;-------------&gt;| vhost-user port 1 |               |</span><br><span class="line">|        +---------------+               +-------------------+               |</span><br><span class="line">| host   |     pktgen    |               |      testpmd      |     container |</span><br><span class="line">|        +---------------+               +-------------------+               |</span><br><span class="line">|        | socket file 0 |&lt;-------------&gt;| vhost-user port 0 |               |</span><br><span class="line">+--------+---------------+               +-------------------+---------------+</span><br></pre></td></tr></table></figure>
+
+<p>testpmd是DPDK提供的一个通过数据包转发进行DPDK测试的工具，也是一个非常好的DPDK应用开发示例。如果想进行简单的DPDK开发实验推荐修改<code>$RTE_SDK/app/test-pmd/iofwd.c</code>后编译testpmd应用，之后在同一目录<code>$RTE_SDK/app/test-pmd/</code>下可以找到下编译后的testpmd应用。</p>
+<p>pktgen运行在主机中，testpmd运行在容器中，两个应用之间通过建立的socket文件以及vhost-user进行通信，相当于虚拟网卡。</p>
+<h2 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h2><p>创建Dockerfile</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat &lt;&lt;EOT &gt;&gt; $RTE_SDK/../Dockerfile</span><br><span class="line">FROM ubuntu:latest</span><br><span class="line">WORKDIR /root/dpdk</span><br><span class="line">COPY dpdk /root/dpdk/.</span><br><span class="line">ENV PATH &quot;$PATH:/root/dpdk/$RTE_TARGET/app/&quot;</span><br><span class="line">EOT</span><br></pre></td></tr></table></figure>
+
+<p>使用创建的dockerfile建立docker镜像</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd $RTE_SDK/..</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">-t为镜像名，可以以name:tag的格式来写，不加tag默认tag为latest</span></span><br><span class="line">sudo docker build -t dpdk .</span><br></pre></td></tr></table></figure>
+
+<p>运行容器</p>
+<p>注：这里一开始没把libnuma.so.1共享-v加进去，结果进去报错</p>
+<p>注2：但是在后来的可跑的版本中，不加又没有关系</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir -p /tmp/virtio</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-ti 提供一个PTY交互界面并保持STDIN持续可用</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-v /dev/... 将主机的hugepages通过数据卷挂载到容器内，从而可以与主机共享hugepages</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-v /tmp/... 挂载一个数据卷到容器中用于共享virtio_user的sockets</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--privilege 不启用特权可能导致无法共享hugepages和sockets</span></span><br><span class="line">sudo docker run -ti --rm --name=test \</span><br><span class="line">-v /dev/hugepages:/dev/hugepages \</span><br><span class="line">-v /tmp/virtio/:/tmp/virtio/ \</span><br><span class="line">--privileged dpdk</span><br></pre></td></tr></table></figure>
+
+<h3 id="虚拟机上的初步结果"><a href="#虚拟机上的初步结果" class="headerlink" title="虚拟机上的初步结果"></a>虚拟机上的初步结果</h3><p>因为硬件受限还没法添加1G的hugepage，为了测试testpmd的可用性，我暂时直接在容器中运行</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">testpmd</span><br></pre></td></tr></table></figure>
+
+<p>截图如下</p>
+<p><img src="/img/2018-7-16-1-1.png"></p>
+<h2 id="启动应用"><a href="#启动应用" class="headerlink" title="启动应用"></a>启动应用</h2><p>在容器中运行testpmd</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">以下命令在容器中运行</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">DPDK的参数</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-l 列出所使用的CPU核</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-n 给出memory channels的数量</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--socket-mem 限制用于每个socket的内存量</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--vdev 创建vhost的socket文件用于进行网络连接，可以理解为虚拟网卡</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--file-prefix hugepages字首，用于区分所使用的hugepage</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">testpmd的参数</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--forward-mode=io 对两个端口情况从一个端口进来的包直接从另一个端口发出</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在~/dpdk文件夹下运行</span></span><br><span class="line">./x86_64-native-linuxapp-gcc/app/testpmd -l 0-1 -n 1 --socket-mem 1024,1024 --vdev &#x27;eth_vhost0,iface=/tmp/virtio/sock1&#x27; --vdev &#x27;eth_vhost1,iface=/tmp/virtio/sock2&#x27; --file-prefix=test --no-pci -- -i --forward-mode=io --auto-start</span><br></pre></td></tr></table></figure>
+
+<p>在主机上运行pktgen</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">以下命令在主机中运行</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">DPDK的参数同上，--vdev在这里用来连接到socket文件</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">pktgen的参数</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-P 在所有端口启用混杂模式</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-m 定义CPU核到端口的绑定，在这里core5绑定到prot0，core6绑定到port1</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">pktgen的运行目录应在Pktgen.lua同一文件夹下运行</span></span><br><span class="line"></span><br><span class="line">sudo pktgen -l 2-6 -n 3 --socket-mem 1024,1024 --vdev=&#x27;virtio_user0,path=/tmp/virtio/sock1&#x27; --vdev=&#x27;virtio_user1,path=/tmp/virtio/sock2&#x27; -- -P -m &quot;5.0,6.1&quot;</span><br></pre></td></tr></table></figure>
+
+<h1 id="最终结果"><a href="#最终结果" class="headerlink" title="最终结果"></a>最终结果</h1><p>在pktgen中进行简单设置，并在testpmd中查看结果</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Pktgen:/&gt;set all rate 10</span><br><span class="line">Pktgen:/&gt;set 0 count 100</span><br><span class="line">Pktgen:/&gt;set 1 count 200</span><br><span class="line">Pktgen:/&gt;str</span><br></pre></td></tr></table></figure>
+
+<h2 id="pktgen上截图"><a href="#pktgen上截图" class="headerlink" title="pktgen上截图"></a>pktgen上截图</h2><p><img src="/img/2018-8-15-2.png"></p>
+<h2 id="testpmd上截图"><a href="#testpmd上截图" class="headerlink" title="testpmd上截图"></a>testpmd上截图</h2><p><img src="/img/2018-8-15-1.png"></p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a href="https://www.sdnlab.com/20112.html">https://www.sdnlab.com/20112.html</a></li>
+<li><a href="https://segmentfault.com/q/1010000003036379">https://segmentfault.com/q/1010000003036379</a></li>
+<li><a href="http://pktgen-dpdk.readthedocs.io/en/latest/getting_started.html">http://pktgen-dpdk.readthedocs.io/en/latest/getting_started.html</a></li>
+<li><a href="http://www.voidcn.com/article/p-fmqewmwt-bqu.html">http://www.voidcn.com/article/p-fmqewmwt-bqu.html</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>其他</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>pktgen-dpdk安装踩坑实录</title>
+    <url>/pktgen-install.html</url>
+    <content><![CDATA[<p>pktgen安装。</p>
+<span id="more"></span>
+
+<h1 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h1><p>非常简单。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://git.dpdk.org/apps/pktgen-dpdk/snapshot/pktgen-3.5.0.tar.xz</span><br><span class="line">cd pktgen-3.5.0/</span><br><span class="line">make -j8</span><br></pre></td></tr></table></figure>
+
+<h1 id="运行脚本"><a href="#运行脚本" class="headerlink" title="运行脚本"></a>运行脚本</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo ./app/x86_64-native-linuxapp-gcc/pktgen -l 1,3,5,7,9 -n 4 --socket-mem 1024,1024 -- -P -m &quot;[3:5].0,[7:9].1&quot;</span><br></pre></td></tr></table></figure>
+
+<h1 id="踩坑实录"><a href="#踩坑实录" class="headerlink" title="踩坑实录"></a>踩坑实录</h1><p>版本很重要！3.5.0这个版本不会遇到liblua的问题，因为他内部会自动下载。</p>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>pktgen</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>linux查看线程状态</title>
     <url>/linux-thread-state.html</url>
     <content><![CDATA[<p>查看线程状态的简单方法。</p>
@@ -217,101 +407,6 @@
       </categories>
       <tags>
         <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>dpdk安装踩坑实录</title>
-    <url>/dpdk-install.html</url>
-    <content><![CDATA[<p>本次安装的版本是dpdk18.02.2，在ubuntu 14.04.5上安装，内核版本为4.4.0-31-generic。</p>
-<span id="more"></span>
-
-<h1 id="系统配置"><a href="#系统配置" class="headerlink" title="系统配置"></a>系统配置</h1><p>需要：</p>
-<ul>
-<li>python、libnuma-dev等库（libnuma-dev直接通过<code>apt-get install libnuma-dev</code>）</li>
-<li>大页内存（并mount）</li>
-</ul>
-<h1 id="dpdk的安装与下载"><a href="#dpdk的安装与下载" class="headerlink" title="dpdk的安装与下载"></a>dpdk的安装与下载</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget http://fast.dpdk.org/rel/dpdk-18.02.2.tar.xz</span><br><span class="line">tar -xvf dpdk-18.02.2.tar.xz</span><br><span class="line">cd dpdk-stable-18.02.2</span><br><span class="line">echo export RTE_SDK=$(pwd) &gt;&gt; ~/.bashrc</span><br><span class="line">echo export RTE_TARGET=x86_64-native-linuxapp-gcc &gt;&gt; ~/.bashrc</span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
-
-<p>如果需要用到vhost-user驱动，要修改<code>config/common_base</code>，另其中的<code>CONFIG_RTE_LIBRTE_VHOST=y</code>。</p>
-<p>安装dpdk</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">make config T=$RTE_TARGET</span><br><span class="line">make T=$RTE_TARGET -j8</span><br><span class="line">make install T=$RTE_TARGET</span><br></pre></td></tr></table></figure>
-
-<h1 id="配置大页内存"><a href="#配置大页内存" class="headerlink" title="配置大页内存"></a>配置大页内存</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改/etc/default/grub</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在 GRUB_CMDLINE_LINUX_DEFAULT= 项中添加</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">default_hugepagesz=1GB hugepagesz=1G hugepages=8</span></span><br><span class="line">sudo update-grub</span><br><span class="line"></span><br><span class="line">mkdir -p /mnt/huge_1GB</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">可以直接mount，但每次重启都要重新配置</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">方法我就不写了</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">也可以让重启后有效</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">vim /etc/fstab</span></span><br><span class="line">nodev /mnt/huge_1GB hugetlbfs pagesize=1GB 0 0</span><br></pre></td></tr></table></figure>
-
-<h1 id="加载驱动"><a href="#加载驱动" class="headerlink" title="加载驱动"></a>加载驱动</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo modprobe uio</span><br><span class="line">sudo insmod $RTE_SDK/x86_64-native-linuxapp-gcc/kmod/igb_uio.ko</span><br></pre></td></tr></table></figure>
-
-<h1 id="绑定端口"><a href="#绑定端口" class="headerlink" title="绑定端口"></a>绑定端口</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看网卡信息，确定要绑定的网卡</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">RTE_SDK/usertools/dpdk-devbind.py -s</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">绑定网卡</span></span><br><span class="line">sudo $RTE_SDK/usertools/dpdk-devbind.py --bind=igb_uio 0000:82:00.0</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">后面的参数写-s出来的网卡信息最左边一行，当然也可以写名字之类的</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="一些注意事项"><a href="#一些注意事项" class="headerlink" title="一些注意事项"></a>一些注意事项</h1><p>按上面方法配置，大页内存不会因为重启而要重新配置，但是模块和端口需要重新配置，<code>~/.bashrc</code>也需要重新<code>source</code>。</p>
-]]></content>
-      <categories>
-        <category>工具</category>
-      </categories>
-      <tags>
-        <tag>dpdk</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>dlopen源码分析</title>
-    <url>/dlopen-source-code.html</url>
-    <content><![CDATA[<p>研究一下dlopen的源码。</p>
-<span id="more"></span>
-
-<p>通过调用链的形式分析dlopen源码。</p>
-<p>首先，函数的入口是<code>dlopen (const char *file, int mode)</code></p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> *</span><br><span class="line"><span class="title function_">dlopen</span> <span class="params">(<span class="type">const</span> <span class="type">char</span> *file, <span class="type">int</span> mode)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> __dlopen (file, mode, RETURN_ADDRESS (<span class="number">0</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>函数跳转到了<code>__dlopen</code>，这个函数实际上做了两件事情，将<code>struct dlopen_args args</code>赋值，然后运行<code>dlopen_doit</code>。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> *</span><br><span class="line">__dlopen (<span class="type">const</span> <span class="type">char</span> *file, <span class="type">int</span> mode DL_CALLER_DECL)</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line"> </span><br><span class="line"><span class="meta"># <span class="keyword">ifdef</span> SHARED</span></span><br><span class="line">  <span class="keyword">return</span> _dlerror_run (dlopen_doit, &amp;args) ? <span class="literal">NULL</span> : args.new;</span><br><span class="line"><span class="meta"># <span class="keyword">else</span></span></span><br><span class="line">  <span class="keyword">if</span> (_dlerror_run (dlopen_doit, &amp;args))</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">return</span> args.new;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>其中结构体<code>struct dlopen_args</code>是这样的：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">dlopen_args</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *file; <span class="comment">/* The arguments for dlopen_doit.  */</span></span><br><span class="line">  <span class="type">int</span> mode;</span><br><span class="line">  <span class="type">void</span> *new; <span class="comment">/* The return value of dlopen_doit.  */</span></span><br><span class="line">  <span class="type">const</span> <span class="type">void</span> *caller; <span class="comment">/* The return value of dlopen_doit.  */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>然后<code>dlopen_doit</code>的函数则是调用了<code>__dl_open</code>函数。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span></span><br><span class="line"><span class="title function_">dlopen_doit</span> <span class="params">(<span class="type">void</span> *a)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">dlopen_args</span> *<span class="title">args</span> =</span> (<span class="keyword">struct</span> dlopen_args *) a;</span><br><span class="line">	... </span><br><span class="line">  args-&gt;new = GLRO(dl_open) (args-&gt;file ?: <span class="string">&quot;&quot;</span>, args-&gt;mode | __RTLD_DLOPEN,</span><br><span class="line">			     args-&gt;caller,</span><br><span class="line">			     args-&gt;file == <span class="literal">NULL</span> ? LM_ID_BASE : NS,</span><br><span class="line">			     __dlfcn_argc, __dlfcn_argv, __environ);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>对于<code>__dl_open</code>函数，实际上调用了<code>dl_open_worker</code>函数。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> *</span><br><span class="line">_dl_open (<span class="type">const</span> <span class="type">char</span> *file, <span class="type">int</span> mode, <span class="type">const</span> <span class="type">void</span> *caller_dlopen, Lmid_t nsid,</span><br><span class="line">	  <span class="type">int</span> argc, <span class="type">char</span> *argv[], <span class="type">char</span> *env[])</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">dl_open_args</span> <span class="title">args</span>;</span></span><br><span class="line">  args.file = file;</span><br><span class="line">  args.mode = mode;</span><br><span class="line">  args.caller_dlopen = caller_dlopen;</span><br><span class="line">  args.caller_dl_open = RETURN_ADDRESS (<span class="number">0</span>);</span><br><span class="line">  args.<span class="built_in">map</span> = <span class="literal">NULL</span>;</span><br><span class="line">  args.nsid = nsid;</span><br><span class="line">  args.argc = argc;</span><br><span class="line">  args.argv = argv;</span><br><span class="line">  args.env = env;</span><br><span class="line"> </span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *objname;</span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *errstring;</span><br><span class="line">  <span class="type">bool</span> malloced;</span><br><span class="line">  <span class="type">int</span> errcode = _dl_catch_error (&amp;objname, &amp;errstring, &amp;malloced,</span><br><span class="line">				 dl_open_worker, &amp;args);</span><br><span class="line">	... </span><br><span class="line">  <span class="keyword">return</span> args.<span class="built_in">map</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>其中关键的数据存储在<code>struct dl_open_args</code>内，它的结构如下所示</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">dl_open_args</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *file;</span><br><span class="line">  <span class="type">int</span> mode;</span><br><span class="line">  <span class="type">const</span> <span class="type">void</span> *caller_dlopen; <span class="comment">/* This is the caller of dlopen().  */</span></span><br><span class="line">  <span class="type">const</span> <span class="type">void</span> *caller_dl_open; <span class="comment">/* This is the caller of _dl_open().  */</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">link_map</span> *<span class="title">map</span>;</span></span><br><span class="line">  Lmid_t nsid; <span class="comment">/* Namespace ID.  */</span></span><br><span class="line">  <span class="type">int</span> argc;</span><br><span class="line">  <span class="type">char</span> **argv;</span><br><span class="line">  <span class="type">char</span> **env;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>在<code>dl_open_worker</code>函数中，最重要的加载数据一步是通过调用<code>_dl_map_object</code>实现的。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Load the named object.  */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">link_map</span> *<span class="title">new</span>;</span></span><br><span class="line">args-&gt;<span class="built_in">map</span> = new = _dl_map_object (call_map, file, lt_loaded, <span class="number">0</span>,</span><br><span class="line">		    mode | __RTLD_CALLMAP, args-&gt;nsid);</span><br></pre></td></tr></table></figure>
-
-<p>接下来就是<code>_dl_map_object</code>函数，其主要的内容如下：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">link_map</span> *</span></span><br><span class="line"><span class="class"><span class="title">internal_function</span></span></span><br><span class="line"><span class="class">_<span class="title">dl_map_object</span> (<span class="keyword">struct</span> <span class="title">link_map</span> *<span class="title">loader</span>, <span class="title">const</span> <span class="title">char</span> *<span class="title">name</span>,</span></span><br><span class="line"><span class="class">		<span class="title">int</span> <span class="title">type</span>, <span class="title">int</span> <span class="title">trace_mode</span>, <span class="title">int</span> <span class="title">mode</span>, <span class="title">Lmid_t</span> <span class="title">nsid</span>)</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="type">int</span> fd;</span><br><span class="line">  <span class="type">char</span> *realname;</span><br><span class="line">  <span class="type">char</span> *name_copy;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">link_map</span> *<span class="title">l</span>;</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">filebuf</span> <span class="title">fb</span>;</span></span><br><span class="line">	...</span><br><span class="line">  <span class="comment">/* Look for this name among those already loaded.  */</span></span><br><span class="line">  <span class="keyword">for</span> (l = GL(dl_ns)[nsid]._ns_loaded; l; l = l-&gt;l_next)</span><br><span class="line">  &#123;</span><br><span class="line">      <span class="comment">/* If the requested name matches the soname of a loaded object,</span></span><br><span class="line"><span class="comment">	 use that object.  Elide this check for names that have not</span></span><br><span class="line"><span class="comment">	 yet been opened.  */</span></span><br><span class="line">      <span class="keyword">if</span> (__builtin_expect (l-&gt;l_faked, <span class="number">0</span>) != <span class="number">0</span> </span><br><span class="line">          || __builtin_expect (l-&gt;l_removed, <span class="number">0</span>) != <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">      <span class="keyword">if</span> (!_dl_name_match_p (name, l))</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="type">const</span> <span class="type">char</span> *soname;</span><br><span class="line"> 				<span class="keyword">if</span> (__builtin_expect (l-&gt;l_soname_added, <span class="number">1</span>) </span><br><span class="line">            || l-&gt;l_info[DT_SONAME] == <span class="literal">NULL</span>)</span><br><span class="line">	    	<span class="keyword">continue</span>;</span><br><span class="line"> </span><br><span class="line">	  		soname = ((<span class="type">const</span> <span class="type">char</span> *) D_PTR (l, l_info[DT_STRTAB])</span><br><span class="line">		    	+ l-&gt;l_info[DT_SONAME]-&gt;d_un.d_val);</span><br><span class="line">	  		<span class="keyword">if</span> (<span class="built_in">strcmp</span> (name, soname) != <span class="number">0</span>)</span><br><span class="line">	    		<span class="keyword">continue</span>;</span><br><span class="line"> </span><br><span class="line">        <span class="comment">/* We have a match on a new name -- cache it.  */</span></span><br><span class="line">        add_name_to_object (l, soname);</span><br><span class="line">        l-&gt;l_soname_added = <span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line"> </span><br><span class="line">      <span class="comment">/* We have a match.  */</span></span><br><span class="line">      <span class="keyword">return</span> l;</span><br><span class="line">  &#125;</span><br><span class="line"> 	</span><br><span class="line">  ...</span><br><span class="line">  fd = open_path (name, namelen, mode &amp; __RTLD_SECURE, </span><br><span class="line">                  &amp;main_map-&gt;l_rpath_dirs, &amp;realname, &amp;fb, </span><br><span class="line">                  loader ?: main_map, LA_SER_RUNPATH, &amp;found_other_class);</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">  l = _dl_new_object (name_copy, name, type, loader,</span><br><span class="line">				      mode, nsid)) </span><br><span class="line">	</span><br><span class="line">   <span class="keyword">return</span> _dl_map_object_from_fd (name, fd, &amp;fb, realname, loader, type, mode, &amp;stack_end, nsid);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>其中文件是通过<code>open_path</code>调用的。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span></span><br><span class="line"><span class="title function_">open_path</span> <span class="params">(<span class="type">const</span> <span class="type">char</span> *name, <span class="type">size_t</span> namelen, <span class="type">int</span> secure,</span></span><br><span class="line"><span class="params">	   <span class="keyword">struct</span> r_search_path_struct *sps, <span class="type">char</span> **realname,</span></span><br><span class="line"><span class="params">	   <span class="keyword">struct</span> filebuf *fbp, <span class="keyword">struct</span> link_map *loader, <span class="type">int</span> whatcode,</span></span><br><span class="line"><span class="params">	   <span class="type">bool</span> *found_other_class)</span></span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">for</span> (cnt = <span class="number">0</span>; fd == <span class="number">-1</span> &amp;&amp; cnt &lt; ncapstr; ++cnt) &#123;</span><br><span class="line"> 			fd = open_verify (buf, fbp, loader, whatcode, found_other_class, </span><br><span class="line">                        <span class="literal">false</span>);</span><br><span class="line">			...</span><br><span class="line">		&#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> (fd != <span class="number">-1</span>) &#123;</span><br><span class="line">	  	*realname = (<span class="type">char</span> *) <span class="built_in">malloc</span> (buflen);</span><br><span class="line">	  	<span class="keyword">if</span> (*realname != <span class="literal">NULL</span>)</span><br><span class="line">	    &#123;</span><br><span class="line">	      <span class="built_in">memcpy</span> (*realname, buf, buflen);</span><br><span class="line">	      <span class="keyword">return</span> fd; <span class="comment">// here return the fd</span></span><br><span class="line">	    &#125;</span><br><span class="line">	  	<span class="keyword">else</span></span><br><span class="line">	    &#123;</span><br><span class="line">	      <span class="comment">/* No memory for the name, we certainly won&#x27;t be able</span></span><br><span class="line"><span class="comment">		 to load and link it.  */</span></span><br><span class="line">	      __close (fd);</span><br><span class="line">	      <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	    &#125;</span><br><span class="line">		&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* Remember whether we found anything.  */</span></span><br><span class="line">    any |= here_any;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span> (*++dirs != <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>其中<code>open_verify</code>函数通过调用<code>__libc_read</code>对ELF文件的文件头实现了读写。</p>
-<p>接下来是<code>_dl_new_object</code>函数，它主要初始化一个新的<code>struct link_map*</code>数据结构，并把它加入到<code>loader</code>对应的单链中（猜测）。</p>
-<p>最重要的是函数<code>_dl_map_object_from_fd</code>。这个函数包括了</p>
-<ul>
-<li>对<code>link_map</code>的二次查找，是否已经存在映射了.so文件的</li>
-<li>提取ELF头文件信息（程序入口地址，头文件信息等）</li>
-<li>对phdr（程序头表进行遍历），根据每个程序头的type类型做具体的操作</li>
-<li>进行映射</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">maplength = loadcmds[nloadcmds - <span class="number">1</span>].allocend - loadcmds[<span class="number">0</span>].mapstart;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Now process the load commands and map segments into memory.</span></span><br><span class="line"><span class="comment">   This is responsible for filling in:</span></span><br><span class="line"><span class="comment">   l_map_start, l_map_end, l_addr, l_contiguous, l_text_end, l_phdr</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">errstring = _dl_map_segments (l, fd, header, type, loadcmds, nloadcmds,</span><br><span class="line">  maplength, has_holes, loader);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>调用<code>mprotect</code>修改内存权限</li>
-<li>修改TLS等设置</li>
-<li>修改符号表</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Set up the symbol hash table.  */</span></span><br><span class="line">_dl_setup_hash (l);</span><br></pre></td></tr></table></figure>
-
-<p>最后，是<code>_dl_map_segments</code>函数</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* This is a position-independent shared object.  We can let the</span></span><br><span class="line"><span class="comment">   kernel map it anywhere it likes, but we must have space for all</span></span><br><span class="line"><span class="comment">   the segments in their specified positions relative to the first.</span></span><br><span class="line"><span class="comment">   So we map the first segment without MAP_FIXED, but with its</span></span><br><span class="line"><span class="comment">   extent increased to cover all the segments.  Then we remove</span></span><br><span class="line"><span class="comment">   access from excess portion, and there is known sufficient space</span></span><br><span class="line"><span class="comment">   there to remap from the later segments.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">   As a refinement, sometimes we have an address that we would</span></span><br><span class="line"><span class="comment">   prefer to map such objects at; but this is only a preference,</span></span><br><span class="line"><span class="comment">   the OS can do whatever it likes. */</span></span><br><span class="line">ElfW(Addr) mappref</span><br><span class="line">  = (ELF_PREFERRED_ADDRESS (loader, maplength,</span><br><span class="line">                            c-&gt;mapstart &amp; GLRO(dl_use_load_bias))</span><br><span class="line">     - MAP_BASE_ADDR (l));</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Remember which part of the address space this object uses.  */</span></span><br><span class="line">l-&gt;l_map_start = (ElfW(Addr)) __mmap ((<span class="type">void</span> *) mappref, maplength,</span><br><span class="line">                                      c-&gt;prot,</span><br><span class="line">                                      MAP_COPY|MAP_FILE,</span><br><span class="line">                                      fd, c-&gt;mapoff);</span><br><span class="line"><span class="keyword">if</span> (__glibc_unlikely ((<span class="type">void</span> *) l-&gt;l_map_start == MAP_FAILED))</span><br><span class="line">  <span class="keyword">return</span> DL_MAP_SEGMENTS_ERROR_MAP_SEGMENT;</span><br><span class="line"></span><br><span class="line">l-&gt;l_map_end = l-&gt;l_map_start + maplength;</span><br><span class="line">l-&gt;l_addr = l-&gt;l_map_start - c-&gt;mapstart;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (has_holes)</span><br><span class="line">  <span class="comment">/* Change protection on the excess portion to disallow all access;</span></span><br><span class="line"><span class="comment">     the portions we do not remap later will be inaccessible as if</span></span><br><span class="line"><span class="comment">     unallocated.  Then jump into the normal segment-mapping loop to</span></span><br><span class="line"><span class="comment">     handle the portion of the segment past the end of the file</span></span><br><span class="line"><span class="comment">     mapping.  */</span></span><br><span class="line">  __mprotect ((<span class="type">caddr_t</span>) (l-&gt;l_addr + c-&gt;mapend),</span><br><span class="line">              loadcmds[nloadcmds - <span class="number">1</span>].mapstart - c-&gt;mapend,</span><br><span class="line">              PROT_NONE);</span><br><span class="line"></span><br><span class="line">l-&gt;l_contiguous = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">goto</span> postmap;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>系统</category>
-      </categories>
-      <tags>
-        <tag>dlopen</tag>
       </tags>
   </entry>
   <entry>
@@ -507,108 +602,6 @@
       </tags>
   </entry>
   <entry>
-    <title>mac清理磁盘空间</title>
-    <url>/mac-clear-disk-space.html</url>
-    <content><![CDATA[<p>今天在clone git的时候居然提示我mac磁盘满了，我也是惊了。</p>
-<span id="more"></span>
-
-<h1 id="工具使用"><a href="#工具使用" class="headerlink" title="工具使用"></a>工具使用</h1><p>用的是知乎上推荐的一款程序：OmniDiskSweeper。（后来看到据说可以终端上<code>du -sh *</code>就行）</p>
-<p><img src="/img/2018-10-11.png"></p>
-<p>然后选要扫的磁盘就行了，具体就不截图了，太麻烦。</p>
-<h1 id="进阶问题"><a href="#进阶问题" class="headerlink" title="进阶问题"></a>进阶问题</h1><p>通过扫除居然发现显示的占用空间和实际磁盘工具给出的空间不一样，很神奇，一度以为自己中毒了。</p>
-<p>后面发现是mac的时间机器的自动备份没有关。</p>
-<p>一方面进到preference关掉mac的时间机器自动备份。</p>
-<p>另一方面删除快照。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示所有snapshots</span></span><br><span class="line">sudo tmutil listlocalsnapshots /</span><br><span class="line"></span><br><span class="line">com.apple.TimeMachine.2018-10-11-113833</span><br><span class="line">com.apple.TimeMachine.2018-10-11-133802</span><br><span class="line">com.apple.TimeMachine.2018-10-11-143851</span><br><span class="line">com.apple.TimeMachine.2018-10-11-153801</span><br><span class="line">com.apple.TimeMachine.2018-10-11-163801</span><br><span class="line">com.apple.TimeMachine.2018-10-11-192918</span><br><span class="line">com.apple.TimeMachine.2018-10-11-205829</span><br><span class="line">com.apple.TimeMachine.2018-10-11-213912</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删掉相应的</span></span><br><span class="line">tmutil deletelocalsnapshots 2018-10-11-213912</span><br></pre></td></tr></table></figure>
-
-<p>问题解决！</p>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>mac</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>p4学习</title>
-    <url>/p4-learning.html</url>
-    <content><![CDATA[<p>因为最近用到p4，总结一下p4的学习</p>
-<span id="more"></span>
-
-<h1 id="P4概念"><a href="#P4概念" class="headerlink" title="P4概念"></a>P4概念</h1><p>P4由以下部分构成</p>
-<ul>
-<li>Headers</li>
-<li>Parsers</li>
-<li>Tables</li>
-<li>Actions</li>
-<li>Control Programs</li>
-</ul>
-<h2 id="Headers"><a href="#Headers" class="headerlink" title="Headers"></a>Headers</h2><p>用来形容the sequence and structure of a series of fields，包括了字段的宽度和字段值的限制。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">header ethernet &#123;</span><br><span class="line">    fields &#123;</span><br><span class="line">        dst_addr : 48; // width in bits</span><br><span class="line">        src_addr : 48;</span><br><span class="line">        ethertype : 16;</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br><span class="line">header vlan &#123;</span><br><span class="line">    fields &#123;</span><br><span class="line">        pcp : 3;</span><br><span class="line">        cfi : 1;</span><br><span class="line">        vid : 12;</span><br><span class="line">        ethertype : 16;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Parsers"><a href="#Parsers" class="headerlink" title="Parsers"></a>Parsers</h2><p>P4用一个transition的集合来表示state machine，用来提取字段的value，然后发送到match+action表。论文给了一个示例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">parser start &#123;</span><br><span class="line">    ethernet;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">parser ethernet &#123;</span><br><span class="line">    switch(ethertype) &#123;</span><br><span class="line">        case 0x8100: vlan;</span><br><span class="line">        case 0x9100: vlan;</span><br><span class="line">        case  0x800: ipv4;</span><br><span class="line">        // Other cases</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">parser vlan &#123;</span><br><span class="line">    switch(ethertype) &#123;</span><br><span class="line">        case 0xaaaa: mTag;</span><br><span class="line">        case  0x800: ipv4;</span><br><span class="line">        // Other cases</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br><span class="line">parser mTag &#123;</span><br><span class="line">    switch(ethertype) &#123;</span><br><span class="line">        case 0x800: ipv4;</span><br><span class="line">        // Other cases</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>解析从start state开始。知道一个显式声明的stop state结束（或者遇到一个unhandled case报错）。</p>
-<p>遇到一个新的header的state，状态机会提取出header然后继续下一次处理，被提取出的头会被发送到match+action进行处理。</p>
-<h2 id="Table-Specification"><a href="#Table-Specification" class="headerlink" title="Table Specification"></a>Table Specification</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">table mTag_table &#123;</span><br><span class="line">    reads &#123;</span><br><span class="line">        ethernet.dst_addr : exact;</span><br><span class="line">        vlan.vid : exact;</span><br><span class="line">    &#125;</span><br><span class="line">    actions &#123;</span><br><span class="line">        add_mTag;</span><br><span class="line">    &#125;</span><br><span class="line">    max_size : 20000;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>reads属性声明match什么字段，指定match的类型（exact, ternary）等。</p>
-</li>
-<li><p>actions属性列举所有对packet的可能行为</p>
-</li>
-<li><p>max_size属性声明table应该支持多少entries</p>
-</li>
-</ul>
-<h2 id="Action-Specifications"><a href="#Action-Specifications" class="headerlink" title="Action Specifications"></a>Action Specifications</h2><p>P4定义了一堆动作原语。每一个P4程序都通过动作原语定义新的动作。</p>
-<p>如上文提到的add_mTag</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">action add_mTag(up1, up2, down1, down2, egr_spec) &#123;</span><br><span class="line">    add_header(mTag);</span><br><span class="line">    // Copy VLAN ethertype to mTag</span><br><span class="line">    copy_field(mTag.ethertype, vlan.ethertype);</span><br><span class="line">    // Set VLAN’s ethertype to signal mTag</span><br><span class="line">    set_field(vlan.ethertype, 0xaaaa);</span><br><span class="line">    set_field(mTag.up1, up1);</span><br><span class="line">    set_field(mTag.up2, up2);</span><br><span class="line">    set_field(mTag.down1, down1);</span><br><span class="line">    set_field(mTag.down2, down2);</span><br><span class="line">    // Set the destination egress port as well</span><br><span class="line">    set_field(metadata.egress_spec, egr_spec);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>如果action需要某些参数，如up1，会由match table在运行的时候提供。</p>
-<p>p4的动作原语包括</p>
-<ul>
-<li>set_field</li>
-<li>copy_field</li>
-<li>add_header</li>
-<li>remove_header</li>
-<li>increment</li>
-<li>checksum</li>
-</ul>
-<h2 id="The-Control-Program"><a href="#The-Control-Program" class="headerlink" title="The Control Program"></a>The Control Program</h2><p><img src="/img/2018-9-29-1.png"></p>
-<p>主要通过函数、条件、对table的引用来完成。如以下代码完成了对上图的构建。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">control main() &#123;</span><br><span class="line">    // Verify mTag state and port are consistent</span><br><span class="line">    table(source_check);</span><br><span class="line">    // If no error from source_check, continue</span><br><span class="line">    if (!defined(metadata.ingress_error)) &#123;</span><br><span class="line">        // Attempt to switch to end hosts</span><br><span class="line">        table(local_switching);</span><br><span class="line">        if (!defined(metadata.egress_spec)) &#123;</span><br><span class="line">            // Not a known local host; try mtagging</span><br><span class="line">            table(mTag_table);</span><br><span class="line">		&#125;</span><br><span class="line">        // Check for unknown egress state or</span><br><span class="line">        // bad retagging with mTag.</span><br><span class="line">        table(egress_check);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>语言</category>
-      </categories>
-      <tags>
-        <tag>p4</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>pktgen-dpdk安装踩坑实录</title>
-    <url>/pktgen-install.html</url>
-    <content><![CDATA[<p>pktgen安装。</p>
-<span id="more"></span>
-
-<h1 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h1><p>非常简单。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://git.dpdk.org/apps/pktgen-dpdk/snapshot/pktgen-3.5.0.tar.xz</span><br><span class="line">cd pktgen-3.5.0/</span><br><span class="line">make -j8</span><br></pre></td></tr></table></figure>
-
-<h1 id="运行脚本"><a href="#运行脚本" class="headerlink" title="运行脚本"></a>运行脚本</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo ./app/x86_64-native-linuxapp-gcc/pktgen -l 1,3,5,7,9 -n 4 --socket-mem 1024,1024 -- -P -m &quot;[3:5].0,[7:9].1&quot;</span><br></pre></td></tr></table></figure>
-
-<h1 id="踩坑实录"><a href="#踩坑实录" class="headerlink" title="踩坑实录"></a>踩坑实录</h1><p>版本很重要！3.5.0这个版本不会遇到liblua的问题，因为他内部会自动下载。</p>
-]]></content>
-      <categories>
-        <category>工具</category>
-      </categories>
-      <tags>
-        <tag>pktgen</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>moongen学习</title>
     <url>/moongen-learning.html</url>
     <content><![CDATA[<p>学习了一下MoonGen，主要参考官网和tutorial。</p>
@@ -675,6 +668,64 @@
       </tags>
   </entry>
   <entry>
+    <title>p4学习</title>
+    <url>/p4-learning.html</url>
+    <content><![CDATA[<p>因为最近用到p4，总结一下p4的学习</p>
+<span id="more"></span>
+
+<h1 id="P4概念"><a href="#P4概念" class="headerlink" title="P4概念"></a>P4概念</h1><p>P4由以下部分构成</p>
+<ul>
+<li>Headers</li>
+<li>Parsers</li>
+<li>Tables</li>
+<li>Actions</li>
+<li>Control Programs</li>
+</ul>
+<h2 id="Headers"><a href="#Headers" class="headerlink" title="Headers"></a>Headers</h2><p>用来形容the sequence and structure of a series of fields，包括了字段的宽度和字段值的限制。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">header ethernet &#123;</span><br><span class="line">    fields &#123;</span><br><span class="line">        dst_addr : 48; // width in bits</span><br><span class="line">        src_addr : 48;</span><br><span class="line">        ethertype : 16;</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br><span class="line">header vlan &#123;</span><br><span class="line">    fields &#123;</span><br><span class="line">        pcp : 3;</span><br><span class="line">        cfi : 1;</span><br><span class="line">        vid : 12;</span><br><span class="line">        ethertype : 16;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Parsers"><a href="#Parsers" class="headerlink" title="Parsers"></a>Parsers</h2><p>P4用一个transition的集合来表示state machine，用来提取字段的value，然后发送到match+action表。论文给了一个示例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">parser start &#123;</span><br><span class="line">    ethernet;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">parser ethernet &#123;</span><br><span class="line">    switch(ethertype) &#123;</span><br><span class="line">        case 0x8100: vlan;</span><br><span class="line">        case 0x9100: vlan;</span><br><span class="line">        case  0x800: ipv4;</span><br><span class="line">        // Other cases</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">parser vlan &#123;</span><br><span class="line">    switch(ethertype) &#123;</span><br><span class="line">        case 0xaaaa: mTag;</span><br><span class="line">        case  0x800: ipv4;</span><br><span class="line">        // Other cases</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br><span class="line">parser mTag &#123;</span><br><span class="line">    switch(ethertype) &#123;</span><br><span class="line">        case 0x800: ipv4;</span><br><span class="line">        // Other cases</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>解析从start state开始。知道一个显式声明的stop state结束（或者遇到一个unhandled case报错）。</p>
+<p>遇到一个新的header的state，状态机会提取出header然后继续下一次处理，被提取出的头会被发送到match+action进行处理。</p>
+<h2 id="Table-Specification"><a href="#Table-Specification" class="headerlink" title="Table Specification"></a>Table Specification</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">table mTag_table &#123;</span><br><span class="line">    reads &#123;</span><br><span class="line">        ethernet.dst_addr : exact;</span><br><span class="line">        vlan.vid : exact;</span><br><span class="line">    &#125;</span><br><span class="line">    actions &#123;</span><br><span class="line">        add_mTag;</span><br><span class="line">    &#125;</span><br><span class="line">    max_size : 20000;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>reads属性声明match什么字段，指定match的类型（exact, ternary）等。</p>
+</li>
+<li><p>actions属性列举所有对packet的可能行为</p>
+</li>
+<li><p>max_size属性声明table应该支持多少entries</p>
+</li>
+</ul>
+<h2 id="Action-Specifications"><a href="#Action-Specifications" class="headerlink" title="Action Specifications"></a>Action Specifications</h2><p>P4定义了一堆动作原语。每一个P4程序都通过动作原语定义新的动作。</p>
+<p>如上文提到的add_mTag</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">action add_mTag(up1, up2, down1, down2, egr_spec) &#123;</span><br><span class="line">    add_header(mTag);</span><br><span class="line">    // Copy VLAN ethertype to mTag</span><br><span class="line">    copy_field(mTag.ethertype, vlan.ethertype);</span><br><span class="line">    // Set VLAN’s ethertype to signal mTag</span><br><span class="line">    set_field(vlan.ethertype, 0xaaaa);</span><br><span class="line">    set_field(mTag.up1, up1);</span><br><span class="line">    set_field(mTag.up2, up2);</span><br><span class="line">    set_field(mTag.down1, down1);</span><br><span class="line">    set_field(mTag.down2, down2);</span><br><span class="line">    // Set the destination egress port as well</span><br><span class="line">    set_field(metadata.egress_spec, egr_spec);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果action需要某些参数，如up1，会由match table在运行的时候提供。</p>
+<p>p4的动作原语包括</p>
+<ul>
+<li>set_field</li>
+<li>copy_field</li>
+<li>add_header</li>
+<li>remove_header</li>
+<li>increment</li>
+<li>checksum</li>
+</ul>
+<h2 id="The-Control-Program"><a href="#The-Control-Program" class="headerlink" title="The Control Program"></a>The Control Program</h2><p><img src="/img/2018-9-29-1.png"></p>
+<p>主要通过函数、条件、对table的引用来完成。如以下代码完成了对上图的构建。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">control main() &#123;</span><br><span class="line">    // Verify mTag state and port are consistent</span><br><span class="line">    table(source_check);</span><br><span class="line">    // If no error from source_check, continue</span><br><span class="line">    if (!defined(metadata.ingress_error)) &#123;</span><br><span class="line">        // Attempt to switch to end hosts</span><br><span class="line">        table(local_switching);</span><br><span class="line">        if (!defined(metadata.egress_spec)) &#123;</span><br><span class="line">            // Not a known local host; try mtagging</span><br><span class="line">            table(mTag_table);</span><br><span class="line">		&#125;</span><br><span class="line">        // Check for unknown egress state or</span><br><span class="line">        // bad retagging with mTag.</span><br><span class="line">        table(egress_check);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>语言</category>
+      </categories>
+      <tags>
+        <tag>p4</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>memsentry项目源码注释</title>
     <url>/memsentry-source-code.html</url>
     <content><![CDATA[<p>memsentry github地址：<a href="https://github.com/vusec/memsentry">https://github.com/vusec/memsentry</a></p>
@@ -693,6 +744,169 @@
       </categories>
       <tags>
         <tag>llvm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ssh-permissions-are-too-open解决方法</title>
+    <url>/ssh-permissions-are-too-open-error.html</url>
+    <content><![CDATA[<p>前几天跑S6的框架，然后在一个ssh的环节报错。</p>
+<span id="more"></span>
+
+<h1 id="具体错误"><a href="#具体错误" class="headerlink" title="具体错误"></a>具体错误</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Permissions 0777 for &#x27;/Users/username/.ssh/id_rsa&#x27; are too open.</span><br><span class="line">It is recommended that your private key files are NOT accessible by others.</span><br><span class="line">This private key will be ignored.</span><br></pre></td></tr></table></figure>
+
+<p>大概意思就是权限太松了。</p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>只需要将<code>~/.ssh/id_rsa</code>的权限调整为只有自己可读就好了。</p>
+<p>众所周知，<code>r=4</code>为可读，<code>w=2</code>为可写，<code>x=1</code>为可执行。三个分别是<code>user</code>、<code>group</code>和<code>other</code>。权限位相或即可。</p>
+<p>所以</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod 400 ~/.ssh/id_rsa</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">或者</span></span><br><span class="line">chmod 600 ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
+
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a href="https://stackoverflow.com/questions/9270734/ssh-permissions-are-too-open-error">https://stackoverflow.com/questions/9270734/ssh-permissions-are-too-open-error</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>ssh</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>dpdk安装踩坑实录</title>
+    <url>/dpdk-install.html</url>
+    <content><![CDATA[<p>本次安装的版本是dpdk18.02.2，在ubuntu 14.04.5上安装，内核版本为4.4.0-31-generic。</p>
+<span id="more"></span>
+
+<h1 id="系统配置"><a href="#系统配置" class="headerlink" title="系统配置"></a>系统配置</h1><p>需要：</p>
+<ul>
+<li>python、libnuma-dev等库（libnuma-dev直接通过<code>apt-get install libnuma-dev</code>）</li>
+<li>大页内存（并mount）</li>
+</ul>
+<h1 id="dpdk的安装与下载"><a href="#dpdk的安装与下载" class="headerlink" title="dpdk的安装与下载"></a>dpdk的安装与下载</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget http://fast.dpdk.org/rel/dpdk-18.02.2.tar.xz</span><br><span class="line">tar -xvf dpdk-18.02.2.tar.xz</span><br><span class="line">cd dpdk-stable-18.02.2</span><br><span class="line">echo export RTE_SDK=$(pwd) &gt;&gt; ~/.bashrc</span><br><span class="line">echo export RTE_TARGET=x86_64-native-linuxapp-gcc &gt;&gt; ~/.bashrc</span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>如果需要用到vhost-user驱动，要修改<code>config/common_base</code>，另其中的<code>CONFIG_RTE_LIBRTE_VHOST=y</code>。</p>
+<p>安装dpdk</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">make config T=$RTE_TARGET</span><br><span class="line">make T=$RTE_TARGET -j8</span><br><span class="line">make install T=$RTE_TARGET</span><br></pre></td></tr></table></figure>
+
+<h1 id="配置大页内存"><a href="#配置大页内存" class="headerlink" title="配置大页内存"></a>配置大页内存</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改/etc/default/grub</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在 GRUB_CMDLINE_LINUX_DEFAULT= 项中添加</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">default_hugepagesz=1GB hugepagesz=1G hugepages=8</span></span><br><span class="line">sudo update-grub</span><br><span class="line"></span><br><span class="line">mkdir -p /mnt/huge_1GB</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">可以直接mount，但每次重启都要重新配置</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">方法我就不写了</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">也可以让重启后有效</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">vim /etc/fstab</span></span><br><span class="line">nodev /mnt/huge_1GB hugetlbfs pagesize=1GB 0 0</span><br></pre></td></tr></table></figure>
+
+<h1 id="加载驱动"><a href="#加载驱动" class="headerlink" title="加载驱动"></a>加载驱动</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo modprobe uio</span><br><span class="line">sudo insmod $RTE_SDK/x86_64-native-linuxapp-gcc/kmod/igb_uio.ko</span><br></pre></td></tr></table></figure>
+
+<h1 id="绑定端口"><a href="#绑定端口" class="headerlink" title="绑定端口"></a>绑定端口</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看网卡信息，确定要绑定的网卡</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">RTE_SDK/usertools/dpdk-devbind.py -s</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">绑定网卡</span></span><br><span class="line">sudo $RTE_SDK/usertools/dpdk-devbind.py --bind=igb_uio 0000:82:00.0</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">后面的参数写-s出来的网卡信息最左边一行，当然也可以写名字之类的</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="一些注意事项"><a href="#一些注意事项" class="headerlink" title="一些注意事项"></a>一些注意事项</h1><p>按上面方法配置，大页内存不会因为重启而要重新配置，但是模块和端口需要重新配置，<code>~/.bashrc</code>也需要重新<code>source</code>。</p>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>dpdk</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ycsb学习</title>
+    <url>/ycsb-learning.html</url>
+    <content><![CDATA[<p>主要总结Yahoo的数据库测试项目YCSB的使用（针对redis）。</p>
+<span id="more"></span>
+
+<p>github网址：<a href="https://github.com/brianfrankcooper/YCSB">https://github.com/brianfrankcooper/YCSB</a></p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ul>
+<li><p>需要安装</p>
+<ul>
+<li>java</li>
+<li>maven</li>
+</ul>
+</li>
+<li><p>直接下载编译好的版本（不推荐）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl -O --location https://github.com/brianfrankcooper/YCSB/releases/download/0.15.0/ycsb-0.15.0.tar.gz</span><br><span class="line">tar xfvz ycsb-0.15.0.tar.gz</span><br><span class="line">cd ycsb-0.15.0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用java或者maven编译</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone http://github.com/brianfrankcooper/YCSB.git</span><br><span class="line">cd YCSB</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">只安装redis测试部分</span></span><br><span class="line">mvn -pl com.yahoo.ycsb:redis-binding -am clean package</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装全部测试功能</span></span><br><span class="line">mvn clean package</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>详细说明：<a href="https://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload">https://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload</a></p>
+<p>运行workload一共有六个部分</p>
+<ul>
+<li>设置数据库</li>
+<li>选择合适的DB interface</li>
+<li>选择合适的负载</li>
+<li>选择合适的runtime parameters</li>
+<li>load选择好的workload</li>
+<li>run选择好的workload</li>
+</ul>
+<h2 id="设置数据库"><a href="#设置数据库" class="headerlink" title="设置数据库"></a>设置数据库</h2><p>简要的说，就是创建名为<code>usertable</code>的表，因为ycsb默认的是对<code>usertable</code>进行相关操作。</p>
+<p>而对于redis，则不需要相关的操作。</p>
+<h2 id="选择合适的DB-interface"><a href="#选择合适的DB-interface" class="headerlink" title="选择合适的DB interface"></a>选择合适的DB interface</h2><p>YCSB的操作是通过DB interface来实现的。最基本的DB interface是<code>com.yahoo.ycsb.BasicDB</code>，会将输出输出到<code>System.out</code>里。可以通过继承DB interface来自定义DB interface，也可以使用原有的DB interface。</p>
+<h2 id="选择合适的workload"><a href="#选择合适的workload" class="headerlink" title="选择合适的workload"></a>选择合适的workload</h2><p>当前版本提供了六种workload</p>
+<h3 id="Workload-A-Update-heavy-workload"><a href="#Workload-A-Update-heavy-workload" class="headerlink" title="Workload A: Update heavy workload"></a>Workload A: Update heavy workload</h3><p>This workload has a mix of 50&#x2F;50 reads and writes. An application example is a session store recording recent actions.</p>
+<h3 id="Workload-B-Read-mostly-workload"><a href="#Workload-B-Read-mostly-workload" class="headerlink" title="Workload B: Read mostly workload"></a>Workload B: Read mostly workload</h3><p>This workload has a 95&#x2F;5 reads&#x2F;write mix. Application example: photo tagging; add a tag is an update, but most operations are to read tags.</p>
+<h3 id="Workload-C-Read-only"><a href="#Workload-C-Read-only" class="headerlink" title="Workload C: Read only"></a>Workload C: Read only</h3><p>This workload is 100% read. Application example: user profile cache, where profiles are constructed elsewhere (e.g., Hadoop).</p>
+<h3 id="Workload-D-Read-latest-workload"><a href="#Workload-D-Read-latest-workload" class="headerlink" title="Workload D: Read latest workload"></a>Workload D: Read latest workload</h3><p>In this workload, new records are inserted, and the most recently inserted records are the most popular. Application example: user status updates; people want to read the latest.</p>
+<h3 id="Workload-E-Short-ranges"><a href="#Workload-E-Short-ranges" class="headerlink" title="Workload E: Short ranges"></a>Workload E: Short ranges</h3><p>In this workload, short ranges of records are queried, instead of individual records. Application example: threaded conversations, where each scan is for the posts in a given thread (assumed to be clustered by thread id).</p>
+<h3 id="Workload-F-Read-modify-write"><a href="#Workload-F-Read-modify-write" class="headerlink" title="Workload F: Read-modify-write"></a>Workload F: Read-modify-write</h3><p>In this workload, the client will read a record, modify it, and write back the changes. Application example: user database, where user records are read and modified by the user or to record user activity.</p>
+<h3 id="自定义Workload"><a href="#自定义Workload" class="headerlink" title="自定义Workload"></a>自定义Workload</h3><p>当然也可以自定义workload：<a href="https://github.com/brianfrankcooper/YCSB/wiki/Implementing-New-Workloads">https://github.com/brianfrankcooper/YCSB/wiki/Implementing-New-Workloads</a></p>
+<p>一般常用的workload property如<code>fieldcount</code>，<code>fieldlength</code>，<code>requestdistribution</code>等。</p>
+<p>全部properties如下：</p>
+<p>The property files used with the core workload generator can specify values for the following properties:</p>
+<ul>
+<li><strong>fieldcount</strong>: the number of fields in a record (default: 10)</li>
+<li><strong>fieldlength</strong>: the size of each field (default: 100)</li>
+<li><strong>readallfields</strong>: should reads read all fields (true) or just one (false) (default: true)</li>
+<li><strong>readproportion</strong>: what proportion of operations should be reads (default: 0.95)</li>
+<li><strong>updateproportion</strong>: what proportion of operations should be updates (default: 0.05)</li>
+<li><strong>insertproportion</strong>: what proportion of operations should be inserts (default: 0)</li>
+<li><strong>scanproportion</strong>: what proportion of operations should be scans (default: 0)</li>
+<li><strong>readmodifywriteproportion</strong>: what proportion of operations should be read a record, modify it, write it back (default: 0)</li>
+<li><strong>requestdistribution</strong>: what distribution should be used to select the records to operate on – uniform, zipfian or latest (default: uniform)</li>
+<li><strong>maxscanlength</strong>: for scans, what is the maximum number of records to scan (default: 1000)</li>
+<li><strong>scanlengthdistribution</strong>: for scans, what distribution should be used to choose the number of records to scan, for each scan, between 1 and maxscanlength (default: uniform)</li>
+<li><strong>insertorder</strong>: should records be inserted in order by key (“ordered”), or in hashed order (“hashed”) (default: hashed)</li>
+<li><strong>operationcount</strong>: number of operations to perform. If set to zero then YCSB will run until maxexecutiontime is reached (which by default is indefinitely). Note that if your workload or command line parameters do not specify an operation count it will defualt to zero.</li>
+<li><strong>maxexecutiontime</strong>: maximum execution time in seconds. The benchmark runs until either the operation count has exhausted or the maximum specified time has elapsed, whichever is earlier. If unspecified the defualt is to run indefinitely.</li>
+<li><strong>table</strong>: the name of the table (default: usertable)</li>
+<li><strong>recordcount</strong>: number of records to load into the database initially (default: 0)</li>
+<li><strong>core_workload_insertion_retry_limit</strong>: number of attempts for any failed insert operation (default: 0)</li>
+<li><strong>core_workload_insertion_retry_interval</strong>: interval between retries, in seconds (default: 3)</li>
+</ul>
+<h2 id="选择合适的runtime-parameter"><a href="#选择合适的runtime-parameter" class="headerlink" title="选择合适的runtime parameter"></a>选择合适的runtime parameter</h2><p>主要是</p>
+<ul>
+<li><code>-threads</code> : <strong>the number of client threads</strong>.</li>
+<li><code>-target</code> : <strong>the target number of operations per second</strong>.</li>
+<li><code>-s</code> : <strong>status</strong>.十秒打印一次状态</li>
+</ul>
+<h2 id="load-data"><a href="#load-data" class="headerlink" title="load data"></a>load data</h2><p>需要指定<code>redis.host</code>，<code>redis.port</code>。（可以指定<code>redis.password</code>和<code>redis.cluster</code>）</p>
+<p>以上参数也可以在命令中指定，比如</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./bin/ycsb load redis -s -P workloads/workloada -p &quot;redis.host=127.0.0.1&quot; -p &quot;redis.port=6379&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="run-data"><a href="#run-data" class="headerlink" title="run data"></a>run data</h2><p>同理</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./bin/ycsb run redis -s -P workloads/workloada -p &quot;redis.host=127.0.0.1&quot; -p &quot;redis.port=6379&quot;</span><br></pre></td></tr></table></figure>
+
+<h1 id="一些注意事项"><a href="#一些注意事项" class="headerlink" title="一些注意事项"></a>一些注意事项</h1><h2 id="ycsb不支持对key的长度的修改"><a href="#ycsb不支持对key的长度的修改" class="headerlink" title="ycsb不支持对key的长度的修改"></a>ycsb不支持对key的长度的修改</h2><p>issue网址：<a href="https://github.com/brianfrankcooper/YCSB/issues/587">https://github.com/brianfrankcooper/YCSB/issues/587</a></p>
+<p>ycsb对key命名规则是两种，<code>hashed</code>模式会生成<code>user</code>加固定长度的一串hash值，而<code>ordered</code>模式会按照<code>user</code>加顺序的方式来命名。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">insertorder=hashed      # user6284781860667377211, user8517097267634966620, user1820151046732198393</span><br><span class="line">insertorder=ordered     # user1, user2, user3032</span><br></pre></td></tr></table></figure>
+
+<h2 id="ycsb运行时错误：Read-time-out"><a href="#ycsb运行时错误：Read-time-out" class="headerlink" title="ycsb运行时错误：Read time out"></a>ycsb运行时错误：Read time out</h2><p>错误类似于</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">redis.clients.jedis.exceptions.JedisConnectionException: java.net.SocketTimeoutException: Read timed out</span><br><span class="line"></span><br><span class="line">at redis.clients.jedis.Protocol.process(Protocol.java:79)</span><br><span class="line">at redis.clients.jedis.Protocol.read(Protocol.java:131)</span><br><span class="line">at redis.clients.jedis.Connection.getIntegerReply(Connection.java:188)</span><br><span class="line">at redis.clients.jedis.Jedis.sismember(Jedis.java:1266)</span><br></pre></td></tr></table></figure>
+
+<p>当数据量变大之后，延时可能会变成几秒，而Jedis默认的是<code>2</code>秒的超时限制。</p>
+<p>修改redis的src文件夹的RedisClient.java</p>
+<p>将</p>
+<p><code>jedis = new Jedis(host, port);</code></p>
+<p>修改为</p>
+<p><code>jedis = new Jedis(host, port, 10000);</code></p>
+<p>即从默认的2秒上升为10秒。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li>ycsb github地址：<a href="https://github.com/brianfrankcooper/YCSB">https://github.com/brianfrankcooper/YCSB</a></li>
+<li>ycsb 流程介绍：<a href="https://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload">https://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload</a></li>
+<li>ycsb workload介绍：<a href="https://github.com/brianfrankcooper/YCSB/wiki/Implementing-New-Workloads">https://github.com/brianfrankcooper/YCSB/wiki/Implementing-New-Workloads</a></li>
+<li>ycsb 不支持对key长度的修改 issue网址：<a href="https://github.com/brianfrankcooper/YCSB/issues/587">https://github.com/brianfrankcooper/YCSB/issues/587</a></li>
+<li>ycsb 运行时错误：read time out 解决方法博客网址：<a href="https://github.com/brianfrankcooper/YCSB/issues/587">https://github.com/brianfrankcooper/YCSB/issues/587</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>ycsb</tag>
       </tags>
   </entry>
   <entry>
@@ -813,34 +1027,40 @@
       </tags>
   </entry>
   <entry>
-    <title>route add报错SIOCADDRT:Network is unreachable解决方案</title>
-    <url>/route%20add-siocaddrt-network-is-unreachable.html</url>
-    <content><![CDATA[<p>服务器 重启后无法通过外网访问，此时需要添加路由表项。</p>
-<p>添加时出现错误：SIOCADDRT:Network is unreachable</p>
+    <title>如何在matplotlib中使用中文</title>
+    <url>/matplotlib-chinese-font.html</url>
+    <content><![CDATA[<p>matplotlib原生是不支持中文的，但是因为画图中文方便一点，所以解决了一下这个问题。</p>
 <span id="more"></span>
 
-<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>错误信息：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">SIOCADDRT:Network is unreachable</span><br></pre></td></tr></table></figure>
+<h1 id="查看字体目录位置"><a href="#查看字体目录位置" class="headerlink" title="查看字体目录位置"></a>查看字体目录位置</h1><p>首先进入python查看一下自己电脑的字体存放位置</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> matplotlib</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">print</span> matplotlib.matplotlib_fname()</span><br></pre></td></tr></table></figure>
 
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>这个错误的原因是因为gateway和IP不在一个网段内。</p>
-<p>通过ifconfig查找相应添加的device的网段。</p>
-<p>如：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">eth0      Link encap:Ethernet  HWaddr 0c:c4:7a:dc:76:aa  </span><br><span class="line">          inet addr:202.112.237.33  Bcast:202.112.237.255  Mask:255.255.255.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:226265 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:15405 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000 </span><br><span class="line">          RX bytes:18275659 (18.2 MB)  TX bytes:3133390 (3.1 MB)</span><br><span class="line">          Memory:c7220000-c723ffff</span><br></pre></td></tr></table></figure>
+<p>我的mac打印出的信息在</p>
+<p><code>/Users/junxianshen/anaconda2/lib/python2.7/site-packages/matplotlib/mpl-data/matplotlibrc</code></p>
+<p>字体目录就在</p>
+<p><code>/Users/junxianshen/anaconda2/lib/python2.7/site-packages/matplotlib/mpl-data/fonts/ttf/</code></p>
+<h1 id="下载并安装"><a href="#下载并安装" class="headerlink" title="下载并安装"></a>下载并安装</h1><p>然后下载一个黑体简体中文字体，比如在这里下</p>
+<ul>
+<li><a href="http://www.font5.com.cn/font_download.php?id=151&amp;part=1237887120">http://www.font5.com.cn/font_download.php?id=151&amp;part=1237887120</a></li>
+</ul>
+<p>然后复制到上面的字体目录中</p>
+<h1 id="清空缓存"><a href="#清空缓存" class="headerlink" title="清空缓存"></a>清空缓存</h1><p>接下来移除缓存，我的mac缓存目录在<code>~/.matplotlib/</code>，我是把里面的东西都删掉了。</p>
+<h1 id="正式使用"><a href="#正式使用" class="headerlink" title="正式使用"></a>正式使用</h1><p>在python中添加一些中文必须的东西，比如</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br></pre></td></tr></table></figure>
 
-<p>那么gateway的数值就应该是<code>202.112.237.1</code></p>
-<p>route命令为：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo route add default gw 202.112.237.1 dev eth0</span><br></pre></td></tr></table></figure>
+<p>然后使用的时候例如</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">plt.plot(max_xval, max_cdf_yval)</span><br><span class="line">plt.xlabel(<span class="string">u&#x27;最大流量&#x27;</span>, fontproperties=<span class="string">&#x27;SimHei&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 
-<p>PS: 当初就是<code>eth0</code>写成了<code>eth1</code>导致这个错误的发生</p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
-<li><a href="https://www.jianshu.com/p/0bd0c0c7bc73">https://www.jianshu.com/p/0bd0c0c7bc73</a></li>
+<ul>
+<li>注意，<code>plt.xlabel()</code>中还可以添加<code>fontsize</code>属性，如<code>plt.xlabel(u&#39;横轴：时间&#39;,fontproperties = &#39;SimHei&#39;,fontsize = 20)</code></li>
 </ul>
 ]]></content>
       <categories>
         <category>其他</category>
       </categories>
       <tags>
-        <tag>linux</tag>
+        <tag>python</tag>
+        <tag>matplotlib</tag>
       </tags>
   </entry>
   <entry>
@@ -855,43 +1075,6 @@
 
 <p><code>*</code>代表所有用户，可根据需要设置某一用户</p>
 <h1 id="检查程序文件数"><a href="#检查程序文件数" class="headerlink" title="检查程序文件数"></a>检查程序文件数</h1><p>如果你对你的程序有一定的解的话，应该对程序打开文件数(链接数)上限有一定的估算，如果感觉数字异常，请使用第一步的<strong>lsof -p 进程id &gt; openfiles.log</strong>命令，获得当前占用句柄的全部详情进行分析。</p>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ubuntu 服务器升降linux kernel踩坑实录</title>
-    <url>/ubuntu-change-kernel-version.html</url>
-    <content><![CDATA[<p>因为dpdk的驱动、docker等等要求，必须重装服务器的linux kernel</p>
-<span id="more"></span>
-
-<h1 id="安装linux-kernel并更新grub"><a href="#安装linux-kernel并更新grub" class="headerlink" title="安装linux kernel并更新grub"></a>安装linux kernel并更新grub</h1><p>先看看自己的linux kernel是什么版本：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">uname -r</span><br></pre></td></tr></table></figure>
-
-<p>先前天舒帮我装了一个4.16的，太新了，apt里啥都没有，所以以后装的时候先<code>apt-cache search linux-generic</code>一下，不然真要命。</p>
-<p>然后选一个看起来image和kernel header都有的版本吧。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt install linux-image-4.13.0-45-generic</span><br></pre></td></tr></table></figure>
-
-<p>装完之后别急着重启……把grub改了！</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">grep -A100 submenu  /boot/grub/grub.cfg |grep menuentry</span><br></pre></td></tr></table></figure>
-
-<p>从输出的信息中选择需要的启动条目（从0开始）</p>
-<p>然后修改<code>/etc/default/grub</code></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">GRUB_DEFAULT=”1&gt;3″</span><br></pre></td></tr></table></figure>
-
-<p>1指的是进入高级选项，3指的是第三个启动项，如果不知道说什么的话 ，重启的时候按shift看一下就懂了。</p>
-<p>然后更新grub</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo /usr/sbin/update-grub</span><br></pre></td></tr></table></figure>
-
-<p>最后重启</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo reboot</span><br></pre></td></tr></table></figure>
-
-<h1 id="安装kernel-header"><a href="#安装kernel-header" class="headerlink" title="安装kernel header"></a>安装kernel header</h1><p>没什么好说的。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get install linux-headers-$(uname -r)</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>其他</category>
@@ -916,112 +1099,6 @@
       </tags>
   </entry>
   <entry>
-    <title>ycsb学习</title>
-    <url>/ycsb-learning.html</url>
-    <content><![CDATA[<p>主要总结Yahoo的数据库测试项目YCSB的使用（针对redis）。</p>
-<span id="more"></span>
-
-<p>github网址：<a href="https://github.com/brianfrankcooper/YCSB">https://github.com/brianfrankcooper/YCSB</a></p>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ul>
-<li><p>需要安装</p>
-<ul>
-<li>java</li>
-<li>maven</li>
-</ul>
-</li>
-<li><p>直接下载编译好的版本（不推荐）</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl -O --location https://github.com/brianfrankcooper/YCSB/releases/download/0.15.0/ycsb-0.15.0.tar.gz</span><br><span class="line">tar xfvz ycsb-0.15.0.tar.gz</span><br><span class="line">cd ycsb-0.15.0</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用java或者maven编译</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone http://github.com/brianfrankcooper/YCSB.git</span><br><span class="line">cd YCSB</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">只安装redis测试部分</span></span><br><span class="line">mvn -pl com.yahoo.ycsb:redis-binding -am clean package</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装全部测试功能</span></span><br><span class="line">mvn clean package</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>详细说明：<a href="https://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload">https://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload</a></p>
-<p>运行workload一共有六个部分</p>
-<ul>
-<li>设置数据库</li>
-<li>选择合适的DB interface</li>
-<li>选择合适的负载</li>
-<li>选择合适的runtime parameters</li>
-<li>load选择好的workload</li>
-<li>run选择好的workload</li>
-</ul>
-<h2 id="设置数据库"><a href="#设置数据库" class="headerlink" title="设置数据库"></a>设置数据库</h2><p>简要的说，就是创建名为<code>usertable</code>的表，因为ycsb默认的是对<code>usertable</code>进行相关操作。</p>
-<p>而对于redis，则不需要相关的操作。</p>
-<h2 id="选择合适的DB-interface"><a href="#选择合适的DB-interface" class="headerlink" title="选择合适的DB interface"></a>选择合适的DB interface</h2><p>YCSB的操作是通过DB interface来实现的。最基本的DB interface是<code>com.yahoo.ycsb.BasicDB</code>，会将输出输出到<code>System.out</code>里。可以通过继承DB interface来自定义DB interface，也可以使用原有的DB interface。</p>
-<h2 id="选择合适的workload"><a href="#选择合适的workload" class="headerlink" title="选择合适的workload"></a>选择合适的workload</h2><p>当前版本提供了六种workload</p>
-<h3 id="Workload-A-Update-heavy-workload"><a href="#Workload-A-Update-heavy-workload" class="headerlink" title="Workload A: Update heavy workload"></a>Workload A: Update heavy workload</h3><p>This workload has a mix of 50&#x2F;50 reads and writes. An application example is a session store recording recent actions.</p>
-<h3 id="Workload-B-Read-mostly-workload"><a href="#Workload-B-Read-mostly-workload" class="headerlink" title="Workload B: Read mostly workload"></a>Workload B: Read mostly workload</h3><p>This workload has a 95&#x2F;5 reads&#x2F;write mix. Application example: photo tagging; add a tag is an update, but most operations are to read tags.</p>
-<h3 id="Workload-C-Read-only"><a href="#Workload-C-Read-only" class="headerlink" title="Workload C: Read only"></a>Workload C: Read only</h3><p>This workload is 100% read. Application example: user profile cache, where profiles are constructed elsewhere (e.g., Hadoop).</p>
-<h3 id="Workload-D-Read-latest-workload"><a href="#Workload-D-Read-latest-workload" class="headerlink" title="Workload D: Read latest workload"></a>Workload D: Read latest workload</h3><p>In this workload, new records are inserted, and the most recently inserted records are the most popular. Application example: user status updates; people want to read the latest.</p>
-<h3 id="Workload-E-Short-ranges"><a href="#Workload-E-Short-ranges" class="headerlink" title="Workload E: Short ranges"></a>Workload E: Short ranges</h3><p>In this workload, short ranges of records are queried, instead of individual records. Application example: threaded conversations, where each scan is for the posts in a given thread (assumed to be clustered by thread id).</p>
-<h3 id="Workload-F-Read-modify-write"><a href="#Workload-F-Read-modify-write" class="headerlink" title="Workload F: Read-modify-write"></a>Workload F: Read-modify-write</h3><p>In this workload, the client will read a record, modify it, and write back the changes. Application example: user database, where user records are read and modified by the user or to record user activity.</p>
-<h3 id="自定义Workload"><a href="#自定义Workload" class="headerlink" title="自定义Workload"></a>自定义Workload</h3><p>当然也可以自定义workload：<a href="https://github.com/brianfrankcooper/YCSB/wiki/Implementing-New-Workloads">https://github.com/brianfrankcooper/YCSB/wiki/Implementing-New-Workloads</a></p>
-<p>一般常用的workload property如<code>fieldcount</code>，<code>fieldlength</code>，<code>requestdistribution</code>等。</p>
-<p>全部properties如下：</p>
-<p>The property files used with the core workload generator can specify values for the following properties:</p>
-<ul>
-<li><strong>fieldcount</strong>: the number of fields in a record (default: 10)</li>
-<li><strong>fieldlength</strong>: the size of each field (default: 100)</li>
-<li><strong>readallfields</strong>: should reads read all fields (true) or just one (false) (default: true)</li>
-<li><strong>readproportion</strong>: what proportion of operations should be reads (default: 0.95)</li>
-<li><strong>updateproportion</strong>: what proportion of operations should be updates (default: 0.05)</li>
-<li><strong>insertproportion</strong>: what proportion of operations should be inserts (default: 0)</li>
-<li><strong>scanproportion</strong>: what proportion of operations should be scans (default: 0)</li>
-<li><strong>readmodifywriteproportion</strong>: what proportion of operations should be read a record, modify it, write it back (default: 0)</li>
-<li><strong>requestdistribution</strong>: what distribution should be used to select the records to operate on – uniform, zipfian or latest (default: uniform)</li>
-<li><strong>maxscanlength</strong>: for scans, what is the maximum number of records to scan (default: 1000)</li>
-<li><strong>scanlengthdistribution</strong>: for scans, what distribution should be used to choose the number of records to scan, for each scan, between 1 and maxscanlength (default: uniform)</li>
-<li><strong>insertorder</strong>: should records be inserted in order by key (“ordered”), or in hashed order (“hashed”) (default: hashed)</li>
-<li><strong>operationcount</strong>: number of operations to perform. If set to zero then YCSB will run until maxexecutiontime is reached (which by default is indefinitely). Note that if your workload or command line parameters do not specify an operation count it will defualt to zero.</li>
-<li><strong>maxexecutiontime</strong>: maximum execution time in seconds. The benchmark runs until either the operation count has exhausted or the maximum specified time has elapsed, whichever is earlier. If unspecified the defualt is to run indefinitely.</li>
-<li><strong>table</strong>: the name of the table (default: usertable)</li>
-<li><strong>recordcount</strong>: number of records to load into the database initially (default: 0)</li>
-<li><strong>core_workload_insertion_retry_limit</strong>: number of attempts for any failed insert operation (default: 0)</li>
-<li><strong>core_workload_insertion_retry_interval</strong>: interval between retries, in seconds (default: 3)</li>
-</ul>
-<h2 id="选择合适的runtime-parameter"><a href="#选择合适的runtime-parameter" class="headerlink" title="选择合适的runtime parameter"></a>选择合适的runtime parameter</h2><p>主要是</p>
-<ul>
-<li><code>-threads</code> : <strong>the number of client threads</strong>.</li>
-<li><code>-target</code> : <strong>the target number of operations per second</strong>.</li>
-<li><code>-s</code> : <strong>status</strong>.十秒打印一次状态</li>
-</ul>
-<h2 id="load-data"><a href="#load-data" class="headerlink" title="load data"></a>load data</h2><p>需要指定<code>redis.host</code>，<code>redis.port</code>。（可以指定<code>redis.password</code>和<code>redis.cluster</code>）</p>
-<p>以上参数也可以在命令中指定，比如</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./bin/ycsb load redis -s -P workloads/workloada -p &quot;redis.host=127.0.0.1&quot; -p &quot;redis.port=6379&quot;</span><br></pre></td></tr></table></figure>
-
-<h2 id="run-data"><a href="#run-data" class="headerlink" title="run data"></a>run data</h2><p>同理</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./bin/ycsb run redis -s -P workloads/workloada -p &quot;redis.host=127.0.0.1&quot; -p &quot;redis.port=6379&quot;</span><br></pre></td></tr></table></figure>
-
-<h1 id="一些注意事项"><a href="#一些注意事项" class="headerlink" title="一些注意事项"></a>一些注意事项</h1><h2 id="ycsb不支持对key的长度的修改"><a href="#ycsb不支持对key的长度的修改" class="headerlink" title="ycsb不支持对key的长度的修改"></a>ycsb不支持对key的长度的修改</h2><p>issue网址：<a href="https://github.com/brianfrankcooper/YCSB/issues/587">https://github.com/brianfrankcooper/YCSB/issues/587</a></p>
-<p>ycsb对key命名规则是两种，<code>hashed</code>模式会生成<code>user</code>加固定长度的一串hash值，而<code>ordered</code>模式会按照<code>user</code>加顺序的方式来命名。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">insertorder=hashed      # user6284781860667377211, user8517097267634966620, user1820151046732198393</span><br><span class="line">insertorder=ordered     # user1, user2, user3032</span><br></pre></td></tr></table></figure>
-
-<h2 id="ycsb运行时错误：Read-time-out"><a href="#ycsb运行时错误：Read-time-out" class="headerlink" title="ycsb运行时错误：Read time out"></a>ycsb运行时错误：Read time out</h2><p>错误类似于</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">redis.clients.jedis.exceptions.JedisConnectionException: java.net.SocketTimeoutException: Read timed out</span><br><span class="line"></span><br><span class="line">at redis.clients.jedis.Protocol.process(Protocol.java:79)</span><br><span class="line">at redis.clients.jedis.Protocol.read(Protocol.java:131)</span><br><span class="line">at redis.clients.jedis.Connection.getIntegerReply(Connection.java:188)</span><br><span class="line">at redis.clients.jedis.Jedis.sismember(Jedis.java:1266)</span><br></pre></td></tr></table></figure>
-
-<p>当数据量变大之后，延时可能会变成几秒，而Jedis默认的是<code>2</code>秒的超时限制。</p>
-<p>修改redis的src文件夹的RedisClient.java</p>
-<p>将</p>
-<p><code>jedis = new Jedis(host, port);</code></p>
-<p>修改为</p>
-<p><code>jedis = new Jedis(host, port, 10000);</code></p>
-<p>即从默认的2秒上升为10秒。</p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
-<li>ycsb github地址：<a href="https://github.com/brianfrankcooper/YCSB">https://github.com/brianfrankcooper/YCSB</a></li>
-<li>ycsb 流程介绍：<a href="https://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload">https://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload</a></li>
-<li>ycsb workload介绍：<a href="https://github.com/brianfrankcooper/YCSB/wiki/Implementing-New-Workloads">https://github.com/brianfrankcooper/YCSB/wiki/Implementing-New-Workloads</a></li>
-<li>ycsb 不支持对key长度的修改 issue网址：<a href="https://github.com/brianfrankcooper/YCSB/issues/587">https://github.com/brianfrankcooper/YCSB/issues/587</a></li>
-<li>ycsb 运行时错误：read time out 解决方法博客网址：<a href="https://github.com/brianfrankcooper/YCSB/issues/587">https://github.com/brianfrankcooper/YCSB/issues/587</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>工具</category>
-      </categories>
-      <tags>
-        <tag>ycsb</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>修改或删除git submodule</title>
     <url>/git-submodule-modify.html</url>
     <content><![CDATA[<p>因为国外google代码仓库的东西访问不到，有可能导致submodule失效，需要修改 或者删除git子模块</p>
@@ -1039,62 +1116,6 @@
       </categories>
       <tags>
         <tag>git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>更换python默认版本</title>
-    <url>/change-python-default-version.html</url>
-    <content><![CDATA[<p>服务器上用的python默认是python3，需要改成python2</p>
-<span id="more"></span>
-
-<h1 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h1><p>修改别名，在<code>~/.bashrc</code>中修改</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alias python=python2</span><br></pre></td></tr></table></figure>
-
-<h1 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h1><p>但是如果是在程序中调用有可能仍然是原来的python(具体我不太清楚，但是在跑一个项目的时候，他调用的python仍然是python3)。而且别的地方也找不到别名了。按理说python的默认版本应该是python2才对，但是也没有办法，只能硬着头皮改，毕竟项目还是要跑的啊。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">sudo update-alternatives --install &lt;<span class="built_in">link</span>&gt; &lt;name&gt; &lt;path&gt; &lt;priority&gt;</span></span><br><span class="line">sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 10</span><br></pre></td></tr></table></figure>
-
-<p>搞定。</p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
-<li><a href="https://stackoverflow.com/questions/41986507/unable-to-set-default-python-version-to-python3-in-ubuntu">https://stackoverflow.com/questions/41986507/unable-to-set-default-python-version-to-python3-in-ubuntu</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>普通用户使用docker的权限问题</title>
-    <url>/docker-cgroup.html</url>
-    <content><![CDATA[<p>好像默认的只有<code>sudo</code>有docker相关权限，普通用户<code>docker run hello-world</code>会有权限报错，解决方法如下</p>
-<span id="more"></span>
-
-<h1 id="具体错误"><a href="#具体错误" class="headerlink" title="具体错误"></a>具体错误</h1><p>如果直接运行</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
-
-<p>产生错误</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker: Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post http://%2Fvar%2Frun%2Fdocker.sock/v1.35/containers/create: dial unix /var/run/docker.sock: connect: permission denied.See &#x27;docker run --help&#x27;.</span><br></pre></td></tr></table></figure>
-
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>创建docker group</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo groupadd docker</span><br></pre></td></tr></table></figure>
-
-<p>把当前用户加入docker group</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo usermod -aG docker $USER</span><br></pre></td></tr></table></figure>
-
-<p>登出再登入，此时可以直接运行</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
-
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
-<li><a href="https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue">https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>工具</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
       </tags>
   </entry>
   <entry>
@@ -1213,76 +1234,198 @@
       </tags>
   </entry>
   <entry>
-    <title>比较docker默认网络模式、dpdk、ovs+dpdk三种网络性能测试</title>
-    <url>/compare-docker-dpdk-ovs+dpdk.html</url>
-    <content><![CDATA[<p>将前面的工作整合了一下，比较docker默认的网桥模式、dpdk和dpdk+ovs三种网络的网络性能</p>
+    <title>普通用户使用docker的权限问题</title>
+    <url>/docker-cgroup.html</url>
+    <content><![CDATA[<p>好像默认的只有<code>sudo</code>有docker相关权限，普通用户<code>docker run hello-world</code>会有权限报错，解决方法如下</p>
 <span id="more"></span>
 
-<h1 id="前期工作"><a href="#前期工作" class="headerlink" title="前期工作"></a>前期工作</h1><ul>
-<li>docker + dpdk：<a href="https://datawine.github.io/2018/07/15/DPDK-Pktgen-Docker%E6%90%AD%E5%BB%BAVNF%E7%8E%AF%E5%A2%83%E5%8F%8A%E9%AA%8C%E8%AF%81/">https://datawine.github.io/2018/07/15/DPDK-Pktgen-Docker%E6%90%AD%E5%BB%BAVNF%E7%8E%AF%E5%A2%83%E5%8F%8A%E9%AA%8C%E8%AF%81/</a></li>
-<li>docker + dpdk + ovs：<a href="https://datawine.github.io/2018/07/22/Docker-DPDK-OVS/">https://datawine.github.io/2018/07/22/Docker-DPDK-OVS/</a></li>
-</ul>
-<h1 id="docker默认的网桥performance"><a href="#docker默认的网桥performance" class="headerlink" title="docker默认的网桥performance"></a>docker默认的网桥performance</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">运行docker，使用iperf3 server监听5201端口</span></span><br><span class="line">sudo docker run -it --rm --name=iperf3-server -p 5201:5201 networkstatic/iperf3 -s</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">启动iperf3 client，发包</span></span><br><span class="line">docker run  -it --rm networkstatic/iperf3 -c $(docker inspect --format &quot;&#123;&#123; .NetworkSettings.IPAddress &#125;&#125;&quot; $(docker ps -ql))</span><br></pre></td></tr></table></figure>
+<h1 id="具体错误"><a href="#具体错误" class="headerlink" title="具体错误"></a>具体错误</h1><p>如果直接运行</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
 
-<h1 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h1><p>因为没有查到如何iperf3监听建好的virtio_user或者是virtio_host端口，而iperf3对ovs的监听好像也是针对网桥（见参考资料[1]），不支持手动添加ovs port和流表的方法，而且在查资料中，据说iperf在dpdk的实验中没有办法达到峰值（？见参考资料[2]），所以后面两种用pktgen测速。</p>
-<h2 id="docker默认网桥性能"><a href="#docker默认网桥性能" class="headerlink" title="docker默认网桥性能"></a>docker默认网桥性能</h2><p>性能</p>
-<p><img src="/img/2018-8-20.jpg"></p>
-<h2 id="docker-dpdk性能"><a href="#docker-dpdk性能" class="headerlink" title="docker + dpdk性能"></a>docker + dpdk性能</h2><p>拓扑结构</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+--------+---------------+               +-------------------+---------------+</span><br><span class="line">|        | socket file 1 |&lt;-------------&gt;| vhost-user port 1 |               |</span><br><span class="line">|        +---------------+               +-------------------+               |</span><br><span class="line">| host   |     pktgen    |               |      testpmd      |     container |</span><br><span class="line">|        +---------------+               +-------------------+               |</span><br><span class="line">|        | socket file 0 |&lt;-------------&gt;| vhost-user port 0 |               |</span><br><span class="line">+--------+---------------+               +-------------------+---------------+</span><br></pre></td></tr></table></figure>
+<p>产生错误</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker: Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post http://%2Fvar%2Frun%2Fdocker.sock/v1.35/containers/create: dial unix /var/run/docker.sock: connect: permission denied.See &#x27;docker run --help&#x27;.</span><br></pre></td></tr></table></figure>
 
-<p>性能</p>
-<p><img src="/img/2018-8-20-1.jpg"></p>
-<h2 id="docker-dpdk-ovs性能"><a href="#docker-dpdk-ovs性能" class="headerlink" title="docker + dpdk + ovs性能"></a>docker + dpdk + ovs性能</h2><p>拓扑结构</p>
-<p><img src="/img/2018-8-17-1.jpg"></p>
-<p>性能</p>
-<p><img src="/img/2018-8-20-2.jpg"></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>由上面可知，docker默认的网桥带宽能够达到<code>1.98GB/s</code>，docker+dpdk的模式下，带宽能够达到<code>4150MB/s</code>即<code>4.05GB.s</code>左右，而docker+dpdk+ovs的模式下，带宽能够达到<code>1350MB/s</code>即<code>1.32GB/s</code>左右，且发现Rx速率要小于Tx速率，猜测是ovs处发生堵塞。</p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>创建docker group</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo groupadd docker</span><br></pre></td></tr></table></figure>
+
+<p>把当前用户加入docker group</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo usermod -aG docker $USER</span><br></pre></td></tr></table></figure>
+
+<p>登出再登入，此时可以直接运行</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
+
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
-<li>[1] <a href="https://software.intel.com/en-us/articles/using-docker-containers-with-open-vswitch-and-dpdk-on-ubuntu-1710">https://software.intel.com/en-us/articles/using-docker-containers-with-open-vswitch-and-dpdk-on-ubuntu-1710</a></li>
-<li>[2] <a href="http://www.qingpingshan.com/jb/lua/322243.html">http://www.qingpingshan.com/jb/lua/322243.html</a></li>
-<li>[3] <a href="http://networkstatic.net/measuring-network-bandwidth-using-iperf-and-docker/">http://networkstatic.net/measuring-network-bandwidth-using-iperf-and-docker/</a></li>
-<li>[4] <a href="https://www.cnblogs.com/gispathfinder/p/5871043.html">https://www.cnblogs.com/gispathfinder/p/5871043.html</a></li>
-<li>[5] <a href="https://my.oschina.net/LastRitter/blog/1807032">https://my.oschina.net/LastRitter/blog/1807032</a></li>
+<li><a href="https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue">https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue</a></li>
 </ul>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ubuntu 服务器升降linux kernel踩坑实录</title>
+    <url>/ubuntu-change-kernel-version.html</url>
+    <content><![CDATA[<p>因为dpdk的驱动、docker等等要求，必须重装服务器的linux kernel</p>
+<span id="more"></span>
+
+<h1 id="安装linux-kernel并更新grub"><a href="#安装linux-kernel并更新grub" class="headerlink" title="安装linux kernel并更新grub"></a>安装linux kernel并更新grub</h1><p>先看看自己的linux kernel是什么版本：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">uname -r</span><br></pre></td></tr></table></figure>
+
+<p>先前天舒帮我装了一个4.16的，太新了，apt里啥都没有，所以以后装的时候先<code>apt-cache search linux-generic</code>一下，不然真要命。</p>
+<p>然后选一个看起来image和kernel header都有的版本吧。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt install linux-image-4.13.0-45-generic</span><br></pre></td></tr></table></figure>
+
+<p>装完之后别急着重启……把grub改了！</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">grep -A100 submenu  /boot/grub/grub.cfg |grep menuentry</span><br></pre></td></tr></table></figure>
+
+<p>从输出的信息中选择需要的启动条目（从0开始）</p>
+<p>然后修改<code>/etc/default/grub</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">GRUB_DEFAULT=”1&gt;3″</span><br></pre></td></tr></table></figure>
+
+<p>1指的是进入高级选项，3指的是第三个启动项，如果不知道说什么的话 ，重启的时候按shift看一下就懂了。</p>
+<p>然后更新grub</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo /usr/sbin/update-grub</span><br></pre></td></tr></table></figure>
+
+<p>最后重启</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo reboot</span><br></pre></td></tr></table></figure>
+
+<h1 id="安装kernel-header"><a href="#安装kernel-header" class="headerlink" title="安装kernel header"></a>安装kernel header</h1><p>没什么好说的。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get install linux-headers-$(uname -r)</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>其他</category>
       </categories>
       <tags>
-        <tag>dpdk</tag>
-        <tag>docker</tag>
-        <tag>ovs</tag>
-        <tag>pktgen</tag>
-        <tag>iperf</tag>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
-    <title>如何在matplotlib中使用中文</title>
-    <url>/matplotlib-chinese-font.html</url>
-    <content><![CDATA[<p>matplotlib原生是不支持中文的，但是因为画图中文方便一点，所以解决了一下这个问题。</p>
+    <title>mac清理磁盘空间</title>
+    <url>/mac-clear-disk-space.html</url>
+    <content><![CDATA[<p>今天在clone git的时候居然提示我mac磁盘满了，我也是惊了。</p>
 <span id="more"></span>
 
-<h1 id="查看字体目录位置"><a href="#查看字体目录位置" class="headerlink" title="查看字体目录位置"></a>查看字体目录位置</h1><p>首先进入python查看一下自己电脑的字体存放位置</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> matplotlib</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">print</span> matplotlib.matplotlib_fname()</span><br></pre></td></tr></table></figure>
+<h1 id="工具使用"><a href="#工具使用" class="headerlink" title="工具使用"></a>工具使用</h1><p>用的是知乎上推荐的一款程序：OmniDiskSweeper。（后来看到据说可以终端上<code>du -sh *</code>就行）</p>
+<p><img src="/img/2018-10-11.png"></p>
+<p>然后选要扫的磁盘就行了，具体就不截图了，太麻烦。</p>
+<h1 id="进阶问题"><a href="#进阶问题" class="headerlink" title="进阶问题"></a>进阶问题</h1><p>通过扫除居然发现显示的占用空间和实际磁盘工具给出的空间不一样，很神奇，一度以为自己中毒了。</p>
+<p>后面发现是mac的时间机器的自动备份没有关。</p>
+<p>一方面进到preference关掉mac的时间机器自动备份。</p>
+<p>另一方面删除快照。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示所有snapshots</span></span><br><span class="line">sudo tmutil listlocalsnapshots /</span><br><span class="line"></span><br><span class="line">com.apple.TimeMachine.2018-10-11-113833</span><br><span class="line">com.apple.TimeMachine.2018-10-11-133802</span><br><span class="line">com.apple.TimeMachine.2018-10-11-143851</span><br><span class="line">com.apple.TimeMachine.2018-10-11-153801</span><br><span class="line">com.apple.TimeMachine.2018-10-11-163801</span><br><span class="line">com.apple.TimeMachine.2018-10-11-192918</span><br><span class="line">com.apple.TimeMachine.2018-10-11-205829</span><br><span class="line">com.apple.TimeMachine.2018-10-11-213912</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删掉相应的</span></span><br><span class="line">tmutil deletelocalsnapshots 2018-10-11-213912</span><br></pre></td></tr></table></figure>
 
-<p>我的mac打印出的信息在</p>
-<p><code>/Users/junxianshen/anaconda2/lib/python2.7/site-packages/matplotlib/mpl-data/matplotlibrc</code></p>
-<p>字体目录就在</p>
-<p><code>/Users/junxianshen/anaconda2/lib/python2.7/site-packages/matplotlib/mpl-data/fonts/ttf/</code></p>
-<h1 id="下载并安装"><a href="#下载并安装" class="headerlink" title="下载并安装"></a>下载并安装</h1><p>然后下载一个黑体简体中文字体，比如在这里下</p>
+<p>问题解决！</p>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>mac</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>dlopen源码分析</title>
+    <url>/dlopen-source-code.html</url>
+    <content><![CDATA[<p>研究一下dlopen的源码。</p>
+<span id="more"></span>
+
+<p>通过调用链的形式分析dlopen源码。</p>
+<p>首先，函数的入口是<code>dlopen (const char *file, int mode)</code></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> *</span><br><span class="line"><span class="title function_">dlopen</span> <span class="params">(<span class="type">const</span> <span class="type">char</span> *file, <span class="type">int</span> mode)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> __dlopen (file, mode, RETURN_ADDRESS (<span class="number">0</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>函数跳转到了<code>__dlopen</code>，这个函数实际上做了两件事情，将<code>struct dlopen_args args</code>赋值，然后运行<code>dlopen_doit</code>。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> *</span><br><span class="line">__dlopen (<span class="type">const</span> <span class="type">char</span> *file, <span class="type">int</span> mode DL_CALLER_DECL)</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line"> </span><br><span class="line"><span class="meta"># <span class="keyword">ifdef</span> SHARED</span></span><br><span class="line">  <span class="keyword">return</span> _dlerror_run (dlopen_doit, &amp;args) ? <span class="literal">NULL</span> : args.new;</span><br><span class="line"><span class="meta"># <span class="keyword">else</span></span></span><br><span class="line">  <span class="keyword">if</span> (_dlerror_run (dlopen_doit, &amp;args))</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">return</span> args.new;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中结构体<code>struct dlopen_args</code>是这样的：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">dlopen_args</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *file; <span class="comment">/* The arguments for dlopen_doit.  */</span></span><br><span class="line">  <span class="type">int</span> mode;</span><br><span class="line">  <span class="type">void</span> *new; <span class="comment">/* The return value of dlopen_doit.  */</span></span><br><span class="line">  <span class="type">const</span> <span class="type">void</span> *caller; <span class="comment">/* The return value of dlopen_doit.  */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>然后<code>dlopen_doit</code>的函数则是调用了<code>__dl_open</code>函数。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span></span><br><span class="line"><span class="title function_">dlopen_doit</span> <span class="params">(<span class="type">void</span> *a)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">dlopen_args</span> *<span class="title">args</span> =</span> (<span class="keyword">struct</span> dlopen_args *) a;</span><br><span class="line">	... </span><br><span class="line">  args-&gt;new = GLRO(dl_open) (args-&gt;file ?: <span class="string">&quot;&quot;</span>, args-&gt;mode | __RTLD_DLOPEN,</span><br><span class="line">			     args-&gt;caller,</span><br><span class="line">			     args-&gt;file == <span class="literal">NULL</span> ? LM_ID_BASE : NS,</span><br><span class="line">			     __dlfcn_argc, __dlfcn_argv, __environ);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于<code>__dl_open</code>函数，实际上调用了<code>dl_open_worker</code>函数。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> *</span><br><span class="line">_dl_open (<span class="type">const</span> <span class="type">char</span> *file, <span class="type">int</span> mode, <span class="type">const</span> <span class="type">void</span> *caller_dlopen, Lmid_t nsid,</span><br><span class="line">	  <span class="type">int</span> argc, <span class="type">char</span> *argv[], <span class="type">char</span> *env[])</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">dl_open_args</span> <span class="title">args</span>;</span></span><br><span class="line">  args.file = file;</span><br><span class="line">  args.mode = mode;</span><br><span class="line">  args.caller_dlopen = caller_dlopen;</span><br><span class="line">  args.caller_dl_open = RETURN_ADDRESS (<span class="number">0</span>);</span><br><span class="line">  args.<span class="built_in">map</span> = <span class="literal">NULL</span>;</span><br><span class="line">  args.nsid = nsid;</span><br><span class="line">  args.argc = argc;</span><br><span class="line">  args.argv = argv;</span><br><span class="line">  args.env = env;</span><br><span class="line"> </span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *objname;</span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *errstring;</span><br><span class="line">  <span class="type">bool</span> malloced;</span><br><span class="line">  <span class="type">int</span> errcode = _dl_catch_error (&amp;objname, &amp;errstring, &amp;malloced,</span><br><span class="line">				 dl_open_worker, &amp;args);</span><br><span class="line">	... </span><br><span class="line">  <span class="keyword">return</span> args.<span class="built_in">map</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中关键的数据存储在<code>struct dl_open_args</code>内，它的结构如下所示</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">dl_open_args</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *file;</span><br><span class="line">  <span class="type">int</span> mode;</span><br><span class="line">  <span class="type">const</span> <span class="type">void</span> *caller_dlopen; <span class="comment">/* This is the caller of dlopen().  */</span></span><br><span class="line">  <span class="type">const</span> <span class="type">void</span> *caller_dl_open; <span class="comment">/* This is the caller of _dl_open().  */</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">link_map</span> *<span class="title">map</span>;</span></span><br><span class="line">  Lmid_t nsid; <span class="comment">/* Namespace ID.  */</span></span><br><span class="line">  <span class="type">int</span> argc;</span><br><span class="line">  <span class="type">char</span> **argv;</span><br><span class="line">  <span class="type">char</span> **env;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>dl_open_worker</code>函数中，最重要的加载数据一步是通过调用<code>_dl_map_object</code>实现的。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Load the named object.  */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">link_map</span> *<span class="title">new</span>;</span></span><br><span class="line">args-&gt;<span class="built_in">map</span> = new = _dl_map_object (call_map, file, lt_loaded, <span class="number">0</span>,</span><br><span class="line">		    mode | __RTLD_CALLMAP, args-&gt;nsid);</span><br></pre></td></tr></table></figure>
+
+<p>接下来就是<code>_dl_map_object</code>函数，其主要的内容如下：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">link_map</span> *</span></span><br><span class="line"><span class="class"><span class="title">internal_function</span></span></span><br><span class="line"><span class="class">_<span class="title">dl_map_object</span> (<span class="keyword">struct</span> <span class="title">link_map</span> *<span class="title">loader</span>, <span class="title">const</span> <span class="title">char</span> *<span class="title">name</span>,</span></span><br><span class="line"><span class="class">		<span class="title">int</span> <span class="title">type</span>, <span class="title">int</span> <span class="title">trace_mode</span>, <span class="title">int</span> <span class="title">mode</span>, <span class="title">Lmid_t</span> <span class="title">nsid</span>)</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="type">int</span> fd;</span><br><span class="line">  <span class="type">char</span> *realname;</span><br><span class="line">  <span class="type">char</span> *name_copy;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">link_map</span> *<span class="title">l</span>;</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">filebuf</span> <span class="title">fb</span>;</span></span><br><span class="line">	...</span><br><span class="line">  <span class="comment">/* Look for this name among those already loaded.  */</span></span><br><span class="line">  <span class="keyword">for</span> (l = GL(dl_ns)[nsid]._ns_loaded; l; l = l-&gt;l_next)</span><br><span class="line">  &#123;</span><br><span class="line">      <span class="comment">/* If the requested name matches the soname of a loaded object,</span></span><br><span class="line"><span class="comment">	 use that object.  Elide this check for names that have not</span></span><br><span class="line"><span class="comment">	 yet been opened.  */</span></span><br><span class="line">      <span class="keyword">if</span> (__builtin_expect (l-&gt;l_faked, <span class="number">0</span>) != <span class="number">0</span> </span><br><span class="line">          || __builtin_expect (l-&gt;l_removed, <span class="number">0</span>) != <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">      <span class="keyword">if</span> (!_dl_name_match_p (name, l))</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="type">const</span> <span class="type">char</span> *soname;</span><br><span class="line"> 				<span class="keyword">if</span> (__builtin_expect (l-&gt;l_soname_added, <span class="number">1</span>) </span><br><span class="line">            || l-&gt;l_info[DT_SONAME] == <span class="literal">NULL</span>)</span><br><span class="line">	    	<span class="keyword">continue</span>;</span><br><span class="line"> </span><br><span class="line">	  		soname = ((<span class="type">const</span> <span class="type">char</span> *) D_PTR (l, l_info[DT_STRTAB])</span><br><span class="line">		    	+ l-&gt;l_info[DT_SONAME]-&gt;d_un.d_val);</span><br><span class="line">	  		<span class="keyword">if</span> (<span class="built_in">strcmp</span> (name, soname) != <span class="number">0</span>)</span><br><span class="line">	    		<span class="keyword">continue</span>;</span><br><span class="line"> </span><br><span class="line">        <span class="comment">/* We have a match on a new name -- cache it.  */</span></span><br><span class="line">        add_name_to_object (l, soname);</span><br><span class="line">        l-&gt;l_soname_added = <span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line"> </span><br><span class="line">      <span class="comment">/* We have a match.  */</span></span><br><span class="line">      <span class="keyword">return</span> l;</span><br><span class="line">  &#125;</span><br><span class="line"> 	</span><br><span class="line">  ...</span><br><span class="line">  fd = open_path (name, namelen, mode &amp; __RTLD_SECURE, </span><br><span class="line">                  &amp;main_map-&gt;l_rpath_dirs, &amp;realname, &amp;fb, </span><br><span class="line">                  loader ?: main_map, LA_SER_RUNPATH, &amp;found_other_class);</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">  l = _dl_new_object (name_copy, name, type, loader,</span><br><span class="line">				      mode, nsid)) </span><br><span class="line">	</span><br><span class="line">   <span class="keyword">return</span> _dl_map_object_from_fd (name, fd, &amp;fb, realname, loader, type, mode, &amp;stack_end, nsid);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中文件是通过<code>open_path</code>调用的。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span></span><br><span class="line"><span class="title function_">open_path</span> <span class="params">(<span class="type">const</span> <span class="type">char</span> *name, <span class="type">size_t</span> namelen, <span class="type">int</span> secure,</span></span><br><span class="line"><span class="params">	   <span class="keyword">struct</span> r_search_path_struct *sps, <span class="type">char</span> **realname,</span></span><br><span class="line"><span class="params">	   <span class="keyword">struct</span> filebuf *fbp, <span class="keyword">struct</span> link_map *loader, <span class="type">int</span> whatcode,</span></span><br><span class="line"><span class="params">	   <span class="type">bool</span> *found_other_class)</span></span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">for</span> (cnt = <span class="number">0</span>; fd == <span class="number">-1</span> &amp;&amp; cnt &lt; ncapstr; ++cnt) &#123;</span><br><span class="line"> 			fd = open_verify (buf, fbp, loader, whatcode, found_other_class, </span><br><span class="line">                        <span class="literal">false</span>);</span><br><span class="line">			...</span><br><span class="line">		&#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> (fd != <span class="number">-1</span>) &#123;</span><br><span class="line">	  	*realname = (<span class="type">char</span> *) <span class="built_in">malloc</span> (buflen);</span><br><span class="line">	  	<span class="keyword">if</span> (*realname != <span class="literal">NULL</span>)</span><br><span class="line">	    &#123;</span><br><span class="line">	      <span class="built_in">memcpy</span> (*realname, buf, buflen);</span><br><span class="line">	      <span class="keyword">return</span> fd; <span class="comment">// here return the fd</span></span><br><span class="line">	    &#125;</span><br><span class="line">	  	<span class="keyword">else</span></span><br><span class="line">	    &#123;</span><br><span class="line">	      <span class="comment">/* No memory for the name, we certainly won&#x27;t be able</span></span><br><span class="line"><span class="comment">		 to load and link it.  */</span></span><br><span class="line">	      __close (fd);</span><br><span class="line">	      <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	    &#125;</span><br><span class="line">		&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* Remember whether we found anything.  */</span></span><br><span class="line">    any |= here_any;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span> (*++dirs != <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>open_verify</code>函数通过调用<code>__libc_read</code>对ELF文件的文件头实现了读写。</p>
+<p>接下来是<code>_dl_new_object</code>函数，它主要初始化一个新的<code>struct link_map*</code>数据结构，并把它加入到<code>loader</code>对应的单链中（猜测）。</p>
+<p>最重要的是函数<code>_dl_map_object_from_fd</code>。这个函数包括了</p>
 <ul>
-<li><a href="http://www.font5.com.cn/font_download.php?id=151&amp;part=1237887120">http://www.font5.com.cn/font_download.php?id=151&amp;part=1237887120</a></li>
+<li>对<code>link_map</code>的二次查找，是否已经存在映射了.so文件的</li>
+<li>提取ELF头文件信息（程序入口地址，头文件信息等）</li>
+<li>对phdr（程序头表进行遍历），根据每个程序头的type类型做具体的操作</li>
+<li>进行映射</li>
 </ul>
-<p>然后复制到上面的字体目录中</p>
-<h1 id="清空缓存"><a href="#清空缓存" class="headerlink" title="清空缓存"></a>清空缓存</h1><p>接下来移除缓存，我的mac缓存目录在<code>~/.matplotlib/</code>，我是把里面的东西都删掉了。</p>
-<h1 id="正式使用"><a href="#正式使用" class="headerlink" title="正式使用"></a>正式使用</h1><p>在python中添加一些中文必须的东西，比如</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br></pre></td></tr></table></figure>
-
-<p>然后使用的时候例如</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">plt.plot(max_xval, max_cdf_yval)</span><br><span class="line">plt.xlabel(<span class="string">u&#x27;最大流量&#x27;</span>, fontproperties=<span class="string">&#x27;SimHei&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">maplength = loadcmds[nloadcmds - <span class="number">1</span>].allocend - loadcmds[<span class="number">0</span>].mapstart;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Now process the load commands and map segments into memory.</span></span><br><span class="line"><span class="comment">   This is responsible for filling in:</span></span><br><span class="line"><span class="comment">   l_map_start, l_map_end, l_addr, l_contiguous, l_text_end, l_phdr</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">errstring = _dl_map_segments (l, fd, header, type, loadcmds, nloadcmds,</span><br><span class="line">  maplength, has_holes, loader);</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>注意，<code>plt.xlabel()</code>中还可以添加<code>fontsize</code>属性，如<code>plt.xlabel(u&#39;横轴：时间&#39;,fontproperties = &#39;SimHei&#39;,fontsize = 20)</code></li>
+<li>调用<code>mprotect</code>修改内存权限</li>
+<li>修改TLS等设置</li>
+<li>修改符号表</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Set up the symbol hash table.  */</span></span><br><span class="line">_dl_setup_hash (l);</span><br></pre></td></tr></table></figure>
+
+<p>最后，是<code>_dl_map_segments</code>函数</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* This is a position-independent shared object.  We can let the</span></span><br><span class="line"><span class="comment">   kernel map it anywhere it likes, but we must have space for all</span></span><br><span class="line"><span class="comment">   the segments in their specified positions relative to the first.</span></span><br><span class="line"><span class="comment">   So we map the first segment without MAP_FIXED, but with its</span></span><br><span class="line"><span class="comment">   extent increased to cover all the segments.  Then we remove</span></span><br><span class="line"><span class="comment">   access from excess portion, and there is known sufficient space</span></span><br><span class="line"><span class="comment">   there to remap from the later segments.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">   As a refinement, sometimes we have an address that we would</span></span><br><span class="line"><span class="comment">   prefer to map such objects at; but this is only a preference,</span></span><br><span class="line"><span class="comment">   the OS can do whatever it likes. */</span></span><br><span class="line">ElfW(Addr) mappref</span><br><span class="line">  = (ELF_PREFERRED_ADDRESS (loader, maplength,</span><br><span class="line">                            c-&gt;mapstart &amp; GLRO(dl_use_load_bias))</span><br><span class="line">     - MAP_BASE_ADDR (l));</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Remember which part of the address space this object uses.  */</span></span><br><span class="line">l-&gt;l_map_start = (ElfW(Addr)) __mmap ((<span class="type">void</span> *) mappref, maplength,</span><br><span class="line">                                      c-&gt;prot,</span><br><span class="line">                                      MAP_COPY|MAP_FILE,</span><br><span class="line">                                      fd, c-&gt;mapoff);</span><br><span class="line"><span class="keyword">if</span> (__glibc_unlikely ((<span class="type">void</span> *) l-&gt;l_map_start == MAP_FAILED))</span><br><span class="line">  <span class="keyword">return</span> DL_MAP_SEGMENTS_ERROR_MAP_SEGMENT;</span><br><span class="line"></span><br><span class="line">l-&gt;l_map_end = l-&gt;l_map_start + maplength;</span><br><span class="line">l-&gt;l_addr = l-&gt;l_map_start - c-&gt;mapstart;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (has_holes)</span><br><span class="line">  <span class="comment">/* Change protection on the excess portion to disallow all access;</span></span><br><span class="line"><span class="comment">     the portions we do not remap later will be inaccessible as if</span></span><br><span class="line"><span class="comment">     unallocated.  Then jump into the normal segment-mapping loop to</span></span><br><span class="line"><span class="comment">     handle the portion of the segment past the end of the file</span></span><br><span class="line"><span class="comment">     mapping.  */</span></span><br><span class="line">  __mprotect ((<span class="type">caddr_t</span>) (l-&gt;l_addr + c-&gt;mapend),</span><br><span class="line">              loadcmds[nloadcmds - <span class="number">1</span>].mapstart - c-&gt;mapend,</span><br><span class="line">              PROT_NONE);</span><br><span class="line"></span><br><span class="line">l-&gt;l_contiguous = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">goto</span> postmap;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>dlopen</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2018年网络攻防小学期</title>
+    <url>/network-attack-and-defense-semester.html</url>
+    <content><![CDATA[<p>收录2018年网络攻防小学期的一些东西</p>
+<span id="more"></span> 
+
+<ul>
+<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%B8%80%EF%BC%89%E7%BD%91%E7%BB%9C%E4%BE%A6%E6%9F%A5%E4%B8%8E%E5%8F%96%E8%AF%81%E5%88%86%E6%9E%90.html">网络攻防小学期（一）网络侦查与取证分析</a></li>
+<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%BA%8C%EF%BC%89%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F%E4%B8%8E%E4%BF%9D%E5%AF%86-%E5%AF%86%E7%A0%81.html">网络攻防小学期（二）信息隐藏与保密&#x2F;密码</a></li>
+<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%B8%89%EF%BC%89%E7%BD%91%E7%AB%99%E5%AE%89%E5%85%A8.html">网络攻防小学期（三）网站安全</a></li>
+<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E5%9B%9B%EF%BC%89%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E4%B8%8E%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%BC%8F%E6%B4%9E.html">网络攻防小学期（四）逆向工程与二进制漏洞</a></li>
+<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%EF%BC%9AM1%E5%8D%A1%E5%B0%8F%E5%AE%9E%E9%AA%8C.html">网络攻防：M1卡小实验</a></li>
+<li><a href="https://datawine.github.io/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%EF%BC%9AM1%E5%8D%A1%E5%A4%A7%E5%AE%9E%E9%AA%8C.html">网络攻防：M1卡大实验</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>网络攻防</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>更换python默认版本</title>
+    <url>/change-python-default-version.html</url>
+    <content><![CDATA[<p>服务器上用的python默认是python3，需要改成python2</p>
+<span id="more"></span>
+
+<h1 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h1><p>修改别名，在<code>~/.bashrc</code>中修改</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alias python=python2</span><br></pre></td></tr></table></figure>
+
+<h1 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h1><p>但是如果是在程序中调用有可能仍然是原来的python(具体我不太清楚，但是在跑一个项目的时候，他调用的python仍然是python3)。而且别的地方也找不到别名了。按理说python的默认版本应该是python2才对，但是也没有办法，只能硬着头皮改，毕竟项目还是要跑的啊。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">sudo update-alternatives --install &lt;<span class="built_in">link</span>&gt; &lt;name&gt; &lt;path&gt; &lt;priority&gt;</span></span><br><span class="line">sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 10</span><br></pre></td></tr></table></figure>
+
+<p>搞定。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a href="https://stackoverflow.com/questions/41986507/unable-to-set-default-python-version-to-python3-in-ubuntu">https://stackoverflow.com/questions/41986507/unable-to-set-default-python-version-to-python3-in-ubuntu</a></li>
 </ul>
 ]]></content>
       <categories>
@@ -1290,80 +1433,6 @@
       </categories>
       <tags>
         <tag>python</tag>
-        <tag>matplotlib</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ssh-permissions-are-too-open解决方法</title>
-    <url>/ssh-permissions-are-too-open-error.html</url>
-    <content><![CDATA[<p>前几天跑S6的框架，然后在一个ssh的环节报错。</p>
-<span id="more"></span>
-
-<h1 id="具体错误"><a href="#具体错误" class="headerlink" title="具体错误"></a>具体错误</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Permissions 0777 for &#x27;/Users/username/.ssh/id_rsa&#x27; are too open.</span><br><span class="line">It is recommended that your private key files are NOT accessible by others.</span><br><span class="line">This private key will be ignored.</span><br></pre></td></tr></table></figure>
-
-<p>大概意思就是权限太松了。</p>
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>只需要将<code>~/.ssh/id_rsa</code>的权限调整为只有自己可读就好了。</p>
-<p>众所周知，<code>r=4</code>为可读，<code>w=2</code>为可写，<code>x=1</code>为可执行。三个分别是<code>user</code>、<code>group</code>和<code>other</code>。权限位相或即可。</p>
-<p>所以</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod 400 ~/.ssh/id_rsa</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">或者</span></span><br><span class="line">chmod 600 ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
-
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
-<li><a href="https://stackoverflow.com/questions/9270734/ssh-permissions-are-too-open-error">https://stackoverflow.com/questions/9270734/ssh-permissions-are-too-open-error</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>ssh</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>nsdi22-Efficient Scheduling Policies for Microsecond-Scale Tasks</title>
-    <url>/null.html</url>
-    <content><![CDATA[<h1 id="Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks"><a href="#Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks" class="headerlink" title="Efficient Scheduling Policies for Microsecond-Scale Tasks"></a>Efficient Scheduling Policies for Microsecond-Scale Tasks</h1><p>开源 [代码](<a href="https://github.com/smcclure20/">https://github.com/smcclure20/</a> scheduling-policies-sim)</p>
-<p>对负载均衡策略和cpu core的分配策略的比较，得到了几个结论</p>
-<ul>
-<li>总的来说，在给定与其他方法相同的周期数时，即使开销和工作负载参数不同，work-stealing始终是性能最好的负载平衡策略。</li>
-<li>即使是在平均负载不变的情况下，想比于静态core分配，核心分配可能不会为短任务提供性能优势（中位数或tail latency）。</li>
-<li>然而，即使核心分配可能不会为短任务提供性能优势，但人们可以采用核心分配策略，以确保应用程序能够适应负载的变化。。</li>
-</ul>
-<h1 id="对比方案"><a href="#对比方案" class="headerlink" title="对比方案"></a>对比方案</h1><ul>
-<li>load balancing策略<ul>
-<li>单一队列：shinjuku和ram-cloud。一个大队列，但是实践中可能因为对于单一队列的争夺而限制吞吐量</li>
-<li>没有负载平衡：任务由它们首先到达的核心来处理</li>
-<li>enqueue choice：任务在创建时决定在哪运行，并且保持不动。现在的系统通常是二选一，选两个随机抽样的core中负载较低的那个。这是有开销的，“看别的core的负载”这件事情需要创建任务的core来干</li>
-<li>work stealing，当core idle时，从别的有queued work的core里拿一半task过来，它产生的开销是检查其他核心的排队工作并将工作转移到其本地队列。</li>
-<li>work shedding。过载的核心可以将负载转移给其他核心，或者要求其他核心承担他们的一些负载。我们考虑一种工作脱落策略，在这种策略中，一个任务排队时间超过指定阈值的核心会随机选择一个核心，并表示它已经过载。然后，该核心将通过窃取过载核心的一半任务来作出回应；这是该策略的主要开销来源。</li>
-</ul>
-</li>
-<li>core-allocation策略<ul>
-<li>静态的。通过静态核心分配，每个应用的核心数量不能随时间变化，正如一些研究系统[42, 64, 66]。这不会产生核心重新分配的开销。然而，每个应用程序必须有足够的核心来应对峰值负载，当负载随时间变化时，会浪费大量的CPU资源，这是数据中心工作负载的典型情况[11, 35]。</li>
-<li>per-task。诸如Fred[40]这样的系统具有按任务分配核心的功能，每次任务到来时都会给应用程序分配一个核心。这就产生了为每个任务分配核心的开销，除非所有核心都在使用。</li>
-<li>queueing-based。基于队列延迟的策略，如果队列–以线程、数据包或存储完成的数量或延迟来衡量–超过了某个阈值，则授予应用程序一个额外的内核。这些策略的不同之处在于它们是基于跨核心的最大排队量触发的[26, 60]还是使用平均数[12, 67]。</li>
-<li>基于CPU利用率。基于利用率的策略是根据空闲核心的数量[35]或核心在任务上花费的平均时间（而不是闲置或忙于旋转）[12, 67]来增加或重新启用核心。</li>
-<li>failure to find work。在一些系统中，当核心无法找到任何任务时，应用程序将产生一个核心。这可能发生在一个核心找不到另一个有排队工作的核心来偷取[26,60,76]，或者当它完成了当前的任务，有一个每个任务的核心分配政策[40]。<h1 id="建模细节"><a href="#建模细节" class="headerlink" title="建模细节"></a>建模细节</h1></li>
-<li>我们对负载平衡所需的跨核通信进行建模，一般需要100ns的时间。我们将内核分配的开销（包括分配内核的延迟和浪费的CPU周期）建模为每个内核分配5μs。</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>论文</category>
-      </categories>
-      <tags>
-        <tag>nsdi</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>孟德尔随机化</title>
-    <url>/mendelian-randomization.html</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>孟德尔随机化</tag>
       </tags>
   </entry>
 </search>
