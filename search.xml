@@ -33,71 +33,11 @@ Cloud</a>：以请求粒度捕获请求延迟异常（RLA）相关的事件：�
   <entry>
     <title>孟德尔随机化</title>
     <url>/mendelian-randomization.html</url>
-    <content><![CDATA[
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>孟德尔随机化</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>工具变量和孟德尔随机化原理</title>
-    <url>/instrumental-variable.html</url>
-    <content><![CDATA[<p>工具变量(Instrumental-Variable)本身是一个计量经济学的概念，它的出现是为了克服普通最小二乘法中的内生性问题。</p>
-<h1 id="内生性问题">内生性问题</h1>
-<p>内生性问题的原因主要有以下三种 - 遗漏变量 - 变量有测量误差 -
-双向因果关系：比如受教育年限影响工资，工资反过来影响受教育年限</p>
-<h1 id="假设">假设</h1>
-<p>孟德尔随机化需要三个核心工具变量假设，即： -
-相关性假设：用作工具变量的遗传变异(<span
-class="math inline">\(Z\)</span>)与暴露(<span
-class="math inline">\(X\)</span>)有关，即存在<span
-class="math inline">\(Z \to X\)</span> -
-独立性/可交换性假设：遗传变异和目标结果没有共同的原因（即没有干扰因子），即虽然可能存在<span
-class="math inline">\(U \to Y\)</span>，但是不存在<span
-class="math inline">\(U \to Z\)</span> -
-排斥性/无水平多效性假设：除了通过暴露(<span
-class="math inline">\(X\)</span>)外，遗传变异(<span
-class="math inline">\(Z\)</span>)和结果(<span
-class="math inline">\(Y\)</span>)之间没有独立的因果途径，不存在<span
-class="math inline">\(Z \to Y\)</span>不经过<span
-class="math inline">\(X\)</span></p>
-<h1 id="模型解释">模型解释</h1>
+    <content><![CDATA[<p>孟德尔随机化</p>
+<span id="more"></span>
 <ul>
-<li>用作工具变量的遗传变异(<span class="math inline">\(Z\)</span>)</li>
-<li>暴露(<span class="math inline">\(X\)</span>)</li>
-<li>结果(<span class="math inline">\(Y\)</span>)</li>
-<li>混杂因素(<span class="math inline">\(U\)</span>)</li>
-</ul>
-<figure>
-<img src="/img/2022-5-9-1.png" alt="孟德尔随机化模型" />
-<figcaption aria-hidden="true">孟德尔随机化模型</figcaption>
-</figure>
-<h1 id="模型使用">模型使用</h1>
-<p>使用两阶最小二乘（Two Stage Least
-Squares，TSLS）来替代原来的最小二乘法</p>
-<p><span class="math display">\[Y = \sum \beta_i X_i +
-\delta\]</span></p>
-<h2 id="第一步建立自变量x和工具变量的回归模型">第一步：建立自变量<span
-class="math inline">\(X\)</span>和工具变量的回归模型</h2>
-<p><span class="math display">\[X = \alpha Z + \epsilon\]</span></p>
-<p>在这一步中，需要验证，Cov（Z, ε）= 0，也即工具变量和混杂因素无关。
-注：我感觉应该是残差吧！</p>
-<p>另外还需要考虑上述方程的决定系数或者说是F统计量，来判断<span
-class="math inline">\(Z\)</span>和<span
-class="math inline">\(X\)</span>的关联强度。通常情况下，决定系数或者F统计量越大，说明Z和X的关联程度越大。</p>
-<h2
-id="第二步将第一步中拟合的x的估计量带入如下方程">第二步：将第一步中拟合的X的估计量带入如下方程：</h2>
-<p><span class="math display">\[Y = \beta \hat{X} + \delta\]</span></p>
-<p>其中<span
-class="math inline">\(\beta\)</span>便是X对Y的纯净效应量。</p>
-<h1 id="参考资料">参考资料</h1>
-<ul>
-<li>https://mp.weixin.qq.com/s?__biz=MjM5MTIzNjI1OA==&amp;mid=2247483687&amp;idx=1&amp;sn=e5ef4497043d0a5b3b02416d94e380f1&amp;chksm=a6b9e8ea91ce61fcb032a4d80cc834a7431d150f06485127766ba3ed20e5ce673a77f4e23c90&amp;scene=21#wechat_redirect</li>
-<li>决定系数:
-https://zh.wikipedia.org/zh-hans/%E5%86%B3%E5%AE%9A%E7%B3%BB%E6%95%B0</li>
+<li><a
+href="https://datawine.github.io/instrumental-variable.html">工具变量孟德尔随机化原理</a></li>
 </ul>
 ]]></content>
       <categories>
