@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="python,matplotlib," />
+  <meta name="keywords" content="nsdi," />
 
 
 
@@ -79,18 +79,17 @@
 
 
 
-<meta name="description" content="matplotlib原生是不支持中文的，但是因为画图中文方便一点，所以解决了一下这个问题。">
+<meta name="description" content="Efficient Scheduling Policies for Microsecond-Scale Tasks开源 [代码](https:&#x2F;&#x2F;github.com&#x2F;smcclure20&#x2F; scheduling-policies-sim) 对负载均衡策略和cpu core的分配策略的比较，得到了几个结论  总的来说，在给定与其他方法相同的周期数时，即使开销和工作负载参数不同，work-steal">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何在matplotlib中使用中文">
-<meta property="og:url" content="https://datawine.github.io/matplotlib-chinese-font.html">
+<meta property="og:title" content="nsdi22-Efficient Scheduling Policies for Microsecond-Scale Tasks">
+<meta property="og:url" content="https://datawine.github.io/null.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="matplotlib原生是不支持中文的，但是因为画图中文方便一点，所以解决了一下这个问题。">
+<meta property="og:description" content="Efficient Scheduling Policies for Microsecond-Scale Tasks开源 [代码](https:&#x2F;&#x2F;github.com&#x2F;smcclure20&#x2F; scheduling-policies-sim) 对负载均衡策略和cpu core的分配策略的比较，得到了几个结论  总的来说，在给定与其他方法相同的周期数时，即使开销和工作负载参数不同，work-steal">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-05-07T14:42:20.000Z">
-<meta property="article:modified_time" content="2022-05-07T14:42:43.355Z">
+<meta property="article:published_time" content="2022-05-09T12:23:57.000Z">
+<meta property="article:modified_time" content="2022-05-09T12:30:19.480Z">
 <meta property="article:author" content="Datawine">
-<meta property="article:tag" content="python">
-<meta property="article:tag" content="matplotlib">
+<meta property="article:tag" content="nsdi">
 <meta name="twitter:card" content="summary">
 
 
@@ -121,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/matplotlib-chinese-font.html"/>
+  <link rel="canonical" href="https://datawine.github.io/null.html"/>
 
 
 
 
 
-  <title>如何在matplotlib中使用中文 | Datawine's Blog</title>
+  <title>nsdi22-Efficient Scheduling Policies for Microsecond-Scale Tasks | Datawine's Blog</title>
   
 
 
@@ -298,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/matplotlib-chinese-font.html">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/null.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -315,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">如何在matplotlib中使用中文</h1>
+          <h1 class="post-title" itemprop="name headline">nsdi22-Efficient Scheduling Policies for Microsecond-Scale Tasks</h1>
         
 
         <div class="post-meta">
@@ -327,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-07T22:42:20+08:00">
-                2022-05-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-09T20:23:57+08:00">
+                2022-05-09
               </time>
             
 
@@ -350,8 +349,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index">
-                    <span itemprop="name">其他</span>
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
                   </a>
                 </span>
 
@@ -369,8 +368,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/matplotlib-chinese-font.html#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="matplotlib-chinese-font.html" itemprop="commentsCount"></span>
+                <a href="/null.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="null.html" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -397,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  277
+                  997
                 </span>
               
 
@@ -413,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  3
                 </span>
               
             </div>
@@ -434,30 +433,31 @@
       
 
       
-        <p>matplotlib原生是不支持中文的，但是因为画图中文方便一点，所以解决了一下这个问题。</p>
-<span id="more"></span>
-
-<h1 id="查看字体目录位置"><a href="#查看字体目录位置" class="headerlink" title="查看字体目录位置"></a>查看字体目录位置</h1><p>首先进入python查看一下自己电脑的字体存放位置</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> matplotlib</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">print</span> matplotlib.matplotlib_fname()</span><br></pre></td></tr></table></figure>
-
-<p>我的mac打印出的信息在</p>
-<p><code>/Users/junxianshen/anaconda2/lib/python2.7/site-packages/matplotlib/mpl-data/matplotlibrc</code></p>
-<p>字体目录就在</p>
-<p><code>/Users/junxianshen/anaconda2/lib/python2.7/site-packages/matplotlib/mpl-data/fonts/ttf/</code></p>
-<h1 id="下载并安装"><a href="#下载并安装" class="headerlink" title="下载并安装"></a>下载并安装</h1><p>然后下载一个黑体简体中文字体，比如在这里下</p>
+        <h1 id="Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks"><a href="#Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks" class="headerlink" title="Efficient Scheduling Policies for Microsecond-Scale Tasks"></a>Efficient Scheduling Policies for Microsecond-Scale Tasks</h1><p>开源 [代码](<a target="_blank" rel="noopener" href="https://github.com/smcclure20/">https://github.com/smcclure20/</a> scheduling-policies-sim)</p>
+<p>对负载均衡策略和cpu core的分配策略的比较，得到了几个结论</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="http://www.font5.com.cn/font_download.php?id=151&amp;part=1237887120">http://www.font5.com.cn/font_download.php?id=151&amp;part=1237887120</a></li>
+<li>总的来说，在给定与其他方法相同的周期数时，即使开销和工作负载参数不同，work-stealing始终是性能最好的负载平衡策略。</li>
+<li>即使是在平均负载不变的情况下，想比于静态core分配，核心分配可能不会为短任务提供性能优势（中位数或tail latency）。</li>
+<li>然而，即使核心分配可能不会为短任务提供性能优势，但人们可以采用核心分配策略，以确保应用程序能够适应负载的变化。。</li>
 </ul>
-<p>然后复制到上面的字体目录中</p>
-<h1 id="清空缓存"><a href="#清空缓存" class="headerlink" title="清空缓存"></a>清空缓存</h1><p>接下来移除缓存，我的mac缓存目录在<code>~/.matplotlib/</code>，我是把里面的东西都删掉了。</p>
-<h1 id="正式使用"><a href="#正式使用" class="headerlink" title="正式使用"></a>正式使用</h1><p>在python中添加一些中文必须的东西，比如</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br></pre></td></tr></table></figure>
-
-<p>然后使用的时候例如</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(max_xval, max_cdf_yval)</span><br><span class="line">plt.xlabel(<span class="string">u&#x27;最大流量&#x27;</span>, fontproperties=<span class="string">&#x27;SimHei&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>注意，<code>plt.xlabel()</code>中还可以添加<code>fontsize</code>属性，如<code>plt.xlabel(u&#39;横轴：时间&#39;,fontproperties = &#39;SimHei&#39;,fontsize = 20)</code></li>
+<h1 id="对比方案"><a href="#对比方案" class="headerlink" title="对比方案"></a>对比方案</h1><ul>
+<li>load balancing策略<ul>
+<li>单一队列：shinjuku和ram-cloud。一个大队列，但是实践中可能因为对于单一队列的争夺而限制吞吐量</li>
+<li>没有负载平衡：任务由它们首先到达的核心来处理</li>
+<li>enqueue choice：任务在创建时决定在哪运行，并且保持不动。现在的系统通常是二选一，选两个随机抽样的core中负载较低的那个。这是有开销的，“看别的core的负载”这件事情需要创建任务的core来干</li>
+<li>work stealing，当core idle时，从别的有queued work的core里拿一半task过来，它产生的开销是检查其他核心的排队工作并将工作转移到其本地队列。</li>
+<li>work shedding。过载的核心可以将负载转移给其他核心，或者要求其他核心承担他们的一些负载。我们考虑一种工作脱落策略，在这种策略中，一个任务排队时间超过指定阈值的核心会随机选择一个核心，并表示它已经过载。然后，该核心将通过窃取过载核心的一半任务来作出回应；这是该策略的主要开销来源。</li>
+</ul>
+</li>
+<li>core-allocation策略<ul>
+<li>静态的。通过静态核心分配，每个应用的核心数量不能随时间变化，正如一些研究系统[42, 64, 66]。这不会产生核心重新分配的开销。然而，每个应用程序必须有足够的核心来应对峰值负载，当负载随时间变化时，会浪费大量的CPU资源，这是数据中心工作负载的典型情况[11, 35]。</li>
+<li>per-task。诸如Fred[40]这样的系统具有按任务分配核心的功能，每次任务到来时都会给应用程序分配一个核心。这就产生了为每个任务分配核心的开销，除非所有核心都在使用。</li>
+<li>queueing-based。基于队列延迟的策略，如果队列–以线程、数据包或存储完成的数量或延迟来衡量–超过了某个阈值，则授予应用程序一个额外的内核。这些策略的不同之处在于它们是基于跨核心的最大排队量触发的[26, 60]还是使用平均数[12, 67]。</li>
+<li>基于CPU利用率。基于利用率的策略是根据空闲核心的数量[35]或核心在任务上花费的平均时间（而不是闲置或忙于旋转）[12, 67]来增加或重新启用核心。</li>
+<li>failure to find work。在一些系统中，当核心无法找到任何任务时，应用程序将产生一个核心。这可能发生在一个核心找不到另一个有排队工作的核心来偷取[26,60,76]，或者当它完成了当前的任务，有一个每个任务的核心分配政策[40]。<h1 id="建模细节"><a href="#建模细节" class="headerlink" title="建模细节"></a>建模细节</h1></li>
+<li>我们对负载平衡所需的跨核通信进行建模，一般需要100ns的时间。我们将内核分配的开销（包括分配内核的延迟和浪费的CPU周期）建模为每个内核分配5μs。</li>
+</ul>
+</li>
 </ul>
 
       
@@ -476,9 +476,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/" rel="tag"># python</a>
-          
-            <a href="/tags/matplotlib/" rel="tag"># matplotlib</a>
+            <a href="/tags/nsdi/" rel="tag"># nsdi</a>
           
         </div>
       
@@ -491,8 +489,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/too-many-open-files-error.html" rel="next" title="too many open files解决方法">
-                <i class="fa fa-chevron-left"></i> too many open files解决方法
+              <a href="/mendelian-randomization.html" rel="next" title="孟德尔随机化">
+                <i class="fa fa-chevron-left"></i> 孟德尔随机化
               </a>
             
           </div>
@@ -500,10 +498,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/smartnic-learning.html" rel="prev" title="smartnic学习">
-                smartnic学习 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -650,7 +644,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%AD%97%E4%BD%93%E7%9B%AE%E5%BD%95%E4%BD%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">查看字体目录位置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">下载并安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B8%85%E7%A9%BA%E7%BC%93%E5%AD%98"><span class="nav-number">3.</span> <span class="nav-text">清空缓存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E5%BC%8F%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">正式使用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks"><span class="nav-number">1.</span> <span class="nav-text">Efficient Scheduling Policies for Microsecond-Scale Tasks</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E6%AF%94%E6%96%B9%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text">对比方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BB%BA%E6%A8%A1%E7%BB%86%E8%8A%82"><span class="nav-number">3.</span> <span class="nav-text">建模细节</span></a></li></ol></div>
             
 
           </div>

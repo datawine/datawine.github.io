@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://datawine.github.io/null.html</loc>
+    <lastmod>2022-05-09</lastmod>
+  </url>
+  <url>
+    <loc>https://datawine.github.io/mendelian-randomization.html</loc>
+    <lastmod>2022-05-08</lastmod>
+  </url>
+  <url>
     <loc>https://datawine.github.io/route%20add-siocaddrt-network-is-unreachable.html</loc>
     <lastmod>2022-05-07</lastmod>
   </url>

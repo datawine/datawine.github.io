@@ -1318,4 +1318,52 @@
         <tag>ssh</tag>
       </tags>
   </entry>
+  <entry>
+    <title>nsdi22-Efficient Scheduling Policies for Microsecond-Scale Tasks</title>
+    <url>/null.html</url>
+    <content><![CDATA[<h1 id="Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks"><a href="#Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks" class="headerlink" title="Efficient Scheduling Policies for Microsecond-Scale Tasks"></a>Efficient Scheduling Policies for Microsecond-Scale Tasks</h1><p>开源 [代码](<a href="https://github.com/smcclure20/">https://github.com/smcclure20/</a> scheduling-policies-sim)</p>
+<p>对负载均衡策略和cpu core的分配策略的比较，得到了几个结论</p>
+<ul>
+<li>总的来说，在给定与其他方法相同的周期数时，即使开销和工作负载参数不同，work-stealing始终是性能最好的负载平衡策略。</li>
+<li>即使是在平均负载不变的情况下，想比于静态core分配，核心分配可能不会为短任务提供性能优势（中位数或tail latency）。</li>
+<li>然而，即使核心分配可能不会为短任务提供性能优势，但人们可以采用核心分配策略，以确保应用程序能够适应负载的变化。。</li>
+</ul>
+<h1 id="对比方案"><a href="#对比方案" class="headerlink" title="对比方案"></a>对比方案</h1><ul>
+<li>load balancing策略<ul>
+<li>单一队列：shinjuku和ram-cloud。一个大队列，但是实践中可能因为对于单一队列的争夺而限制吞吐量</li>
+<li>没有负载平衡：任务由它们首先到达的核心来处理</li>
+<li>enqueue choice：任务在创建时决定在哪运行，并且保持不动。现在的系统通常是二选一，选两个随机抽样的core中负载较低的那个。这是有开销的，“看别的core的负载”这件事情需要创建任务的core来干</li>
+<li>work stealing，当core idle时，从别的有queued work的core里拿一半task过来，它产生的开销是检查其他核心的排队工作并将工作转移到其本地队列。</li>
+<li>work shedding。过载的核心可以将负载转移给其他核心，或者要求其他核心承担他们的一些负载。我们考虑一种工作脱落策略，在这种策略中，一个任务排队时间超过指定阈值的核心会随机选择一个核心，并表示它已经过载。然后，该核心将通过窃取过载核心的一半任务来作出回应；这是该策略的主要开销来源。</li>
+</ul>
+</li>
+<li>core-allocation策略<ul>
+<li>静态的。通过静态核心分配，每个应用的核心数量不能随时间变化，正如一些研究系统[42, 64, 66]。这不会产生核心重新分配的开销。然而，每个应用程序必须有足够的核心来应对峰值负载，当负载随时间变化时，会浪费大量的CPU资源，这是数据中心工作负载的典型情况[11, 35]。</li>
+<li>per-task。诸如Fred[40]这样的系统具有按任务分配核心的功能，每次任务到来时都会给应用程序分配一个核心。这就产生了为每个任务分配核心的开销，除非所有核心都在使用。</li>
+<li>queueing-based。基于队列延迟的策略，如果队列–以线程、数据包或存储完成的数量或延迟来衡量–超过了某个阈值，则授予应用程序一个额外的内核。这些策略的不同之处在于它们是基于跨核心的最大排队量触发的[26, 60]还是使用平均数[12, 67]。</li>
+<li>基于CPU利用率。基于利用率的策略是根据空闲核心的数量[35]或核心在任务上花费的平均时间（而不是闲置或忙于旋转）[12, 67]来增加或重新启用核心。</li>
+<li>failure to find work。在一些系统中，当核心无法找到任何任务时，应用程序将产生一个核心。这可能发生在一个核心找不到另一个有排队工作的核心来偷取[26,60,76]，或者当它完成了当前的任务，有一个每个任务的核心分配政策[40]。<h1 id="建模细节"><a href="#建模细节" class="headerlink" title="建模细节"></a>建模细节</h1></li>
+<li>我们对负载平衡所需的跨核通信进行建模，一般需要100ns的时间。我们将内核分配的开销（包括分配内核的延迟和浪费的CPU周期）建模为每个内核分配5μs。</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>论文</category>
+      </categories>
+      <tags>
+        <tag>nsdi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>孟德尔随机化</title>
+    <url>/mendelian-randomization.html</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>孟德尔随机化</tag>
+      </tags>
+  </entry>
 </search>
