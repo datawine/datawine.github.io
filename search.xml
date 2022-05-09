@@ -13,7 +13,7 @@
   </entry>
   <entry>
     <title>nsdi22-Buffer-based End-to-end Request Event Monitoring in the Cloud</title>
-    <url>/null.html</url>
+    <url>/nsdi22-Buffer-based-End-to-end-Request-Event-Monitoring-in-the-Cloud.html</url>
     <content><![CDATA[<h1 id="核心贡献"><a href="#核心贡献" class="headerlink" title="核心贡献"></a>核心贡献</h1><ul>
 <li>BufScope，一个高覆盖率的请求事件监测系统，其目的是在请求的端到端数据路径中以一致的请求级语义捕获大多数与请求延迟异常（RLA）相关的事件。</li>
 <li>缓冲区建模：BufScope将请求的数据路径建模为一个缓冲区链。并根据缓冲区的不同属性来定义RLA相关的事件，实现端到端（跨缓冲区）。</li>
@@ -58,6 +58,12 @@
 <li>暂停和拥堵。这些事件的发生是由于当前缓冲区或下游缓冲区的数据包调度缓慢。在这种情况下，BufScope可以识别对拥堵贡献最大的请求，即重度请求，因为重度请求会经历更多的拥堵事件。然后，云提供商需要评估网络结构和应用混合模型。</li>
 </ul>
 ]]></content>
+      <categories>
+        <category>论文</category>
+      </categories>
+      <tags>
+        <tag>nsdi</tag>
+      </tags>
   </entry>
   <entry>
     <title>论文阅读</title>
