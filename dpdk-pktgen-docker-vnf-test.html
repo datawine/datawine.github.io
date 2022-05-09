@@ -439,8 +439,8 @@
       
         <p>主要是搭建一个DPDK+docker的环境，然而docker上次用是在软工的时候，重新学还花了一些功夫，改日写篇docker总结好了。</p>
 <span id="more"></span>
-
-<h1 id="最终能够运行的版本信息"><a href="#最终能够运行的版本信息" class="headerlink" title="最终能够运行的版本信息"></a>最终能够运行的版本信息</h1><p>注 ：dpdk、pktgen是wget下载安装的，docker是apt install安装的</p>
+<h1 id="最终能够运行的版本信息">最终能够运行的版本信息</h1>
+<p>注 ：dpdk、pktgen是wget下载安装的，docker是apt install安装的</p>
 <ul>
 <li>Linux kernel 4.4.0-131-generic</li>
 <li>Ubuntu 16.04.5 LTS</li>
@@ -448,52 +448,54 @@
 <li>pktgen-dpdk-pktgen-3.1.1</li>
 <li>Docker version 17.03.2-ce</li>
 </ul>
-<h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><ul>
+<h1 id="环境配置">环境配置</h1>
+<ul>
 <li>安装dpdk</li>
 <li>安装docker</li>
 <li>安装pktgen</li>
-<li>配置hugepages<ul>
+<li>配置hugepages
+<ul>
 <li>注意！本实验中由于我们需要使用virtio-user这种连接方式，由于实现时的一些限制导致使用vhost-user时同时最多只能使用8个hugepages无论2M还是1G大小的hugepagesize。所以这里必须使用1G大小的hugepagesize同时最多分配8个。</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h1 id="拓扑搭建"><a href="#拓扑搭建" class="headerlink" title="拓扑搭建"></a>拓扑搭建</h1><h2 id="拓扑"><a href="#拓扑" class="headerlink" title="拓扑"></a>拓扑</h2><p>预建立的简单拓扑</p>
+<h1 id="拓扑搭建">拓扑搭建</h1>
+<h2 id="拓扑">拓扑</h2>
+<p>预建立的简单拓扑</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+--------+---------------+               +-------------------+---------------+</span><br><span class="line">|        | socket file 1 |&lt;-------------&gt;| vhost-user port 1 |               |</span><br><span class="line">|        +---------------+               +-------------------+               |</span><br><span class="line">| host   |     pktgen    |               |      testpmd      |     container |</span><br><span class="line">|        +---------------+               +-------------------+               |</span><br><span class="line">|        | socket file 0 |&lt;-------------&gt;| vhost-user port 0 |               |</span><br><span class="line">+--------+---------------+               +-------------------+---------------+</span><br></pre></td></tr></table></figure>
-
 <p>testpmd是DPDK提供的一个通过数据包转发进行DPDK测试的工具，也是一个非常好的DPDK应用开发示例。如果想进行简单的DPDK开发实验推荐修改<code>$RTE_SDK/app/test-pmd/iofwd.c</code>后编译testpmd应用，之后在同一目录<code>$RTE_SDK/app/test-pmd/</code>下可以找到下编译后的testpmd应用。</p>
 <p>pktgen运行在主机中，testpmd运行在容器中，两个应用之间通过建立的socket文件以及vhost-user进行通信，相当于虚拟网卡。</p>
-<h2 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h2><p>创建Dockerfile</p>
+<h2 id="启动容器">启动容器</h2>
+<p>创建Dockerfile</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;EOT &gt;&gt; $RTE_SDK/../Dockerfile</span><br><span class="line">FROM ubuntu:latest</span><br><span class="line">WORKDIR /root/dpdk</span><br><span class="line">COPY dpdk /root/dpdk/.</span><br><span class="line">ENV PATH &quot;$PATH:/root/dpdk/$RTE_TARGET/app/&quot;</span><br><span class="line">EOT</span><br></pre></td></tr></table></figure>
-
 <p>使用创建的dockerfile建立docker镜像</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd $RTE_SDK/..</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">-t为镜像名，可以以name:tag的格式来写，不加tag默认tag为latest</span></span><br><span class="line">sudo docker build -t dpdk .</span><br></pre></td></tr></table></figure>
-
 <p>运行容器</p>
 <p>注：这里一开始没把libnuma.so.1共享-v加进去，结果进去报错</p>
 <p>注2：但是在后来的可跑的版本中，不加又没有关系</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /tmp/virtio</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-ti 提供一个PTY交互界面并保持STDIN持续可用</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-v /dev/... 将主机的hugepages通过数据卷挂载到容器内，从而可以与主机共享hugepages</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-v /tmp/... 挂载一个数据卷到容器中用于共享virtio_user的sockets</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--privilege 不启用特权可能导致无法共享hugepages和sockets</span></span><br><span class="line">sudo docker run -ti --rm --name=test \</span><br><span class="line">-v /dev/hugepages:/dev/hugepages \</span><br><span class="line">-v /tmp/virtio/:/tmp/virtio/ \</span><br><span class="line">--privileged dpdk</span><br></pre></td></tr></table></figure>
-
-<h3 id="虚拟机上的初步结果"><a href="#虚拟机上的初步结果" class="headerlink" title="虚拟机上的初步结果"></a>虚拟机上的初步结果</h3><p>因为硬件受限还没法添加1G的hugepage，为了测试testpmd的可用性，我暂时直接在容器中运行</p>
+<h3 id="虚拟机上的初步结果">虚拟机上的初步结果</h3>
+<p>因为硬件受限还没法添加1G的hugepage，为了测试testpmd的可用性，我暂时直接在容器中运行</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">testpmd</span><br></pre></td></tr></table></figure>
-
 <p>截图如下</p>
-<p><img src="/img/2018-7-16-1-1.png"></p>
-<h2 id="启动应用"><a href="#启动应用" class="headerlink" title="启动应用"></a>启动应用</h2><p>在容器中运行testpmd</p>
+<p><img src="/img/2018-7-16-1-1.png" /></p>
+<h2 id="启动应用">启动应用</h2>
+<p>在容器中运行testpmd</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">以下命令在容器中运行</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">DPDK的参数</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-l 列出所使用的CPU核</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-n 给出memory channels的数量</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--socket-mem 限制用于每个socket的内存量</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--vdev 创建vhost的socket文件用于进行网络连接，可以理解为虚拟网卡</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--file-prefix hugepages字首，用于区分所使用的hugepage</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">testpmd的参数</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--forward-mode=io 对两个端口情况从一个端口进来的包直接从另一个端口发出</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在~/dpdk文件夹下运行</span></span><br><span class="line">./x86_64-native-linuxapp-gcc/app/testpmd -l 0-1 -n 1 --socket-mem 1024,1024 --vdev &#x27;eth_vhost0,iface=/tmp/virtio/sock1&#x27; --vdev &#x27;eth_vhost1,iface=/tmp/virtio/sock2&#x27; --file-prefix=test --no-pci -- -i --forward-mode=io --auto-start</span><br></pre></td></tr></table></figure>
-
 <p>在主机上运行pktgen</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">以下命令在主机中运行</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">DPDK的参数同上，--vdev在这里用来连接到socket文件</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">pktgen的参数</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-P 在所有端口启用混杂模式</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-m 定义CPU核到端口的绑定，在这里core5绑定到prot0，core6绑定到port1</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">pktgen的运行目录应在Pktgen.lua同一文件夹下运行</span></span><br><span class="line"></span><br><span class="line">sudo pktgen -l 2-6 -n 3 --socket-mem 1024,1024 --vdev=&#x27;virtio_user0,path=/tmp/virtio/sock1&#x27; --vdev=&#x27;virtio_user1,path=/tmp/virtio/sock2&#x27; -- -P -m &quot;5.0,6.1&quot;</span><br></pre></td></tr></table></figure>
-
-<h1 id="最终结果"><a href="#最终结果" class="headerlink" title="最终结果"></a>最终结果</h1><p>在pktgen中进行简单设置，并在testpmd中查看结果</p>
+<h1 id="最终结果">最终结果</h1>
+<p>在pktgen中进行简单设置，并在testpmd中查看结果</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Pktgen:/&gt;set all rate 10</span><br><span class="line">Pktgen:/&gt;set 0 count 100</span><br><span class="line">Pktgen:/&gt;set 1 count 200</span><br><span class="line">Pktgen:/&gt;str</span><br></pre></td></tr></table></figure>
-
-<h2 id="pktgen上截图"><a href="#pktgen上截图" class="headerlink" title="pktgen上截图"></a>pktgen上截图</h2><p><img src="/img/2018-8-15-2.png"></p>
-<h2 id="testpmd上截图"><a href="#testpmd上截图" class="headerlink" title="testpmd上截图"></a>testpmd上截图</h2><p><img src="/img/2018-8-15-1.png"></p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
-<li><a target="_blank" rel="noopener" href="https://www.sdnlab.com/20112.html">https://www.sdnlab.com/20112.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://segmentfault.com/q/1010000003036379">https://segmentfault.com/q/1010000003036379</a></li>
-<li><a target="_blank" rel="noopener" href="http://pktgen-dpdk.readthedocs.io/en/latest/getting_started.html">http://pktgen-dpdk.readthedocs.io/en/latest/getting_started.html</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.voidcn.com/article/p-fmqewmwt-bqu.html">http://www.voidcn.com/article/p-fmqewmwt-bqu.html</a></li>
+<h2 id="pktgen上截图">pktgen上截图</h2>
+<p><img src="/img/2018-8-15-2.png" /></p>
+<h2 id="testpmd上截图">testpmd上截图</h2>
+<p><img src="/img/2018-8-15-1.png" /></p>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li>https://www.sdnlab.com/20112.html</li>
+<li>https://segmentfault.com/q/1010000003036379</li>
+<li>http://pktgen-dpdk.readthedocs.io/en/latest/getting_started.html</li>
+<li>http://www.voidcn.com/article/p-fmqewmwt-bqu.html</li>
 </ul>
 
       

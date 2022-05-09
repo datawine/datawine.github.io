@@ -435,24 +435,21 @@
       
         <p>好像默认的只有<code>sudo</code>有docker相关权限，普通用户<code>docker run hello-world</code>会有权限报错，解决方法如下</p>
 <span id="more"></span>
-
-<h1 id="具体错误"><a href="#具体错误" class="headerlink" title="具体错误"></a>具体错误</h1><p>如果直接运行</p>
+<h1 id="具体错误">具体错误</h1>
+<p>如果直接运行</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
-
 <p>产生错误</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker: Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post http://%2Fvar%2Frun%2Fdocker.sock/v1.35/containers/create: dial unix /var/run/docker.sock: connect: permission denied.See &#x27;docker run --help&#x27;.</span><br></pre></td></tr></table></figure>
-
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>创建docker group</p>
+<h1 id="解决方法">解决方法</h1>
+<p>创建docker group</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo groupadd docker</span><br></pre></td></tr></table></figure>
-
 <p>把当前用户加入docker group</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo usermod -aG docker $USER</span><br></pre></td></tr></table></figure>
-
 <p>登出再登入，此时可以直接运行</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
-
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue">https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue</a></li>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li>https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue</li>
 </ul>
 
       

@@ -435,17 +435,17 @@
       
         <p>前几天跑S6的框架，然后在一个ssh的环节报错。</p>
 <span id="more"></span>
-
-<h1 id="具体错误"><a href="#具体错误" class="headerlink" title="具体错误"></a>具体错误</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Permissions 0777 for &#x27;/Users/username/.ssh/id_rsa&#x27; are too open.</span><br><span class="line">It is recommended that your private key files are NOT accessible by others.</span><br><span class="line">This private key will be ignored.</span><br></pre></td></tr></table></figure>
-
+<h1 id="具体错误">具体错误</h1>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Permissions 0777 for &#x27;/Users/username/.ssh/id_rsa&#x27; are too open.</span><br><span class="line">It is recommended that your private key files are NOT accessible by others.</span><br><span class="line">This private key will be ignored.</span><br></pre></td></tr></table></figure>
 <p>大概意思就是权限太松了。</p>
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>只需要将<code>~/.ssh/id_rsa</code>的权限调整为只有自己可读就好了。</p>
+<h1 id="解决方法">解决方法</h1>
+<p>只需要将<code>~/.ssh/id_rsa</code>的权限调整为只有自己可读就好了。</p>
 <p>众所周知，<code>r=4</code>为可读，<code>w=2</code>为可写，<code>x=1</code>为可执行。三个分别是<code>user</code>、<code>group</code>和<code>other</code>。权限位相或即可。</p>
 <p>所以</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chmod 400 ~/.ssh/id_rsa</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">或者</span></span><br><span class="line">chmod 600 ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
-
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/9270734/ssh-permissions-are-too-open-error">https://stackoverflow.com/questions/9270734/ssh-permissions-are-too-open-error</a></li>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li>https://stackoverflow.com/questions/9270734/ssh-permissions-are-too-open-error</li>
 </ul>
 
       

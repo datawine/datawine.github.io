@@ -397,7 +397,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  277
+                  273
                 </span>
               
 
@@ -436,28 +436,28 @@
       
         <p>matplotlib原生是不支持中文的，但是因为画图中文方便一点，所以解决了一下这个问题。</p>
 <span id="more"></span>
-
-<h1 id="查看字体目录位置"><a href="#查看字体目录位置" class="headerlink" title="查看字体目录位置"></a>查看字体目录位置</h1><p>首先进入python查看一下自己电脑的字体存放位置</p>
+<h1 id="查看字体目录位置">查看字体目录位置</h1>
+<p>首先进入python查看一下自己电脑的字体存放位置</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> matplotlib</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">print</span> matplotlib.matplotlib_fname()</span><br></pre></td></tr></table></figure>
-
 <p>我的mac打印出的信息在</p>
 <p><code>/Users/junxianshen/anaconda2/lib/python2.7/site-packages/matplotlib/mpl-data/matplotlibrc</code></p>
 <p>字体目录就在</p>
 <p><code>/Users/junxianshen/anaconda2/lib/python2.7/site-packages/matplotlib/mpl-data/fonts/ttf/</code></p>
-<h1 id="下载并安装"><a href="#下载并安装" class="headerlink" title="下载并安装"></a>下载并安装</h1><p>然后下载一个黑体简体中文字体，比如在这里下</p>
+<h1 id="下载并安装">下载并安装</h1>
+<p>然后下载一个黑体简体中文字体，比如在这里下</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="http://www.font5.com.cn/font_download.php?id=151&amp;part=1237887120">http://www.font5.com.cn/font_download.php?id=151&amp;part=1237887120</a></li>
+<li>http://www.font5.com.cn/font_download.php?id=151&amp;part=1237887120</li>
 </ul>
 <p>然后复制到上面的字体目录中</p>
-<h1 id="清空缓存"><a href="#清空缓存" class="headerlink" title="清空缓存"></a>清空缓存</h1><p>接下来移除缓存，我的mac缓存目录在<code>~/.matplotlib/</code>，我是把里面的东西都删掉了。</p>
-<h1 id="正式使用"><a href="#正式使用" class="headerlink" title="正式使用"></a>正式使用</h1><p>在python中添加一些中文必须的东西，比如</p>
+<h1 id="清空缓存">清空缓存</h1>
+<p>接下来移除缓存，我的mac缓存目录在<code>~/.matplotlib/</code>，我是把里面的东西都删掉了。</p>
+<h1 id="正式使用">正式使用</h1>
+<p>在python中添加一些中文必须的东西，比如</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br></pre></td></tr></table></figure>
-
 <p>然后使用的时候例如</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(max_xval, max_cdf_yval)</span><br><span class="line">plt.xlabel(<span class="string">u&#x27;最大流量&#x27;</span>, fontproperties=<span class="string">&#x27;SimHei&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
 <ul>
-<li>注意，<code>plt.xlabel()</code>中还可以添加<code>fontsize</code>属性，如<code>plt.xlabel(u&#39;横轴：时间&#39;,fontproperties = &#39;SimHei&#39;,fontsize = 20)</code></li>
+<li>注意，<code>plt.xlabel()</code>中还可以添加<code>fontsize</code>属性，如<code>plt.xlabel(u'横轴：时间',fontproperties = 'SimHei',fontsize = 20)</code></li>
 </ul>
 
       

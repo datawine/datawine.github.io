@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  342
+                  343
                 </span>
               
 
@@ -433,27 +433,28 @@
       
 
       
-        <p>本次安装的版本是dpdk18.02.2，在ubuntu 14.04.5上安装，内核版本为4.4.0-31-generic。</p>
+        <p>本次安装的版本是dpdk18.02.2，在ubuntu
+14.04.5上安装，内核版本为4.4.0-31-generic。</p>
 <span id="more"></span>
-
-<h1 id="系统配置"><a href="#系统配置" class="headerlink" title="系统配置"></a>系统配置</h1><p>需要：</p>
+<h1 id="系统配置">系统配置</h1>
+<p>需要：</p>
 <ul>
 <li>python、libnuma-dev等库（libnuma-dev直接通过<code>apt-get install libnuma-dev</code>）</li>
 <li>大页内存（并mount）</li>
 </ul>
-<h1 id="dpdk的安装与下载"><a href="#dpdk的安装与下载" class="headerlink" title="dpdk的安装与下载"></a>dpdk的安装与下载</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget http://fast.dpdk.org/rel/dpdk-18.02.2.tar.xz</span><br><span class="line">tar -xvf dpdk-18.02.2.tar.xz</span><br><span class="line">cd dpdk-stable-18.02.2</span><br><span class="line">echo export RTE_SDK=$(pwd) &gt;&gt; ~/.bashrc</span><br><span class="line">echo export RTE_TARGET=x86_64-native-linuxapp-gcc &gt;&gt; ~/.bashrc</span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
-
+<h1 id="dpdk的安装与下载">dpdk的安装与下载</h1>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget http://fast.dpdk.org/rel/dpdk-18.02.2.tar.xz</span><br><span class="line">tar -xvf dpdk-18.02.2.tar.xz</span><br><span class="line">cd dpdk-stable-18.02.2</span><br><span class="line">echo export RTE_SDK=$(pwd) &gt;&gt; ~/.bashrc</span><br><span class="line">echo export RTE_TARGET=x86_64-native-linuxapp-gcc &gt;&gt; ~/.bashrc</span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
 <p>如果需要用到vhost-user驱动，要修改<code>config/common_base</code>，另其中的<code>CONFIG_RTE_LIBRTE_VHOST=y</code>。</p>
 <p>安装dpdk</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">make config T=$RTE_TARGET</span><br><span class="line">make T=$RTE_TARGET -j8</span><br><span class="line">make install T=$RTE_TARGET</span><br></pre></td></tr></table></figure>
-
-<h1 id="配置大页内存"><a href="#配置大页内存" class="headerlink" title="配置大页内存"></a>配置大页内存</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改/etc/default/grub</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在 GRUB_CMDLINE_LINUX_DEFAULT= 项中添加</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">default_hugepagesz=1GB hugepagesz=1G hugepages=8</span></span><br><span class="line">sudo update-grub</span><br><span class="line"></span><br><span class="line">mkdir -p /mnt/huge_1GB</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">可以直接mount，但每次重启都要重新配置</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">方法我就不写了</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">也可以让重启后有效</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">vim /etc/fstab</span></span><br><span class="line">nodev /mnt/huge_1GB hugetlbfs pagesize=1GB 0 0</span><br></pre></td></tr></table></figure>
-
-<h1 id="加载驱动"><a href="#加载驱动" class="headerlink" title="加载驱动"></a>加载驱动</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo modprobe uio</span><br><span class="line">sudo insmod $RTE_SDK/x86_64-native-linuxapp-gcc/kmod/igb_uio.ko</span><br></pre></td></tr></table></figure>
-
-<h1 id="绑定端口"><a href="#绑定端口" class="headerlink" title="绑定端口"></a>绑定端口</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看网卡信息，确定要绑定的网卡</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">RTE_SDK/usertools/dpdk-devbind.py -s</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">绑定网卡</span></span><br><span class="line">sudo $RTE_SDK/usertools/dpdk-devbind.py --bind=igb_uio 0000:82:00.0</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">后面的参数写-s出来的网卡信息最左边一行，当然也可以写名字之类的</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="一些注意事项"><a href="#一些注意事项" class="headerlink" title="一些注意事项"></a>一些注意事项</h1><p>按上面方法配置，大页内存不会因为重启而要重新配置，但是模块和端口需要重新配置，<code>~/.bashrc</code>也需要重新<code>source</code>。</p>
+<h1 id="配置大页内存">配置大页内存</h1>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改/etc/default/grub</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在 GRUB_CMDLINE_LINUX_DEFAULT= 项中添加</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">default_hugepagesz=1GB hugepagesz=1G hugepages=8</span></span><br><span class="line">sudo update-grub</span><br><span class="line"></span><br><span class="line">mkdir -p /mnt/huge_1GB</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">可以直接mount，但每次重启都要重新配置</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">方法我就不写了</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">也可以让重启后有效</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">vim /etc/fstab</span></span><br><span class="line">nodev /mnt/huge_1GB hugetlbfs pagesize=1GB 0 0</span><br></pre></td></tr></table></figure>
+<h1 id="加载驱动">加载驱动</h1>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo modprobe uio</span><br><span class="line">sudo insmod $RTE_SDK/x86_64-native-linuxapp-gcc/kmod/igb_uio.ko</span><br></pre></td></tr></table></figure>
+<h1 id="绑定端口">绑定端口</h1>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看网卡信息，确定要绑定的网卡</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">RTE_SDK/usertools/dpdk-devbind.py -s</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">绑定网卡</span></span><br><span class="line">sudo $RTE_SDK/usertools/dpdk-devbind.py --bind=igb_uio 0000:82:00.0</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">后面的参数写-s出来的网卡信息最左边一行，当然也可以写名字之类的</span></span><br></pre></td></tr></table></figure>
+<h1 id="一些注意事项">一些注意事项</h1>
+<p>按上面方法配置，大页内存不会因为重启而要重新配置，但是模块和端口需要重新配置，<code>~/.bashrc</code>也需要重新<code>source</code>。</p>
 
       
     </div>

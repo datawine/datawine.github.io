@@ -433,14 +433,14 @@
       
 
       
-        <p>因为国外google代码仓库的东西访问不到，有可能导致submodule失效，需要修改 或者删除git子模块</p>
+        <p>因为国外google代码仓库的东西访问不到，有可能导致submodule失效，需要修改
+或者删除git子模块</p>
 <span id="more"></span>
-
-<h1 id="删除子模块"><a href="#删除子模块" class="headerlink" title="删除子模块"></a>删除子模块</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">逆初始化模块，其中&#123;MOD_NAME&#125;为模块目录，执行后可发现模块目录被清空</span></span><br><span class="line">git submodule deinit &#123;MOD_NAME&#125; </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除.gitmodules中记录的模块信息（--cached选项清除.git/modules中的缓存）</span></span><br><span class="line">git rm --cached &#123;MOD_NAME&#125; </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">提交更改到代码库，可观察到<span class="string">&#x27;.gitmodules&#x27;</span>内容发生变更</span></span><br><span class="line">git commit -am &quot;Remove a submodule.&quot; </span><br></pre></td></tr></table></figure>
-
-<h1 id="更改子模块url"><a href="#更改子模块url" class="headerlink" title="更改子模块url"></a>更改子模块url</h1><p>修改<code>.gitmodules</code>文件中对应模块的<code>url</code>属性，然后更新到<code>.git/config</code></p>
+<h1 id="删除子模块">删除子模块</h1>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">逆初始化模块，其中&#123;MOD_NAME&#125;为模块目录，执行后可发现模块目录被清空</span></span><br><span class="line">git submodule deinit &#123;MOD_NAME&#125; </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除.gitmodules中记录的模块信息（--cached选项清除.git/modules中的缓存）</span></span><br><span class="line">git rm --cached &#123;MOD_NAME&#125; </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">提交更改到代码库，可观察到<span class="string">&#x27;.gitmodules&#x27;</span>内容发生变更</span></span><br><span class="line">git commit -am &quot;Remove a submodule.&quot; </span><br></pre></td></tr></table></figure>
+<h1 id="更改子模块url">更改子模块url</h1>
+<p>修改<code>.gitmodules</code>文件中对应模块的<code>url</code>属性，然后更新到<code>.git/config</code></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git submodule sync</span><br><span class="line">git commit -am &quot;Update submodule url.&quot;</span><br></pre></td></tr></table></figure>
-
 <p>更低版本可能会不能自动更行<code>.git/config</code>，这时需要手动更新。</p>
 
       

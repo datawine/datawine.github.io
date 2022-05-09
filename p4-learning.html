@@ -398,7 +398,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  538
+                  543
                 </span>
               
 
@@ -437,8 +437,8 @@
       
         <p>因为最近用到p4，总结一下p4的学习</p>
 <span id="more"></span>
-
-<h1 id="P4概念"><a href="#P4概念" class="headerlink" title="P4概念"></a>P4概念</h1><p>P4由以下部分构成</p>
+<h1 id="p4概念">P4概念</h1>
+<p>P4由以下部分构成</p>
 <ul>
 <li>Headers</li>
 <li>Parsers</li>
@@ -446,28 +446,29 @@
 <li>Actions</li>
 <li>Control Programs</li>
 </ul>
-<h2 id="Headers"><a href="#Headers" class="headerlink" title="Headers"></a>Headers</h2><p>用来形容the sequence and structure of a series of fields，包括了字段的宽度和字段值的限制。</p>
+<h2 id="headers">Headers</h2>
+<p>用来形容the sequence and structure of a series of
+fields，包括了字段的宽度和字段值的限制。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">header ethernet &#123;</span><br><span class="line">    fields &#123;</span><br><span class="line">        dst_addr : 48; // width in bits</span><br><span class="line">        src_addr : 48;</span><br><span class="line">        ethertype : 16;</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br><span class="line">header vlan &#123;</span><br><span class="line">    fields &#123;</span><br><span class="line">        pcp : 3;</span><br><span class="line">        cfi : 1;</span><br><span class="line">        vid : 12;</span><br><span class="line">        ethertype : 16;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Parsers"><a href="#Parsers" class="headerlink" title="Parsers"></a>Parsers</h2><p>P4用一个transition的集合来表示state machine，用来提取字段的value，然后发送到match+action表。论文给了一个示例</p>
+<h2 id="parsers">Parsers</h2>
+<p>P4用一个transition的集合来表示state
+machine，用来提取字段的value，然后发送到match+action表。论文给了一个示例</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">parser start &#123;</span><br><span class="line">    ethernet;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">parser ethernet &#123;</span><br><span class="line">    switch(ethertype) &#123;</span><br><span class="line">        case 0x8100: vlan;</span><br><span class="line">        case 0x9100: vlan;</span><br><span class="line">        case  0x800: ipv4;</span><br><span class="line">        // Other cases</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">parser vlan &#123;</span><br><span class="line">    switch(ethertype) &#123;</span><br><span class="line">        case 0xaaaa: mTag;</span><br><span class="line">        case  0x800: ipv4;</span><br><span class="line">        // Other cases</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br><span class="line">parser mTag &#123;</span><br><span class="line">    switch(ethertype) &#123;</span><br><span class="line">        case 0x800: ipv4;</span><br><span class="line">        // Other cases</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>解析从start state开始。知道一个显式声明的stop state结束（或者遇到一个unhandled case报错）。</p>
+<p>解析从start state开始。知道一个显式声明的stop
+state结束（或者遇到一个unhandled case报错）。</p>
 <p>遇到一个新的header的state，状态机会提取出header然后继续下一次处理，被提取出的头会被发送到match+action进行处理。</p>
-<h2 id="Table-Specification"><a href="#Table-Specification" class="headerlink" title="Table Specification"></a>Table Specification</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">table mTag_table &#123;</span><br><span class="line">    reads &#123;</span><br><span class="line">        ethernet.dst_addr : exact;</span><br><span class="line">        vlan.vid : exact;</span><br><span class="line">    &#125;</span><br><span class="line">    actions &#123;</span><br><span class="line">        add_mTag;</span><br><span class="line">    &#125;</span><br><span class="line">    max_size : 20000;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<h2 id="table-specification">Table Specification</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">table mTag_table &#123;</span><br><span class="line">    reads &#123;</span><br><span class="line">        ethernet.dst_addr : exact;</span><br><span class="line">        vlan.vid : exact;</span><br><span class="line">    &#125;</span><br><span class="line">    actions &#123;</span><br><span class="line">        add_mTag;</span><br><span class="line">    &#125;</span><br><span class="line">    max_size : 20000;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p>reads属性声明match什么字段，指定match的类型（exact, ternary）等。</p>
-</li>
-<li><p>actions属性列举所有对packet的可能行为</p>
-</li>
-<li><p>max_size属性声明table应该支持多少entries</p>
-</li>
+<li><p>reads属性声明match什么字段，指定match的类型（exact,
+ternary）等。</p></li>
+<li><p>actions属性列举所有对packet的可能行为</p></li>
+<li><p>max_size属性声明table应该支持多少entries</p></li>
 </ul>
-<h2 id="Action-Specifications"><a href="#Action-Specifications" class="headerlink" title="Action Specifications"></a>Action Specifications</h2><p>P4定义了一堆动作原语。每一个P4程序都通过动作原语定义新的动作。</p>
+<h2 id="action-specifications">Action Specifications</h2>
+<p>P4定义了一堆动作原语。每一个P4程序都通过动作原语定义新的动作。</p>
 <p>如上文提到的add_mTag</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">action add_mTag(up1, up2, down1, down2, egr_spec) &#123;</span><br><span class="line">    add_header(mTag);</span><br><span class="line">    // Copy VLAN ethertype to mTag</span><br><span class="line">    copy_field(mTag.ethertype, vlan.ethertype);</span><br><span class="line">    // Set VLAN’s ethertype to signal mTag</span><br><span class="line">    set_field(vlan.ethertype, 0xaaaa);</span><br><span class="line">    set_field(mTag.up1, up1);</span><br><span class="line">    set_field(mTag.up2, up2);</span><br><span class="line">    set_field(mTag.down1, down1);</span><br><span class="line">    set_field(mTag.down2, down2);</span><br><span class="line">    // Set the destination egress port as well</span><br><span class="line">    set_field(metadata.egress_spec, egr_spec);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>如果action需要某些参数，如up1，会由match table在运行的时候提供。</p>
 <p>p4的动作原语包括</p>
 <ul>
@@ -478,10 +479,10 @@
 <li>increment</li>
 <li>checksum</li>
 </ul>
-<h2 id="The-Control-Program"><a href="#The-Control-Program" class="headerlink" title="The Control Program"></a>The Control Program</h2><p><img src="/img/2018-9-29-1.png"></p>
+<h2 id="the-control-program">The Control Program</h2>
+<p><img src="/img/2018-9-29-1.png" /></p>
 <p>主要通过函数、条件、对table的引用来完成。如以下代码完成了对上图的构建。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">control main() &#123;</span><br><span class="line">    // Verify mTag state and port are consistent</span><br><span class="line">    table(source_check);</span><br><span class="line">    // If no error from source_check, continue</span><br><span class="line">    if (!defined(metadata.ingress_error)) &#123;</span><br><span class="line">        // Attempt to switch to end hosts</span><br><span class="line">        table(local_switching);</span><br><span class="line">        if (!defined(metadata.egress_spec)) &#123;</span><br><span class="line">            // Not a known local host; try mtagging</span><br><span class="line">            table(mTag_table);</span><br><span class="line">		&#125;</span><br><span class="line">        // Check for unknown egress state or</span><br><span class="line">        // bad retagging with mTag.</span><br><span class="line">        table(egress_check);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 
       
     </div>
@@ -671,7 +672,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#P4%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">P4概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Headers"><span class="nav-number">1.1.</span> <span class="nav-text">Headers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Parsers"><span class="nav-number">1.2.</span> <span class="nav-text">Parsers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Table-Specification"><span class="nav-number">1.3.</span> <span class="nav-text">Table Specification</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Action-Specifications"><span class="nav-number">1.4.</span> <span class="nav-text">Action Specifications</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Control-Program"><span class="nav-number">1.5.</span> <span class="nav-text">The Control Program</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#p4%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">P4概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#headers"><span class="nav-number">1.1.</span> <span class="nav-text">Headers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#parsers"><span class="nav-number">1.2.</span> <span class="nav-text">Parsers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#table-specification"><span class="nav-number">1.3.</span> <span class="nav-text">Table Specification</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#action-specifications"><span class="nav-number">1.4.</span> <span class="nav-text">Action Specifications</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-control-program"><span class="nav-number">1.5.</span> <span class="nav-text">The Control Program</span></a></li></ol></li></ol></div>
             
 
           </div>

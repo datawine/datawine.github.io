@@ -293,220 +293,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/instrumental-variable.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Datawine's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/instrumental-variable.html" itemprop="url">工具变量和孟德尔随机化远离</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-09T21:38:07+08:00">
-                2022-05-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
-                    <span itemprop="name">学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/instrumental-variable.html#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::https://datawine.github.io/instrumental-variable.html" class="cy_cmt_count" data-xid="instrumental-variable.html" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  529
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>工具变量(Instrumental-Variable)本身是一个计量经济学的概念，它的出现是为了克服普通最小二乘法中的内生性问题。</p>
-<h1 id="内生性问题"><a href="#内生性问题" class="headerlink" title="内生性问题"></a>内生性问题</h1><p>内生性问题的原因主要有以下三种</p>
-<ul>
-<li>遗漏变量</li>
-<li>变量有测量误差</li>
-<li>双向因果关系：比如受教育年限影响工资，工资反过来影响受教育年限</li>
-</ul>
-<h1 id="假设"><a href="#假设" class="headerlink" title="假设"></a>假设</h1><p>孟德尔随机化需要三个核心工具变量假设，即：</p>
-<ul>
-<li>相关性假设：用作工具变量的遗传变异($Z$)与暴露($X$)有关，即存在$Z \to X$</li>
-<li>独立性&#x2F;可交换性假设：遗传变异和目标结果没有共同的原因（即没有干扰因子），即虽然可能存在$U \to Y$，但是不存在$U \to Z$</li>
-<li>排斥性&#x2F;无水平多效性假设：除了通过暴露($X$)外，遗传变异($Z$)和结果($Y$)之间没有独立的因果途径，不存在$Z \to Y$不经过$X$</li>
-</ul>
-<h1 id="模型解释"><a href="#模型解释" class="headerlink" title="模型解释"></a>模型解释</h1><ul>
-<li>用作工具变量的遗传变异($Z$)</li>
-<li>暴露($X$)</li>
-<li>结果($Y$)</li>
-<li>混杂因素($U$)</li>
-</ul>
-<p><img src="/img/2022-5-9-1.png" alt="孟德尔随机化模型"></p>
-<h1 id="模型使用"><a href="#模型使用" class="headerlink" title="模型使用"></a>模型使用</h1><p>使用两阶最小二乘（Two Stage Least Squares，TSLS）来替代原来的最小二乘法</p>
-<p>$$Y &#x3D; \sum \beta_i X_i + \delta$$</p>
-<h2 id="第一步：建立自变量-X-和工具变量的回归模型"><a href="#第一步：建立自变量-X-和工具变量的回归模型" class="headerlink" title="第一步：建立自变量$X$和工具变量的回归模型"></a>第一步：建立自变量$X$和工具变量的回归模型</h2><p>$$X &#x3D; \alpha Z + \epsilon$$</p>
-<p>在这一步中，需要验证，Cov（Z, ε）&#x3D; 0，也即工具变量和混杂因素无关。<br>注：我感觉应该是残差吧！</p>
-<p>另外还需要考虑上述方程的决定系数或者说是F统计量，来判断$Z$和$X$的关联强度。通常情况下，决定系数或者F统计量越大，说明Z和X的关联程度越大。</p>
-<h2 id="第二步：将第一步中拟合的X的估计量带入如下方程："><a href="#第二步：将第一步中拟合的X的估计量带入如下方程：" class="headerlink" title="第二步：将第一步中拟合的X的估计量带入如下方程："></a>第二步：将第一步中拟合的X的估计量带入如下方程：</h2><p>$$Y &#x3D; \beta \hat{X} + \delta$$</p>
-<p>其中$\beta$便是X对Y的纯净效应量。</p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MjM5MTIzNjI1OA==&amp;mid=2247483687&amp;idx=1&amp;sn=e5ef4497043d0a5b3b02416d94e380f1&amp;chksm=a6b9e8ea91ce61fcb032a4d80cc834a7431d150f06485127766ba3ed20e5ce673a77f4e23c90&amp;scene=21#wechat_redirect">https://mp.weixin.qq.com/s?__biz=MjM5MTIzNjI1OA==&amp;mid=2247483687&amp;idx=1&amp;sn=e5ef4497043d0a5b3b02416d94e380f1&amp;chksm=a6b9e8ea91ce61fcb032a4d80cc834a7431d150f06485127766ba3ed20e5ce673a77f4e23c90&amp;scene=21#wechat_redirect</a></li>
-<li>决定系数: <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-hans/%E5%86%B3%E5%AE%9A%E7%B3%BB%E6%95%B0">https://zh.wikipedia.org/zh-hans/%E5%86%B3%E5%AE%9A%E7%B3%BB%E6%95%B0</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://datawine.github.io/paper-reading.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -831,6 +617,244 @@
         
           
             
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/instrumental-variable.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/instrumental-variable.html" itemprop="url">工具变量和孟德尔随机化原理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-09T21:38:07+08:00">
+                2022-05-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/instrumental-variable.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::https://datawine.github.io/instrumental-variable.html" class="cy_cmt_count" data-xid="instrumental-variable.html" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  531
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>工具变量(Instrumental-Variable)本身是一个计量经济学的概念，它的出现是为了克服普通最小二乘法中的内生性问题。</p>
+<h1 id="内生性问题">内生性问题</h1>
+<p>内生性问题的原因主要有以下三种 - 遗漏变量 - 变量有测量误差 -
+双向因果关系：比如受教育年限影响工资，工资反过来影响受教育年限</p>
+<h1 id="假设">假设</h1>
+<p>孟德尔随机化需要三个核心工具变量假设，即： -
+相关性假设：用作工具变量的遗传变异(<span
+class="math inline">\(Z\)</span>)与暴露(<span
+class="math inline">\(X\)</span>)有关，即存在<span
+class="math inline">\(Z \to X\)</span> -
+独立性/可交换性假设：遗传变异和目标结果没有共同的原因（即没有干扰因子），即虽然可能存在<span
+class="math inline">\(U \to Y\)</span>，但是不存在<span
+class="math inline">\(U \to Z\)</span> -
+排斥性/无水平多效性假设：除了通过暴露(<span
+class="math inline">\(X\)</span>)外，遗传变异(<span
+class="math inline">\(Z\)</span>)和结果(<span
+class="math inline">\(Y\)</span>)之间没有独立的因果途径，不存在<span
+class="math inline">\(Z \to Y\)</span>不经过<span
+class="math inline">\(X\)</span></p>
+<h1 id="模型解释">模型解释</h1>
+<ul>
+<li>用作工具变量的遗传变异(<span class="math inline">\(Z\)</span>)</li>
+<li>暴露(<span class="math inline">\(X\)</span>)</li>
+<li>结果(<span class="math inline">\(Y\)</span>)</li>
+<li>混杂因素(<span class="math inline">\(U\)</span>)</li>
+</ul>
+<figure>
+<img src="/img/2022-5-9-1.png" alt="孟德尔随机化模型" />
+<figcaption aria-hidden="true">孟德尔随机化模型</figcaption>
+</figure>
+<h1 id="模型使用">模型使用</h1>
+<p>使用两阶最小二乘（Two Stage Least
+Squares，TSLS）来替代原来的最小二乘法</p>
+<p><span class="math display">\[Y = \sum \beta_i X_i +
+\delta\]</span></p>
+<h2 id="第一步建立自变量x和工具变量的回归模型">第一步：建立自变量<span
+class="math inline">\(X\)</span>和工具变量的回归模型</h2>
+<p><span class="math display">\[X = \alpha Z + \epsilon\]</span></p>
+<p>在这一步中，需要验证，Cov（Z, ε）= 0，也即工具变量和混杂因素无关。
+注：我感觉应该是残差吧！</p>
+<p>另外还需要考虑上述方程的决定系数或者说是F统计量，来判断<span
+class="math inline">\(Z\)</span>和<span
+class="math inline">\(X\)</span>的关联强度。通常情况下，决定系数或者F统计量越大，说明Z和X的关联程度越大。</p>
+<h2
+id="第二步将第一步中拟合的x的估计量带入如下方程">第二步：将第一步中拟合的X的估计量带入如下方程：</h2>
+<p><span class="math display">\[Y = \beta \hat{X} + \delta\]</span></p>
+<p>其中<span
+class="math inline">\(\beta\)</span>便是X对Y的纯净效应量。</p>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li>https://mp.weixin.qq.com/s?__biz=MjM5MTIzNjI1OA==&amp;mid=2247483687&amp;idx=1&amp;sn=e5ef4497043d0a5b3b02416d94e380f1&amp;chksm=a6b9e8ea91ce61fcb032a4d80cc834a7431d150f06485127766ba3ed20e5ce673a77f4e23c90&amp;scene=21#wechat_redirect</li>
+<li>决定系数:
+https://zh.wikipedia.org/zh-hans/%E5%86%B3%E5%AE%9A%E7%B3%BB%E6%95%B0</li>
+</ul>
+
           
         
       
@@ -1163,7 +1187,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  431
+                  432
                 </span>
               
 
@@ -1389,7 +1413,8 @@
 
       
         
-          <p>前后弄了一个多月，总算弄出来了Docker + OpenvSwitch + dpdk的VNF实验环境。</p>
+          <p>前后弄了一个多月，总算弄出来了Docker + OpenvSwitch +
+dpdk的VNF实验环境。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/docker-ovs-dpdk-vnf-exp.html#more" rel="contents">

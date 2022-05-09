@@ -435,7 +435,6 @@
       
         <p>最近在make的时候发现server上的时间落后于我本地的时间，查了一下发现只要一条命令就能巧妙把server时间和互联网时间同步。</p>
 <span id="more"></span>
-
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo date -s &quot;$(wget -qSO- --max-redirect=0 google.com 2&gt;&amp;1 | grep Date: | cut -d&#x27; &#x27; -f5-8)Z&quot;</span><br></pre></td></tr></table></figure>
 
       

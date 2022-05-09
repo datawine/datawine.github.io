@@ -437,16 +437,16 @@
       
         <p>今天在clone git的时候居然提示我mac磁盘满了，我也是惊了。</p>
 <span id="more"></span>
-
-<h1 id="工具使用"><a href="#工具使用" class="headerlink" title="工具使用"></a>工具使用</h1><p>用的是知乎上推荐的一款程序：OmniDiskSweeper。（后来看到据说可以终端上<code>du -sh *</code>就行）</p>
-<p><img src="/img/2018-10-11.png"></p>
+<h1 id="工具使用">工具使用</h1>
+<p>用的是知乎上推荐的一款程序：OmniDiskSweeper。（后来看到据说可以终端上<code>du -sh *</code>就行）</p>
+<p><img src="/img/2018-10-11.png" /></p>
 <p>然后选要扫的磁盘就行了，具体就不截图了，太麻烦。</p>
-<h1 id="进阶问题"><a href="#进阶问题" class="headerlink" title="进阶问题"></a>进阶问题</h1><p>通过扫除居然发现显示的占用空间和实际磁盘工具给出的空间不一样，很神奇，一度以为自己中毒了。</p>
+<h1 id="进阶问题">进阶问题</h1>
+<p>通过扫除居然发现显示的占用空间和实际磁盘工具给出的空间不一样，很神奇，一度以为自己中毒了。</p>
 <p>后面发现是mac的时间机器的自动备份没有关。</p>
 <p>一方面进到preference关掉mac的时间机器自动备份。</p>
 <p>另一方面删除快照。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示所有snapshots</span></span><br><span class="line">sudo tmutil listlocalsnapshots /</span><br><span class="line"></span><br><span class="line">com.apple.TimeMachine.2018-10-11-113833</span><br><span class="line">com.apple.TimeMachine.2018-10-11-133802</span><br><span class="line">com.apple.TimeMachine.2018-10-11-143851</span><br><span class="line">com.apple.TimeMachine.2018-10-11-153801</span><br><span class="line">com.apple.TimeMachine.2018-10-11-163801</span><br><span class="line">com.apple.TimeMachine.2018-10-11-192918</span><br><span class="line">com.apple.TimeMachine.2018-10-11-205829</span><br><span class="line">com.apple.TimeMachine.2018-10-11-213912</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删掉相应的</span></span><br><span class="line">tmutil deletelocalsnapshots 2018-10-11-213912</span><br></pre></td></tr></table></figure>
-
 <p>问题解决！</p>
 
       

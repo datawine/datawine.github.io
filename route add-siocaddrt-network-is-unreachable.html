@@ -436,22 +436,22 @@
         <p>服务器 重启后无法通过外网访问，此时需要添加路由表项。</p>
 <p>添加时出现错误：SIOCADDRT:Network is unreachable</p>
 <span id="more"></span>
-
-<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>错误信息：</p>
+<h1 id="问题描述">问题描述</h1>
+<p>错误信息：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SIOCADDRT:Network is unreachable</span><br></pre></td></tr></table></figure>
-
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>这个错误的原因是因为gateway和IP不在一个网段内。</p>
+<h1 id="解决方法">解决方法</h1>
+<p>这个错误的原因是因为gateway和IP不在一个网段内。</p>
 <p>通过ifconfig查找相应添加的device的网段。</p>
 <p>如：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">eth0      Link encap:Ethernet  HWaddr 0c:c4:7a:dc:76:aa  </span><br><span class="line">          inet addr:202.112.237.33  Bcast:202.112.237.255  Mask:255.255.255.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:226265 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:15405 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000 </span><br><span class="line">          RX bytes:18275659 (18.2 MB)  TX bytes:3133390 (3.1 MB)</span><br><span class="line">          Memory:c7220000-c723ffff</span><br></pre></td></tr></table></figure>
-
 <p>那么gateway的数值就应该是<code>202.112.237.1</code></p>
 <p>route命令为：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo route add default gw 202.112.237.1 dev eth0</span><br></pre></td></tr></table></figure>
-
-<p>PS: 当初就是<code>eth0</code>写成了<code>eth1</code>导致这个错误的发生</p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
-<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0bd0c0c7bc73">https://www.jianshu.com/p/0bd0c0c7bc73</a></li>
+<p>PS:
+当初就是<code>eth0</code>写成了<code>eth1</code>导致这个错误的发生</p>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li>https://www.jianshu.com/p/0bd0c0c7bc73</li>
 </ul>
 
       

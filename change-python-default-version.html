@@ -435,16 +435,16 @@
       
         <p>服务器上用的python默认是python3，需要改成python2</p>
 <span id="more"></span>
-
-<h1 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h1><p>修改别名，在<code>~/.bashrc</code>中修改</p>
+<h1 id="方法一">方法一</h1>
+<p>修改别名，在<code>~/.bashrc</code>中修改</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias python=python2</span><br></pre></td></tr></table></figure>
-
-<h1 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h1><p>但是如果是在程序中调用有可能仍然是原来的python(具体我不太清楚，但是在跑一个项目的时候，他调用的python仍然是python3)。而且别的地方也找不到别名了。按理说python的默认版本应该是python2才对，但是也没有办法，只能硬着头皮改，毕竟项目还是要跑的啊。</p>
+<h1 id="方法二">方法二</h1>
+<p>但是如果是在程序中调用有可能仍然是原来的python(具体我不太清楚，但是在跑一个项目的时候，他调用的python仍然是python3)。而且别的地方也找不到别名了。按理说python的默认版本应该是python2才对，但是也没有办法，只能硬着头皮改，毕竟项目还是要跑的啊。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">sudo update-alternatives --install &lt;<span class="built_in">link</span>&gt; &lt;name&gt; &lt;path&gt; &lt;priority&gt;</span></span><br><span class="line">sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 10</span><br></pre></td></tr></table></figure>
-
 <p>搞定。</p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/41986507/unable-to-set-default-python-version-to-python3-in-ubuntu">https://stackoverflow.com/questions/41986507/unable-to-set-default-python-version-to-python3-in-ubuntu</a></li>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li>https://stackoverflow.com/questions/41986507/unable-to-set-default-python-version-to-python3-in-ubuntu</li>
 </ul>
 
       

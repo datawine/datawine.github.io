@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  242
+                  243
                 </span>
               
 
@@ -435,29 +435,25 @@
       
         <p>因为dpdk的驱动、docker等等要求，必须重装服务器的linux kernel</p>
 <span id="more"></span>
-
-<h1 id="安装linux-kernel并更新grub"><a href="#安装linux-kernel并更新grub" class="headerlink" title="安装linux kernel并更新grub"></a>安装linux kernel并更新grub</h1><p>先看看自己的linux kernel是什么版本：</p>
+<h1 id="安装linux-kernel并更新grub">安装linux kernel并更新grub</h1>
+<p>先看看自己的linux kernel是什么版本：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -r</span><br></pre></td></tr></table></figure>
-
 <p>先前天舒帮我装了一个4.16的，太新了，apt里啥都没有，所以以后装的时候先<code>apt-cache search linux-generic</code>一下，不然真要命。</p>
 <p>然后选一个看起来image和kernel header都有的版本吧。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install linux-image-4.13.0-45-generic</span><br></pre></td></tr></table></figure>
-
 <p>装完之后别急着重启……把grub改了！</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -A100 submenu  /boot/grub/grub.cfg |grep menuentry</span><br></pre></td></tr></table></figure>
-
 <p>从输出的信息中选择需要的启动条目（从0开始）</p>
 <p>然后修改<code>/etc/default/grub</code></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRUB_DEFAULT=”1&gt;3″</span><br></pre></td></tr></table></figure>
-
-<p>1指的是进入高级选项，3指的是第三个启动项，如果不知道说什么的话 ，重启的时候按shift看一下就懂了。</p>
+<p>1指的是进入高级选项，3指的是第三个启动项，如果不知道说什么的话
+，重启的时候按shift看一下就懂了。</p>
 <p>然后更新grub</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /usr/sbin/update-grub</span><br></pre></td></tr></table></figure>
-
 <p>最后重启</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo reboot</span><br></pre></td></tr></table></figure>
-
-<h1 id="安装kernel-header"><a href="#安装kernel-header" class="headerlink" title="安装kernel header"></a>安装kernel header</h1><p>没什么好说的。</p>
+<h1 id="安装kernel-header">安装kernel header</h1>
+<p>没什么好说的。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install linux-headers-$(uname -r)</span><br></pre></td></tr></table></figure>
 
       

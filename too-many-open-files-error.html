@@ -435,13 +435,15 @@
       
         <p>解决一下linux系统同时打开过多文件的问题。</p>
 <span id="more"></span>
-
-<h1 id="方法一：命令方式"><a href="#方法一：命令方式" class="headerlink" title="方法一：命令方式"></a>方法一：命令方式</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这样就可以把当前用户的最大允许打开文件数量设置为2048了，但这种设置方法在重启后会还原为默认值。</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">ulimit</span> -n命令非root用户只能设置到4096。</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">想要设置到8192需要sudo权限或者root用户。</span></span><br><span class="line">ulimit -n 2048</span><br></pre></td></tr></table></figure>
-
-<h1 id="方法二：修改配置文件"><a href="#方法二：修改配置文件" class="headerlink" title="方法二：修改配置文件"></a>方法二：修改配置文件</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/security/limits.conf  </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">在最后加入</span>  </span><br><span class="line">* soft nofile 4096  </span><br><span class="line">* hard nofile 4096 </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">或者只加入</span></span><br><span class="line">* - nofile 8192</span><br></pre></td></tr></table></figure>
-
+<h1 id="方法一命令方式">方法一：命令方式</h1>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这样就可以把当前用户的最大允许打开文件数量设置为2048了，但这种设置方法在重启后会还原为默认值。</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">ulimit</span> -n命令非root用户只能设置到4096。</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">想要设置到8192需要sudo权限或者root用户。</span></span><br><span class="line">ulimit -n 2048</span><br></pre></td></tr></table></figure>
+<h1 id="方法二修改配置文件">方法二：修改配置文件</h1>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/security/limits.conf  </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">在最后加入</span>  </span><br><span class="line">* soft nofile 4096  </span><br><span class="line">* hard nofile 4096 </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">或者只加入</span></span><br><span class="line">* - nofile 8192</span><br></pre></td></tr></table></figure>
 <p><code>*</code>代表所有用户，可根据需要设置某一用户</p>
-<h1 id="检查程序文件数"><a href="#检查程序文件数" class="headerlink" title="检查程序文件数"></a>检查程序文件数</h1><p>如果你对你的程序有一定的解的话，应该对程序打开文件数(链接数)上限有一定的估算，如果感觉数字异常，请使用第一步的<strong>lsof -p 进程id &gt; openfiles.log</strong>命令，获得当前占用句柄的全部详情进行分析。</p>
+<h1 id="检查程序文件数">检查程序文件数</h1>
+<p>如果你对你的程序有一定的解的话，应该对程序打开文件数(链接数)上限有一定的估算，如果感觉数字异常，请使用第一步的<strong>lsof
+-p 进程id &gt;
+openfiles.log</strong>命令，获得当前占用句柄的全部详情进行分析。</p>
 
       
     </div>
@@ -631,7 +633,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E5%91%BD%E4%BB%A4%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">方法一：命令方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">方法二：修改配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E7%A8%8B%E5%BA%8F%E6%96%87%E4%BB%B6%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">检查程序文件数</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%E5%91%BD%E4%BB%A4%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">方法一：命令方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">方法二：修改配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E7%A8%8B%E5%BA%8F%E6%96%87%E4%BB%B6%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">检查程序文件数</span></a></li></ol></div>
             
 
           </div>
