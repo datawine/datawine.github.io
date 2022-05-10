@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="istio," />
 
 
 
@@ -79,15 +79,20 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="分类">
-<meta property="og:url" content="https://datawine.github.io/categories/index.html">
+<meta name="description" content="istio学习：参考资料、总述、数据平面、控制平面、简单实践">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Istio学习（一）">
+<meta property="og:url" content="https://datawine.github.io/istio-learning-1.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="istio学习：参考资料、总述、数据平面、控制平面、简单实践">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-05-07T08:05:23.000Z">
-<meta property="article:modified_time" content="2022-05-07T08:05:50.918Z">
+<meta property="og:image" content="https://jimmysong.io/istio-handbook/images/proxyless-mode.png">
+<meta property="article:published_time" content="2022-05-10T10:50:19.000Z">
+<meta property="article:modified_time" content="2022-05-10T11:46:25.842Z">
 <meta property="article:author" content="Datawine">
+<meta property="article:tag" content="istio">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jimmysong.io/istio-handbook/images/proxyless-mode.png">
 
 
 
@@ -117,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/categories/"/>
+  <link rel="canonical" href="https://datawine.github.io/istio-learning-1.html"/>
 
 
 
 
 
-  <title>分类 | Datawine's Blog</title>
+  <title>Istio学习（一） | Datawine's Blog</title>
   
 
 
@@ -282,40 +287,325 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/istio-learning-1.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">分类</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="category-all-page">
-            <div class="category-all-title">
-                目前共计 6 个分类
+          <h1 class="post-title" itemprop="name headline">Istio学习（一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-10T18:50:19+08:00">
+                2022-05-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index">
+                    <span itemprop="name">工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/istio-learning-1.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="istio-learning-1.html" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
             </div>
-            <div class="category-all">
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F/">系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BA%E6%96%87/">论文</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%AD%E8%A8%80/">语言</a><span class="category-list-count">3</span></li></ul>
-            </div>
-          </div>
-        
-      </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>istio学习：参考资料、总述、数据平面、控制平面、简单实践</p>
+<span id="more"></span>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://jimmysong.io/istio-handbook/">Istio
+服务网格——云原生应用网络构建指南</a></li>
+<li><a target="_blank" rel="noopener" href="https://istio.io/latest/docs/">Istio Documentation</a></li>
+<li><a
+target="_blank" rel="noopener" href="http://dockone.io/article/2434566">http://dockone.io/article/2434566</a></li>
+</ul>
+<h1 id="总述">总述</h1>
+<p>Istio服务网格逻辑上分为数据平面和控制平面，架构图如下所示</p>
+<figure>
+<img
+src="http://dockone.io/uploads/article/20210904/6079b0b89f6f5057109b0aa42a8344b4.png"
+alt="Istio架构图" />
+<figcaption aria-hidden="true">Istio架构图</figcaption>
+</figure>
+<p>它的架构目前来说有两种，一种是 Sidecar 模式，这也是 Istio
+最传统的部署架构，另一种是 Proxyless 模式。</p>
+<h2 id="sidecar模式">Sidecar模式</h2>
+<p>见<a
+target="_blank" rel="noopener" href="https://jimmysong.io/istio-handbook/concepts/transparent-traffic-hijacking.html">Istio中的透明流量劫持过程详解</a></p>
+<figure>
+<img
+src="https://jimmysong.io/istio-handbook/images/envoy-sidecar-traffic-interception-zh-20220424.jpg"
+alt="Envoy Sidecar流量劫持流程示意图" />
+<figcaption aria-hidden="true">Envoy
+Sidecar流量劫持流程示意图</figcaption>
+</figure>
+<h2 id="proxyless模式">Proxyless模式</h2>
+<p>Proxyless 模式是 Istio 1.11 版本中支持的实验特性，Istio
+官网中有篇博客介绍了这个特性。 可以直接将 gRPC 服务添加到 Istio
+中，不需要再向 Pod 中注入 Envoy 代理。
+这样做可以极大的提升应用性能，降低网络延迟。
+有人说这种做法又回到了原始的基于 SDK
+的微服务模式，其实非也，它依然使用了 Envoy 的 xDS API.
+但是因为不再需要向应用程序中注入 Sidecar
+代理，因此可以减少应用程序性能的损耗。</p>
+<figure>
+<img src="https://jimmysong.io/istio-handbook/images/proxyless-mode.png"
+alt="Proxyless模式" />
+<figcaption aria-hidden="true">Proxyless模式</figcaption>
+</figure>
+<h1 id="数据平面">数据平面</h1>
+<h2 id="xds-api">xDS-API</h2>
+<p>在Envoy中，xDS-API中的xDS是一类发现服务的统称，包括</p>
+<ul>
+<li>SDS/EDS：Service/Endpoint Discovery Service</li>
+<li>CDS：Cluster Discovery Service</li>
+<li>RDS：Route Discovery Service</li>
+<li>LDS：Listener Discovery Service</li>
+</ul>
+<h2 id="入口网关与出口网关">入口网关与出口网关</h2>
+<p>Istio提倡所有进入与离开服务网格的流量都经过一个特殊的网关。
+网关配置被用于运行在网格边界的独立 Envoy 代理，而不是服务工作负载的
+sidecar 代理。</p>
+<h3 id="ingressgateway">IngressGateway</h3>
+<p>istio-ingressgateway是Istio安装完成后就会启动的服务，其作用是作为整个服务网格的边缘网关。
+在边缘架设网关的作用不仅是做一层统一代理，更是对服务接口的统一管理。</p>
+<p>IngressGateway在Istio中的具体实现仍然是Envoy。</p>
+<h2 id="sidecar路由配置">Sidecar路由配置</h2>
+<p>默认情况下，Sidecar中并没有任何特别的配置，所有的流量都通过k8s域名走DNS解析走掉了。</p>
+<p>当想对流量进行控制的时候，可以定义一个Virtual
+Service来动态指定流量的流向。</p>
+<h1 id="控制平面">控制平面</h1>
+<h2 id="pilot结构及功能">Pilot结构及功能</h2>
+<p>Pilot是对各容器平台（或者VM）的逻辑抽象，通过适配器模式，形成统一的对接接口。</p>
+<p>Pilot的基本工作就是为数据平台的Sidecar提供服务发现能力。但是Pilot本身并不做服务注册。
+它只是提供一个接口，对接已有的服务注册系统。除此之外，还负责为动态路由提供总控配置，并将这些配置分发给数据平面代理。</p>
+<h2 id="mixer结构及功能">Mixer结构及功能</h2>
+<p>Mixer负责在服务调用之间实施控制策略，同时在调用间收集请求的遥测数据。</p>
+<p>为了实现上述目的，每个请求在到达Sidecar的时候都需要向Mixer发起一次逻辑请求，以进行前置检查。
+在每次请求结束之后，还需要再次向Mixer做一次汇报。</p>
+<p>这里其实有了问题，一次通信变成了三次。要解决这个问题，有两种方式：</p>
+<ul>
+<li>把Mixer的部分请求处理逻辑放置在数据平面的网管Envoy上</li>
+<li>将Mixer的数据二级缓存到Envoy上</li>
+</ul>
+<h2 id="请求属性attribute">请求属性(Attribute)</h2>
+<p>请求属性是控制平面的数据元。每个Sidecar在处理数据流动时均会向Mixer提供一种叫Attribute的key-value对，比如</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">request.path:</span> <span class="string">xyz/abc</span></span><br><span class="line"><span class="attr">request.size:</span> <span class="number">1234</span></span><br></pre></td></tr></table></figure>
+<h2 id="操作配置operator-config">操作配置(Operator Config)</h2>
+<p>操作配置是Mixer的规则定义，包含三个方面</p>
+<ul>
+<li>数据实例配置，规定Mixer从请求属性中采集什么数据、在一些条件下应该采取什么样的行为（即如何生成一个数据实例）</li>
+<li>处理器，实际处理数据实例的逻辑体</li>
+<li>规则，将上面两个关联起来</li>
+</ul>
+<h1 id="安全控制">安全控制</h1>
+<p>Istio的安全分成三层</p>
+<ul>
+<li>最外层的企业防火墙是路由硬件层面上的安全防御，抵挡如DoS攻击</li>
+<li>服务网格内部入口还有一层网关，主要提供服务接入鉴权及访问资源控制</li>
+<li>内部实现多种机制，强化数据安全，如
+<ul>
+<li>身份标识</li>
+<li>控制策略</li>
+<li>传输加密</li>
+<li>审计、认证、鉴权</li>
+</ul></li>
+</ul>
+<h2 id="citadel结构及功能">Citadel结构及功能</h2>
+<p>Citadel是密钥与证书的管理系统。</p>
+<h2 id="搭建bookinfo系统">搭建BookInfo系统</h2>
+<p><a
+target="_blank" rel="noopener" href="https://istio.io/latest/zh/docs/examples/bookinfo/">https://istio.io/latest/zh/docs/examples/bookinfo/</a></p>
+<figure>
+<img
+src="https://istio.io/latest/zh/docs/examples/bookinfo/withistio.svg"
+alt="BookInfo Application" />
+<figcaption aria-hidden="true">BookInfo Application</figcaption>
+</figure>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/istio/" rel="tag"># istio</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/r-introduce.html" rel="next" title="R语言介绍">
+                <i class="fa fa-chevron-left"></i> R语言介绍
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -324,6 +614,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -344,8 +643,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -415,6 +723,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">1.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">总述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sidecar%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">Sidecar模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#proxyless%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">Proxyless模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2"><span class="nav-number">3.</span> <span class="nav-text">数据平面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#xds-api"><span class="nav-number">3.1.</span> <span class="nav-text">xDS-API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A5%E5%8F%A3%E7%BD%91%E5%85%B3%E4%B8%8E%E5%87%BA%E5%8F%A3%E7%BD%91%E5%85%B3"><span class="nav-number">3.2.</span> <span class="nav-text">入口网关与出口网关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ingressgateway"><span class="nav-number">3.2.1.</span> <span class="nav-text">IngressGateway</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sidecar%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE"><span class="nav-number">3.3.</span> <span class="nav-text">Sidecar路由配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%B9%B3%E9%9D%A2"><span class="nav-number">4.</span> <span class="nav-text">控制平面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pilot%E7%BB%93%E6%9E%84%E5%8F%8A%E5%8A%9F%E8%83%BD"><span class="nav-number">4.1.</span> <span class="nav-text">Pilot结构及功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mixer%E7%BB%93%E6%9E%84%E5%8F%8A%E5%8A%9F%E8%83%BD"><span class="nav-number">4.2.</span> <span class="nav-text">Mixer结构及功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E5%B1%9E%E6%80%A7attribute"><span class="nav-number">4.3.</span> <span class="nav-text">请求属性(Attribute)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E9%85%8D%E7%BD%AEoperator-config"><span class="nav-number">4.4.</span> <span class="nav-text">操作配置(Operator Config)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%8E%A7%E5%88%B6"><span class="nav-number">5.</span> <span class="nav-text">安全控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#citadel%E7%BB%93%E6%9E%84%E5%8F%8A%E5%8A%9F%E8%83%BD"><span class="nav-number">5.1.</span> <span class="nav-text">Citadel结构及功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BAbookinfo%E7%B3%BB%E7%BB%9F"><span class="nav-number">5.2.</span> <span class="nav-text">搭建BookInfo系统</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
