@@ -86,13 +86,16 @@
 <meta property="og:site_name" content="Datawine&#39;s Blog">
 <meta property="og:description" content="istio学习：参考资料、总述、数据平面、控制平面、简单实践">
 <meta property="og:locale">
-<meta property="og:image" content="https://jimmysong.io/istio-handbook/images/proxyless-mode.png">
+<meta property="og:image" content="https://datawine.github.io/img/2022-5-10-1.png">
+<meta property="og:image" content="https://datawine.github.io/img/2022-5-10-2.jpeg">
+<meta property="og:image" content="https://datawine.github.io/img/2022-5-10-3.png">
+<meta property="og:image" content="https://datawine.github.io/img/2022-5-10-4.jpeg">
 <meta property="article:published_time" content="2022-05-10T10:50:19.000Z">
-<meta property="article:modified_time" content="2022-05-10T11:46:25.842Z">
+<meta property="article:modified_time" content="2022-05-10T12:01:22.332Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="istio">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jimmysong.io/istio-handbook/images/proxyless-mode.png">
+<meta name="twitter:image" content="https://datawine.github.io/img/2022-5-10-1.png">
 
 
 
@@ -414,7 +417,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  3
                 </span>
               
             </div>
@@ -447,24 +450,13 @@ target="_blank" rel="noopener" href="http://dockone.io/article/2434566">http://d
 </ul>
 <h1 id="总述">总述</h1>
 <p>Istio服务网格逻辑上分为数据平面和控制平面，架构图如下所示</p>
-<figure>
-<img
-src="http://dockone.io/uploads/article/20210904/6079b0b89f6f5057109b0aa42a8344b4.png"
-alt="Istio架构图" />
-<figcaption aria-hidden="true">Istio架构图</figcaption>
-</figure>
+<p><img src="/img/2022-5-10-1.png" height="50%" width="50%"></p>
 <p>它的架构目前来说有两种，一种是 Sidecar 模式，这也是 Istio
 最传统的部署架构，另一种是 Proxyless 模式。</p>
 <h2 id="sidecar模式">Sidecar模式</h2>
 <p>见<a
 target="_blank" rel="noopener" href="https://jimmysong.io/istio-handbook/concepts/transparent-traffic-hijacking.html">Istio中的透明流量劫持过程详解</a></p>
-<figure>
-<img
-src="https://jimmysong.io/istio-handbook/images/envoy-sidecar-traffic-interception-zh-20220424.jpg"
-alt="Envoy Sidecar流量劫持流程示意图" />
-<figcaption aria-hidden="true">Envoy
-Sidecar流量劫持流程示意图</figcaption>
-</figure>
+<p><img src="/img/2022-5-10-2.jpeg" /></p>
 <h2 id="proxyless模式">Proxyless模式</h2>
 <p>Proxyless 模式是 Istio 1.11 版本中支持的实验特性，Istio
 官网中有篇博客介绍了这个特性。 可以直接将 gRPC 服务添加到 Istio
@@ -474,11 +466,7 @@ Sidecar流量劫持流程示意图</figcaption>
 的微服务模式，其实非也，它依然使用了 Envoy 的 xDS API.
 但是因为不再需要向应用程序中注入 Sidecar
 代理，因此可以减少应用程序性能的损耗。</p>
-<figure>
-<img src="https://jimmysong.io/istio-handbook/images/proxyless-mode.png"
-alt="Proxyless模式" />
-<figcaption aria-hidden="true">Proxyless模式</figcaption>
-</figure>
+<p><img src="/img/2022-5-10-3.png" /></p>
 <h1 id="数据平面">数据平面</h1>
 <h2 id="xds-api">xDS-API</h2>
 <p>在Envoy中，xDS-API中的xDS是一类发现服务的统称，包括</p>
@@ -542,12 +530,7 @@ Service来动态指定流量的流向。</p>
 <h2 id="搭建bookinfo系统">搭建BookInfo系统</h2>
 <p><a
 target="_blank" rel="noopener" href="https://istio.io/latest/zh/docs/examples/bookinfo/">https://istio.io/latest/zh/docs/examples/bookinfo/</a></p>
-<figure>
-<img
-src="https://istio.io/latest/zh/docs/examples/bookinfo/withistio.svg"
-alt="BookInfo Application" />
-<figcaption aria-hidden="true">BookInfo Application</figcaption>
-</figure>
+<p><img src="/img/2022-5-10-4.jpeg" height="50%" width="50%"></p>
 
       
     </div>
