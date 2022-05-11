@@ -87,7 +87,7 @@
 <meta property="og:description" content="包括：R的参考资料、R扩展软件包的安装与管理、基本R软件的用法、RStudio软件。 参考自https:&#x2F;&#x2F;www.math.pku.edu.cn&#x2F;teachers&#x2F;lidf&#x2F;docs&#x2F;Rbook&#x2F;html&#x2F;_Rbook&#x2F;">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-05-10T10:44:58.000Z">
-<meta property="article:modified_time" content="2022-05-10T13:07:31.432Z">
+<meta property="article:modified_time" content="2022-05-11T06:09:02.869Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="R">
 <meta name="twitter:card" content="summary">
@@ -585,7 +585,7 @@ Encoding”命令，我们主要试验其中GB18030和UTF-8两种选择一般就
 Markdown(简称Rmd)是一种特殊的文件格式，在这种文件中，即有R程序，又有说明文字，通过R和RStudio软件，可以运行其中的程序，并将说明文字、程序、程序的文字结果、图形结果统一地转换为一个研究报告，支持Word、PDF、网页、网站、幻灯片等许多种输出格式。在打开的Rmd源文件中，也可以选择其中的某一段R程序单独运行。所以，Rmd文件也可以作为一种特殊的R源程序文件。</p>
 <p>用RStudio的“File – New File – R
 Markdown”菜单就可以生成一个新的Rmd文件并显示在编辑窗格中，其中已经有了一些样例内容，可以修改这些样例内容为自己的文字和程序。</p>
-<p>Rmd文件中用<code>&#123;r&#125;开头，用</code>结尾的段落是R程序段，在显示的程序段的右侧有一个向右箭头形状的小图标（类似于媒体播放图标），点击该图标就可以运行该程序段。</p>
+<p>Rmd文件中用```{r}开头，用```结尾的段落是R程序段，在显示的程序段的右侧有一个向右箭头形状的小图标（类似于媒体播放图标），点击该图标就可以运行该程序段。</p>
 <p>打开Rmd文件后，用编辑窗口的Knit命令可以选择将文件整个地转换为HTML(网页)或者MS
 Word格式，如果操作系统中安装有LaTeX软件，还可以以LaTeX为中间格式转换为PDF文件。</p>
 <p>为了将网页转换为PDF文件，建议使用Chrome浏览器打开HTML文件，然后选择菜单“打印”，选打印机为“另存为PDF”，然后选“更多设置”，将其中的“缩放”改为自定义，比例改为“90%”。</p>
