@@ -5,10 +5,8 @@
     <url>/paper-reading.html</url>
     <content><![CDATA[<p>论文阅读列表</p>
 <span id="more"></span>
-<ul>
-<li>NSDI
-<ul>
-<li>2022
+<h1 id="nsdi">NSDI</h1>
+<h2 id="section">2022</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/nsdi22-Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks.html">Efficient
@@ -28,8 +26,15 @@ Completion Time要比history-based更好。</li>
 href="https://datawine.github.io/nsdi22-Starlight-Fast-Container-Provisioning-on-the-Edge-and-over-the-WAN.html">Starlight:
 Fast Container Provisioning on the Edge and over the
 WAN</a>：重新设计了容器provisioning的协议和流程等，来让在低带宽、高延时的网络中加速容器provisioning</li>
-</ul></li>
-</ul></li>
+<li><a
+href="https://datawine.github.io/nsdi22-Closed-loop-Network-Performance-Monitoring-and-Diagnosis-with-SpiderMon.html">Closed-loop
+Network Performance Monitoring and Diagnosis with
+SpiderMon</a>：基于可编程交换机的网络异常监控。论文的亮点在于针对后验诊断（posterior
+diagnosis）、解决了现有的监控系统的两个问题：高覆盖率和低开销</li>
+<li><a
+href="https://datawine.github.io/nsdi22-Collie-Finding-Performance-Anomalies-in-RDMA-Subsystems.html">Collie-Finding
+Performance Anomalies in RDMA
+Subsystems</a>：使用模拟退火搜索性能异常空间</li>
 </ul>
 ]]></content>
       <categories>

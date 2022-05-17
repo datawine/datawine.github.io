@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="git," />
+  <meta name="keywords" content="nsdi," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="因为国外google代码仓库的东西访问不到，有可能导致submodule失效，需要修改 或者删除git子模块">
+<meta name="description" content="背景 目前已经有基于很多可编程交换机的网络性能监测工具，但是还没有针对后验诊断（posterior diagnosis）。这边提出了现有的监控系统的两个问题：高覆盖率和低开销  高覆盖率：例如，&quot;query driven &quot;的监控系统[16, 32]需要预先配置一个静态查询。由于性能下降的根本原因可能不同，而且性能问题可能有各种各样的原因，因此事先选择正确的查询是很有挑战性的。原则上，人们可以根据">
 <meta property="og:type" content="article">
-<meta property="og:title" content="修改或删除git submodule">
-<meta property="og:url" content="https://datawine.github.io/git-submodule-modify.html">
+<meta property="og:title" content="Closed-loop Network Performance Monitoring and Diagnosis with SpiderMon">
+<meta property="og:url" content="https://datawine.github.io/nsdi22-Closed-loop-Network-Performance-Monitoring-and-Diagnosis-with-SpiderMon.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="因为国外google代码仓库的东西访问不到，有可能导致submodule失效，需要修改 或者删除git子模块">
+<meta property="og:description" content="背景 目前已经有基于很多可编程交换机的网络性能监测工具，但是还没有针对后验诊断（posterior diagnosis）。这边提出了现有的监控系统的两个问题：高覆盖率和低开销  高覆盖率：例如，&quot;query driven &quot;的监控系统[16, 32]需要预先配置一个静态查询。由于性能下降的根本原因可能不同，而且性能问题可能有各种各样的原因，因此事先选择正确的查询是很有挑战性的。原则上，人们可以根据">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-05-07T14:39:27.000Z">
-<meta property="article:modified_time" content="2022-05-07T14:40:06.234Z">
+<meta property="article:published_time" content="2022-05-17T07:23:12.000Z">
+<meta property="article:modified_time" content="2022-05-17T07:26:35.173Z">
 <meta property="article:author" content="Datawine">
-<meta property="article:tag" content="git">
+<meta property="article:tag" content="nsdi">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/git-submodule-modify.html"/>
+  <link rel="canonical" href="https://datawine.github.io/nsdi22-Closed-loop-Network-Performance-Monitoring-and-Diagnosis-with-SpiderMon.html"/>
 
 
 
 
 
-  <title>修改或删除git submodule | Datawine's Blog</title>
+  <title>Closed-loop Network Performance Monitoring and Diagnosis with SpiderMon | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/git-submodule-modify.html">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/nsdi22-Closed-loop-Network-Performance-Monitoring-and-Diagnosis-with-SpiderMon.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">修改或删除git submodule</h1>
+          <h1 class="post-title" itemprop="name headline">Closed-loop Network Performance Monitoring and Diagnosis with SpiderMon</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-07T22:39:27+08:00">
-                2022-05-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-17T15:23:12+08:00">
+                2022-05-17
               </time>
             
 
@@ -349,8 +349,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index">
-                    <span itemprop="name">工具</span>
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
                   </a>
                 </span>
 
@@ -368,8 +368,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/git-submodule-modify.html#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="git-submodule-modify.html" itemprop="commentsCount"></span>
+                <a href="/nsdi22-Closed-loop-Network-Performance-Monitoring-and-Diagnosis-with-SpiderMon.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="nsdi22-Closed-loop-Network-Performance-Monitoring-and-Diagnosis-with-SpiderMon.html" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  193
+                  1.9k
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  6
                 </span>
               
             </div>
@@ -433,16 +433,72 @@
       
 
       
-        <p>因为国外google代码仓库的东西访问不到，有可能导致submodule失效，需要修改
-或者删除git子模块</p>
-<span id="more"></span>
-<h1 id="删除子模块">删除子模块</h1>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">逆初始化模块，其中&#123;MOD_NAME&#125;为模块目录，执行后可发现模块目录被清空</span></span><br><span class="line">git submodule deinit &#123;MOD_NAME&#125; </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除.gitmodules中记录的模块信息（--cached选项清除.git/modules中的缓存）</span></span><br><span class="line">git rm --cached &#123;MOD_NAME&#125; </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">提交更改到代码库，可观察到<span class="string">&#x27;.gitmodules&#x27;</span>内容发生变更</span></span><br><span class="line">git commit -am &quot;Remove a submodule.&quot; </span><br></pre></td></tr></table></figure>
-<h1 id="更改子模块url">更改子模块url</h1>
-<p>修改<code>.gitmodules</code>文件中对应模块的<code>url</code>属性，然后更新到<code>.git/config</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git submodule sync</span><br><span class="line">git commit -am &quot;Update submodule url.&quot;</span><br></pre></td></tr></table></figure>
-<p>更低版本可能会不能自动更行<code>.git/config</code>，这时需要手动更新。</p>
-
+        <h1 id="背景">背景</h1>
+<p>目前已经有基于很多可编程交换机的网络性能监测工具，但是还没有针对后验诊断（posterior
+diagnosis）。这边提出了现有的监控系统的两个问题：高覆盖率和低开销</p>
+<ul>
+<li><p>高覆盖率：例如，"query driven "的监控系统[16,
+32]需要预先配置一个静态查询。由于性能下降的根本原因可能不同，而且性能问题可能有各种各样的原因，因此事先选择正确的查询是很有挑战性的。原则上，人们可以根据观察到的症状自适应地改变监测查询；但在实践中，许多瞬时问题发生在细微的时间尺度上，它们的零星性质要求始终保持监测。</p></li>
+<li><p>低开销：另一方面，"blanket
+"监测系统总是监测和收集来自交换机的遥测数据，以实现高覆盖率[10,14,22,26,27]。然而，这将导致过多的数据，而这些数据可能首先是诊断所不需要的。</p></li>
+</ul>
+<h1 id="主要设计点">主要设计点</h1>
+<p>因此，拥有一个实现低开销或高覆盖率的监测和诊断系统并不难，但同时实现这两个目标却很有挑战性。</p>
+<p>为了实现高效和准确的监控，SpiderMon利用了一个叫做
+"等待"[46]关系的概念。由于许多性能问题源于网络内的竞争，"等待
+"关系以精确的方式在遥测采集中针对这些行为。此外，这些信息也正是诊断中所需要的。例如，一个具有高延迟的受害流可能已经
+"等待
+"了许多跨越多个跳数的干扰事件。通过捕捉和分析这种关系，SpiderMon可以实现有效的诊断，具有精确、有针对性和高覆盖率的操作。</p>
+<p>由于 "等待
+"事件的症状通常是高延迟，SpiderMon使用定时信息来触发积极的遥测收集。准确地说，SpiderMon在遇到排队延迟过高的流量时，会检测到性能问题。检测到问题后，SpiderMon使用等待关系来跟踪和收集整个网络中数据平面的其他相关形成。为了进行诊断，SpiderMon还从收集的遥测数据中总结出最重要的等待关系，从而确定性能问题的根本原因。它通过与其他类型的网络知识（如拓扑结构）和遥测数据（如流量级结果）共同分析等待模式来做到这一点。这样，SpiderMon只在诊断过程需要分析问题时收集遥测数据，并根据诊断过程的要求进行有针对性的收集。</p>
+<h1 id="挑战">挑战</h1>
+<p>为了实现这一想法，SpiderMon解决了三个技术难题。</p>
+<ul>
+<li>第一个挑战是在不干扰实际数据包处理的情况下检测性能下降。SpiderMon利用可编程的交换机来记录有关网络流量的遥测数据。它在数据包头中捎带遥测数据，并检查性能异常的情况</li>
+<li>第二个挑战是如何精确地收集整个网络的相关遥测信息。依靠等待关系，SpiderMon通知相关的交换机，并从这些地方激活遥测数据收集</li>
+<li>最后，SpiderMon利用遥测信息和网络配置知识来确定性能问题的根本原因。等待关系对于识别异常的网络行为以及将这些行为与根本原因的特征相匹配也是至关重要的。</li>
+</ul>
+<h1 id="设计点">设计点</h1>
+<p>SpiderMon通过三个步骤监测和诊断由网络内竞争引起的性能问题。1）SpiderMon将每个数据包的累积延迟编码在头字段中，一旦检测到过高的延迟，就触发遥测收集（§3.1）；2）检测到高延迟的交换机启动
+"蜘蛛
+"数据包，并利用等待关系将其快速传递给相关交换机；收到蜘蛛数据包的相关交换机报告其遥测数据（§3.2）；3）根本原因分析器从证据中构建等待关系以进行根本原因分析（§3.3）。</p>
+<h2 id="problem-monitoring">problem monitoring</h2>
+<p>SpiderMon不是等待有害事件的发生，而是根据更早的迹象--数据包经历的异常累积排队延迟来检测性能问题。它对性能下降的反应很快。</p>
+<h2 id="设计">设计</h2>
+<ol type="1">
+<li>使用累积延迟进行检测。Spider-Mon不在报头中存储每一跳的延迟信息，而是使用累积延迟来保证报头的长度保持不变，而不考虑跳数。累积延迟L在每一跳都会根据当前的排队延迟和数据包迄今为止经历的累积延迟进行更新，L
+= L +
+queuing_delay。路径上的每个switch都会检查累积延迟是否超过延迟阈值。为了进一步减少开销，SpiderMon可以通过提取最重要的位来将附加字段压缩到2个字节以下（更多内容见§C.2）。</li>
+<li>为不同流量类型指定不同的延迟阈值。鉴于不同应用的可容忍延迟不同，SpiderMon允许网络运营商为不同应用定制延迟阈值。</li>
+<li>检测问题并触发交换机数据面的遥测。与一些使用中央控制器监控网络问题的监控系统不同[6,
+31,
+48]，SpiderMon在数据平面上触发快速反应。数据平面内的通信延迟（几十ns）比数据平面和控制平面之间的延迟（几百μs）低得多。</li>
+<li>监测每一跳的目标流量的每一个数据包。与基于采样的检测[2,
+34]相比，SpiderMon实现了全覆盖，而不会丢失任何重要信息。另外，Spider-
+Mon不是检测终端主机的问题[9,
+24]，而是检测网络内部的性能问题，并对问题做出更快速的反应。</li>
+<li>对终端主机透明。延迟阈值和累积延迟在数据包进入网络时在边缘交换机上添加，在数据包离开网络时删除。主机保持不变。</li>
+</ol>
+<h2 id="telemetry-collection">telemetry collection</h2>
+<p>首先，为了尽量减少收集到分析器的遥测数据量，同时保持诊断的准确性，SpiderMon只针对与观察到的性能问题有关的交换机，详见3.2.1节。其次，SpiderMon在短时间内收集相关的遥测数据，这样每个交换机只需要保留少量的历史遥测数据，详见§3.2.2。</p>
+<h2 id="relevant-switches-notification">Relevant Switches
+Notification</h2>
+<ol type="1">
+<li>只在发现问题后收集数据</li>
+<li>只收集相关交换机的数据</li>
+<li>在数据平面上跟踪provenance graph</li>
+<li>通过修剪provenance graph来减少收集的遥测数据</li>
+</ol>
+<h2 id="telemetry-data-collection">telemetry data collection</h2>
+<ol type="1">
+<li>收集每个epoch每个flow的信息。</li>
+<li>使用流的序列号提供交换机之间的同步。</li>
+<li>在数据平面上触发遥测数据包的生成。</li>
+<li>只从相关端口收集遥测数据以减少开销。</li>
+</ol>
+<h2 id="root-cause-analysis">root cause analysis</h2>
+<p>SpiderMon用一种两步的不可知算法来解决这些挑战。1）有效分析流量级别和总体级别的排队信息，使用等待图（WFG）回忆所有问题流量，如3.3.1节所述；2）在问题流量和根源类型之间应用签名匹配，如3.3.2节所述。</p>
+<!-- flag of hidden posts -->
       
     </div>
     
@@ -459,7 +515,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/git/" rel="tag"># git</a>
+            <a href="/tags/nsdi/" rel="tag"># nsdi</a>
           
         </div>
       
@@ -468,26 +524,6 @@
       
       
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/dylib-to-sharemem.html" rel="next" title="关于将动态链接库函数拷贝到共享存储中运行的调研历程">
-                <i class="fa fa-chevron-left"></i> 关于将动态链接库函数拷贝到共享存储中运行的调研历程
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/sync-server-time.html" rel="prev" title="同步服务器时间">
-                同步服务器时间 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
 
       
@@ -631,7 +667,8 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E5%AD%90%E6%A8%A1%E5%9D%97"><span class="nav-number">1.</span> <span class="nav-text">删除子模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E5%AD%90%E6%A8%A1%E5%9D%97url"><span class="nav-number">2.</span> <span class="nav-text">更改子模块url</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E8%AE%BE%E8%AE%A1%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">主要设计点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%91%E6%88%98"><span class="nav-number">3.</span> <span class="nav-text">挑战</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">设计点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#problem-monitoring"><span class="nav-number">4.1.</span> <span class="nav-text">problem monitoring</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1"><span class="nav-number">4.2.</span> <span class="nav-text">设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#telemetry-collection"><span class="nav-number">4.3.</span> <span class="nav-text">telemetry collection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#relevant-switches-notification"><span class="nav-number">4.4.</span> <span class="nav-text">Relevant Switches
+Notification</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#telemetry-data-collection"><span class="nav-number">4.5.</span> <span class="nav-text">telemetry data collection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#root-cause-analysis"><span class="nav-number">4.6.</span> <span class="nav-text">root cause analysis</span></a></li></ol></li></ol></div>
             
 
           </div>
