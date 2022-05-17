@@ -87,7 +87,7 @@
 <meta property="og:description" content="背景 目前已经有基于很多可编程交换机的网络性能监测工具，但是还没有针对后验诊断（posterior diagnosis）。这边提出了现有的监控系统的两个问题：高覆盖率和低开销  高覆盖率：例如，&quot;query driven &quot;的监控系统[16, 32]需要预先配置一个静态查询。由于性能下降的根本原因可能不同，而且性能问题可能有各种各样的原因，因此事先选择正确的查询是很有挑战性的。原则上，人们可以根据">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-05-17T07:23:12.000Z">
-<meta property="article:modified_time" content="2022-05-17T07:26:35.173Z">
+<meta property="article:modified_time" content="2022-05-17T10:14:46.379Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="nsdi">
 <meta name="twitter:card" content="summary">
@@ -498,6 +498,15 @@ Notification</h2>
 </ol>
 <h2 id="root-cause-analysis">root cause analysis</h2>
 <p>SpiderMon用一种两步的不可知算法来解决这些挑战。1）有效分析流量级别和总体级别的排队信息，使用等待图（WFG）回忆所有问题流量，如3.3.1节所述；2）在问题流量和根源类型之间应用签名匹配，如3.3.2节所述。</p>
+<h1 id="文章正文">文章正文</h1>
+
+
+	<div class="row">
+    <embed src="/paper/nsdi22-Closed-loop-Network-Performance-Monitoring-and-Diagnosis-with-SpiderMon.pdf" width="100%" height="1700" type="application/pdf">
+	</div>
+
+
+
 <!-- flag of hidden posts -->
       
     </div>
@@ -668,7 +677,7 @@ Notification</h2>
 
             
               <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E8%AE%BE%E8%AE%A1%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">主要设计点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%91%E6%88%98"><span class="nav-number">3.</span> <span class="nav-text">挑战</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">设计点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#problem-monitoring"><span class="nav-number">4.1.</span> <span class="nav-text">problem monitoring</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1"><span class="nav-number">4.2.</span> <span class="nav-text">设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#telemetry-collection"><span class="nav-number">4.3.</span> <span class="nav-text">telemetry collection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#relevant-switches-notification"><span class="nav-number">4.4.</span> <span class="nav-text">Relevant Switches
-Notification</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#telemetry-data-collection"><span class="nav-number">4.5.</span> <span class="nav-text">telemetry data collection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#root-cause-analysis"><span class="nav-number">4.6.</span> <span class="nav-text">root cause analysis</span></a></li></ol></li></ol></div>
+Notification</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#telemetry-data-collection"><span class="nav-number">4.5.</span> <span class="nav-text">telemetry data collection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#root-cause-analysis"><span class="nav-number">4.6.</span> <span class="nav-text">root cause analysis</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E6%AD%A3%E6%96%87"><span class="nav-number">5.</span> <span class="nav-text">文章正文</span></a></li></ol></div>
             
 
           </div>

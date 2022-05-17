@@ -87,7 +87,7 @@
 <meta property="og:description" content="background 解决的核心问题： container provisioning outside the cloud，比如在mobile and edge computing上，会受到network traffic的影响而变得很慢。渐进式的方法并不能解决这个问题。 starlight是一个用于container provisioning的加速器。通过重新设计容器部署协议、文件系统和image存">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-05-16T12:33:27.000Z">
-<meta property="article:modified_time" content="2022-05-16T12:37:25.507Z">
+<meta property="article:modified_time" content="2022-05-17T10:16:42.525Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="nsdi">
 <meta name="twitter:card" content="summary">
@@ -518,6 +518,15 @@ snapshotter守护进程管理着容器文件系统的生命周期：从下载图
 <li>worker连接到云中的一个新的proxy组件，该组件实现了新的协议。proxy跨layer和container按需优化文件的列表和顺序，从而减少重复，使更新更快。该proxy与现有的基础设施透明地工作：压缩层存储在一个标准的registry中，传统的worker可以正常地连接到该registry。</li>
 <li>一个seekable的压缩层格式允许代理将单个压缩文件发送给worker，而不必先解压存储的层。这种格式的开销很低（平均为4.2%），并与现有的worker和registry向后兼容，因此没有必要以两种格式存储容器image。</li>
 </ul>
+<h1 id="文章正文">文章正文</h1>
+
+
+	<div class="row">
+    <embed src="/paper/nsdi22-Starlight-Fast-Container-Provisioning-on-the-Edge-and-over-the-WAN.pdf" width="100%" height="1700" type="application/pdf">
+	</div>
+
+
+
 <!-- flag of hidden posts -->
       
     </div>
@@ -688,7 +697,7 @@ snapshotter守护进程管理着容器文件系统的生命周期：从下载图
 
             
               <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background"><span class="nav-number">1.</span> <span class="nav-text">background</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#motivation"><span class="nav-number">2.</span> <span class="nav-text">motivation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pull-based-protocol%E5%85%B6%E5%AE%9E%E6%98%AFregistry%E7%9A%84%E5%B9%B6%E5%8F%91%E8%BF%9E%E6%8E%A5%E4%B8%AA%E6%95%B0%E9%99%90%E5%88%B6%E5%AF%BC%E8%87%B4%E6%8E%92%E9%98%9F%E5%BB%B6%E6%97%B6"><span class="nav-number">2.1.</span> <span class="nav-text">pull-based
-protocol（其实是registry的并发连接个数限制导致排队延时）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#layer-based-structure"><span class="nav-number">2.2.</span> <span class="nav-text">layer-based structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#no-explicit-update-support"><span class="nav-number">2.3.</span> <span class="nav-text">no explicit update support</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="nav-number">3.</span> <span class="nav-text">设计原则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#delta-bundle-protocol"><span class="nav-number">3.1.</span> <span class="nav-text">delta bundle protocol</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#proxy-and-directory-database"><span class="nav-number">3.2.</span> <span class="nav-text">proxy and directory database</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#snapshotter-plugin"><span class="nav-number">3.3.</span> <span class="nav-text">snapshotter plugin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#starlight-filesystem"><span class="nav-number">3.4.</span> <span class="nav-text">starlight filesystem</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+protocol（其实是registry的并发连接个数限制导致排队延时）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#layer-based-structure"><span class="nav-number">2.2.</span> <span class="nav-text">layer-based structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#no-explicit-update-support"><span class="nav-number">2.3.</span> <span class="nav-text">no explicit update support</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="nav-number">3.</span> <span class="nav-text">设计原则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#delta-bundle-protocol"><span class="nav-number">3.1.</span> <span class="nav-text">delta bundle protocol</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#proxy-and-directory-database"><span class="nav-number">3.2.</span> <span class="nav-text">proxy and directory database</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#snapshotter-plugin"><span class="nav-number">3.3.</span> <span class="nav-text">snapshotter plugin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#starlight-filesystem"><span class="nav-number">3.4.</span> <span class="nav-text">starlight filesystem</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E6%AD%A3%E6%96%87"><span class="nav-number">5.</span> <span class="nav-text">文章正文</span></a></li></ol></div>
             
 
           </div>
