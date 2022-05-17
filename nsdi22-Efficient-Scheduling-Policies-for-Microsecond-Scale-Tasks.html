@@ -87,7 +87,7 @@
 <meta property="og:description" content="开源 代码 对负载均衡策略和cpu core的分配策略的比较，得到了几个结论  总的来说，在给定与其他方法相同的周期数时，即使开销和工作负载参数不同，work-stealing始终是性能最好的负载平衡策略。 即使是在平均负载不变的情况下，想比于静态core分配，核心分配可能不会为短任务提供性能优势（中位数或tail latency）。 然而，即使核心分配可能不会为短任务提供性能优势，但人们可以采用">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-05-09T12:23:57.000Z">
-<meta property="article:modified_time" content="2022-05-17T07:51:09.608Z">
+<meta property="article:modified_time" content="2022-05-17T07:57:45.638Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="nsdi">
 <meta name="twitter:card" content="summary">
@@ -471,8 +471,14 @@ work。在一些系统中，当核心无法找到任何任务时，应用程序�
 <h1 id="建模细节">建模细节</h1>
 <p>我们对负载平衡所需的跨核通信进行建模，一般需要100ns的时间。我们将内核分配的开销（包括分配内核的延迟和浪费的CPU周期）建模为每个内核分配5μs。</p>
 <h1 id="文章正文">文章正文</h1>
-<p><embed
-src="/paper/nsdi22-Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks.pdf" /></p>
+
+
+	<div class="row">
+    <embed src="/paper/nsdi22-Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks.pdf" width="100%" height="550" type="application/pdf">
+	</div>
+
+
+
 <!-- flag of hidden posts -->
       
     </div>
