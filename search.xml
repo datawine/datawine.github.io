@@ -35,6 +35,11 @@ diagnosis）、解决了现有的监控系统的两个问题：高覆盖率和�
 href="https://datawine.github.io/nsdi22-Collie-Finding-Performance-Anomalies-in-RDMA-Subsystems.html">Collie-Finding
 Performance Anomalies in RDMA
 Subsystems</a>：使用模拟退火搜索性能异常空间</li>
+<li><a
+href="https://datawine.github.io/nsdi22-Performance-Interfaces-for-Network-Functions.html">Performance
+Interfaces for Network Functions</a>：提出了performance
+interface的概念，用符号执行和trace的一个简单执行来生成关于Performance
+Critical Variances的一个程序，和实际的NF一一对应</li>
 </ul>
 ]]></content>
       <categories>

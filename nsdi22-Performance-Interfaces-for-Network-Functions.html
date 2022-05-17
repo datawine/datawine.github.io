@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="论文汇总," />
+  <meta name="keywords" content="nsdi," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="论文阅读列表">
+<meta name="description" content="contribution 个人总结的话就是用一些形式化的程序代替了函数的执行，给函数的输入，然后输出性能。至于怎么提取好像也不是全自动的，同时还依赖符号执行。 我们建议将性能接口作为描述系统性能的一种方式，类似于语义接口描述其功能的方式。我们在网络功能（NF）领域具体化了这一想法，并提出了一个工具（PIX），它可以从NF的实现中自动提取性能界面。 performance interface des">
 <meta property="og:type" content="article">
-<meta property="og:title" content="论文阅读">
-<meta property="og:url" content="https://datawine.github.io/paper-reading.html">
+<meta property="og:title" content="Performance Interfaces for Network Functions">
+<meta property="og:url" content="https://datawine.github.io/nsdi22-Performance-Interfaces-for-Network-Functions.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="论文阅读列表">
+<meta property="og:description" content="contribution 个人总结的话就是用一些形式化的程序代替了函数的执行，给函数的输入，然后输出性能。至于怎么提取好像也不是全自动的，同时还依赖符号执行。 我们建议将性能接口作为描述系统性能的一种方式，类似于语义接口描述其功能的方式。我们在网络功能（NF）领域具体化了这一想法，并提出了一个工具（PIX），它可以从NF的实现中自动提取性能界面。 performance interface des">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-05-09T12:34:45.000Z">
-<meta property="article:modified_time" content="2022-05-17T13:26:23.871Z">
+<meta property="article:published_time" content="2022-05-17T13:23:28.000Z">
+<meta property="article:modified_time" content="2022-05-17T13:26:23.874Z">
 <meta property="article:author" content="Datawine">
-<meta property="article:tag" content="论文汇总">
+<meta property="article:tag" content="nsdi">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/paper-reading.html"/>
+  <link rel="canonical" href="https://datawine.github.io/nsdi22-Performance-Interfaces-for-Network-Functions.html"/>
 
 
 
 
 
-  <title>论文阅读 | Datawine's Blog</title>
+  <title>Performance Interfaces for Network Functions | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/paper-reading.html">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/nsdi22-Performance-Interfaces-for-Network-Functions.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">论文阅读</h1>
+          <h1 class="post-title" itemprop="name headline">Performance Interfaces for Network Functions</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-09T20:34:45+08:00">
-                2022-05-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-17T21:23:28+08:00">
+                2022-05-17
               </time>
             
 
@@ -368,8 +368,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/paper-reading.html#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="paper-reading.html" itemprop="commentsCount"></span>
+                <a href="/nsdi22-Performance-Interfaces-for-Network-Functions.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="nsdi22-Performance-Interfaces-for-Network-Functions.html" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  301
+                  2k
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  7
                 </span>
               
             </div>
@@ -433,45 +433,101 @@
       
 
       
-        <p>论文阅读列表</p>
-<span id="more"></span>
-<h1 id="nsdi">NSDI</h1>
-<h2 id="section">2022</h2>
+        <h1 id="contribution">contribution</h1>
+<p>个人总结的话就是用一些形式化的程序代替了函数的执行，给函数的输入，然后输出性能。至于怎么提取好像也不是全自动的，同时还依赖符号执行。</p>
+<p>我们建议将性能接口作为描述系统性能的一种方式，类似于语义接口描述其功能的方式。我们在网络功能（NF）领域具体化了这一想法，并提出了一个工具（PIX），它可以从NF的实现中自动提取性能界面。</p>
+<h1 id="performance-interface">performance interface</h1>
+<h2 id="design-goals">design goals</h2>
+<p>我们设想，"性能界面
+"必须描述系统外部可见的性能行为，就像语义界面描述系统外部可见的功能一样[48]。
+总结性能的主要挑战是，系统通常比语义界面暴露出更多的性能行为。因此，一个能够完美预测每一种可能的性能行为的性能接口很可能会非常复杂，以至于不值得被称为接口。
+我们寻找一种折中的方法，即一种能够在以下特性之间取得良好平衡的性能总结方式：</p>
 <ul>
-<li><a
-href="https://datawine.github.io/nsdi22-Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks.html">Efficient
-Scheduling Policies for Microsecond-Scale
-Tasks</a>：开源。模拟。对比load balancing策略和core
-allocation策略对1us级别任务的性能影响。</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Buffer-based-End-to-end-Request-Event-Monitoring-in-the-Cloud.html">Buffer-based
-End-to-end Request Event Monitoring in the
-Cloud</a>：以请求粒度捕获请求延迟异常（RLA）相关的事件：缓冲区建模和请求级别的数据包注入</li>
-<li><a
-href="https://datawine.github.io/nsdi22-A-Case-for-Task-Sampling-based-Learning-for-Cluster-Job-Scheduling.html">A
-Case for Task Sampling based Learning for Cluster Job
-Scheduling</a>：提出使用空间特性（其实就是sample-based）来预测集群作业的Job
-Completion Time要比history-based更好。</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Starlight-Fast-Container-Provisioning-on-the-Edge-and-over-the-WAN.html">Starlight:
-Fast Container Provisioning on the Edge and over the
-WAN</a>：重新设计了容器provisioning的协议和流程等，来让在低带宽、高延时的网络中加速容器provisioning</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Closed-loop-Network-Performance-Monitoring-and-Diagnosis-with-SpiderMon.html">Closed-loop
-Network Performance Monitoring and Diagnosis with
-SpiderMon</a>：基于可编程交换机的网络异常监控。论文的亮点在于针对后验诊断（posterior
-diagnosis）、解决了现有的监控系统的两个问题：高覆盖率和低开销</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Collie-Finding-Performance-Anomalies-in-RDMA-Subsystems.html">Collie-Finding
-Performance Anomalies in RDMA
-Subsystems</a>：使用模拟退火搜索性能异常空间</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Performance-Interfaces-for-Network-Functions.html">Performance
-Interfaces for Network Functions</a>：提出了performance
-interface的概念，用符号执行和trace的一个简单执行来生成关于Performance
-Critical Variances的一个程序，和实际的NF一一对应</li>
+<li>准确性，即完全（对每一个可能的输入）和精确（误差小）总结性能的能力。</li>
+<li>简洁性，即比代码小，并尽可能地抽象--用适合于系统语义界面的基元来总结性能，只有在必要时才显示出实现细节。</li>
+<li>可移植性。一个系统的性能可能在很大程度上取决于其环境（例如，工作负载，硬件）。例如，造成L3缓存缺失的对抗性流量可以使NF延迟降低3倍[64]。该接口应该能够方便地量化特定环境对性能的影响，使接口能够跨部署地移植。</li>
 </ul>
+<h2 id="definition">definition</h2>
+<p>几个定义</p>
+<ul>
+<li>program: <span class="math inline">\(P\)</span></li>
+<li>procedure: <span class="math inline">\(p_1, p_2, ...\)</span></li>
+<li>performance interface of <span class="math inline">\(P\)</span>:
+<span class="math inline">\(S_p = {p_1&#39;,p_2&#39;, ...}\)</span></li>
+<li><span class="math inline">\(p_i&#39;\)</span> 是一个程序，takes the
+same inputs as the corresponding <span class="math inline">\(p_i \in
+P\)</span>，return</li>
+</ul>
+<p>有两种情况：general-case performance interface和deployment-specific
+performance interface</p>
+<h2 id="general-case-performance-interface">general-case performance
+interface</h2>
+<p>在一般情况下的性能接口中，程序 <span
+class="math inline">\(p_i&#39;\)</span> 的计算性能是Performance-
+Critical Variables的一个函数[41]。PCVs保证了接口可以完全通用地描述每个
+<span class="math inline">\(p_i&#39;\)</span>
+的性能，也就是说，对于任意的工作负载和硬件配置。</p>
+<h2 id="deployment-specific-performance-interface">deployment-specific
+performance interface</h2>
+<p>一个针对部署的性能接口比一般情况下的接口更简单，而且不包含PCVs。相反，程序
+<span class="math inline">\(p_i&#39;\)</span>
+将性能作为一个统计量（如中位数、最大值、第99百分位数）返回，该统计量是针对描述
+<span class="math inline">\(P\)</span>
+的特定部署环境的PCV的给定联合概率分布计算的。在这项工作中，一个NF的部署环境是由它在启动时读取的配置、一个有代表性的工作负载和它运行的具体硬件来定义。</p>
+<h2 id="extracting-performance-interfaces">extracting performance
+interfaces</h2>
+<p>图3展示了PIX的概况。</p>
+<h2 id="pix-backend">PIX Backend</h2>
+<p>NF开发者向PIX后端提供NF源代码，并辅以几个single-line annotation。</p>
+<p>PIX将此与NF使用的数据结构的预先分析相结合，并为所有有意义的解析范围提取general-case
+interface。PIX后端使用详尽的符号执行（ESE）[45]来自动分析NF代码。</p>
+<h2 id="pix-frontend">PIX Frontend</h2>
+<p>NF运营商向PIX前端提供NF binary和general-case
+interface（由NF开发者提供和上一步生成），以及代表其部署中预期工作负载的（一组）数据包trace。</p>
+<p>从这些数据中，PIX为所有有意义的分辨率范围提取特定于部署的interface。NF开发人员/操作人员也可以用特定的分辨率查询PIX，以获得该分辨率的接口。</p>
+<h2 id="extracting-general-case-interfaces">extracting general-case
+interfaces</h2>
+<p>整个步骤分成四步</p>
+<ol type="1">
+<li>预处理。生成each execution path of the NF的hardware-independent
+PCV。论文中是指令个数和内存访问个数。我们主要是重复使用Bolt[41]的方法和工具。In
+Step 0, PIX also automatically instruments the NF code such that it can
+log the values of the hardware-independent PCVs for each input packet
+encountered.</li>
+<li>NF-domain hardware
+model。这一步通过引入与硬件相关的PCVs（即捕捉NF和硬件之间相互作用的PCVs），以与硬件相关的指标（CPU
+cycles）来描述NF的每个执行路径的性能。我们利用NF领域的知识来消除CPI组件，并只挑选必要的硬件依赖性PCVs集。PIX只引入了两个与硬件相关的PCV--Base_CPI和LLC_miss_latency，并将路径的CPU周期数表示为
+instructions * Base_CPI + LLC_misses *
+LLC_miss_latency。注意，虽然PIX对所有NF使用相同的两个PCV，但这些PCV的值随每个&lt;NF，HW&gt;对而变化（§3.2）。为了跟踪可能的LLC失误，PIX利用taint
+analysis[70]来识别特定于当前输入的依赖性堆访问；然后在每个这样的访问上进行分支，一个结果是LLC失误，另一个是LLC命中。</li>
+<li>Python程序。前面的步骤将NF执行路径指定为对输入包和调用数据结构产生的符号的一组符号约束；这一步将这些约束翻译成人类可读的Python代码，并输出一个分辨率为1的NF的一般情况下的性能接口。
+PIX利用流行的网络工作协议（如IPv4、TCP、QUIC）的头格式知识，对输入数据包进行符号约束的翻译。例如，非隧道式IPv4数据包上的约束pkt[23
+: 24] == 6被翻译成pkt.isTCP
+。PIX使用调用上下文和开发者提供的注释（每个实例化的数据结构有一个注释）来翻译调用数据结构产生的符号。</li>
+<li>基于解析的合并。这一步使用分辨率的概念来简化性能间的关系。首先，它计算每个约束条件的最大性能影响，即两个执行路径之间的最大性能差异，这两个执行路径只在这个约束条件上有差异。不同的
+"最大性能影响
+"的集合形成了最小的决议阈值。其次，它消除了所有影响小于目标分辨率的约束。</li>
+</ol>
+<h2 id="extracting-deployment-specific-interfaces">extracting
+deployment-specific interfaces</h2>
+<p>PIX通过数据包trace作为输入，运行NF
+binary，推断出特定deployment下的PCV分布。主要有以下的PCV分布</p>
+<ol type="1">
+<li>与硬件无关的PCVs。PIX利用步骤0中介绍的测量方法来测量所提供的跟踪中每个数据包所遇到的这些PCV的值。然后，它计算这些PCVs的联合概率分布，因为它们往往是高度相关的（例如，在表1中，n_stale和n_evictions都是occ的函数）。</li>
+<li>基础CPI。PIX使用当今所有主要处理器上的硬件性能计数器[75]来测量。由于数据包跟踪可能没有行使所有的执行路径，PIX假设所有路径的基础CPI分布相同，如果检测到明显的差异（例如，一些路径使用昂贵的X86指令，如整数除法，而其他路径不使用），它会提供警告。我们认为这是一个合理的假设，因为基本CPI只是指令组合的一个函数（它不包括任何失误事件）。在第4.1节中，我们通过实验来验证这一点。</li>
+<li>LLC miss latency。测量LLC miss
+latency的分布，理想情况下需要复杂的NF特定测试[64]，以说明NF的特定指令和内存级的并行性。PIX避免了这一点，因为它的目标是将其所有状态保存在相对较小的一组预先分析的数据结构中的NF。PIX通过在部署的硬件上运行相应的micro-benchmark，估计出了特定部署中每个数据结构调用的LLC-miss-latency分布。在第4.1节中，我们通过实验表明，我们的近似方法在实践中表现良好（平均误差&lt;10%）。</li>
+</ol>
+<h1 id="文章正文">文章正文</h1>
 
+
+	<div class="row">
+    <embed src="/paper/nsdi22-Performance-Interfaces-for-Network-Functions.pdf" width="100%" height="1700" type="application/pdf">
+	</div>
+
+
+
+<!-- flag of hidden posts -->
       
     </div>
     
@@ -488,7 +544,7 @@ Critical Variances的一个程序，和实际的NF一一对应</li>
       
         <div class="post-tags">
           
-            <a href="/tags/%E8%AE%BA%E6%96%87%E6%B1%87%E6%80%BB/" rel="tag"># 论文汇总</a>
+            <a href="/tags/nsdi/" rel="tag"># nsdi</a>
           
         </div>
       
@@ -497,26 +553,6 @@ Critical Variances的一个程序，和实际的NF一一对应</li>
       
       
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/mendelian-randomization.html" rel="next" title="孟德尔随机化">
-                <i class="fa fa-chevron-left"></i> 孟德尔随机化
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/r-learning.html" rel="prev" title="R语言学习">
-                R语言学习 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
 
       
@@ -660,7 +696,12 @@ Critical Variances的一个程序，和实际的NF一一对应</li>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#nsdi"><span class="nav-number">1.</span> <span class="nav-text">NSDI</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section"><span class="nav-number">1.1.</span> <span class="nav-text">2022</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#contribution"><span class="nav-number">1.</span> <span class="nav-text">contribution</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#performance-interface"><span class="nav-number">2.</span> <span class="nav-text">performance interface</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#design-goals"><span class="nav-number">2.1.</span> <span class="nav-text">design goals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#definition"><span class="nav-number">2.2.</span> <span class="nav-text">definition</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#general-case-performance-interface"><span class="nav-number">2.3.</span> <span class="nav-text">general-case performance
+interface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deployment-specific-performance-interface"><span class="nav-number">2.4.</span> <span class="nav-text">deployment-specific
+performance interface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extracting-performance-interfaces"><span class="nav-number">2.5.</span> <span class="nav-text">extracting performance
+interfaces</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pix-backend"><span class="nav-number">2.6.</span> <span class="nav-text">PIX Backend</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pix-frontend"><span class="nav-number">2.7.</span> <span class="nav-text">PIX Frontend</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extracting-general-case-interfaces"><span class="nav-number">2.8.</span> <span class="nav-text">extracting general-case
+interfaces</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extracting-deployment-specific-interfaces"><span class="nav-number">2.9.</span> <span class="nav-text">extracting
+deployment-specific interfaces</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E6%AD%A3%E6%96%87"><span class="nav-number">3.</span> <span class="nav-text">文章正文</span></a></li></ol></div>
             
 
           </div>
