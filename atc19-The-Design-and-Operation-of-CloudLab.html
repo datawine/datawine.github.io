@@ -87,7 +87,7 @@
 <meta property="og:description" content="Paper Structure 鉴于云计算、网络系统和相关领域研究的高度经验性，测试平台在研究生态系统中发挥着重要作用。在本文中，我们介绍了这样一个设施：CloudLab，它通过提供对可编程硬件的原始访问来支持系统研究，实现大规模的研究，并为可重复的研究创建一个共享平台。 我们介绍了我们设计CloudLab的经验，并对其进行了四年的运营，为近4000名用户提供服务，他们在2250台服务器、交换机和">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-05-24T11:30:42.000Z">
-<meta property="article:modified_time" content="2022-05-24T11:34:30.933Z">
+<meta property="article:modified_time" content="2022-05-24T11:49:32.346Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="atc">
 <meta name="twitter:card" content="summary">
@@ -512,7 +512,7 @@ the more common failure modes变成messages that are easier for users to
 understand。</p>
 <p>设计这些启发式方法的一个主要挑战是它们必须是保守的：也就是说，没有启发式方法也能成功的每一个映射必须仍然成功。</p>
 <p>我们的经验是，最好是在映射算法周围而不是在其中建立这样的启发式算法。</p>
-<h2 id="小的motivation">小的motivation</h2>
+<h3 id="小的motivation">小的motivation</h3>
 <p>表二记录了Distribution of recorded mapping
 errors。表明经常收到哪些错误，这些错误信息的汇报是否有用。</p>
 <h2 id="interactive-topology-design-feedback">Interactive Topology
@@ -524,12 +524,12 @@ Design Feedback</h2>
 "界面来构建配置文件。在这种情况下，它的目标是通过禁用与他们现有选择相冲突的用户界面操作来帮助新手用户，并在他们所绘制的拓扑结构不可能被实例化时向他们发出警告。</li>
 <li>在第二种情况下，它被用于配置文件实例化的最后阶段，当用户选择在哪个CloudLab集群上运行他们的实验。在这里，它根据每个集群检查请求，并禁止选择任何不能实例化请求的集群。</li>
 </ul>
-<h2 id="generating-and-checking-candidates">generating and checking
-candidates</h2>
+<h3 id="generating-and-checking-candidates">generating and checking
+candidates</h3>
 <p>一些约束条件的合取范式</p>
-<h2 id="checking-constraints-quickly">checking constraints quickly</h2>
+<h3 id="checking-constraints-quickly">checking constraints quickly</h3>
 <p>现实中，实验的节点可能很多。提了几个优化点。</p>
-<h2 id="impact-on-user-workflow">Impact on User Workflow</h2>
+<h3 id="impact-on-user-workflow">Impact on User Workflow</h3>
 <p>在许多情况下，IaaS类型设施的建设者面临一个选择：确保用户对以任何方式配置的任何资源集的任何请求都可以在设施上实例化，或者以某种方式限制用户的请求。</p>
 <p>虽然前者很有吸引力，但要保证它的成本很高，并可能导致这样的情况：用户可以请求某些组合，但最好不要这样做，因为这些组合在一起的性能并不理想。</p>
 <p>CloudLab的拓扑结构约束系统显示了后一种选择的可能路径：约束用户的请求，并在他们设计配置时给予他们早期的互动反馈。</p>
@@ -542,35 +542,35 @@ candidates</h2>
 <li>快速</li>
 <li>支持资源的后期绑定：预订系统应该在未来承诺一些资源集，但应该等到时间到来时再选择具体的资源。</li>
 </ul>
-<h2 id="late-binding">Late Binding</h2>
+<h3 id="late-binding">Late Binding</h3>
 <p>这里利用了云的特性。</p>
 <p>考虑到CloudLab的硬件在每种硬件类型都是同质的。只要有足够的空闲节点供所有申请者使用，所有的实验都可以继续。</p>
 <p>因此，我们免除了预订系统在预订和特定节点之间寻找精确映射的任务，并将预订操作作为节点计数任务来实现。预订系统只是确保容量足够。</p>
-<h2 id="checking-reservations-quickly">Checking Reservations
-Quickly</h2>
+<h3 id="checking-reservations-quickly">Checking Reservations
+Quickly</h3>
 <p>给出关于正在进行的实验的数据--节点数和它们当前的到期时间--以及批准的即将进行的预订的参数，我们的预订系统构建了一个暂定时间表，描述可用节点的数量预计将随时间变化。</p>
 <p>实际上，这创造了一个两阶段的过程，其中预订阶段涉及的任务是轻量级和快速的，而费力的资源映射阶段则作为冗长的资源供应过程的一部分运行。
 这种快速检查是由一个关键的设计决定促成的：预订是按硬件类型进行的--我们不允许对更广泛的类别进行预订，如
 "任何服务器类型"。</p>
 <p>在我们的设计中，我们可以独立地检查每种类型的时间表，因为每种类型的节点集并不重叠。</p>
 <p>在时间表的每一点上只有一个二进制的解决方案：要么实验中的节点加上保留的节点之和超过该类型的节点总数，要么不超过。</p>
-<h2 id="enforcing-reservations">Enforcing Reservations</h2>
+<h3 id="enforcing-reservations">Enforcing Reservations</h3>
 <p>CloudLab的预订系统基本上是通过 "积累
 "空闲节点，直到预订开始的那一刻。</p>
 <p>随着预订开始时间的临近，它将仔细检查两种类型的操作：创建新的实验和延长现有实验的时间。</p>
 <p>如果这些操作中的任何一个会与预约重叠，并会导致没有足够的空闲节点来满足它，它们就会被拒绝。</p>
-<h2 id="parameter-exploration">Parameter Exploration</h2>
+<h3 id="parameter-exploration">Parameter Exploration</h3>
 <p>除了提交、批准和删除之外，CloudLab的预订系统还支持验证操作。验证允许用户在不提交预订的情况下探索潜在的预订，使他们能够尝试不同的时间、硬件类型和预订大小，以找到适合他们需求的配置。</p>
 <p>如果验证成功，用户可以提交预订。</p>
 <p>以我们的映射和约束系统为线索，验证程序在验证失败时向用户提供可操作的反馈：消息的形式是
 "2018年9月21日星期五18:00:00空闲节点不足（还需要12个）"。这种反馈表明，减少节点的数量，缩短预订的时间，或将预订进一步移到未来，可以帮助用户继续提交一个有效的预订。</p>
-<h2 id="size-and-duration">Size and Duration</h2>
+<h3 id="size-and-duration">Size and Duration</h3>
 <p>本节是通过实验，看看预定是否成功地促成了比单独使用FCFS更大规模的实验。</p>
-<h2 id="utilization">Utilization</h2>
+<h3 id="utilization">Utilization</h3>
 <p>CloudLab不会在预订开始时为用户自动实例化实验，也不要求预订的结束与实验的结束相一致。因此本节考虑利用率。</p>
 <p>我们的结论是，大多数预定的利用率很高，我们确实可以相信用户会预定他们需要的东西并使用他们预定的东西。
 相比之下，我们发现有相当多的预定，123个（未在图中显示）没有确定的使用。</p>
-<h2 id="reservations-in-action">Reservations in Action</h2>
+<h3 id="reservations-in-action">Reservations in Action</h3>
 <p>我们通过研究预订系统的使用与整个测试平台的使用之间的关系来结束我们对预订系统的讨论。</p>
 <p>总的来说，我们的分析证实，预订系统构成了CloudLab的一个成功的
 "社会工程
@@ -691,7 +691,7 @@ Quickly</h2>
               
                 <a href="/archives/%7C%7Carchive">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -759,10 +759,10 @@ Quickly</h2>
               <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#paper-structure"><span class="nav-number">1.</span> <span class="nav-text">Paper Structure</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cloudlab-is-not-cloud"><span class="nav-number">2.1.</span> <span class="nav-text">CloudLab is not Cloud</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#development-and-use-of-cloudlab"><span class="nav-number">3.</span> <span class="nav-text">Development and Use of
 CloudLab</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-deployed-cloudlab-facility"><span class="nav-number">3.1.</span> <span class="nav-text">The Deployed CloudLab
 Facility</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hardware-overview"><span class="nav-number">3.2.</span> <span class="nav-text">Hardware Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#usage-patterns"><span class="nav-number">3.3.</span> <span class="nav-text">Usage Patterns</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#resource-availability"><span class="nav-number">3.4.</span> <span class="nav-text">Resource Availability</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#research-use-of-cloudlab"><span class="nav-number">3.5.</span> <span class="nav-text">Research Use of CloudLab</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#high-level-effects-of-low-level-decisions"><span class="nav-number">4.</span> <span class="nav-text">High-Level Effects of
-Low-Level Decisions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#resource-mapping"><span class="nav-number">4.1.</span> <span class="nav-text">Resource Mapping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E7%AE%97%E6%B3%95%E7%9A%84%E6%9D%83%E8%A1%A1%E5%92%8C%E6%80%9D%E8%B7%AF"><span class="nav-number">4.2.</span> <span class="nav-text">设计算法的权衡和思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%9A%84motivation"><span class="nav-number">4.3.</span> <span class="nav-text">小的motivation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#interactive-topology-design-feedback"><span class="nav-number">4.4.</span> <span class="nav-text">Interactive Topology
-Design Feedback</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#generating-and-checking-candidates"><span class="nav-number">4.5.</span> <span class="nav-text">generating and checking
-candidates</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#checking-constraints-quickly"><span class="nav-number">4.6.</span> <span class="nav-text">checking constraints quickly</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#impact-on-user-workflow"><span class="nav-number">4.7.</span> <span class="nav-text">Impact on User Workflow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reserving-resources"><span class="nav-number">4.8.</span> <span class="nav-text">Reserving Resources</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#late-binding"><span class="nav-number">4.9.</span> <span class="nav-text">Late Binding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#checking-reservations-quickly"><span class="nav-number">4.10.</span> <span class="nav-text">Checking Reservations
-Quickly</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#enforcing-reservations"><span class="nav-number">4.11.</span> <span class="nav-text">Enforcing Reservations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#parameter-exploration"><span class="nav-number">4.12.</span> <span class="nav-text">Parameter Exploration</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#size-and-duration"><span class="nav-number">4.13.</span> <span class="nav-text">Size and Duration</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#utilization"><span class="nav-number">4.14.</span> <span class="nav-text">Utilization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reservations-in-action"><span class="nav-number">4.15.</span> <span class="nav-text">Reservations in Action</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#related-work-conclusion"><span class="nav-number">5.</span> <span class="nav-text">Related Work &#x2F; Conclusion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E6%AD%A3%E6%96%87"><span class="nav-number">6.</span> <span class="nav-text">文章正文</span></a></li></ol></div>
+Low-Level Decisions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#resource-mapping"><span class="nav-number">4.1.</span> <span class="nav-text">Resource Mapping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E7%AE%97%E6%B3%95%E7%9A%84%E6%9D%83%E8%A1%A1%E5%92%8C%E6%80%9D%E8%B7%AF"><span class="nav-number">4.2.</span> <span class="nav-text">设计算法的权衡和思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%9A%84motivation"><span class="nav-number">4.2.1.</span> <span class="nav-text">小的motivation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#interactive-topology-design-feedback"><span class="nav-number">4.3.</span> <span class="nav-text">Interactive Topology
+Design Feedback</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#generating-and-checking-candidates"><span class="nav-number">4.3.1.</span> <span class="nav-text">generating and checking
+candidates</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#checking-constraints-quickly"><span class="nav-number">4.3.2.</span> <span class="nav-text">checking constraints quickly</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#impact-on-user-workflow"><span class="nav-number">4.3.3.</span> <span class="nav-text">Impact on User Workflow</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reserving-resources"><span class="nav-number">4.4.</span> <span class="nav-text">Reserving Resources</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#late-binding"><span class="nav-number">4.4.1.</span> <span class="nav-text">Late Binding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#checking-reservations-quickly"><span class="nav-number">4.4.2.</span> <span class="nav-text">Checking Reservations
+Quickly</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#enforcing-reservations"><span class="nav-number">4.4.3.</span> <span class="nav-text">Enforcing Reservations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#parameter-exploration"><span class="nav-number">4.4.4.</span> <span class="nav-text">Parameter Exploration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#size-and-duration"><span class="nav-number">4.4.5.</span> <span class="nav-text">Size and Duration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#utilization"><span class="nav-number">4.4.6.</span> <span class="nav-text">Utilization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reservations-in-action"><span class="nav-number">4.4.7.</span> <span class="nav-text">Reservations in Action</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#related-work-conclusion"><span class="nav-number">5.</span> <span class="nav-text">Related Work &#x2F; Conclusion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E6%AD%A3%E6%96%87"><span class="nav-number">6.</span> <span class="nav-text">文章正文</span></a></li></ol></div>
             
 
           </div>
@@ -803,7 +803,7 @@ Quickly</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.1k</span>
+    <span title="Site words total count">24.6k</span>
   
 </div>
 
