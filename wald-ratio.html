@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="孟德尔随机化," />
 
 
 
@@ -79,13 +79,20 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Datawine&#39;s Blog">
-<meta property="og:url" content="https://datawine.github.io/tags/%E5%85%B6%E4%BB%96/index.html">
+<meta name="description" content="系数比率法 连续型结局变量，二分类工具变量 结局变量为连续值。工具变量为二分值（取值为0或1）。  我们看到，两个子组 \(\Delta X &#x3D; x_1&#39; - x_0&#39;\) 的平均暴露差异导致 \(\Delta Y &#x3D; y_1&#39; - y_0&#39;\) 的结局平均差异。 假设暴露量对结果的影响是线性的，则由于暴露量单位增加而导致的结局变化的比率估算为：\(\Delta Y">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wald Ratio方法">
+<meta property="og:url" content="https://datawine.github.io/wald-ratio.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="系数比率法 连续型结局变量，二分类工具变量 结局变量为连续值。工具变量为二分值（取值为0或1）。  我们看到，两个子组 \(\Delta X &#x3D; x_1&#39; - x_0&#39;\) 的平均暴露差异导致 \(\Delta Y &#x3D; y_1&#39; - y_0&#39;\) 的结局平均差异。 假设暴露量对结果的影响是线性的，则由于暴露量单位增加而导致的结局变化的比率估算为：\(\Delta Y">
 <meta property="og:locale">
+<meta property="og:image" content="https://datawine.github.io/img/2022-5-19-1.png">
+<meta property="article:published_time" content="2022-05-19T07:26:32.000Z">
+<meta property="article:modified_time" content="2022-05-19T11:55:20.917Z">
 <meta property="article:author" content="Datawine">
+<meta property="article:tag" content="孟德尔随机化">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://datawine.github.io/img/2022-5-19-1.png">
 
 
 
@@ -115,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/tags/其他/"/>
+  <link rel="canonical" href="https://datawine.github.io/wald-ratio.html"/>
 
 
 
 
 
-  <title>标签: 其他 | Datawine's Blog</title>
+  <title>Wald Ratio方法 | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -140,7 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -278,54 +285,258 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>其他<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/wald-ratio.html">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/dpdk-pktgen-docker-vnf-test.html" itemprop="url">
-              
-                <span itemprop="name">DPDK Pktgen+Docker搭建VNF环境及验证</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Wald Ratio方法</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T22:56:51+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-19T15:26:32+08:00">
+                2022-05-19
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/wald-ratio.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="wald-ratio.html" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  766
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    </div>
+      
 
+      
+        <h1 id="系数比率法">系数比率法</h1>
+<h2
+id="连续型结局变量二分类工具变量">连续型结局变量，二分类工具变量</h2>
+<p>结局变量为连续值。工具变量为二分值（取值为0或1）。</p>
+<p><img src="/img/2022-5-19-1.png" height="50%" width="50%"></p>
+<p>我们看到，两个子组 <span class="math inline">\(\Delta X = x_1&#39; -
+x_0&#39;\)</span> 的平均暴露差异导致 <span class="math inline">\(\Delta
+Y = y_1&#39; - y_0&#39;\)</span> 的结局平均差异。
+假设暴露量对结果的影响是线性的，则由于暴露量单位增加而导致的结局变化的比率估算为：<span
+class="math inline">\(\Delta Y / \Delta X = (y_1’− y_0‘) / (x_1’-
+x_0‘)\)</span>。</p>
+<p>在上图示例中， <span class="math inline">\(\Delta Y= 0.4\)</span> 和
+<span class="math inline">\(\Delta X = 1.0\)</span> ，得出的比率估计值为
+<span class="math inline">\(0.4\)</span> 。</p>
+<h3 id="结果分析">结果分析</h3>
+<p>如果我们假设暴露对结局的影响是线性的，则比率估计值是 <span
+class="math inline">\(x + 1\)</span>
+单位暴露与x单位暴露对结局影响的因果效应（在线性假设下，暴露因素单位增加的因果效应对于所有x值都是相等的）。</p>
+<p>如果效应不是线性的，则比率估计值近似于种群在暴露中的平均因果效应。</p>
+<h2
+id="连续型结局变量多分类或连续型工具变量">连续型结局变量，多分类或连续型工具变量</h2>
+<p>// 这部分不要看推送，写的什么狗屁</p>
+<p>有时候，IV可能无法将遗传亚组依据不同暴露层次单纯分为两组。
+这时候，一般会出现3个遗传亚组：</p>
+<ul>
+<li>AA（主要纯合子,majorhomozygote）</li>
+<li>Aa（杂合子,heterozygote）</li>
+<li>aa（次要纯合子,minor homozygote）</li>
+</ul>
+<p>这三个水平分别称为0、1和2，分别对应于次要等位基因的数目。
+在加性模型中，我们假设遗传变异的次要等位基因拷贝数与暴露因素水平成正比。
+在等位基因得分（allele
+score）与暴露也是线性相关的假设下，IV也可以是等位基因得分（连续型变量）。</p>
+<p>从技术角度来看，在遗传对暴露的单调影响和线性因果估计假设条件下，比率估计方法仍然是有效的。</p>
+<ul>
+<li>单调性意味着对所有g1&gt;=
+g0的个体而言，则g1个体对应的暴露都会大于或等于g0个体对应的暴露。</li>
+<li>线性假设是：结局Y的期望值取决于暴露X和混杂因子U，而且这个关系应该是线性的。</li>
+</ul>
+<h2 id="二分类结局">二分类结局</h2>
+<p>在流行病学应用中，疾病通常是人们关注的结局，而疾病的结局通常是二分类变量（即只有患病和无病两种情况）。
+当IV是多分类或者连续型变量时，用于比值估计的系数取自回归的结果。</p>
+<p>原则上我们使用的回归模型可以是线性的。
+但是对于二分结果，我们通常首选对数线性或逻辑回归模型。</p>
+<h2 id="置信区间">置信区间</h2>
+<p>这边给了两个置信区间的例子，正态近似和Fieller's
+Law。需要进一步研究一下。</p>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MjM5MTIzNjI1OA==&amp;mid=2247484406&amp;idx=1&amp;sn=0699f60887aac3bae42ccc28627ad699&amp;chksm=a6b9ea3b91ce632d4b05a6f6d0b997807890f9f25b3b0bb6f77cfe2c1bc9cf80e11b54add381&amp;scene=21#wechat_redirect">孟德尔随机化之Wald
+ratio方法（一）</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MjM5MTIzNjI1OA==&amp;mid=2247484411&amp;idx=1&amp;sn=0cb4c28ddfc02c7fae8b01d9f6c0de48&amp;chksm=a6b9ea3691ce6320185a140381dcba43ee95c98453bbebb8016ddca31dee1cfae0f6a269c71c&amp;scene=21#wechat_redirect">孟德尔随机化之Wald
+ratio方法（二）</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MjM5MTIzNjI1OA==&amp;mid=2247484417&amp;idx=1&amp;sn=518942bae11a046d9932cb107553c34a&amp;chksm=a6b9edcc91ce64da3d07e3dfcead815d7382c39e3f9f6e3cc4d856c882610ad352e29f2459e3&amp;scene=21#wechat_redirect">孟德尔随机化之Wald
+ratio方法（三）</a></li>
+</ul>
+<!-- flag of hidden posts -->
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E5%AD%9F%E5%BE%B7%E5%B0%94%E9%9A%8F%E6%9C%BA%E5%8C%96/" rel="tag"># 孟德尔随机化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -333,6 +544,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -353,8 +573,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -424,6 +653,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B3%BB%E6%95%B0%E6%AF%94%E7%8E%87%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">系数比率法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E5%9E%8B%E7%BB%93%E5%B1%80%E5%8F%98%E9%87%8F%E4%BA%8C%E5%88%86%E7%B1%BB%E5%B7%A5%E5%85%B7%E5%8F%98%E9%87%8F"><span class="nav-number">1.1.</span> <span class="nav-text">连续型结局变量，二分类工具变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90"><span class="nav-number">1.1.1.</span> <span class="nav-text">结果分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E5%9E%8B%E7%BB%93%E5%B1%80%E5%8F%98%E9%87%8F%E5%A4%9A%E5%88%86%E7%B1%BB%E6%88%96%E8%BF%9E%E7%BB%AD%E5%9E%8B%E5%B7%A5%E5%85%B7%E5%8F%98%E9%87%8F"><span class="nav-number">1.2.</span> <span class="nav-text">连续型结局变量，多分类或连续型工具变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%88%86%E7%B1%BB%E7%BB%93%E5%B1%80"><span class="nav-number">1.3.</span> <span class="nav-text">二分类结局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%AE%E4%BF%A1%E5%8C%BA%E9%97%B4"><span class="nav-number">1.4.</span> <span class="nav-text">置信区间</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -608,6 +853,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

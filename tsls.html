@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="孟德尔随机化," />
 
 
 
@@ -79,12 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Datawine&#39;s Blog">
-<meta property="og:url" content="https://datawine.github.io/tags/%E5%85%B6%E4%BB%96/index.html">
+<meta name="description" content="简介 就是两阶段最小二乘法。 第一阶段是用暴露在工具变量上回归得到暴露的拟合值。 第二阶段是对结局在暴露的拟合值上进行回归，第二阶段得到的暴露拟合值的回归系数就是我们关心的因果效应值了。 具体流程 连续结局 二分类结局 二分类结局的两阶段估计方法和连续型结局类似，只是其中第二阶段回归使用对数线性或逻辑回归模型。 这里需要再总结一下，我认为数学上这推送少了太多统计学知识了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="两阶段估计法">
+<meta property="og:url" content="https://datawine.github.io/tsls.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="简介 就是两阶段最小二乘法。 第一阶段是用暴露在工具变量上回归得到暴露的拟合值。 第二阶段是对结局在暴露的拟合值上进行回归，第二阶段得到的暴露拟合值的回归系数就是我们关心的因果效应值了。 具体流程 连续结局 二分类结局 二分类结局的两阶段估计方法和连续型结局类似，只是其中第二阶段回归使用对数线性或逻辑回归模型。 这里需要再总结一下，我认为数学上这推送少了太多统计学知识了">
 <meta property="og:locale">
+<meta property="article:published_time" content="2022-05-19T11:58:01.000Z">
+<meta property="article:modified_time" content="2022-05-19T12:07:23.734Z">
 <meta property="article:author" content="Datawine">
+<meta property="article:tag" content="孟德尔随机化">
 <meta name="twitter:card" content="summary">
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/tags/其他/"/>
+  <link rel="canonical" href="https://datawine.github.io/tsls.html"/>
 
 
 
 
 
-  <title>标签: 其他 | Datawine's Blog</title>
+  <title>两阶段估计法 | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -278,54 +283,208 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>其他<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/tsls.html">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/dpdk-pktgen-docker-vnf-test.html" itemprop="url">
-              
-                <span itemprop="name">DPDK Pktgen+Docker搭建VNF环境及验证</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">两阶段估计法</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T22:56:51+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-19T19:58:01+08:00">
+                2022-05-19
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/tsls.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="tsls.html" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  171
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    </div>
+      
 
+      
+        <h1 id="简介">简介</h1>
+<p>就是两阶段最小二乘法。
+第一阶段是用暴露在工具变量上回归得到暴露的拟合值。
+第二阶段是对结局在暴露的拟合值上进行回归，第二阶段得到的暴露拟合值的回归系数就是我们关心的因果效应值了。</p>
+<h1 id="具体流程">具体流程</h1>
+<h2 id="连续结局">连续结局</h2>
+<h2 id="二分类结局">二分类结局</h2>
+<p>二分类结局的两阶段估计方法和连续型结局类似，只是其中第二阶段回归使用对数线性或逻辑回归模型。</p>
+<p>这里需要再总结一下，我认为数学上这推送少了太多统计学知识了</p>
+<!-- flag of hidden posts -->
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E5%AD%9F%E5%BE%B7%E5%B0%94%E9%9A%8F%E6%9C%BA%E5%8C%96/" rel="tag"># 孟德尔随机化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -333,6 +492,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -353,8 +521,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -424,6 +601,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">具体流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E7%BB%93%E5%B1%80"><span class="nav-number">2.1.</span> <span class="nav-text">连续结局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%88%86%E7%B1%BB%E7%BB%93%E5%B1%80"><span class="nav-number">2.2.</span> <span class="nav-text">二分类结局</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -608,6 +801,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
