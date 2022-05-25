@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="主要包括以下内容  命令行洁面 四则运算 数学函数 函数调用和自定义函数 输出 向量计算与变量赋值 工作空间介绍 绘图示例 汇总统计示例 运行源程序文件  命令行界面 如果使用RStudio软件，有一个“Console窗格”相当于命令行界面。 在RStudio中，可以用New File–Script file功能建立一个源程序文件（脚本文件），在脚本文件中写程序，然后用Run图标或者Ctrl+En">
+<meta name="description" content="命令行界面 如果使用RStudio软件，有一个“Console窗格”相当于命令行界面。 在RStudio中，可以用New File–Script file功能建立一个源程序文件（脚本文件），在脚本文件中写程序，然后用Run图标或者Ctrl+Enter键运行当前行或者选定的部分。 运行例子 注：在命令行定义的变量称为全局变量。 123456789101112131415161718192021222">
 <meta property="og:type" content="article">
 <meta property="og:title" content="R语言入门运行样例">
 <meta property="og:url" content="https://datawine.github.io/r-learning-2.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="主要包括以下内容  命令行洁面 四则运算 数学函数 函数调用和自定义函数 输出 向量计算与变量赋值 工作空间介绍 绘图示例 汇总统计示例 运行源程序文件  命令行界面 如果使用RStudio软件，有一个“Console窗格”相当于命令行界面。 在RStudio中，可以用New File–Script file功能建立一个源程序文件（脚本文件），在脚本文件中写程序，然后用Run图标或者Ctrl+En">
+<meta property="og:description" content="命令行界面 如果使用RStudio软件，有一个“Console窗格”相当于命令行界面。 在RStudio中，可以用New File–Script file功能建立一个源程序文件（脚本文件），在脚本文件中写程序，然后用Run图标或者Ctrl+Enter键运行当前行或者选定的部分。 运行例子 注：在命令行定义的变量称为全局变量。 123456789101112131415161718192021222">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-05-14T10:21:04.000Z">
-<meta property="article:modified_time" content="2022-05-14T10:44:05.224Z">
+<meta property="article:modified_time" content="2022-05-25T13:57:57.379Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="R">
 <meta name="twitter:card" content="summary">
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  200
+                  1.5k
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  6
                 </span>
               
             </div>
@@ -433,30 +433,50 @@
       
 
       
-        <p>主要包括以下内容</p>
-<ul>
-<li>命令行洁面</li>
-<li>四则运算</li>
-<li>数学函数</li>
-<li>函数调用和自定义函数</li>
-<li>输出</li>
-<li>向量计算与变量赋值</li>
-<li>工作空间介绍</li>
-<li>绘图示例</li>
-<li>汇总统计示例</li>
-<li>运行源程序文件</li>
-</ul>
-<h1 id="命令行界面">命令行界面</h1>
+        <h1 id="命令行界面">命令行界面</h1>
 <p>如果使用RStudio软件，有一个“Console窗格”相当于命令行界面。
 在RStudio中，可以用New File–Script
 file功能建立一个源程序文件（脚本文件），在脚本文件中写程序，然后用Run图标或者Ctrl+Enter键运行当前行或者选定的部分。</p>
-<h2 id="四则运算">四则运算</h2>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 正常的加减乘除</span><br><span class="line"></span><br><span class="line">5 ^ 2 + (2.3 - 1.125) * 3.2 / 1.1 + 1.23E3</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>这里<code>1.23E3</code>是科学计数法，表示<span
-class="math inline">\(1.23*10^3\)</span>，乘方<code>5 ^ 2</code>表示<span
-class="math inline">\(5^2\)</span></p>
-<h2 id="数学函数">数学函数</h2>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="运行例子">运行例子</h1>
+<p>注：在命令行定义的变量称为全局变量。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br></pre></td><td class="code"><pre><span class="line"># R里面真假是TRUE/FALSE</span><br><span class="line"></span><br><span class="line"># 加减乘除</span><br><span class="line">5 ^ 2 + (2.3 - 1.125) * 3.2 / 1.1 + 1.23E3</span><br><span class="line"></span><br><span class="line"># 整除</span><br><span class="line">5 %/% 5</span><br><span class="line"></span><br><span class="line"># 求余</span><br><span class="line">1 %% 6</span><br><span class="line"></span><br><span class="line"># 开方</span><br><span class="line">sqrt(6.25)</span><br><span class="line"></span><br><span class="line"># 指数</span><br><span class="line">exp(1)</span><br><span class="line"></span><br><span class="line"># 对数</span><br><span class="line">log10(10000)</span><br><span class="line"></span><br><span class="line"># 取整</span><br><span class="line">## 四舍五入</span><br><span class="line">round(1.1234, 2)</span><br><span class="line">round(-1.9876, 2)</span><br><span class="line"></span><br><span class="line">## 下取整</span><br><span class="line">floor(1.1234)</span><br><span class="line">floor(-1.1234)</span><br><span class="line"></span><br><span class="line">## 上取整</span><br><span class="line">ceiling(1.1234)</span><br><span class="line">ceiling(-1.1234)</span><br><span class="line"></span><br><span class="line"># 三角函数</span><br><span class="line">pi</span><br><span class="line">sin(pi/6)</span><br><span class="line">cos(pi/6)</span><br><span class="line">tan(pi/6)</span><br><span class="line"></span><br><span class="line"># 反三角函数</span><br><span class="line">pi/6</span><br><span class="line">asin(0.5)</span><br><span class="line">acos(sqrt(3)/2)</span><br><span class="line">atan(sqrt(3)/3)</span><br><span class="line"></span><br><span class="line"># 管道运算符 |&gt;</span><br><span class="line">exp(1.0) |&gt; log() ## 等价于log(exp(1.0))</span><br><span class="line"></span><br><span class="line"># 1. 命令行的计算结果直接显示在命令的后面</span><br><span class="line"># 2. 在用source()运行程序文件时， 需要用print()函数显示一个表达式的结果，如：</span><br><span class="line">print(sin(pi/2))</span><br><span class="line"># 3. 用cat显示多项内容</span><br><span class="line">cat(&quot;sin(pi/2)=&quot;, sin(pi/2), &quot;\n&quot;)</span><br><span class="line"></span><br><span class="line"># 用print()函数显示向量或在命令行中显示向量时， 每行显示的行首会有方括号和数字序号， 代表该行显示的第一个向量元素的下标。如</span><br><span class="line">12345678901:12345678920</span><br><span class="line">##  [1] 12345678901 12345678902 12345678903 12345678904 12345678905</span><br><span class="line">##  [6] 12345678906 12345678907 12345678908 12345678909 12345678910</span><br><span class="line">## [11] 12345678911 12345678912 12345678913 12345678914 12345678915</span><br><span class="line">## [16] 12345678916 12345678917 12345678918 12345678919 12345678920</span><br><span class="line"></span><br><span class="line"># 用sink做函数记录</span><br><span class="line">## R使用经常是在命令行逐行输入命令（程序）， 结果紧接着显示在命令后面</span><br><span class="line">## 如何保存这些命令和显示结果？ 在R命令行中运行过的命令会被保存在运行的工作文件夹中的一个名为.Rhistory的文件中</span><br><span class="line">## 用sink()函数打开一个文本文件开始记录文本型输出结果</span><br><span class="line">## 结束记录时用空的sink()即可关闭文件不再记录</span><br><span class="line">sink(&quot;tmpres01.txt&quot;, split=TRUE)</span><br><span class="line">print(sin(pi/6))</span><br><span class="line">print(cos(pi/6))</span><br><span class="line">cat(&quot;t(10)的双侧0.05分位数（临界值）=&quot;, qt(1 - 0.05/2, 10), &quot;\n&quot;)</span><br><span class="line">sink()</span><br><span class="line"></span><br><span class="line"># 向量</span><br><span class="line"># 注：start:end表示[start, end]</span><br><span class="line"># 注2：下标从1开始</span><br><span class="line">x1 &lt;- 1:10</span><br><span class="line">x1</span><br><span class="line">##  [1]  1  2  3  4  5  6  7  8  9 10</span><br><span class="line"></span><br><span class="line"># 也可以这么生成</span><br><span class="line">marks &lt;- c(3, 5, 10, 5, 6)</span><br><span class="line">x &lt;- c(1:3, 10:13)</span><br><span class="line"></span><br><span class="line"># 向量可以和一个标量作四则运算， 结果是每个元素都和这个标量作四则运算，如</span><br><span class="line">x1 + 200</span><br><span class="line">2*x1</span><br><span class="line">2520/x1</span><br><span class="line"></span><br><span class="line"># 两个等长的向量可以进行四则运算， 相当于对应元素进行四则运算，如</span><br><span class="line">x2 &lt;- x1 * 3</span><br><span class="line">x2 - x1</span><br><span class="line"></span><br><span class="line"># 两个不等长向量的四则运算， 如果其长度为倍数关系，规则是每次从头重复利用短的一个。 如</span><br><span class="line">x1 &lt;- c(10, 20)</span><br><span class="line">x2 &lt;- c(1, 3, 5, 7)</span><br><span class="line">x1 + x2</span><br><span class="line">## [1] 11 23 15 27</span><br><span class="line"></span><br><span class="line"># sort(x)返回排序结果。 rev(x)返回把各元素排列次序反转后的结果。 order(x)返回排序用的下标。如</span><br><span class="line">x &lt;- c(33, 55, 11)</span><br><span class="line">sort(x)</span><br><span class="line">## [1] 11 33 55</span><br><span class="line">rev(sort(x))</span><br><span class="line">## [1] 55 33 11</span><br><span class="line">order(x)</span><br><span class="line">## [1] 3 1 2</span><br><span class="line">x[order(x)]</span><br><span class="line">## [1] 11 33 55</span><br><span class="line"></span><br><span class="line"># R的许多函数都可以用向量作为自变量， 结果是自变量的每个元素各自的函数值。 如</span><br><span class="line">sqrt(x1)</span><br><span class="line"></span><br><span class="line"># 复数向量</span><br><span class="line"># 用函数complex()生成复数向量， 指定实部和虚部。 如</span><br><span class="line">complex(real = c(1,0,-1,0), imaginary = c(0,1,0,-1))</span><br><span class="line">## 相当于c(1+0i, 1i, -1+0i, -1i)。</span><br><span class="line"></span><br><span class="line"># 读入表格</span><br><span class="line">tax.tab &lt;- read.csv(&quot;taxsamp.csv&quot;, header=TRUE, as.is=TRUE)</span><br><span class="line">print(head(tax.tab))</span><br><span class="line">## 技巧：read.csv()的一个改进版本是readr扩展包的read_csv()函数， 此函数读入较大表格速度要快得多， 而且读入的转换设置更倾向于不做不必要的转换。 但是， 这两种输入方法的默认中文编码可能不一样。</span><br><span class="line"></span><br><span class="line"># 表格频数统计</span><br><span class="line">table(tax.tab[[&quot;征收方式&quot;]])</span><br><span class="line"></span><br><span class="line"># 交叉频数统计</span><br><span class="line">table(tax.tab[[&quot;征收方式&quot;]], tax.tab[[&quot;申报渠道&quot;]])</span><br><span class="line"></span><br><span class="line"># 数值型变量的统计：最小值、最大值、中位数、四分之一分位数、四分之三分位数和平均值</span><br><span class="line">summary(tax.tab[[&quot;营业额&quot;]])</span><br><span class="line">## 单独计算可以使用包括sum(求和), mean(平均值), var(样本方差), sd(样本标准差), min(最小值), max(最大值), range(最大值和最小值)几个函数</span><br><span class="line"></span><br><span class="line"># 当前工作路径</span><br><span class="line">getwd()</span><br><span class="line"></span><br><span class="line"># 设置工作路径</span><br><span class="line">setwd(&quot;/ubuntu/...&quot;)</span><br></pre></td></tr></table></figure>
+<h1 id="函数">函数</h1>
+<p>定义格式为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function_name &lt;- function(arg_1, arg_2, ...) &#123;</span><br><span class="line">    // 函数体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>比如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">frat &lt;- function(x)&#123;</span><br><span class="line">  (1 + x + 2*x^2)/(1 + 3*x + 2*x^2 + x^3)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="工作空间">工作空间</h1>
+<p>大概是会保存已经定义的R变量与函数。</p>
+<p>RStudio中的“Environment”窗格会显示当前已定义的R变量与函数。</p>
+<h1 id="绘图">绘图</h1>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 函数曲线图</span><br><span class="line"># curve(f(x), start_x, end_x) 绘制关于f(x)的函数，变量范围[start_x, end_x]</span><br><span class="line">curve(x^2, -2, 2)</span><br><span class="line"></span><br><span class="line"># 参考线</span><br><span class="line">abline(h=0)</span><br><span class="line"></span><br><span class="line"># 柱状图</span><br><span class="line">barplot(c(&quot;男生&quot;=10, &quot;女生&quot;=7), main=&quot;男女生人数&quot;)</span><br><span class="line"></span><br><span class="line"># 散点图</span><br><span class="line">plot(1:10, sqrt(1:10))</span><br><span class="line"></span><br><span class="line"># 自带的图形示例</span><br><span class="line">demo(&quot;graphics&quot;)</span><br><span class="line">demo(&quot;image&quot;)</span><br></pre></td></tr></table></figure>
+<h1 id="源文件模块">源文件（模块？）</h1>
+<p>用source()函数可以运行保存在一个文本文件中的源程序。
+比如，如下内容保存在文件ssq.r中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sum.of.squares &lt;- function(x)&#123;</span><br><span class="line">  sum(x^2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用如下source()命令运行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">source(&quot;ssq.r&quot;)</span><br><span class="line"></span><br><span class="line"># 可以在source中添加encoding=</span><br></pre></td></tr></table></figure>
+<h1 id="其他">其他</h1>
+<ol type="1">
+<li>为了查看这些基础的数学函数的列表，运行命令help.start()，
+点击链接“Search Engine and Keywords”， 找到“Mathematics”栏目，
+浏览其中的“arith”和“math”链接中的说明。</li>
+<li>常用的数学函数有：
+<ol type="1">
+<li>舍入：ceiling, floor, round, signif, trunc, zapsmall</li>
+<li>符号函数 sign</li>
+<li>绝对值 abs</li>
+<li>平方根 sqrt</li>
+<li>对数与指数函数 log, exp, log10, log2</li>
+<li>三角函数 sin, cos, tan</li>
+<li>反三角函数 asin, acos, atan, atan2</li>
+<li>双曲函数 sinh, cosh, tanh</li>
+<li>反双曲函数 asinh, acosh, atanh</li>
+</ol></li>
+<li>如果自己编写的函数没有考虑向量化问题，
+可以用Vectorize()函数将其转换成向量化版本。</li>
+<li></li>
+</ol>
 <!-- flag of hidden posts -->
       
     </div>
@@ -561,7 +581,7 @@ class="math inline">\(5^2\)</span></p>
               
                 <a href="/archives/%7C%7Carchive">
               
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -626,7 +646,7 @@ class="math inline">\(5^2\)</span></p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%95%8C%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">命令行界面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E5%88%99%E8%BF%90%E7%AE%97"><span class="nav-number">1.1.</span> <span class="nav-text">四则运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">数学函数</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%95%8C%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">命令行界面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E4%BE%8B%E5%AD%90"><span class="nav-number">2.</span> <span class="nav-text">运行例子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4"><span class="nav-number">4.</span> <span class="nav-text">工作空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%98%E5%9B%BE"><span class="nav-number">5.</span> <span class="nav-text">绘图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BA%90%E6%96%87%E4%BB%B6%E6%A8%A1%E5%9D%97"><span class="nav-number">6.</span> <span class="nav-text">源文件（模块？）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">7.</span> <span class="nav-text">其他</span></a></li></ol></div>
             
 
           </div>
@@ -667,7 +687,7 @@ class="math inline">\(5^2\)</span></p>
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">24.6k</span>
+    <span title="Site words total count">24.7k</span>
   
 </div>
 

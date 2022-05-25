@@ -65,15 +65,19 @@ Critical Variances的一个程序，和实际的NF一一对应</li>
 <ul>
 <li><a
 href="https://datawine.github.io/mr-background.html">孟德尔随机化研究背景</a></li>
-<li><a href="">统计学原理</a>
+<li>统计学原理
 <ul>
 <li><a
 href="https://datawine.github.io/instrumental-variable.html">工具变量孟德尔随机化原理</a></li>
+<li>[R2]</li>
+<li>[F统计量]</li>
 </ul></li>
 <li>孟德尔随机化方法
 <ul>
 <li><a href="https://datawine.github.io/wald-ratio.html">Wald
 Ratio</a></li>
+<li>IVW</li>
+<li>MR-Egger</li>
 </ul></li>
 <li>包的使用
 <ul>
@@ -90,6 +94,20 @@ href="https://datawine.github.io/mr-others.html">孟德尔随机化及其他</a>
       <tags>
         <tag>孟德尔随机化</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>多元线性回归</title>
+    <url>/mlr.html</url>
+    <content><![CDATA[<p>这篇文章只是对mlr的最简单介绍。详细的线代和统计的知识可以看参考里面的几个链接</p>
+<p>（打定义太麻烦了，我再看看吴孟达怎么介绍的吧）</p>
+<h1 id="定义">定义</h1>
+<h1 id="参考">参考</h1>
+<ul>
+<li><a
+href="https://zhuanlan.zhihu.com/p/45149297">回归分析|笔记整理（1）——引入，一元线性回归（上）</a></li>
+<li>http://staff.ustc.edu.cn/~zwp/teach/MVA/Lec9_slides.pdf</li>
+</ul>
+]]></content>
   </entry>
   <entry>
     <title>Istio学习（一）</title>
