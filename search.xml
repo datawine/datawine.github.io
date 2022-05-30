@@ -48,6 +48,10 @@ href="https://datawine.github.io/nsdi22-Performance-Interfaces-for-Network-Funct
 Interfaces for Network Functions</a>：提出了performance
 interface的概念，用符号执行和trace的一个简单执行来生成关于Performance
 Critical Variances的一个程序，和实际的NF一一对应</li>
+<li><a
+href="https://datawine.github.io/nsdi22-Justitia-Software-Multi-Tenancy-in-Hardware-Kernel-Bypass-Networks.html">Justitia:
+Software Multi-Tenancy in Hardware Kernel-Bypass
+Networks</a>：对RDMA的多租户支持</li>
 </ul>
 ]]></content>
       <categories>

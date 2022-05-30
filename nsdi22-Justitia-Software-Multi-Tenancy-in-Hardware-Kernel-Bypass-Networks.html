@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="论文汇总," />
+  <meta name="keywords" content="nsdi," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="论文阅读列表">
+<meta name="description" content="introduction 现在有两种kernel bypass network，一种是software-based，就是DPDK。另一种是hardware-based的，就是RDMA。 现有的硬件KBN对多租户的支持很差，共享相同的网卡会导致严重的性能异常，包括不可预测的延迟、throttled的吞吐量（即较低的消息速率）和不公平的带宽共享。由于三个独特的挑战，现有的软件KBN解决方案不能应用于基">
 <meta property="og:type" content="article">
-<meta property="og:title" content="论文阅读">
-<meta property="og:url" content="https://datawine.github.io/paper-reading.html">
+<meta property="og:title" content="Justitia-Software Multi-Tenancy in Hardware Kernel-Bypass Networks">
+<meta property="og:url" content="https://datawine.github.io/nsdi22-Justitia-Software-Multi-Tenancy-in-Hardware-Kernel-Bypass-Networks.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="论文阅读列表">
+<meta property="og:description" content="introduction 现在有两种kernel bypass network，一种是software-based，就是DPDK。另一种是hardware-based的，就是RDMA。 现有的硬件KBN对多租户的支持很差，共享相同的网卡会导致严重的性能异常，包括不可预测的延迟、throttled的吞吐量（即较低的消息速率）和不公平的带宽共享。由于三个独特的挑战，现有的软件KBN解决方案不能应用于基">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-05-09T12:34:45.000Z">
-<meta property="article:modified_time" content="2022-05-30T06:19:36.183Z">
+<meta property="article:published_time" content="2022-05-30T06:15:56.000Z">
+<meta property="article:modified_time" content="2022-05-30T06:18:16.539Z">
 <meta property="article:author" content="Datawine">
-<meta property="article:tag" content="论文汇总">
+<meta property="article:tag" content="nsdi">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/paper-reading.html"/>
+  <link rel="canonical" href="https://datawine.github.io/nsdi22-Justitia-Software-Multi-Tenancy-in-Hardware-Kernel-Bypass-Networks.html"/>
 
 
 
 
 
-  <title>论文阅读 | Datawine's Blog</title>
+  <title>Justitia-Software Multi-Tenancy in Hardware Kernel-Bypass Networks | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/paper-reading.html">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/nsdi22-Justitia-Software-Multi-Tenancy-in-Hardware-Kernel-Bypass-Networks.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">论文阅读</h1>
+          <h1 class="post-title" itemprop="name headline">Justitia-Software Multi-Tenancy in Hardware Kernel-Bypass Networks</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-09T20:34:45+08:00">
-                2022-05-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-30T14:15:56+08:00">
+                2022-05-30
               </time>
             
 
@@ -368,8 +368,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/paper-reading.html#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="paper-reading.html" itemprop="commentsCount"></span>
+                <a href="/nsdi22-Justitia-Software-Multi-Tenancy-in-Hardware-Kernel-Bypass-Networks.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="nsdi22-Justitia-Software-Multi-Tenancy-in-Hardware-Kernel-Bypass-Networks.html" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  341
+                  1.1k
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  4
                 </span>
               
             </div>
@@ -433,57 +433,65 @@
       
 
       
-        <p>论文阅读列表</p>
-<span id="more"></span>
-<h1 id="atc">ATC</h1>
-<h2 id="section">2019</h2>
+        <h1 id="introduction">introduction</h1>
+<p>现在有两种kernel bypass
+network，一种是software-based，就是DPDK。另一种是hardware-based的，就是RDMA。</p>
+<p>现有的硬件KBN对多租户的支持很差，共享相同的网卡会导致严重的性能异常，包括不可预测的延迟、throttled的吞吐量（即较低的消息速率）和不公平的带宽共享。由于三个独特的挑战，现有的软件KBN解决方案不能应用于基于硬件的KBN。</p>
+<ol type="1">
+<li>因为主机CPU不再参与，所以不能应用基于CPU的普通资源分配机制。相反，租户在没有CPU成本的情况下发出具有任意数据负载的RDMA操作，这使得没有明显的控制点来施加资源调解。</li>
+<li>硬件卸载将用户空间的数据包化带入网卡，在数据包层面禁用细粒度的用户空间shaping[27,
+51]。</li>
+<li>在提供多租户支持的同时，保持基于硬件的KBN的效率（即单μs的延迟和低CPU成本1）也是至关重要的。</li>
+</ol>
+<h1 id="background">Background</h1>
+<p>第一部分介绍了host-RNIC interaction when posting RDMA WRITE和READ</p>
+<p>第二部分介绍了RDMA缺乏对多租户的支持，主要有两个原因：(i)租户/应用竞争多个RNIC资源，(ii)RNIC以贪婪的方式处理准备消费的消息，以最大化利用率。</p>
+<h1 id="performance-isolation-anomalies-in-rdma">Performance Isolation
+Anomalies in RDMA</h1>
+<p>通过一些实验确定不同RDMA实现中的常见隔离异常。</p>
+<p>定义的几种sensitive</p>
+<ol type="1">
+<li><em>Latency-Sensitive:</em> Sends small messages and cares about the
+individual message latencies.</li>
+<li><em>Throughput-Sensitive:</em> Sends small messages in batches to
+maximize the number of messages sent per second.</li>
+<li><em>Bandwidth-Sensitive:</em> Sends large messages with high
+bandwidth requirements.</li>
+</ol>
+<p>主要发现的总结。</p>
 <ul>
-<li><a
-href="https://datawine.github.io/atc19-The-Design-and-Operation-of-CloudLab.html">The
-Design and Operation of
-CloudLab</a>：主要是讲分布式实验平台CloudLab的综述</li>
+<li>latency-sensitive和throughput-sensitve的应用都需要与bandwidth-sensitive的应用隔离（§3.1.1）。</li>
+<li>如果只有latency-sensitive或throughput-sensitive的应用（或两种类型的混合）在竞争，they
+are isolated from each other（§3.1.2）。</li>
+<li>多个bandwidth-sensitive的应用会导致不公平的带宽分配，这取决于它们的消息大小（§3.1.3）。</li>
+<li>高度优化的、最先进的基于RDMA的系统也会受到我们发现的异常现象的影响（§3.2）。</li>
 </ul>
-<h1 id="nsdi">NSDI</h1>
-<h2 id="section-1">2022</h2>
+<h1 id="design">Design</h1>
+<p>Justitia通过五个关键设计理念解决了在硬件KBN中实现多租户的独特挑战。</p>
 <ul>
-<li><a
-href="https://datawine.github.io/nsdi22-Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks.html">Efficient
-Scheduling Policies for Microsecond-Scale
-Tasks</a>：开源。模拟。对比load balancing策略和core
-allocation策略对1us级别任务的性能影响。</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Buffer-based-End-to-end-Request-Event-Monitoring-in-the-Cloud.html">Buffer-based
-End-to-end Request Event Monitoring in the
-Cloud</a>：以请求粒度捕获请求延迟异常（RLA）相关的事件：缓冲区建模和请求级别的数据包注入</li>
-<li><a
-href="https://datawine.github.io/nsdi22-A-Case-for-Task-Sampling-based-Learning-for-Cluster-Job-Scheduling.html">A
-Case for Task Sampling based Learning for Cluster Job
-Scheduling</a>：提出使用空间特性（其实就是sample-based）来预测集群作业的Job
-Completion Time要比history-based更好。</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Starlight-Fast-Container-Provisioning-on-the-Edge-and-over-the-WAN.html">Starlight:
-Fast Container Provisioning on the Edge and over the
-WAN</a>：重新设计了容器provisioning的协议和流程等，来让在低带宽、高延时的网络中加速容器provisioning</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Closed-loop-Network-Performance-Monitoring-and-Diagnosis-with-SpiderMon.html">Closed-loop
-Network Performance Monitoring and Diagnosis with
-SpiderMon</a>：基于可编程交换机的网络异常监控。论文的亮点在于针对后验诊断（posterior
-diagnosis）、解决了现有的监控系统的两个问题：高覆盖率和低开销</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Collie-Finding-Performance-Anomalies-in-RDMA-Subsystems.html">Collie-Finding
-Performance Anomalies in RDMA
-Subsystems</a>：使用模拟退火搜索性能异常空间</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Performance-Interfaces-for-Network-Functions.html">Performance
-Interfaces for Network Functions</a>：提出了performance
-interface的概念，用符号执行和trace的一个简单执行来生成关于Performance
-Critical Variances的一个程序，和实际的NF一一对应</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Justitia-Software-Multi-Tenancy-in-Hardware-Kernel-Bypass-Networks.html">Justitia:
-Software Multi-Tenancy in Hardware Kernel-Bypass
-Networks</a>：对RDMA的多租户支持</li>
+<li>租户/应用级的连接管理。为了防止租户通过发布任意大的消息或免费创建大量的活动QP来占用RNIC的资源，Justitia通过在租户应用和RNIC之间添加一个shim
+layer来提供一个租户级连接管理方案。租户操作在到达RNIC之前由Justitia处理。</li>
+<li>基于发送者的主动资源调解。Justitia在发件人端主动控制RNIC的资源利用。这是基于这样的观察：RDMA操作的发送方--决定操作何时启动、消息有多大、消息流向--对传输的每个方面都有主动控制，而连接的另一方则保持被动。这种基于发件人的控制可以在RNIC接管之前做出反应，并通过直接控制RNIC资源来保持隔离。</li>
+<li>动态接收方更新。纯粹的基于发件人的方法有时会导致虚假的资源分配，当多个发件人共存但不知道对方的情况时。Justitia利用接收方更新来提供信息（例如，一个应用程序的到达或离开）回馈给发送方，以便在设置发生变化时做出正确反应。</li>
+<li>被动的延迟监测。Justitia没有主动测量每个应用程序的延迟，因为这可能会引入高开销，而是通过issuing
+reference flows来检测RNIC的资源争夺，从而使用被动延迟监测。</li>
+<li>消息级别的shaping with
+splitting。Justitia在消息层面进行shaping，以适应RDMA的面向消息的传输层。在消息层面，很容易应用特定的策略来控制消息如何根据它们的大小和它们所占用的资源进入RNIC。大的消息被分割成大小大致相等的子消息或块，以(i)避免单个消息重新追求过多的RNIC资源；(ii)促进网络共享政策，如公平/加权带宽共享；(iii)减轻延迟敏感应用的HOL阻塞。</li>
 </ul>
+<h2 id="system-overview">System Overview</h2>
+<h2 id="justitia-daemon">Justitia Daemon</h2>
+<h2 id="justitia-shaper">Justitia Shaper</h2>
+<h2 id="dynamic-receiver-side-updates">Dynamic Receiver-Side
+Updates</h2>
 
+
+	<div class="row">
+    <embed src="/paper/nsdi22-Justitia-Software-Multi-Tenancy-in-Hardware-Kernel-Bypass-Networks.pdf" width="100%" height="1700" type="application/pdf">
+	</div>
+
+
+
+<!-- flag of hidden posts -->
       
     </div>
     
@@ -500,7 +508,7 @@ Networks</a>：对RDMA的多租户支持</li>
       
         <div class="post-tags">
           
-            <a href="/tags/%E8%AE%BA%E6%96%87%E6%B1%87%E6%80%BB/" rel="tag"># 论文汇总</a>
+            <a href="/tags/nsdi/" rel="tag"># nsdi</a>
           
         </div>
       
@@ -509,26 +517,6 @@ Networks</a>：对RDMA的多租户支持</li>
       
       
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/mendelian-randomization.html" rel="next" title="孟德尔随机化">
-                <i class="fa fa-chevron-left"></i> 孟德尔随机化
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/r-learning.html" rel="prev" title="R语言学习">
-                R语言学习 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
 
       
@@ -672,7 +660,9 @@ Networks</a>：对RDMA的多租户支持</li>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#atc"><span class="nav-number">1.</span> <span class="nav-text">ATC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section"><span class="nav-number">1.1.</span> <span class="nav-text">2019</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nsdi"><span class="nav-number">2.</span> <span class="nav-text">NSDI</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-1"><span class="nav-number">2.1.</span> <span class="nav-text">2022</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">1.</span> <span class="nav-text">introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#background"><span class="nav-number">2.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#performance-isolation-anomalies-in-rdma"><span class="nav-number">3.</span> <span class="nav-text">Performance Isolation
+Anomalies in RDMA</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#design"><span class="nav-number">4.</span> <span class="nav-text">Design</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#system-overview"><span class="nav-number">4.1.</span> <span class="nav-text">System Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#justitia-daemon"><span class="nav-number">4.2.</span> <span class="nav-text">Justitia Daemon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#justitia-shaper"><span class="nav-number">4.3.</span> <span class="nav-text">Justitia Shaper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dynamic-receiver-side-updates"><span class="nav-number">4.4.</span> <span class="nav-text">Dynamic Receiver-Side
+Updates</span></a></li></ol></li></ol></div>
             
 
           </div>
