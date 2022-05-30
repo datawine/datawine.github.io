@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="其他," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,22 +79,17 @@
 
 
 
-<meta name="description" content="主要是搭建一个DPDK+docker的环境，然而docker上次用是在软工的时候，重新学还花了一些功夫，改日写篇docker总结好了。">
+<meta name="description" content="Introduction 在这篇文章中，我们提出了PCAT，一个production change-aware的遥测系统，处理快速发展的网络中的变化。我们建议使用一个change cube abstraction来系统地跟踪变化，并使用intent-based layering的设计来限制和跟踪变化。 本文考虑的变化不仅包括来自监测数据的网络工作事件，还包括那些对遥测系统本身的更新：监测意图的修改">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DPDK Pktgen+Docker搭建VNF环境及验证">
-<meta property="og:url" content="https://datawine.github.io/dpdk-pktgen-docker-vnf-test.html">
+<meta property="og:title" content="Evolvable Network Telemetry at Facebook">
+<meta property="og:url" content="https://datawine.github.io/nsdi22-Evolvable-Network-Telemetry-at-Facebook.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="主要是搭建一个DPDK+docker的环境，然而docker上次用是在软工的时候，重新学还花了一些功夫，改日写篇docker总结好了。">
+<meta property="og:description" content="Introduction 在这篇文章中，我们提出了PCAT，一个production change-aware的遥测系统，处理快速发展的网络中的变化。我们建议使用一个change cube abstraction来系统地跟踪变化，并使用intent-based layering的设计来限制和跟踪变化。 本文考虑的变化不仅包括来自监测数据的网络工作事件，还包括那些对遥测系统本身的更新：监测意图的修改">
 <meta property="og:locale">
-<meta property="og:image" content="https://datawine.github.io/img/2018-7-16-1-1.png">
-<meta property="og:image" content="https://datawine.github.io/img/2018-8-15-2.png">
-<meta property="og:image" content="https://datawine.github.io/img/2018-8-15-1.png">
-<meta property="article:published_time" content="2022-05-07T14:56:51.000Z">
-<meta property="article:modified_time" content="2022-05-07T14:57:14.491Z">
+<meta property="article:published_time" content="2022-05-30T10:35:20.000Z">
+<meta property="article:modified_time" content="2022-05-30T10:37:13.625Z">
 <meta property="article:author" content="Datawine">
-<meta property="article:tag" content="其他">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://datawine.github.io/img/2018-7-16-1-1.png">
 
 
 
@@ -124,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/dpdk-pktgen-docker-vnf-test.html"/>
+  <link rel="canonical" href="https://datawine.github.io/nsdi22-Evolvable-Network-Telemetry-at-Facebook.html"/>
 
 
 
 
 
-  <title>DPDK Pktgen+Docker搭建VNF环境及验证 | Datawine's Blog</title>
+  <title>Evolvable Network Telemetry at Facebook | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -301,7 +296,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/dpdk-pktgen-docker-vnf-test.html">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/nsdi22-Evolvable-Network-Telemetry-at-Facebook.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -318,7 +313,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">DPDK Pktgen+Docker搭建VNF环境及验证</h1>
+          <h1 class="post-title" itemprop="name headline">Evolvable Network Telemetry at Facebook</h1>
         
 
         <div class="post-meta">
@@ -330,8 +325,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-07T22:56:51+08:00">
-                2022-05-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-30T18:35:20+08:00">
+                2022-05-30
               </time>
             
 
@@ -340,28 +335,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index">
-                    <span itemprop="name">其他</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -372,8 +345,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/dpdk-pktgen-docker-vnf-test.html#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="dpdk-pktgen-docker-vnf-test.html" itemprop="commentsCount"></span>
+                <a href="/nsdi22-Evolvable-Network-Telemetry-at-Facebook.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="nsdi22-Evolvable-Network-Telemetry-at-Facebook.html" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -400,7 +373,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1k
+                  1.2k
                 </span>
               
 
@@ -437,67 +410,77 @@
       
 
       
-        <p>主要是搭建一个DPDK+docker的环境，然而docker上次用是在软工的时候，重新学还花了一些功夫，改日写篇docker总结好了。</p>
-<span id="more"></span>
-<h1 id="最终能够运行的版本信息">最终能够运行的版本信息</h1>
-<p>注 ：dpdk、pktgen是wget下载安装的，docker是apt install安装的</p>
+        <h1 id="introduction">Introduction</h1>
+<p>在这篇文章中，我们提出了PCAT，一个production
+change-aware的遥测系统，处理快速发展的网络中的变化。我们建议使用一个change
+cube abstraction来系统地跟踪变化，并使用intent-based
+layering的设计来限制和跟踪变化。</p>
+<p>本文考虑的变化不仅包括来自监测数据的网络工作事件，还包括那些对遥测系统本身的更新：监测意图的修改、设备API的进步、频率概念的调整、处理的突变和存储格式的重组。</p>
+<p>PCAT包括三个关键设计。</p>
 <ul>
-<li>Linux kernel 4.4.0-131-generic</li>
-<li>Ubuntu 16.04.5 LTS</li>
-<li>dpdk-stable-16.11.1</li>
-<li>pktgen-dpdk-pktgen-3.1.1</li>
-<li>Docker version 17.03.2-ce</li>
+<li>首先，受数据库社区[8]的启发，我们为遥测引入了change cube
+abstraction，以明确跟踪每个变化的时间、实体、属性和组件，并引入了一套primitives以系统地探索变化。</li>
+<li>第二，我们重新构建了我们的遥测系统，使其具有变化意识和可进化性。为了限制变化的影响，即受影响组件的数量，PCAT包括一个基于意图的分层设计（第4节），它将监测意图与数据收集分开，并支持跨层的变化方块。</li>
+<li>第三，我们建立了几个变化感知的应用程序，探索change
+cube之间的依赖关系，以提高应用效率和准确性。</li>
 </ul>
-<h1 id="环境配置">环境配置</h1>
+<h1 id="changes-in-facebook-network-telemetry">Changes in Facebook
+Network Telemetry</h1>
+<h2 id="change-cube-definition">Change Cube Definition</h2>
+<h3 id="change-cubes">Change Cubes</h3>
+<p>We define a change cube to be a tuple &lt;<em>Time</em>,
+<em>Entity</em>, <em>Property</em>, <em>Layer</em>,
+<em>Dependency</em>&gt;</p>
 <ul>
-<li>安装dpdk</li>
-<li>安装docker</li>
-<li>安装pktgen</li>
-<li>配置hugepages
-<ul>
-<li>注意！本实验中由于我们需要使用virtio-user这种连接方式，由于实现时的一些限制导致使用vhost-user时同时最多只能使用8个hugepages无论2M还是1G大小的hugepagesize。所以这里必须使用1G大小的hugepagesize同时最多分配8个。</li>
-</ul></li>
+<li>Time维度捕捉到变化发生的时间。它取决于我们检测变化的颗粒度，例如，秒、分钟或天。</li>
+<li>Entity代表一个测量对象，例如一个开关，一个线卡，以及描述测量内容和方式的模型。</li>
+<li>Property包含实体的字段或属性，会被改变。例如，一个交换机的回环IP地址，一个接口的入口丢包。</li>
+<li>Layer决定了遥测系统中发生变化的层或组件（如图1）。我们将在第4节中讨论我们如何在这些选择中落地。</li>
+<li>Dependency维度包含一个与该变化相关的其他变化的列表。列表中的每一项都是一个&lt;ChangeCube,
+DependencyType&gt;对。</li>
 </ul>
-<h1 id="拓扑搭建">拓扑搭建</h1>
-<h2 id="拓扑">拓扑</h2>
-<p>预建立的简单拓扑</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+--------+---------------+               +-------------------+---------------+</span><br><span class="line">|        | socket file 1 |&lt;-------------&gt;| vhost-user port 1 |               |</span><br><span class="line">|        +---------------+               +-------------------+               |</span><br><span class="line">| host   |     pktgen    |               |      testpmd      |     container |</span><br><span class="line">|        +---------------+               +-------------------+               |</span><br><span class="line">|        | socket file 0 |&lt;-------------&gt;| vhost-user port 0 |               |</span><br><span class="line">+--------+---------------+               +-------------------+---------------+</span><br></pre></td></tr></table></figure>
-<p>testpmd是DPDK提供的一个通过数据包转发进行DPDK测试的工具，也是一个非常好的DPDK应用开发示例。如果想进行简单的DPDK开发实验推荐修改<code>$RTE_SDK/app/test-pmd/iofwd.c</code>后编译testpmd应用，之后在同一目录<code>$RTE_SDK/app/test-pmd/</code>下可以找到下编译后的testpmd应用。</p>
-<p>pktgen运行在主机中，testpmd运行在容器中，两个应用之间通过建立的socket文件以及vhost-user进行通信，相当于虚拟网卡。</p>
-<h2 id="启动容器">启动容器</h2>
-<p>创建Dockerfile</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;EOT &gt;&gt; $RTE_SDK/../Dockerfile</span><br><span class="line">FROM ubuntu:latest</span><br><span class="line">WORKDIR /root/dpdk</span><br><span class="line">COPY dpdk /root/dpdk/.</span><br><span class="line">ENV PATH &quot;$PATH:/root/dpdk/$RTE_TARGET/app/&quot;</span><br><span class="line">EOT</span><br></pre></td></tr></table></figure>
-<p>使用创建的dockerfile建立docker镜像</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd $RTE_SDK/..</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">-t为镜像名，可以以name:tag的格式来写，不加tag默认tag为latest</span></span><br><span class="line">sudo docker build -t dpdk .</span><br></pre></td></tr></table></figure>
-<p>运行容器</p>
-<p>注：这里一开始没把libnuma.so.1共享-v加进去，结果进去报错</p>
-<p>注2：但是在后来的可跑的版本中，不加又没有关系</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /tmp/virtio</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-ti 提供一个PTY交互界面并保持STDIN持续可用</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-v /dev/... 将主机的hugepages通过数据卷挂载到容器内，从而可以与主机共享hugepages</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-v /tmp/... 挂载一个数据卷到容器中用于共享virtio_user的sockets</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--privilege 不启用特权可能导致无法共享hugepages和sockets</span></span><br><span class="line">sudo docker run -ti --rm --name=test \</span><br><span class="line">-v /dev/hugepages:/dev/hugepages \</span><br><span class="line">-v /tmp/virtio/:/tmp/virtio/ \</span><br><span class="line">--privileged dpdk</span><br></pre></td></tr></table></figure>
-<h3 id="虚拟机上的初步结果">虚拟机上的初步结果</h3>
-<p>因为硬件受限还没法添加1G的hugepage，为了测试testpmd的可用性，我暂时直接在容器中运行</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">testpmd</span><br></pre></td></tr></table></figure>
-<p>截图如下</p>
-<p><img src="/img/2018-7-16-1-1.png" /></p>
-<h2 id="启动应用">启动应用</h2>
-<p>在容器中运行testpmd</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">以下命令在容器中运行</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">DPDK的参数</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-l 列出所使用的CPU核</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-n 给出memory channels的数量</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--socket-mem 限制用于每个socket的内存量</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--vdev 创建vhost的socket文件用于进行网络连接，可以理解为虚拟网卡</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--file-prefix hugepages字首，用于区分所使用的hugepage</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">testpmd的参数</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--forward-mode=io 对两个端口情况从一个端口进来的包直接从另一个端口发出</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在~/dpdk文件夹下运行</span></span><br><span class="line">./x86_64-native-linuxapp-gcc/app/testpmd -l 0-1 -n 1 --socket-mem 1024,1024 --vdev &#x27;eth_vhost0,iface=/tmp/virtio/sock1&#x27; --vdev &#x27;eth_vhost1,iface=/tmp/virtio/sock2&#x27; --file-prefix=test --no-pci -- -i --forward-mode=io --auto-start</span><br></pre></td></tr></table></figure>
-<p>在主机上运行pktgen</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">以下命令在主机中运行</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">DPDK的参数同上，--vdev在这里用来连接到socket文件</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">pktgen的参数</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-P 在所有端口启用混杂模式</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-m 定义CPU核到端口的绑定，在这里core5绑定到prot0，core6绑定到port1</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">pktgen的运行目录应在Pktgen.lua同一文件夹下运行</span></span><br><span class="line"></span><br><span class="line">sudo pktgen -l 2-6 -n 3 --socket-mem 1024,1024 --vdev=&#x27;virtio_user0,path=/tmp/virtio/sock1&#x27; --vdev=&#x27;virtio_user1,path=/tmp/virtio/sock2&#x27; -- -P -m &quot;5.0,6.1&quot;</span><br></pre></td></tr></table></figure>
-<h1 id="最终结果">最终结果</h1>
-<p>在pktgen中进行简单设置，并在testpmd中查看结果</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Pktgen:/&gt;set all rate 10</span><br><span class="line">Pktgen:/&gt;set 0 count 100</span><br><span class="line">Pktgen:/&gt;set 1 count 200</span><br><span class="line">Pktgen:/&gt;str</span><br></pre></td></tr></table></figure>
-<h2 id="pktgen上截图">pktgen上截图</h2>
-<p><img src="/img/2018-8-15-2.png" /></p>
-<h2 id="testpmd上截图">testpmd上截图</h2>
-<p><img src="/img/2018-8-15-1.png" /></p>
-<h1 id="参考资料">参考资料</h1>
+<h3 id="primitives-on-change-cubes">Primitives on change cubes</h3>
+<p>定义了几个原语</p>
+<h2 id="changes-in-pcat">Changes in PCAT</h2>
+<p>我们从设备、收集配置和应用意图的角度分析了七年来（2012-2019）的变化。我们下面的结果发现了令人惊讶的频繁变化，并量化了变化的各种原因。</p>
+<h3 id="change-overview">Change Overview</h3>
 <ul>
-<li>https://www.sdnlab.com/20112.html</li>
-<li>https://segmentfault.com/q/1010000003036379</li>
-<li>http://pktgen-dpdk.readthedocs.io/en/latest/getting_started.html</li>
-<li>http://www.voidcn.com/article/p-fmqewmwt-bqu.html</li>
+<li>变化频率：types of changes vary greatly as the telemetry system
+scales</li>
+<li>变化幅度：collection infrastructure has larger changes and the
+application has changes with larger volatility</li>
 </ul>
+<h1 id="changes-tracking-in-telemetry-system">Changes Tracking in
+Telemetry System</h1>
+<p>在本节中，我们描述了我们目前基于意图的遥测系统的分层设计，以帮助跟踪变化。</p>
+<h2 id="towards-change-aware-telemetry">Towards change-aware
+telemetry</h2>
+<h3 id="intent-modeling">Intent Modeling</h3>
+<p>我们使用一种基于Thrift的建模语言，使网络工程师能够轻松地指定他们的监控意图。</p>
+<p>我们的语言包含三个部分，如图5所示。</p>
+<ul>
+<li>范围包括设备级范围（如骨干路由器）和网络级范围（如DC结构网络）。</li>
+<li>监控（Monitor）以厂商无关的方式指定要监控的内容。键是监测的指标，实体是时间序列数据流和离散事件表。</li>
+<li>行动包括两种类型。Emitter和Detector。发射器订阅从设备推送的离散网络事件，并在收到这些事件后定义行动。检测器允许我们为各种时间序列数据编写公式，并为公式值设置一个阈值作为警报条件。</li>
+</ul>
+<h3 id="runtime">Runtime</h3>
+<p>运行时执行系统根据模型从设备中收集数据，其中包括一套分布式的引擎和一个集中式的控制器来分配工作并从这些引擎中收集数据。</p>
+<p>集中式控制器获取最新的收集和作业模型，与我们数据库中的设备信息相结合，并生成一连串的作业，在给定的期限内执行。</p>
+<p>它根据负载和延迟将工作分配给指定的引擎。引擎执行采集命令，进行设备级处理，并将数据送回相应的存储。该系统经过大量的工程设计，以解决可靠性和可扩展性的挑战。</p>
+<h2 id="change-reduction-w-vendor-agnostic-ir">Change reduction w/
+vendor-agnostic IR</h2>
+<p>供应商无关的中间表示（IR）数据模型。该数据模型是基于意图模型中的键字段而创建的。</p>
+<h1 id="change-exploration">Change Exploration</h1>
+<p>一旦PCAT根据监控意图收集数据，我们就会运行设备级和网络级处理，将数据反馈给应用程序。下面，我们通过探索变化方块之间的依赖关系，建立一些变化感知的应用程序。</p>
 
+
+	<div class="row">
+    <embed src="/paper/nsdi22-Evolvable-Network-Telemetry-at-Facebook.pdf" width="100%" height="1700" type="application/pdf">
+	</div>
+
+
+
+<!-- flag of hidden posts -->
       
     </div>
     
@@ -512,37 +495,11 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/%E5%85%B6%E4%BB%96/" rel="tag"># 其他</a>
-          
-        </div>
-      
 
       
       
       
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/pktgen-install.html" rel="next" title="pktgen-dpdk安装踩坑实录">
-                <i class="fa fa-chevron-left"></i> pktgen-dpdk安装踩坑实录
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/docker-ovs-dpdk-vnf-exp.html" rel="prev" title="Docker+openvswitch+dpdk小实验">
-                Docker+openvswitch+dpdk小实验 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
 
       
@@ -686,7 +643,11 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E8%83%BD%E5%A4%9F%E8%BF%90%E8%A1%8C%E7%9A%84%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-number">1.</span> <span class="nav-text">最终能够运行的版本信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8B%93%E6%89%91%E6%90%AD%E5%BB%BA"><span class="nav-number">3.</span> <span class="nav-text">拓扑搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%93%E6%89%91"><span class="nav-number">3.1.</span> <span class="nav-text">拓扑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="nav-number">3.2.</span> <span class="nav-text">启动容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%8A%E7%9A%84%E5%88%9D%E6%AD%A5%E7%BB%93%E6%9E%9C"><span class="nav-number">3.2.1.</span> <span class="nav-text">虚拟机上的初步结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E5%BA%94%E7%94%A8"><span class="nav-number">3.3.</span> <span class="nav-text">启动应用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E7%BB%93%E6%9E%9C"><span class="nav-number">4.</span> <span class="nav-text">最终结果</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pktgen%E4%B8%8A%E6%88%AA%E5%9B%BE"><span class="nav-number">4.1.</span> <span class="nav-text">pktgen上截图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#testpmd%E4%B8%8A%E6%88%AA%E5%9B%BE"><span class="nav-number">4.2.</span> <span class="nav-text">testpmd上截图</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#changes-in-facebook-network-telemetry"><span class="nav-number">2.</span> <span class="nav-text">Changes in Facebook
+Network Telemetry</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#change-cube-definition"><span class="nav-number">2.1.</span> <span class="nav-text">Change Cube Definition</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#change-cubes"><span class="nav-number">2.1.1.</span> <span class="nav-text">Change Cubes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#primitives-on-change-cubes"><span class="nav-number">2.1.2.</span> <span class="nav-text">Primitives on change cubes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#changes-in-pcat"><span class="nav-number">2.2.</span> <span class="nav-text">Changes in PCAT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#change-overview"><span class="nav-number">2.2.1.</span> <span class="nav-text">Change Overview</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#changes-tracking-in-telemetry-system"><span class="nav-number">3.</span> <span class="nav-text">Changes Tracking in
+Telemetry System</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#towards-change-aware-telemetry"><span class="nav-number">3.1.</span> <span class="nav-text">Towards change-aware
+telemetry</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#intent-modeling"><span class="nav-number">3.1.1.</span> <span class="nav-text">Intent Modeling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#runtime"><span class="nav-number">3.1.2.</span> <span class="nav-text">Runtime</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#change-reduction-w-vendor-agnostic-ir"><span class="nav-number">3.2.</span> <span class="nav-text">Change reduction w&#x2F;
+vendor-agnostic IR</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#change-exploration"><span class="nav-number">4.</span> <span class="nav-text">Change Exploration</span></a></li></ol></div>
             
 
           </div>
