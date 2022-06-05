@@ -81,6 +81,12 @@ layering的设计来限制和跟踪变化。</li>
     <url>/mendelian-randomization.html</url>
     <content><![CDATA[<p>孟德尔随机化</p>
 <span id="more"></span>
+<h1 id="课件">课件</h1>
+<ul>
+<li><a
+href="https://datawine.github.io/mr-lesson-1.html">第一讲</a></li>
+</ul>
+<h1 id="资料">资料</h1>
 <ul>
 <li><a
 href="https://datawine.github.io/mr-background.html">孟德尔随机化研究背景</a></li>
