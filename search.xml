@@ -67,6 +67,10 @@ Network Telemetry at Facebook</a>：PCAT，一个production
 change-aware的遥测系统，处理快速发展的网络中的变化。我们建议使用一个change
 cube abstraction来系统地跟踪变化，并使用intent-based
 layering的设计来限制和跟踪变化。</li>
+<li><a
+href="https://datawine.github.io/nsdi22-SketchLib-Enabling-Efficient-Sketch-based-Monitoring-on-Programmable-Switches.html">SketchLib:
+Enabling Efficient Sketch-based Monitoring on Programmable
+Switches</a>：这篇文章主要是在p4交换机针对sketch应用进行优化。</li>
 </ul>
 ]]></content>
       <categories>

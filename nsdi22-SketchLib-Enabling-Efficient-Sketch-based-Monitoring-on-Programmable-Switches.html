@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="Introduction 在这篇文章中，我们提出了PCAT，一个production change-aware的遥测系统，处理快速发展的网络中的变化。我们建议使用一个change cube abstraction来系统地跟踪变化，并使用intent-based layering的设计来限制和跟踪变化。 本文考虑的变化不仅包括来自监测数据的网络工作事件，还包括那些对遥测系统本身的更新：监测意图的修改">
+<meta name="description" content="本文的贡献  系统地分析了现有sketch在硬件上实现的资源瓶颈 确定了实用的和正确的结构化操作技术来解决确定的瓶颈 设计了一个易于使用的库，称为SketchLib，以帮助开发人员在交换机硬件上有效地实现他们的sketch算法，从而从这些资源优化中受益。  本篇文章专注于基于可重构匹配行动表（Reconfigurable Match-Action Table, RMT）范式的可编程硬件交换机 Bo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Evolvable Network Telemetry at Facebook">
-<meta property="og:url" content="https://datawine.github.io/nsdi22-Evolvable-Network-Telemetry-at-Facebook.html">
+<meta property="og:title" content="SketchLib-Enabling Efficient Sketch-based Monitoring on Programmable Switches">
+<meta property="og:url" content="https://datawine.github.io/nsdi22-SketchLib-Enabling-Efficient-Sketch-based-Monitoring-on-Programmable-Switches.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="Introduction 在这篇文章中，我们提出了PCAT，一个production change-aware的遥测系统，处理快速发展的网络中的变化。我们建议使用一个change cube abstraction来系统地跟踪变化，并使用intent-based layering的设计来限制和跟踪变化。 本文考虑的变化不仅包括来自监测数据的网络工作事件，还包括那些对遥测系统本身的更新：监测意图的修改">
+<meta property="og:description" content="本文的贡献  系统地分析了现有sketch在硬件上实现的资源瓶颈 确定了实用的和正确的结构化操作技术来解决确定的瓶颈 设计了一个易于使用的库，称为SketchLib，以帮助开发人员在交换机硬件上有效地实现他们的sketch算法，从而从这些资源优化中受益。  本篇文章专注于基于可重构匹配行动表（Reconfigurable Match-Action Table, RMT）范式的可编程硬件交换机 Bo">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-05-30T10:35:20.000Z">
-<meta property="article:modified_time" content="2022-06-06T06:07:30.373Z">
+<meta property="article:published_time" content="2022-06-06T05:59:30.000Z">
+<meta property="article:modified_time" content="2022-06-06T06:10:15.614Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="nsdi">
 <meta name="twitter:card" content="summary">
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/nsdi22-Evolvable-Network-Telemetry-at-Facebook.html"/>
+  <link rel="canonical" href="https://datawine.github.io/nsdi22-SketchLib-Enabling-Efficient-Sketch-based-Monitoring-on-Programmable-Switches.html"/>
 
 
 
 
 
-  <title>Evolvable Network Telemetry at Facebook | Datawine's Blog</title><meta name="robots" content="noindex">
+  <title>SketchLib-Enabling Efficient Sketch-based Monitoring on Programmable Switches | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/nsdi22-Evolvable-Network-Telemetry-at-Facebook.html">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/nsdi22-SketchLib-Enabling-Efficient-Sketch-based-Monitoring-on-Programmable-Switches.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Evolvable Network Telemetry at Facebook</h1>
+          <h1 class="post-title" itemprop="name headline">SketchLib-Enabling Efficient Sketch-based Monitoring on Programmable Switches</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-30T18:35:20+08:00">
-                2022-05-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-06-06T13:59:30+08:00">
+                2022-06-06
               </time>
             
 
@@ -368,8 +368,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/nsdi22-Evolvable-Network-Telemetry-at-Facebook.html#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="nsdi22-Evolvable-Network-Telemetry-at-Facebook.html" itemprop="commentsCount"></span>
+                <a href="/nsdi22-SketchLib-Enabling-Efficient-Sketch-based-Monitoring-on-Programmable-Switches.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="nsdi22-SketchLib-Enabling-Efficient-Sketch-based-Monitoring-on-Programmable-Switches.html" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.2k
+                  1.3k
                 </span>
               
 
@@ -433,72 +433,72 @@
       
 
       
-        <h1 id="introduction">Introduction</h1>
-<p>在这篇文章中，我们提出了PCAT，一个production
-change-aware的遥测系统，处理快速发展的网络中的变化。我们建议使用一个change
-cube abstraction来系统地跟踪变化，并使用intent-based
-layering的设计来限制和跟踪变化。</p>
-<p>本文考虑的变化不仅包括来自监测数据的网络工作事件，还包括那些对遥测系统本身的更新：监测意图的修改、设备API的进步、频率概念的调整、处理的突变和存储格式的重组。</p>
-<p>PCAT包括三个关键设计。</p>
+        <p>本文的贡献</p>
 <ul>
-<li>首先，受数据库社区[8]的启发，我们为遥测引入了change cube
-abstraction，以明确跟踪每个变化的时间、实体、属性和组件，并引入了一套primitives以系统地探索变化。</li>
-<li>第二，我们重新构建了我们的遥测系统，使其具有变化意识和可进化性。为了限制变化的影响，即受影响组件的数量，PCAT包括一个基于意图的分层设计（第4节），它将监测意图与数据收集分开，并支持跨层的变化方块。</li>
-<li>第三，我们建立了几个变化感知的应用程序，探索change
-cube之间的依赖关系，以提高应用效率和准确性。</li>
+<li>系统地分析了现有sketch在硬件上实现的资源瓶颈</li>
+<li>确定了实用的和正确的结构化操作技术来解决确定的瓶颈</li>
+<li>设计了一个易于使用的库，称为SketchLib，以帮助开发人员在交换机硬件上有效地实现他们的sketch算法，从而从这些资源优化中受益。</li>
 </ul>
-<h1 id="changes-in-facebook-network-telemetry">Changes in Facebook
-Network Telemetry</h1>
-<h2 id="change-cube-definition">Change Cube Definition</h2>
-<h3 id="change-cubes">Change Cubes</h3>
-<p>We define a change cube to be a tuple &lt;<em>Time</em>,
-<em>Entity</em>, <em>Property</em>, <em>Layer</em>,
-<em>Dependency</em>&gt;</p>
+<p>本篇文章专注于基于可重构匹配行动表（Reconfigurable Match-Action
+Table, RMT）范式的可编程硬件交换机</p>
+<h1 id="bottleneck-analysis">Bottleneck Analysis</h1>
+<p>实验方法：扩展了RMT resource mapper</p>
+<p>发现了四个bottleneck</p>
 <ul>
-<li>Time维度捕捉到变化发生的时间。它取决于我们检测变化的颗粒度，例如，秒、分钟或天。</li>
-<li>Entity代表一个测量对象，例如一个开关，一个线卡，以及描述测量内容和方式的模型。</li>
-<li>Property包含实体的字段或属性，会被改变。例如，一个交换机的回环IP地址，一个接口的入口丢包。</li>
-<li>Layer决定了遥测系统中发生变化的层或组件（如图1）。我们将在第4节中讨论我们如何在这些选择中落地。</li>
-<li>Dependency维度包含一个与该变化相关的其他变化的列表。列表中的每一项都是一个&lt;ChangeCube,
-DependencyType&gt;对。</li>
+<li>Hash
+calls：在硬件交换机上，代码中出现的所有hash调用都需要预先分配，因为必须保证在所有可能的执行路径上以线速度执行。这增加了资源需求，即使哈希调用不需要执行。</li>
+<li>Memory：与哈希资源类似，SALU（memory access
+hardware）需要在编译时预先分配，即使它们可能一直未使用。</li>
+<li>Resources for tracking heavy flowkeys：许多sketch需要跟踪heavy
+flowkey，以实现下游的分析任务。通常情况下，这些sketch在一个单独的数据结构（例如，堆或优先级队列）中存储heavy
+flowkey[17, 41]。</li>
+<li>Pipeline
+stages：我们隐含地假设交换机上有一个单一的资源池（即SRAM/TCAM、SALU和哈希调用），可以分配给sketch操作。在现实中，这些资源在流水线的各个阶段被分割开来。这在两个方面影响资源的使用。首先，在一个操作可以被分配到一个阶段之前，所有需要的资源都需要在该阶段可用。如果不是这样，它需要被转移到下一个阶段。第二，如果两个操作之间存在依赖关系，例如代码中的O1
+→
+O2，那么O2必须被放在比O1更晚的阶段，即使在流水线的早期阶段有未使用的资源可用。</li>
 </ul>
-<h3 id="primitives-on-change-cubes">Primitives on change cubes</h3>
-<p>定义了几个原语</p>
-<h2 id="changes-in-pcat">Changes in PCAT</h2>
-<p>我们从设备、收集配置和应用意图的角度分析了七年来（2012-2019）的变化。我们下面的结果发现了令人惊讶的频繁变化，并量化了变化的各种原因。</p>
-<h3 id="change-overview">Change Overview</h3>
-<ul>
-<li>变化频率：types of changes vary greatly as the telemetry system
-scales</li>
-<li>变化幅度：collection infrastructure has larger changes and the
-application has changes with larger volatility</li>
-</ul>
-<h1 id="changes-tracking-in-telemetry-system">Changes Tracking in
-Telemetry System</h1>
-<p>在本节中，我们描述了我们目前基于意图的遥测系统的分层设计，以帮助跟踪变化。</p>
-<h2 id="towards-change-aware-telemetry">Towards change-aware
-telemetry</h2>
-<h3 id="intent-modeling">Intent Modeling</h3>
-<p>我们使用一种基于Thrift的建模语言，使网络工程师能够轻松地指定他们的监控意图。</p>
-<p>我们的语言包含三个部分，如图5所示。</p>
-<ul>
-<li>范围包括设备级范围（如骨干路由器）和网络级范围（如DC结构网络）。</li>
-<li>监控（Monitor）以厂商无关的方式指定要监控的内容。键是监测的指标，实体是时间序列数据流和离散事件表。</li>
-<li>行动包括两种类型。Emitter和Detector。发射器订阅从设备推送的离散网络事件，并在收到这些事件后定义行动。检测器允许我们为各种时间序列数据编写公式，并为公式值设置一个阈值作为警报条件。</li>
-</ul>
-<h3 id="runtime">Runtime</h3>
-<p>运行时执行系统根据模型从设备中收集数据，其中包括一套分布式的引擎和一个集中式的控制器来分配工作并从这些引擎中收集数据。</p>
-<p>集中式控制器获取最新的收集和作业模型，与我们数据库中的设备信息相结合，并生成一连串的作业，在给定的期限内执行。</p>
-<p>它根据负载和延迟将工作分配给指定的引擎。引擎执行采集命令，进行设备级处理，并将数据送回相应的存储。该系统经过大量的工程设计，以解决可靠性和可扩展性的挑战。</p>
-<h2 id="change-reduction-w-vendor-agnostic-ir">Change reduction w/
-vendor-agnostic IR</h2>
-<p>供应商无关的中间表示（IR）数据模型。该数据模型是基于意图模型中的键字段而创建的。</p>
-<h1 id="change-exploration">Change Exploration</h1>
-<p>一旦PCAT根据监控意图收集数据，我们就会运行设备级和网络级处理，将数据反馈给应用程序。下面，我们通过探索变化方块之间的依赖关系，建立一些变化感知的应用程序。</p>
+<h1 id="optimizations">Optimizations</h1>
+<h2 id="optimizing-hash-calls">Optimizing Hash Calls</h2>
+<h3 id="optimization-1.-consolidate-many-short-hash-calls">Optimization
+1. Consolidate many short hash calls</h3>
+<p>我们观察到，许多哈希调用只需要短长度（例如，1比特）的哈希结果。我们可以通过合并许多短的哈希调用来减少哈希调用的数量，只要哈希调用的输入是相同的。</p>
+<p>实际上就是把一个长的hash分割成几个不同的短的hash。</p>
+<h3
+id="optimization-2.-reuse-the-hash-calls-across-levels-for-multi-level-sketches">Optimization
+2. Reuse the hash calls across levels for multi-level sketches</h3>
+<p>如果对哈希调用没有独立性要求，我们可以重用它们；也就是说，它们可以使用同一个种子。尽管在一个单级sketch中的不同计数器阵列之间通常需要哈希的独立性，但在不同级别之间则不需要[16]。因此，我们可以在多级草图中使用相同的哈希种子跨越不同级别。</p>
+<h2 id="optimizing-pipeline-stages">Optimizing Pipeline Stages</h2>
+<h3
+id="optimization-3.-avoiding-the-sequential-if-clauses-using-a-longest-prefix-match">Optimization
+3. Avoiding the sequential if clauses using a longest prefix match</h3>
+<p>最长前缀匹配（LPM），可以在硬件中有效计算。也就是说，我们可以使用单一的L位散列计算L个散列位，并使用LPM来识别哪些层需要更新。如图9所示，这种LPM操作是通过TCAM实现的。</p>
+<h2 id="optimizing-memory-accesses">Optimizing Memory Accesses</h2>
+<h3
+id="optimization-4-refactor-multi-level-sketches-to-update-one-level-per-packet">Optimization
+4: Refactor multi-level sketches to update one level per packet</h3>
+<p>我们重构了multi-level sketching algorithms及其代码，以保证only one
+level is updated per flowkey。</p>
+<p>详细可以看图10</p>
+<h3 id="optimization-5-remove-unnecessary-salu-operations">Optimization
+5: Remove unnecessary SALU operations</h3>
+<p>对于每个级别的每个计数器，编译器静态地分配一个SALU用于内存访问。这导致了SALU的高使用率，即使每个数据包只需要更新一个级别；也就是说，使用率与更新所有级别相同。</p>
+<p>当每个数据包只需要一个更新时，我们可以删除不必要的SALU。编译器之所以没有为所有可能的内存访问预先分配SALU，是因为在运行时很难自动找出只需要一个更新。我们的优化重组了P4代码，使编译器明确知道每一级只需要一个计数草图更新。我们没有使用位于不同开关内存区域的单独的计数器阵列，而是将所有级别的计数器阵列合并到位于一个内存区域的单一阵列中。这是可能的，因为SALU可以支持随机访问，因此根据选定的级别，我们可以计算出相应的索引值来访问合并后的寄存器。图11说明了这种SALU优化。这种优化将多级草图的SALU要求降低了L（级别的数量，例如，R-HHH[12]的25）倍。</p>
+<h2 id="optimizing-heavy-flowkey-reporting">Optimizing Heavy Flowkey
+Reporting</h2>
+<h3
+id="optimization-6-use-a-hash-table-and-an-exact-match-ta--ble-for-checking-duplicate-flowkeys">Optimization
+6: Use a hash table and an exact-match ta- ble for checking duplicate
+flowkeys</h3>
+<p>正如第3.2节B3所讨论的，先前的努力[33，39]使用Bloom
+filter作为重复检查器，但过滤器的假阳性会导致heavy
+flowkeys的错过，除非使用一个非常大的Bloom
+filter。为了改善失误率和数据平面资源之间的权衡，我们使用一个哈希表和一个精确匹配表来检查重复。</p>
+<h1 id="api-implementation">API Implementation</h1>
+<p>没什么好看的</p>
 
 
 	<div class="row">
-    <embed src="/paper/nsdi22-Evolvable-Network-Telemetry-at-Facebook.pdf" width="100%" height="1700" type="application/pdf">
+    <embed src="/paper/nsdi22-SketchLib-Enabling-Efficient-Sketch-based-Monitoring-on-Programmable-Switches.pdf" width="100%" height="1700" type="application/pdf">
 	</div>
 
 
@@ -672,11 +672,15 @@ vendor-agnostic IR</h2>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#changes-in-facebook-network-telemetry"><span class="nav-number">2.</span> <span class="nav-text">Changes in Facebook
-Network Telemetry</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#change-cube-definition"><span class="nav-number">2.1.</span> <span class="nav-text">Change Cube Definition</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#change-cubes"><span class="nav-number">2.1.1.</span> <span class="nav-text">Change Cubes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#primitives-on-change-cubes"><span class="nav-number">2.1.2.</span> <span class="nav-text">Primitives on change cubes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#changes-in-pcat"><span class="nav-number">2.2.</span> <span class="nav-text">Changes in PCAT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#change-overview"><span class="nav-number">2.2.1.</span> <span class="nav-text">Change Overview</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#changes-tracking-in-telemetry-system"><span class="nav-number">3.</span> <span class="nav-text">Changes Tracking in
-Telemetry System</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#towards-change-aware-telemetry"><span class="nav-number">3.1.</span> <span class="nav-text">Towards change-aware
-telemetry</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#intent-modeling"><span class="nav-number">3.1.1.</span> <span class="nav-text">Intent Modeling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#runtime"><span class="nav-number">3.1.2.</span> <span class="nav-text">Runtime</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#change-reduction-w-vendor-agnostic-ir"><span class="nav-number">3.2.</span> <span class="nav-text">Change reduction w&#x2F;
-vendor-agnostic IR</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#change-exploration"><span class="nav-number">4.</span> <span class="nav-text">Change Exploration</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#bottleneck-analysis"><span class="nav-number">1.</span> <span class="nav-text">Bottleneck Analysis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#optimizations"><span class="nav-number">2.</span> <span class="nav-text">Optimizations</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#optimizing-hash-calls"><span class="nav-number">2.1.</span> <span class="nav-text">Optimizing Hash Calls</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#optimization-1.-consolidate-many-short-hash-calls"><span class="nav-number">2.1.1.</span> <span class="nav-text">Optimization
+1. Consolidate many short hash calls</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#optimization-2.-reuse-the-hash-calls-across-levels-for-multi-level-sketches"><span class="nav-number">2.1.2.</span> <span class="nav-text">Optimization
+2. Reuse the hash calls across levels for multi-level sketches</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#optimizing-pipeline-stages"><span class="nav-number">2.2.</span> <span class="nav-text">Optimizing Pipeline Stages</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#optimization-3.-avoiding-the-sequential-if-clauses-using-a-longest-prefix-match"><span class="nav-number">2.2.1.</span> <span class="nav-text">Optimization
+3. Avoiding the sequential if clauses using a longest prefix match</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#optimizing-memory-accesses"><span class="nav-number">2.3.</span> <span class="nav-text">Optimizing Memory Accesses</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#optimization-4-refactor-multi-level-sketches-to-update-one-level-per-packet"><span class="nav-number">2.3.1.</span> <span class="nav-text">Optimization
+4: Refactor multi-level sketches to update one level per packet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#optimization-5-remove-unnecessary-salu-operations"><span class="nav-number">2.3.2.</span> <span class="nav-text">Optimization
+5: Remove unnecessary SALU operations</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#optimizing-heavy-flowkey-reporting"><span class="nav-number">2.4.</span> <span class="nav-text">Optimizing Heavy Flowkey
+Reporting</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#optimization-6-use-a-hash-table-and-an-exact-match-ta--ble-for-checking-duplicate-flowkeys"><span class="nav-number">2.4.1.</span> <span class="nav-text">Optimization
+6: Use a hash table and an exact-match ta- ble for checking duplicate
+flowkeys</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#api-implementation"><span class="nav-number">3.</span> <span class="nav-text">API Implementation</span></a></li></ol></div>
             
 
           </div>
