@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="孟德尔随机化," />
+  <meta name="keywords" content="nsdi," />
 
 
 
@@ -79,15 +79,17 @@
 
 
 
+<meta name="description" content="可编程硬件的广泛异质性以及可用资源和监测所需资源的动态变化使现有的全网监测方法变得不切实际。 我们提出了HeteroSketch，一个由两个主要部分组成的框架。 (1)一个剖析工具，通过预测任意硬件的性能来自动量化它们的sketch算法 (2)一个优化框架，决定测量任务的位置和设备的资源分配，以满足监测目标，同时考虑异质设备的能力。 HeteroSketch使用一种新的聚类方法实现了对大型网络（&amp;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MR第一讲">
-<meta property="og:url" content="https://datawine.github.io/mr-lesson-1.html">
+<meta property="og:title" content="HeteroSketch-Coordinating Network-wide Monitoring in Heterogeneous and Dynamic Networks">
+<meta property="og:url" content="https://datawine.github.io/nsdi22-HeteroSketch-Coordinating-Network-wide-Monitoring-in-Heterogeneous-and-Dynamic-Networks.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="可编程硬件的广泛异质性以及可用资源和监测所需资源的动态变化使现有的全网监测方法变得不切实际。 我们提出了HeteroSketch，一个由两个主要部分组成的框架。 (1)一个剖析工具，通过预测任意硬件的性能来自动量化它们的sketch算法 (2)一个优化框架，决定测量任务的位置和设备的资源分配，以满足监测目标，同时考虑异质设备的能力。 HeteroSketch使用一种新的聚类方法实现了对大型网络（&amp;">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-06-05T06:49:58.000Z">
-<meta property="article:modified_time" content="2022-06-06T06:53:08.581Z">
+<meta property="article:published_time" content="2022-06-06T06:50:27.000Z">
+<meta property="article:modified_time" content="2022-06-06T06:54:22.258Z">
 <meta property="article:author" content="Datawine">
-<meta property="article:tag" content="孟德尔随机化">
+<meta property="article:tag" content="nsdi">
 <meta name="twitter:card" content="summary">
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/mr-lesson-1.html"/>
+  <link rel="canonical" href="https://datawine.github.io/nsdi22-HeteroSketch-Coordinating-Network-wide-Monitoring-in-Heterogeneous-and-Dynamic-Networks.html"/>
 
 
 
 
 
-  <title>MR第一讲 | Datawine's Blog</title><meta name="robots" content="noindex">
+  <title>HeteroSketch-Coordinating Network-wide Monitoring in Heterogeneous and Dynamic Networks | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -295,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/mr-lesson-1.html">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/nsdi22-HeteroSketch-Coordinating-Network-wide-Monitoring-in-Heterogeneous-and-Dynamic-Networks.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -312,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">MR第一讲</h1>
+          <h1 class="post-title" itemprop="name headline">HeteroSketch-Coordinating Network-wide Monitoring in Heterogeneous and Dynamic Networks</h1>
         
 
         <div class="post-meta">
@@ -324,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-06-05T14:49:58+08:00">
-                2022-06-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-06-06T14:50:27+08:00">
+                2022-06-06
               </time>
             
 
@@ -347,8 +349,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
-                    <span itemprop="name">学习</span>
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
                   </a>
                 </span>
 
@@ -366,8 +368,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/mr-lesson-1.html#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="mr-lesson-1.html" itemprop="commentsCount"></span>
+                <a href="/nsdi22-HeteroSketch-Coordinating-Network-wide-Monitoring-in-Heterogeneous-and-Dynamic-Networks.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="nsdi22-HeteroSketch-Coordinating-Network-wide-Monitoring-in-Heterogeneous-and-Dynamic-Networks.html" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -394,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  1.6k
                 </span>
               
 
@@ -410,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  5
                 </span>
               
             </div>
@@ -431,10 +433,63 @@
       
 
       
-        
+        <p>可编程硬件的广泛异质性以及可用资源和监测所需资源的动态变化使现有的全网监测方法变得不切实际。</p>
+<p>我们提出了HeteroSketch，一个由两个主要部分组成的框架。</p>
+<p>(1)一个剖析工具，通过预测任意硬件的性能来自动量化它们的sketch算法</p>
+<p>(2)一个优化框架，决定测量任务的位置和设备的资源分配，以满足监测目标，同时考虑异质设备的能力。</p>
+<p>HeteroSketch使用一种新的聚类方法实现了对大型网络（&gt;40,000个节点）的优化部署，并能对网络拓扑结构、流量、查询和资源动态作出迅速反应。</p>
+<h1 id="system-overview">System Overview</h1>
+<h2 id="heterosketch-workflow">HeteroSketch Workflow</h2>
+<p>对于任何新设备，HeteroSketch都需要进行离线性能分析，将新的抽象配置文件添加到其设备配置文件库中。设备配置文件库允许HeteroSketch预先判断不同sketch配置的性能-资源权衡。</p>
+<p>一旦HeteroSketch获得用户输入（监测要求），HeteroSketch的Optimizer输出草图的配置和对设备的映射（即每个设备的草图清单）以及分配给每个设备的资源（即设备配置）。基于优化器的输出，HeteroSketch将草图部署到网络中，并像其他监控系统一样收集全网统计数据。如果用户输入、网络拓扑结构、流量需求和可用资源发生动态变化，HeteroSketch将进行快速重新优化。</p>
+<p>HeteroSketch目前支持基于sketch的流量级遥测查询，即对origin-destination（OD）上定义的流量集进行查询。然后，HeteroSketch将实例化并收集（线性合并）来自多个实例的sketch（例如，Count-Min和UnivMon）的数据，同时确保所有OD对都被监测，资源开销最小。</p>
+<h2 id="challenges-and-key-insights">Challenges and Key Insights</h2>
+<ul>
+<li>C1: [异质性]：预测不同资源分配的sketch性能。
+<ul>
+<li>insight：我们观察到
+<ul>
+<li>（1）草图的原始操作（如散列、内存更新）在很大程度上决定了数据包的处理时间</li>
+<li>（2）基于数据流分析，大多数草图的数据依赖性有限，控制流有限。这意味着有足够多的独立操作要执行（无论是对同一数据包还是跨数据包），性能大致由操作的数量决定，而不是它们的相互依赖关系。</li>
+</ul></li>
+<li>因此，我们设计了一个benchmark suite。</li>
+</ul></li>
+<li>C2：[表述和可扩展性]
+在异构硬件上的放置的优化形式重新导致了一个NP-Hard问题。
+<ul>
+<li>insight：我们使用求解器的高级功能（双线性约束）来纳入非凸的设备配置文件。为了实现可扩展性，我们将优化问题划分为互不相干的子问题，并同时解决。我们通过将网络划分为群组来定义这些子问题。我们发现，传统的聚类技术，如频谱聚类[51]，要么导致不可行的子问题，要么解决方案远非最佳（见第6节）。我们的关键见解是根据OD-对（流量和监控要求）而不仅仅是网络结构来定义节点之间的聚类亲和力。</li>
+</ul></li>
+<li>C3：[动态调整]
+<ul>
+<li>insight：用快速路径来补充聚类方法。它利用了我们的观察，即只对直接受网络动态影响的设备子集重新计算位置/配置就足够了。</li>
+</ul></li>
+</ul>
+<h1 id="performance-profiler">Performance Profiler</h1>
+<p>具体来说，对于每个设备类型，我们有一个三阶段的方法来确定草图的性能。</p>
+<ul>
+<li>第一阶段：测量原始操作的时间。在这个阶段，我们评估了每次草图更新的下列原始操作的时间：哈希计算（计算能力）、内存访问（内存层次的影响）、抛硬币（随机数生成）和包转发。</li>
+<li>第二阶段：对不同操作的时间进行组合。第二阶段确定不同的微观基准应如何组成，以获得每个数据包的总时间。目标是通过测试三个关键属性来捕捉设备架构如何组合原始操作的独特属性：（1）内存和计算并发，（2）转发和草图并发，以及（3）草图访问频率。</li>
+<li>第三阶段：考虑设备配置的影响。剖析器还必须建立一个模型，说明草图和转发性能如何随设备配置（如CPU内核、微型引擎）的变化而变化。由于性能扩展可能在不同的瓶颈上有所不同，我们研究了三种草图表现：（1）小草图，引发计算瓶颈；（2）单个大草图，引发内存瓶颈；以及（3）无草图，研究转发瓶颈。</li>
+</ul>
+<h1 id="optimizer">Optimizer</h1>
+<p>优化器的目标是决定哪个草图应该放在哪个设备上，每个设备应该使用哪些资源，同时满足设备约束、监测要求、流量需求，并朝着用户指定的目标进行优化。</p>
+<p>我们将放置和资源分配问题制定为混合整数双线性程序（MI- BLP）</p>
+<h1 id="scalability-and-dynamics">Scalability and Dynamics</h1>
+<p>在Gurobi中解决MI-BLP需要几个小时以上的时间，即使是规模不大的数据中心拓扑结构，有成千上万的设备。为了快速响应网络动态和扩展到更多的设备，我们使用了一个三步法。</p>
+<ul>
+<li>第1步：将网络拓扑结构划分为disjoint clusters</li>
+<li>第2步：运行优化器，将草图分配给clusters</li>
+<li>第3步：对于每个cluster，运行优化器将草图放置到集群内的设备上。</li>
+</ul>
+<h2 id="clustering-approach">Clustering Approach</h2>
+<p>我们使用一个特定领域的启发式方法来模仿频谱聚类。</p>
+<p>我们的启发式方法是基于这样的观察：许多聚类解决方案为草图放置保留了足够的灵活性，产生了良好的性能</p>
+<h2 id="fast-path">Fast Path</h2>
+<p>我们从第6.1节得到的关键观察是，子问题应该为草图保留足够的放置选择。基于此，我们发现，在网络变化事件中，只对直接受变化影响的设备A的集合进行重新计算放置就足够了。</p>
+
 
 	<div class="row">
-    <embed src="/paper/mr-lesson-1.pdf" width="100%" height="1700" type="application/pdf">
+    <embed src="/paper/nsdi22-HeteroSketch-Coordinating-Network-wide-Monitoring-in-Heterogeneous-and-Dynamic-Networks.pdf" width="100%" height="1700" type="application/pdf">
 	</div>
 
 
@@ -456,7 +511,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/%E5%AD%9F%E5%BE%B7%E5%B0%94%E9%9A%8F%E6%9C%BA%E5%8C%96/" rel="tag"># 孟德尔随机化</a>
+            <a href="/tags/nsdi/" rel="tag"># nsdi</a>
           
         </div>
       
@@ -518,8 +573,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -589,6 +653,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#system-overview"><span class="nav-number">1.</span> <span class="nav-text">System Overview</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#heterosketch-workflow"><span class="nav-number">1.1.</span> <span class="nav-text">HeteroSketch Workflow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#challenges-and-key-insights"><span class="nav-number">1.2.</span> <span class="nav-text">Challenges and Key Insights</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#performance-profiler"><span class="nav-number">2.</span> <span class="nav-text">Performance Profiler</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#optimizer"><span class="nav-number">3.</span> <span class="nav-text">Optimizer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#scalability-and-dynamics"><span class="nav-number">4.</span> <span class="nav-text">Scalability and Dynamics</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#clustering-approach"><span class="nav-number">4.1.</span> <span class="nav-text">Clustering Approach</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fast-path"><span class="nav-number">4.2.</span> <span class="nav-text">Fast Path</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

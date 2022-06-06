@@ -71,6 +71,10 @@ layering的设计来限制和跟踪变化。</li>
 href="https://datawine.github.io/nsdi22-SketchLib-Enabling-Efficient-Sketch-based-Monitoring-on-Programmable-Switches.html">SketchLib:
 Enabling Efficient Sketch-based Monitoring on Programmable
 Switches</a>：这篇文章主要是在p4交换机针对sketch应用进行优化。</li>
+<li><a
+href="https://datawine.github.io/nsdi22-HeteroSketch-Coordinating-Network-wide-Monitoring-in-Heterogeneous-and-Dynamic-Networks.pdf">HeteroSketch:
+Coordinating Network-wide Monitoring in Heterogeneous and Dynamic
+Networks</a>：主要解决sketch算法的在异质化硬件上的问题。首先用profiler测量硬件性能，再用optimizer根据性能放置sketch算法。</li>
 </ul>
 ]]></content>
       <categories>
