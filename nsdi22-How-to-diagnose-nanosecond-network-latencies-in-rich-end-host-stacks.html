@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="论文汇总," />
+  <meta name="keywords" content="nsdi," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="论文阅读列表">
+<meta name="description" content="How to diagnose nanosecond network latencies in rich end-host stacks 低延迟的网络堆栈已经将终端主机内的网络延迟降低到了微秒级。然而，终端主机分析器的开销很大，它们只对confirm a hypothesis有用，而不是首先诊断出问题。 本文展示了如何建立一个具有全栈覆盖和低开销的延迟诊断工具，它可以识别而不仅仅是确认终端主机的延">
 <meta property="og:type" content="article">
-<meta property="og:title" content="论文阅读">
-<meta property="og:url" content="https://datawine.github.io/paper-reading.html">
+<meta property="og:title" content="How to diagnose nanosecond network latencies in rich end-host stacks">
+<meta property="og:url" content="https://datawine.github.io/nsdi22-How-to-diagnose-nanosecond-network-latencies-in-rich-end-host-stacks.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="论文阅读列表">
+<meta property="og:description" content="How to diagnose nanosecond network latencies in rich end-host stacks 低延迟的网络堆栈已经将终端主机内的网络延迟降低到了微秒级。然而，终端主机分析器的开销很大，它们只对confirm a hypothesis有用，而不是首先诊断出问题。 本文展示了如何建立一个具有全栈覆盖和低开销的延迟诊断工具，它可以识别而不仅仅是确认终端主机的延">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-05-09T12:34:45.000Z">
-<meta property="article:modified_time" content="2022-06-19T11:56:03.119Z">
+<meta property="article:published_time" content="2022-06-19T11:48:57.000Z">
+<meta property="article:modified_time" content="2022-06-19T11:55:32.092Z">
 <meta property="article:author" content="Datawine">
-<meta property="article:tag" content="论文汇总">
+<meta property="article:tag" content="nsdi">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/paper-reading.html"/>
+  <link rel="canonical" href="https://datawine.github.io/nsdi22-How-to-diagnose-nanosecond-network-latencies-in-rich-end-host-stacks.html"/>
 
 
 
 
 
-  <title>论文阅读 | Datawine's Blog</title>
+  <title>How to diagnose nanosecond network latencies in rich end-host stacks | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/paper-reading.html">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/nsdi22-How-to-diagnose-nanosecond-network-latencies-in-rich-end-host-stacks.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">论文阅读</h1>
+          <h1 class="post-title" itemprop="name headline">How to diagnose nanosecond network latencies in rich end-host stacks</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-09T20:34:45+08:00">
-                2022-05-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-06-19T19:48:57+08:00">
+                2022-06-19
               </time>
             
 
@@ -368,8 +368,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/paper-reading.html#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="paper-reading.html" itemprop="commentsCount"></span>
+                <a href="/nsdi22-How-to-diagnose-nanosecond-network-latencies-in-rich-end-host-stacks.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="nsdi22-How-to-diagnose-nanosecond-network-latencies-in-rich-end-host-stacks.html" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  636
+                  1.5k
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  6
                 </span>
               
             </div>
@@ -433,89 +433,142 @@
       
 
       
-        <p>论文阅读列表</p>
-<span id="more"></span>
-<h1 id="atc">ATC</h1>
-<h2 id="section">2019</h2>
+        <h1
+id="how-to-diagnose-nanosecond-network-latencies-in-rich-end-host-stacks">How
+to diagnose nanosecond network latencies in rich end-host stacks</h1>
+<p>低延迟的网络堆栈已经将终端主机内的网络延迟降低到了微秒级。然而，终端主机分析器的开销很大，它们只对confirm
+a hypothesis有用，而不是首先诊断出问题。</p>
+<p>本文展示了如何建立一个具有全栈覆盖和低开销的延迟诊断工具，它可以识别而不仅仅是确认终端主机的延迟来源。这种独特的测量方法通过调和多个时间域（网络和CPU）的CPU和NIC硬件剖析跟踪，以纳秒级的精度重建终端主机内的网络信息寿命。它发现了内核和用户空间堆栈中的意外延迟源。</p>
+<p>我们的调查发现，现有的终端主机分析器在网络延迟诊断方面有三个原因。</p>
 <ul>
-<li><a
-href="https://datawine.github.io/atc19-The-Design-and-Operation-of-CloudLab.html">The
-Design and Operation of
-CloudLab</a>：主要是讲分布式实验平台CloudLab的综述</li>
+<li>首先，现有的分析器未能捕捉到由网卡增加的延迟偏差，从信息进入（或离开）网卡到它们被驱动器接收（或离开）的时间点。</li>
+<li>其次，它们的高开销严重干扰了延迟分布，压倒了正在追求的根本原因。</li>
+<li>第三，现有的剖析器过于沉重，无法应用于整个堆栈。诊断网络延迟的开发者必须在这种剖析器发挥作用之前就已经猜到了要看哪里。用户确定堆栈中可能增加延迟偏差的部分，然后使用分析工具来测量这些部分的延迟。不幸的结果是，堆栈中未被检查的部分的延迟来源没有被发现。此外，堆栈的不同部分之间的重要互动也没有被注意到[46,68]。</li>
 </ul>
-<h1 id="nsdi">NSDI</h1>
-<h2 id="section-1">2022</h2>
+<h1 id="challenges-and-key-ideas">Challenges and key ideas</h1>
+<p>四个目标</p>
 <ul>
-<li><a
-href="https://datawine.github.io/nsdi22-Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks.html">Efficient
-Scheduling Policies for Microsecond-Scale
-Tasks</a>：开源。模拟。对比load balancing策略和core
-allocation策略对1us级别任务的性能影响。</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Buffer-based-End-to-end-Request-Event-Monitoring-in-the-Cloud.html">Buffer-based
-End-to-end Request Event Monitoring in the
-Cloud</a>：以请求粒度捕获请求延迟异常（RLA）相关的事件：缓冲区建模和请求级别的数据包注入</li>
-<li><a
-href="https://datawine.github.io/nsdi22-A-Case-for-Task-Sampling-based-Learning-for-Cluster-Job-Scheduling.html">A
-Case for Task Sampling based Learning for Cluster Job
-Scheduling</a>：提出使用空间特性（其实就是sample-based）来预测集群作业的Job
-Completion Time要比history-based更好。</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Starlight-Fast-Container-Provisioning-on-the-Edge-and-over-the-WAN.html">Starlight:
-Fast Container Provisioning on the Edge and over the
-WAN</a>：重新设计了容器provisioning的协议和流程等，来让在低带宽、高延时的网络中加速容器provisioning</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Closed-loop-Network-Performance-Monitoring-and-Diagnosis-with-SpiderMon.html">Closed-loop
-Network Performance Monitoring and Diagnosis with
-SpiderMon</a>：基于可编程交换机的网络异常监控。论文的亮点在于针对后验诊断（posterior
-diagnosis）、解决了现有的监控系统的两个问题：高覆盖率和低开销</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Collie-Finding-Performance-Anomalies-in-RDMA-Subsystems.html">Collie-Finding
-Performance Anomalies in RDMA
-Subsystems</a>：使用模拟退火搜索性能异常空间</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Performance-Interfaces-for-Network-Functions.html">Performance
-Interfaces for Network Functions</a>：提出了performance
-interface的概念，用符号执行和trace的一个简单执行来生成关于Performance
-Critical Variances的一个程序，和实际的NF一一对应</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Justitia-Software-Multi-Tenancy-in-Hardware-Kernel-Bypass-Networks.html">Justitia:
-Software Multi-Tenancy in Hardware Kernel-Bypass
-Networks</a>：对RDMA的多租户支持</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Zeta-A-Scalable-and-Robust-East-West-Communication-Framework-in-Large-Scale-Clouds.html">Zeta:
-A Scalable and Robust East-West Communication Framework in Large-Scale
-Clouds</a>：云网关的设计</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Cocktail-A-Multidimensional-Optimization-for-Model-Serving-in-Cloud.html">Cocktail:
-A Multidimensional Optimization for Model Serving in
-Cloud</a>：针对ensemble
-learning，在保证机器学习的准确率的情况下设计动态模型选择和购买算法，来保证经济效益</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Evolvable-Network-Telemetry-at-Facebook.html">Evolvable
-Network Telemetry at Facebook</a>：PCAT，一个production
-change-aware的遥测系统，处理快速发展的网络中的变化。我们建议使用一个change
-cube abstraction来系统地跟踪变化，并使用intent-based
-layering的设计来限制和跟踪变化。</li>
-<li><a
-href="https://datawine.github.io/nsdi22-SketchLib-Enabling-Efficient-Sketch-based-Monitoring-on-Programmable-Switches.html">SketchLib:
-Enabling Efficient Sketch-based Monitoring on Programmable
-Switches</a>：这篇文章主要是在p4交换机针对sketch应用进行优化。</li>
-<li><a
-href="https://datawine.github.io/nsdi22-HeteroSketch-Coordinating-Network-wide-Monitoring-in-Heterogeneous-and-Dynamic-Networks.html">HeteroSketch:
-Coordinating Network-wide Monitoring in Heterogeneous and Dynamic
-Networks</a>：主要解决sketch算法的在异质化硬件上的问题。首先用profiler测量硬件性能，再用optimizer根据性能放置sketch算法。</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Packet-Order-Matters-Improving-Application-Performance-by-Deliberately-Delaying-Packets.html">Packet
-Order Matters! Improving Application Performance by Deliberately
-Delaying
-Packets</a>：实际场景中，混杂流的包是交替到达的。论文提出将同一个流的包buffer一下，然后批处理统一发送，会提高效率。</li>
-<li><a
-href="https://datawine.github.io/nsdi22-How-to-diagnose-nanosecond-network-latencies-in-rich-end-host-stacks.html">How
-to diagnose nanosecond network latencies in rich end-host
-stacks</a>：改了基于intel-PT的perf，实现了一个full-stack的网络分析器</li>
+<li>全覆盖</li>
+<li>自动</li>
+<li>纳秒级精度</li>
+<li>低开销</li>
+</ul>
+<h2 id="profiling-network-message-lifetimes">Profiling network-message
+lifetimes</h2>
+<p>网络消息是在网卡和一个或多个CPU核心中处理的。捕获跨越这些设备的消息lifetime具有挑战性，原因有二。</p>
+<h3
+id="challenge-1.-网卡cpu分析和软件的时间戳来自独立变化的时钟">Challenge
+1. 网卡、CPU分析和软件的时间戳来自独立变化的时钟。</h3>
+<p>CPU profiling用hardware clock；网卡用software
+sync机制比如phc2sys；software clock使用如ptp协议不断调整和同步。</p>
+<p>一种理想解决方法是modify time synchronization protocols to expose
+clock changes to profilers like perf。但是要改整个software stack。</p>
+<p>所以我们使用了一个更简单但更昂贵的解决方法。在时间同步协议改变软件时钟后，内核重新计算CPU
+profiling时钟和软件时钟之间的转换。
+通过使用虚拟动态共享对象（vDSO）机制将这些转换参数暴露给用户空间，我们可以在剖析期间从用户线程中轮询它们。
+我们的目标是捕获软体时钟的每一个变化，以便在所有时间点上拥有最准确的时钟映射。</p>
+<h3
+id="challenge-2.-在主机software-stack中没有跟踪网络信息lifetimes的支持">Challenge
+2. 在主机software stack中没有跟踪网络信息lifetimes的支持。</h3>
+<p>Software profiling tools can only track network messages
+<em>within</em> the network stack</p>
+<p>CPU profiling tracks all system activity but not the message
+lifetimes within which such system activity occurs</p>
+<p>解决方法是对于每个消息（例如，M2），我们试图获得三个时间戳：</p>
+<ul>
+<li>一个NIC时间戳（M2(n)）</li>
+<li>一个核心移交时间戳（M2(h)）</li>
+<li>一个应用程序时间戳（M2(a)）</li>
+</ul>
+<p>NIC hardware-timestamps和application
+software-timestamps从send/receive的时候拿（M(n)和M(a)）。 messages sent
+from end-hosts是ordered by application timestamps； messages received at
+end-hosts是ordered by NIC timestamps。</p>
+<p>M(h)是从points where messages cross software-processing and core
+boundaries拿，比如sock_def_readable</p>
+<h2 id="diagnosing-high-message-latencies">Diagnosing high message
+latencies</h2>
+<p>就算跑一小段时间，也有很多数据。为了方便，必须能够identify anomalous
+system activity。 这种异常行为可能有：functions that take
+longer和functions that occur more frequently。</p>
+<h3
+id="challenge-3.-同一个latency-deviation可能由好几个anomalies导致">Challenge
+3. 同一个latency deviation可能由好几个anomalies导致</h3>
+<p>为了减少嵌套带来的歧义，我们只报告那些不能被其嵌套函数解释的异常函数。</p>
+<p>为了确定一个异常函数是否被嵌套的异常现象所解释，我们使用一个启发式方法。
+如果嵌套的异常现象加起来占到父函数延迟偏差的80%以上（原因见第5.2节），我们就得出结论，嵌套的异常现象解释了父异常现象，并省略了父异常现象作为偏差的原因。</p>
+<h1 id="design-and-implementation">Design and implementation</h1>
+<p>整个框架由两部分组成：Profiling System和Nsight Analysis</p>
+<h2 id="profiling-system">Profiling System</h2>
+<p>又分成两个部分：CPU
+profiler收集从call到return的信息；shim收集metadata，包括</p>
+<ul>
+<li>时间戳：recv、send、sk_data_ready</li>
+<li>core number：在kernel-user space边界收集</li>
+<li>socket file descriptor：检测head-of-line blocking</li>
+</ul>
+<p>用LD_PRELOAD实现shim。</p>
+<p>在Intel-PT上使用perf，改的perf。</p>
+<h2 id="nsight-analysis">Nsight Analysis</h2>
+<p>给了六种异常分类</p>
+<ul>
+<li>functions that take longer</li>
+<li>functions that are called more frequently</li>
+<li>unexpected functions</li>
+<li>entire program context unexpected（作为scheduling
+decisions或者interrupts的结果）</li>
+<li>absence of system activity，CPU在等些什么，比如因为cache
+miss导致的memory read</li>
+<li>cross message interference in the network stack</li>
+</ul>
+<p>四个阶段</p>
+<ul>
+<li>找unexpected program context，这部分主要是OS和应用异常</li>
+<li>找gaps in system activities，从gap之前的最后一次活动识别原因</li>
+<li>找function that are slower/more frequently
+called/unexpected，主要是Error handling code
+path（如TCP重传）或者应用瓶颈</li>
+<li>找overlap between msg
+<ul>
+<li>同一个应用msg之间的head-of-line blocking</li>
+<li>不同应用msg之间的cross-app network interference</li>
+</ul></li>
+</ul>
+<p>归因：只需要一个原因就够了</p>
+<ul>
+<li>对program context和cross-app
+interference异常，不需要往下分析，因为一般就是由于调度引起的</li>
+<li>子原因什么时候替代父原因：占了超过80%的时间</li>
+</ul>
+<p>注：</p>
+<ul>
+<li>intel-PT的batch是322ns，可能会引起under-reporting或者bogus
+gap，因此低于这个的不考虑</li>
+<li>没有分得很细，而是分类了，这个过程是partly自动化
+<ul>
+<li>The process of categorization is partly automated. For example,
+process contexts are automatically derived from perf. We categorize 1350
+functions in Linux by hand, using the contextual information from their
+names in a user configurable CSV file. We also introduce head-of-line
+blocking as a category. To do so, we automate summarization of all
+functions that are executed when processing messages with minimum
+latency. When these functions occur more frequently or their latencies
+deviate (for example, NIC interrupt processing takes longer) in message
+lifetimes of the same application, NSight shows head-of-line blocking as
+one of the root causes. We ver- ify the latency deviations attributed to
+head-of-line blocking by cross-referencing message lifetimes to identify
+overlaps.</li>
+</ul></li>
 </ul>
 
+
+	<div class="row">
+    <embed src="/paper/nsdi22-How-to-diagnose-nanosecond-network-latencies-in-rich-end-host-stacks.pdf" width="100%" height="1700" type="application/pdf">
+	</div>
+
+
+
+<!-- flag of hidden posts -->
       
     </div>
     
@@ -532,7 +585,7 @@ stacks</a>：改了基于intel-PT的perf，实现了一个full-stack的网络分
       
         <div class="post-tags">
           
-            <a href="/tags/%E8%AE%BA%E6%96%87%E6%B1%87%E6%80%BB/" rel="tag"># 论文汇总</a>
+            <a href="/tags/nsdi/" rel="tag"># nsdi</a>
           
         </div>
       
@@ -541,26 +594,6 @@ stacks</a>：改了基于intel-PT的perf，实现了一个full-stack的网络分
       
       
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/mendelian-randomization.html" rel="next" title="孟德尔随机化">
-                <i class="fa fa-chevron-left"></i> 孟德尔随机化
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/r-learning.html" rel="prev" title="R语言学习">
-                R语言学习 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
 
       
@@ -704,7 +737,13 @@ stacks</a>：改了基于intel-PT的perf，实现了一个full-stack的网络分
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#atc"><span class="nav-number">1.</span> <span class="nav-text">ATC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section"><span class="nav-number">1.1.</span> <span class="nav-text">2019</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nsdi"><span class="nav-number">2.</span> <span class="nav-text">NSDI</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-1"><span class="nav-number">2.1.</span> <span class="nav-text">2022</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#how-to-diagnose-nanosecond-network-latencies-in-rich-end-host-stacks"><span class="nav-number">1.</span> <span class="nav-text">How
+to diagnose nanosecond network latencies in rich end-host stacks</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#challenges-and-key-ideas"><span class="nav-number">2.</span> <span class="nav-text">Challenges and key ideas</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#profiling-network-message-lifetimes"><span class="nav-number">2.1.</span> <span class="nav-text">Profiling network-message
+lifetimes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#challenge-1.-%E7%BD%91%E5%8D%A1cpu%E5%88%86%E6%9E%90%E5%92%8C%E8%BD%AF%E4%BB%B6%E7%9A%84%E6%97%B6%E9%97%B4%E6%88%B3%E6%9D%A5%E8%87%AA%E7%8B%AC%E7%AB%8B%E5%8F%98%E5%8C%96%E7%9A%84%E6%97%B6%E9%92%9F"><span class="nav-number">2.1.1.</span> <span class="nav-text">Challenge
+1. 网卡、CPU分析和软件的时间戳来自独立变化的时钟。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#challenge-2.-%E5%9C%A8%E4%B8%BB%E6%9C%BAsoftware-stack%E4%B8%AD%E6%B2%A1%E6%9C%89%E8%B7%9F%E8%B8%AA%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AFlifetimes%E7%9A%84%E6%94%AF%E6%8C%81"><span class="nav-number">2.1.2.</span> <span class="nav-text">Challenge
+2. 在主机software stack中没有跟踪网络信息lifetimes的支持。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#diagnosing-high-message-latencies"><span class="nav-number">2.2.</span> <span class="nav-text">Diagnosing high message
+latencies</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#challenge-3.-%E5%90%8C%E4%B8%80%E4%B8%AAlatency-deviation%E5%8F%AF%E8%83%BD%E7%94%B1%E5%A5%BD%E5%87%A0%E4%B8%AAanomalies%E5%AF%BC%E8%87%B4"><span class="nav-number">2.2.1.</span> <span class="nav-text">Challenge
+3. 同一个latency deviation可能由好几个anomalies导致</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#design-and-implementation"><span class="nav-number">3.</span> <span class="nav-text">Design and implementation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#profiling-system"><span class="nav-number">3.1.</span> <span class="nav-text">Profiling System</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nsight-analysis"><span class="nav-number">3.2.</span> <span class="nav-text">Nsight Analysis</span></a></li></ol></li></ol></div>
             
 
           </div>
