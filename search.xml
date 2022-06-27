@@ -84,6 +84,10 @@ Packets</a>：实际场景中，混杂流的包是交替到达的。论文提出
 href="https://datawine.github.io/nsdi22-How-to-diagnose-nanosecond-network-latencies-in-rich-end-host-stacks.html">How
 to diagnose nanosecond network latencies in rich end-host
 stacks</a>：改了基于intel-PT的perf，实现了一个full-stack的网络分析器</li>
+<li><a
+href="https://datawine.github.io/nsdi22-CloudCluster-Unearthing-the-Functional-Structure-of-a-Cloud-Service.html">CloudCluster:
+Unearthing the Functional Structure of a Cloud
+Service</a>：根据流量矩阵对同一个数据中心内的VM进行聚类</li>
 </ul>
 ]]></content>
       <categories>
