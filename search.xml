@@ -88,6 +88,10 @@ stacks</a>：改了基于intel-PT的perf，实现了一个full-stack的网络分
 href="https://datawine.github.io/nsdi22-CloudCluster-Unearthing-the-Functional-Structure-of-a-Cloud-Service.html">CloudCluster:
 Unearthing the Functional Structure of a Cloud
 Service</a>：根据流量矩阵对同一个数据中心内的VM进行聚类</li>
+<li><a
+href="https://datawine.github.io/nsdi22-NetHint-White-Box-Networking-for-Multi-Tenant-Data-Centers.html">NetHint:
+White-Box Networking for Multi-Tenant Data
+Centers</a>：运营商提供给用户一套简单的拓扑信息，方便他们优化机器学习应用（或者说数据密集型应用）</li>
 </ul>
 ]]></content>
       <categories>
