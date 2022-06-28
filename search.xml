@@ -92,6 +92,10 @@ Service</a>：根据流量矩阵对同一个数据中心内的VM进行聚类</li
 href="https://datawine.github.io/nsdi22-NetHint-White-Box-Networking-for-Multi-Tenant-Data-Centers.html">NetHint:
 White-Box Networking for Multi-Tenant Data
 Centers</a>：运营商提供给用户一套简单的拓扑信息，方便他们优化机器学习应用（或者说数据密集型应用）</li>
+<li><a
+href="https://datawine.github.io/nsdi22-Isolation-Mechanisms-for-High-Speed-Packet-Processing-Pipelines.html">Isolation
+Mechanisms for High-Speed Packet-Processing
+Pipelines</a>：本文介绍了Menshen，它是可编程交换机的可重构匹配表（RMT）管道的一个扩展，在不同的数据包处理模块之间实施隔离。</li>
 </ul>
 ]]></content>
       <categories>
