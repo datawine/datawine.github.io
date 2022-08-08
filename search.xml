@@ -1696,18 +1696,26 @@ http://networkstatic.net/measuring-network-bandwidth-using-iperf-and-docker/</li
 <span id="more"></span>
 <h1 id="asplos">ASPLOS</h1>
 <h2 id="section">2022</h2>
-<p>-<a href="https://datawine.github.io/.html"></a> -<a
+<ul>
+<li><a href="https://datawine.github.io/.html"></a></li>
+<li><a
 href="https://datawine.github.io/asplos22-IceBreaker-Warming-Serverless-Functions-Better-with-Heterogeneity.html">IceBreaker:
 Warming Serverless Functions Better with
-Heterogeneity</a>：利用异质化机器的区别来优化serverless function的warmup
--<a
+Heterogeneity</a>：利用异质化机器的区别来优化serverless
+function的warmup</li>
+<li><a
 href="https://datawine.github.io/asplos22-INFless-A-Native-Serverless-System-for-Low-Latency-High-Throughput-Inference.html">INFless:
 A Native Serverless System for Low Latency High
-ThroughputInference</a>：主要对机器学习在serverless上的应用进行了适配
--<a
+ThroughputInference</a>：主要对机器学习在serverless上的应用进行了适配</li>
+<li><a
 href="https://datawine.github.io/asplos22-FaaSFlow-Enable-Efficient-Workflow-Execution-for-Function-as-a-Service.html">FaaSFlow:
 Enable Efficient Workflow Execution for
-Function-as-a-Service</a>：主要对serverless的workflow进行了优化，改成了分布式函数状态存储和in-memory的数据传输</p>
+Function-as-a-Service</a>：主要对serverless的workflow进行了优化，改成了分布式函数状态存储和in-memory的数据传输</li>
+<li><a
+href="https://datawine.github.io/asplos22-Serverless-Computing-on-Heterogeneous-Computers.html">Serverless
+Computing on Heterogeneous
+Computers</a>：提出了一个FPGA+CPU+DPU的serverless平台，主要工作是做兼容的</li>
+</ul>
 <h1 id="atc">ATC</h1>
 <h2 id="section-1">2019</h2>
 <ul>
