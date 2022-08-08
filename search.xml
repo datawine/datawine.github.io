@@ -5,8 +5,14 @@
     <url>/paper-reading.html</url>
     <content><![CDATA[<p>论文阅读列表</p>
 <span id="more"></span>
+<h1 id="asplos">ASPLOS</h1>
+<h2 id="section">2022</h2>
+<p>-<a href="https://datawine.github.io/.html"></a> -<a
+href="https://datawine.github.io/asplos22-IceBreaker-Warming-Serverless-Functions-Better-with-Heterogeneity.html">IceBreaker:
+Warming-Serverless-Functions-Better-with-Heterogeneity</a>：利用异质化机器的区别来优化serverless
+function的warmup</p>
 <h1 id="atc">ATC</h1>
-<h2 id="section">2019</h2>
+<h2 id="section-1">2019</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/atc19-The-Design-and-Operation-of-CloudLab.html">The
@@ -14,7 +20,7 @@ Design and Operation of
 CloudLab</a>：主要是讲分布式实验平台CloudLab的综述</li>
 </ul>
 <h1 id="nsdi">NSDI</h1>
-<h2 id="section-1">2022</h2>
+<h2 id="section-2">2022</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/nsdi22-Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks.html">Efficient
@@ -148,20 +154,6 @@ href="https://datawine.github.io/mr-others.html">孟德尔随机化及其他</a>
       <tags>
         <tag>孟德尔随机化</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>多元线性回归</title>
-    <url>/mlr.html</url>
-    <content><![CDATA[<p>这篇文章只是对mlr的最简单介绍。详细的线代和统计的知识可以看参考里面的几个链接</p>
-<p>（打定义太麻烦了，我再看看吴孟达怎么介绍的吧）</p>
-<h1 id="定义">定义</h1>
-<h1 id="参考">参考</h1>
-<ul>
-<li><a
-href="https://zhuanlan.zhihu.com/p/45149297">回归分析|笔记整理（1）——引入，一元线性回归（上）</a></li>
-<li>http://staff.ustc.edu.cn/~zwp/teach/MVA/Lec9_slides.pdf</li>
-</ul>
-]]></content>
   </entry>
   <entry>
     <title>Istio学习（一）</title>
