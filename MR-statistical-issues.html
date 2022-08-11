@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="简介 就是两阶段最小二乘法。 第一阶段是用暴露在工具变量上回归得到暴露的拟合值。 第二阶段是对结局在暴露的拟合值上进行回归，第二阶段得到的暴露拟合值的回归系数就是我们关心的因果效应值了。 具体流程 连续结局 二分类结局 二分类结局的两阶段估计方法和连续型结局类似，只是其中第二阶段回归使用对数线性或逻辑回归模型。 这里需要再总结一下，我认为数学上这推送少了太多统计学知识了">
+<meta name="description" content="我们依次讨论了  弱工具偏倚 等位基因分数 样本重叠 赢家诅咒 选择和碰撞偏倚 协变量调整 非碰撞性 时间和时变效应 Power to detect a causal effect 从单一基因区选择变体 二元暴露 替代估计方法  Weak instrument bias 弱工具是一个工具变量（IV），在统计学上与暴露的关联不强。 一个弱工具仍然是一个有效的IV，因为它满足IV的假设。基于弱工具的估">
 <meta property="og:type" content="article">
-<meta property="og:title" content="两阶段估计法">
-<meta property="og:url" content="https://datawine.github.io/tsls.html">
+<meta property="og:title" content="MR-statistical issues">
+<meta property="og:url" content="https://datawine.github.io/MR-statistical-issues.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="简介 就是两阶段最小二乘法。 第一阶段是用暴露在工具变量上回归得到暴露的拟合值。 第二阶段是对结局在暴露的拟合值上进行回归，第二阶段得到的暴露拟合值的回归系数就是我们关心的因果效应值了。 具体流程 连续结局 二分类结局 二分类结局的两阶段估计方法和连续型结局类似，只是其中第二阶段回归使用对数线性或逻辑回归模型。 这里需要再总结一下，我认为数学上这推送少了太多统计学知识了">
+<meta property="og:description" content="我们依次讨论了  弱工具偏倚 等位基因分数 样本重叠 赢家诅咒 选择和碰撞偏倚 协变量调整 非碰撞性 时间和时变效应 Power to detect a causal effect 从单一基因区选择变体 二元暴露 替代估计方法  Weak instrument bias 弱工具是一个工具变量（IV），在统计学上与暴露的关联不强。 一个弱工具仍然是一个有效的IV，因为它满足IV的假设。基于弱工具的估">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-05-19T11:58:01.000Z">
-<meta property="article:modified_time" content="2022-05-19T12:07:23.734Z">
+<meta property="article:published_time" content="2022-08-11T07:26:57.000Z">
+<meta property="article:modified_time" content="2022-08-11T08:53:11.023Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="孟德尔随机化">
 <meta name="twitter:card" content="summary">
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/tsls.html"/>
+  <link rel="canonical" href="https://datawine.github.io/MR-statistical-issues.html"/>
 
 
 
 
 
-  <title>两阶段估计法 | Datawine's Blog</title><meta name="robots" content="noindex">
+  <title>MR-statistical issues | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/tsls.html">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/MR-statistical-issues.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">两阶段估计法</h1>
+          <h1 class="post-title" itemprop="name headline">MR-statistical issues</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-19T19:58:01+08:00">
-                2022-05-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-08-11T15:26:57+08:00">
+                2022-08-11
               </time>
             
 
@@ -368,8 +368,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/tsls.html#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="tsls.html" itemprop="commentsCount"></span>
+                <a href="/MR-statistical-issues.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="MR-statistical-issues.html" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  171
+                  2.2k
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  7
                 </span>
               
             </div>
@@ -433,15 +433,92 @@
       
 
       
-        <h1 id="简介">简介</h1>
-<p>就是两阶段最小二乘法。
-第一阶段是用暴露在工具变量上回归得到暴露的拟合值。
-第二阶段是对结局在暴露的拟合值上进行回归，第二阶段得到的暴露拟合值的回归系数就是我们关心的因果效应值了。</p>
-<h1 id="具体流程">具体流程</h1>
-<h2 id="连续结局">连续结局</h2>
-<h2 id="二分类结局">二分类结局</h2>
-<p>二分类结局的两阶段估计方法和连续型结局类似，只是其中第二阶段回归使用对数线性或逻辑回归模型。</p>
-<p>这里需要再总结一下，我认为数学上这推送少了太多统计学知识了</p>
+        <p>我们依次讨论了</p>
+<ol type="1">
+<li>弱工具偏倚</li>
+<li>等位基因分数</li>
+<li>样本重叠</li>
+<li>赢家诅咒</li>
+<li>选择和碰撞偏倚</li>
+<li>协变量调整</li>
+<li>非碰撞性</li>
+<li>时间和时变效应</li>
+<li>Power to detect a causal effect</li>
+<li>从单一基因区选择变体</li>
+<li>二元暴露</li>
+<li>替代估计方法</li>
+</ol>
+<h1 id="weak-instrument-bias">Weak instrument bias</h1>
+<p>弱工具是一个工具变量（IV），在统计学上与暴露的关联不强。
+一个弱工具仍然是一个有效的IV，因为它满足IV的假设。基于弱工具的估计值是渐进无偏的（也就是说，随着样本量向无穷大的方向增加，偏差会减少到零）。
+但是对于任何有限的样本量，估计都是有偏的。</p>
+<p>由于2SLS
+IV估计的偏差取决于暴露量对IV的回归中的预期F统计量，所以可以通过增加预期F统计量来减少偏差。
+同样，如果有一些工具不能解释暴露中的大部分变化，那么排除这些工具将增加F统计量。
+一般来说，采用较少的参数来建立遗传关联模型会增加F统计量。
+理想的情况是，在收集数据之前，应通过指定样本量、工具和遗传模型，利用现有的最佳先验证据来确保F统计量的预期值大，从而解决工具偏差小的问题。</p>
+<h1 id="allele-scores">Allele scores</h1>
+<p>等位基因得分（也称为遗传风险得分、基因得分或基因型得分）是一个单一变量，在单变量得分中总结了多个遗传变异，是孟德尔随机化中使用的一种流行方法。</p>
+<p>未加权的等位基因得分被构建为个体基因型中存在的暴露增加的等位基因的总数。
+也可以考虑加权的等位基因得分，其中每个等位基因贡献一个权重，反映相应的遗传变异对暴露的影响。
+这些权重可以从分析中的数据内部得出，也可以从外部的独立数据源得出。</p>
+<p>使用等位基因得分有两个主要原因。</p>
+<p>首先是解析性。
+人们可以通过测试每个变体与一组测量的协变量的关联来探索IV假设的有效性。
+然而，当变异体和协变量性状的数量很大时，这可能是不切实际的。
+因此，我们可以用这个方法测试等位基因分数与协变量的关联。
+用单一的分数变量来评估违反IV的情况将更简单呈现，如果几个变体与同一协变量有多向关联，检测违反情况的力量将得到提高。</p>
+<p>第二个原因是为了减少弱工具偏差。
+如上所述，即使是相对较弱的IV，单一IV的中位数偏差也接近于零。
+因此，将多个遗传变体合并为一个等位基因得分是减少弱工具偏差的潜在策略。
+果等位基因分数使用与所分析的数据集中的暴露的遗传关联进行加权，那么加权的等位基因分数在数学上等同于2SLS方法中使用的暴露的拟合值（最多为一个加法常数）。
+在这种情况下，使用等位基因分数的比率IV估计值与2SLS估计值相同，弱工具偏差也就无法避免了。
+如果权重来自于被分析的数据集，那么将等位基因得分的F统计量作为一个单一的变量来呈现就会引起误解。
+然而，如果等位基因得分是利用与第二个数据集的暴露的遗传关联来加权的，那么这就相当于是一个双样本分析。
+在这种情况下，弱工具偏差是朝向空的，不会导致夸大的1型错误率。</p>
+<h1 id="sample-overlap">Sample Overlap</h1>
+<p>样本重叠可能会引起bias。</p>
+<p>一个值得注意的情况是二元结果。只
+要在估计变量-暴露关联时只使用对照组参与者（第4.1.4节），即使在一个样本的情况下，样本重叠也不会导致观察性关联方向的偏差，因为变量-暴露和变量-结果关联估计值是不相关的。</p>
+<h1 id="winners-curse">Winner's curse</h1>
+<p>如果孟德尔随机化分析中使用的遗传变体最初是在被分析的数据中发现的，则会出现另一种偏差。
+这是由于一种被称为赢家的诅咒的现象造成的。</p>
+<p>如果真相中的几个遗传变异体与暴露的关联程度相似，那么在分析的数据中最强的那个变异体的关联可能会被高估。
+由于高估通常发生在与混杂因素的关联偶然强于预期的情况下，如果发现数据集被用于估计变体-暴露或变体-结果的关联，就会产生偏差。
+发现数据集和变量-结果关联的数据集之间的重叠是一个特别值得关注的问题，因为这将导致变量-结果关联的高估，并可能导致假阳性结果。</p>
+<h1 id="selection-and-collider-bias">Selection and collider bias</h1>
+<p>选择偏倚和碰撞偏倚会影响任何观察性数据分析的结果。碰撞器是两个变量的共同效应。</p>
+<p>在孟德尔随机化中，暴露受到遗传变异和任何暴露-结果混杂因素的影响，因此在从遗传变异到结果的因果途径上是一个碰撞者。碰
+撞器的任何下游后果本身也是一个碰撞器。如果两个变量是不相关的（它们是勉强独立的），那么在对碰撞物进行调节时，它们通常是相关的（它们成为条件依赖）。</p>
+<p>我认为，这边本质来说是样本的问题导致遗传变量和混杂因素不再真正无关。</p>
+<h1 id="covariate-adjustment">Covariate adjustment</h1>
+<p>在随机试验中对协变量进行调整有两个动机：一是提高效率，二是减少随机分组之间偶然的协变量不平衡引起的偏差</p>
+<p>在IV分析中，对协变量的调整同样不是必须的，但可以提高效率和减少偶然的协变量不平衡</p>
+<p>然而，在孟德尔随机化分析中纳入协变量也有潜在的隐患。如果协变量位于从遗传变异到结果的因果途径上（中介），或者如果调整诱发了碰撞偏倚，那么调整就会使估计结果出现偏差。</p>
+<h1 id="non-collapsibility">Non-collapsibility</h1>
+<p>协变量上存在不可折叠性问题。</p>
+<h1 id="time-and-time-varying-effects">Time and time-varying
+effects</h1>
+<p>从确定个体的基因型（受孕时）到测量暴露和结果，通常有很大的差距。因此，孟德尔随机化调查通常不能很好地解决有关因果效应时间的详细问题。</p>
+<h1 id="time-to-event-data">Time-to-event data</h1>
+<p>虽然我们已经讨论了连续结果和二元结果，但到目前为止，我们还没有讨论通常在纵向研究中测量的生存结果。
+对生存结果的经典观察性分析通常使用Cox比例危害回归在乘法危害模型中估计危害比。然而，危险比的因果解释并不明确。</p>
+<h1 id="power-to-detect-a-causal-effect">Power to detect a causal
+effect</h1>
+<p>IV分析证明给定的因果效应幅度所需的样本量大约等于传统流行病学分析证明相同的关联幅度除以IV的参数</p>
+<p>举例来说，如果一个遗传变异体能解释2%的暴露方差，那么孟德尔随机化调查的样本量是传统流行病学分析的1/0.02=50倍。</p>
+<h1 id="choosing-variants-from-a-single-gene-region">Choosing variants
+from a single gene region</h1>
+<p>一般来说，在孟德尔随机化分析中使用的遗传变体的选择是一个实际问题，而不是一个统计问题。
+在这里，我们假设有一个感兴趣的单一基因区，并从纯统计学的角度考虑选择该基因区的哪些变体的问题。</p>
+<p>这种情况对于作为分子测量的暴露，如蛋白质生物标志物或某一特定基因的基因表达水平，特别相关</p>
+<h1 id="binary-exposure">Binary exposure</h1>
+<p>使用二元暴露使IV估计的解释变得复杂</p>
+<h1 id="alternative-estimation-methods">Alternative estimation
+methods</h1>
+<p>虽然我们集中讨论了比率法、2SLS和反方差加权法，但还有其他方法可以进行IV分析。
+我们简要地提到了计算因果效应的界限的方法，并介绍了有限信息最大似然法（LIML），以及广义矩量法（GMM）和结构平均模型（SMM）方法。
+其他没有讨论的方法包括连续更新估计方法，以及贝叶斯和其他全似然方法。</p>
 <!-- flag of hidden posts -->
       
     </div>
@@ -611,7 +688,11 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">具体流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E7%BB%93%E5%B1%80"><span class="nav-number">2.1.</span> <span class="nav-text">连续结局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%88%86%E7%B1%BB%E7%BB%93%E5%B1%80"><span class="nav-number">2.2.</span> <span class="nav-text">二分类结局</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#weak-instrument-bias"><span class="nav-number">1.</span> <span class="nav-text">Weak instrument bias</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#allele-scores"><span class="nav-number">2.</span> <span class="nav-text">Allele scores</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sample-overlap"><span class="nav-number">3.</span> <span class="nav-text">Sample Overlap</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#winners-curse"><span class="nav-number">4.</span> <span class="nav-text">Winner&#39;s curse</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#selection-and-collider-bias"><span class="nav-number">5.</span> <span class="nav-text">Selection and collider bias</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#covariate-adjustment"><span class="nav-number">6.</span> <span class="nav-text">Covariate adjustment</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#non-collapsibility"><span class="nav-number">7.</span> <span class="nav-text">Non-collapsibility</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#time-and-time-varying-effects"><span class="nav-number">8.</span> <span class="nav-text">Time and time-varying
+effects</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#time-to-event-data"><span class="nav-number">9.</span> <span class="nav-text">Time-to-event data</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#power-to-detect-a-causal-effect"><span class="nav-number">10.</span> <span class="nav-text">Power to detect a causal
+effect</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#choosing-variants-from-a-single-gene-region"><span class="nav-number">11.</span> <span class="nav-text">Choosing variants
+from a single gene region</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#binary-exposure"><span class="nav-number">12.</span> <span class="nav-text">Binary exposure</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#alternative-estimation-methods"><span class="nav-number">13.</span> <span class="nav-text">Alternative estimation
+methods</span></a></li></ol></div>
             
 
           </div>

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="asplos," />
+  <meta name="keywords" content="孟德尔随机化," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="本文主要是为ML inference进行serverless的适配。设计点有以下  batch处理时的速率讨论 基于五元组和distinct operator的性能预测 贪心解决带约束多项式的调度NP问题 两个不同时间尺度直方图加权来预测pre-warm和keep alive时间  基于openfaas，开源：https:&#x2F;&#x2F;github.com&#x2F;TankLabTJU&#x2F;INFless&#x2F; backg">
+<meta name="description" content="安装 第一次使用的时候需要安装 1234567install.packages(‘devtools’)# 安装最新版的TwoSampleMR包devtools::install_github(‘MRCIEU&#x2F;TwoSampleMR’)# 安装指定版本的TwoSampleMR包devtools::install_github(‘MRCIEU&#x2F;TwoSampleMR@0.4.26’) 加载安装好的包">
 <meta property="og:type" content="article">
-<meta property="og:title" content="asplos22-INFless-A-Native-Serverless-System-for-Low-Latency-High-Throughput-Inference">
-<meta property="og:url" content="https://datawine.github.io/asplos22-INFless-A-Native-Serverless-System-for-Low-Latency-High-Throughput-Inference.html">
+<meta property="og:title" content="coding-TwoSampleMR">
+<meta property="og:url" content="https://datawine.github.io/mrcieu-twosamplemr.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="本文主要是为ML inference进行serverless的适配。设计点有以下  batch处理时的速率讨论 基于五元组和distinct operator的性能预测 贪心解决带约束多项式的调度NP问题 两个不同时间尺度直方图加权来预测pre-warm和keep alive时间  基于openfaas，开源：https:&#x2F;&#x2F;github.com&#x2F;TankLabTJU&#x2F;INFless&#x2F; backg">
+<meta property="og:description" content="安装 第一次使用的时候需要安装 1234567install.packages(‘devtools’)# 安装最新版的TwoSampleMR包devtools::install_github(‘MRCIEU&#x2F;TwoSampleMR’)# 安装指定版本的TwoSampleMR包devtools::install_github(‘MRCIEU&#x2F;TwoSampleMR@0.4.26’) 加载安装好的包">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-08-08T08:08:09.000Z">
-<meta property="article:modified_time" content="2022-08-11T07:28:09.419Z">
+<meta property="article:published_time" content="2022-08-11T07:21:31.000Z">
+<meta property="article:modified_time" content="2022-08-11T07:22:53.131Z">
 <meta property="article:author" content="Datawine">
-<meta property="article:tag" content="asplos">
+<meta property="article:tag" content="孟德尔随机化">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/asplos22-INFless-A-Native-Serverless-System-for-Low-Latency-High-Throughput-Inference.html"/>
+  <link rel="canonical" href="https://datawine.github.io/mrcieu-twosamplemr.html"/>
 
 
 
 
 
-  <title>asplos22-INFless-A-Native-Serverless-System-for-Low-Latency-High-Throughput-Inference | Datawine's Blog</title><meta name="robots" content="noindex">
+  <title>coding-TwoSampleMR | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/asplos22-INFless-A-Native-Serverless-System-for-Low-Latency-High-Throughput-Inference.html">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/mrcieu-twosamplemr.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">asplos22-INFless-A-Native-Serverless-System-for-Low-Latency-High-Throughput-Inference</h1>
+          <h1 class="post-title" itemprop="name headline">coding-TwoSampleMR</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-08-08T16:08:09+08:00">
-                2022-08-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-08-11T15:21:31+08:00">
+                2022-08-11
               </time>
             
 
@@ -349,8 +349,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
-                    <span itemprop="name">论文</span>
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
                   </a>
                 </span>
 
@@ -368,8 +368,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/asplos22-INFless-A-Native-Serverless-System-for-Low-Latency-High-Throughput-Inference.html#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="asplos22-INFless-A-Native-Serverless-System-for-Low-Latency-High-Throughput-Inference.html" itemprop="commentsCount"></span>
+                <a href="/mrcieu-twosamplemr.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="mrcieu-twosamplemr.html" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  584
+                  2.1k
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  7
                 </span>
               
             </div>
@@ -433,83 +433,83 @@
       
 
       
-        <p>本文主要是为ML inference进行serverless的适配。设计点有以下</p>
+        <h1 id="安装">安装</h1>
+<p>第一次使用的时候需要安装</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">install.packages<span class="punctuation">(</span>‘devtools’<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装最新版的TwoSampleMR包</span></span><br><span class="line">devtools<span class="operator">::</span>install_github<span class="punctuation">(</span>‘MRCIEU<span class="operator">/</span>TwoSampleMR’<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定版本的TwoSampleMR包</span></span><br><span class="line">devtools<span class="operator">::</span>install_github<span class="punctuation">(</span>‘MRCIEU<span class="operator">/</span>TwoSampleMR<span class="operator">@</span><span class="number">0.4</span>.26’<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<p>加载安装好的包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">library(TwoSampleMR)</span><br></pre></td></tr></table></figure>
+<p>显示以下输出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TwoSampleMR version 0.5.6 </span><br><span class="line">[&gt;] New: Option to use non-European LD reference panels for clumping etc</span><br><span class="line">[&gt;] Some studies temporarily quarantined to verify effect allele</span><br><span class="line">[&gt;] See news(package=&#x27;TwoSampleMR&#x27;) and https://gwas.mrcieu.ac.uk for further details</span><br></pre></td></tr></table></figure>
+<h1 id="读取暴露文件">读取暴露文件</h1>
+<p>有两种读取暴露文件的方法</p>
 <ul>
-<li>batch处理时的速率讨论</li>
-<li>基于五元组和distinct operator的性能预测</li>
-<li>贪心解决带约束多项式的调度NP问题</li>
-<li>两个不同时间尺度直方图加权来预测pre-warm和keep alive时间</li>
+<li>使用TwoSampleMR获取MR base提供的数据</li>
+<li>使用TwoSampleMR包读取本地文件</li>
 </ul>
-<p>基于openfaas，开源：<a
-target="_blank" rel="noopener" href="https://github.com/TankLabTJU/INFless/">https://github.com/TankLabTJU/INFless/</a></p>
-<h1 id="background">background</h1>
-<p>现有的问题</p>
-<ul>
-<li>High latency：在aws做了实验，小内存跑得很慢，大内存也不快</li>
-<li>Batching在commercial平台上没用</li>
-<li>resource over-provisioning：CPU-Memory的这种配制方法让那些CPU
-intensive的应用浪费了memory</li>
-<li>one-to-one
-mapping在ML过程中可能会导致因为bursty的workload起过多的instance</li>
-<li>OTP batching只能够产生有限的提升，因为没有关于batch config- uration,
-instance scheduling and resource allocation的设计</li>
-</ul>
-<h1 id="design">Design</h1>
-<h2 id="workflow">Workflow</h2>
-<p>整个工作流程</p>
-<ol type="1">
-<li>部署函数</li>
-<li>根据DAG建立performance prediction model</li>
-<li>为了建立performance prediction model，还需要事先profile
-operator</li>
-<li>用户发送请求</li>
-<li>到达的请求打包成内置的批次，并分配给相应的实例</li>
-<li>如果工作负载或集群资源状态发生变化，自动扩展引擎会通过从优化的批次-资源决策中挑选出非统一的扩展策略来自适应地调整新的实例配置</li>
-<li>使用LSTH避免冷启动</li>
-</ol>
-<h2 id="built-in-non-uniformed-batching">built-in, non-uniformed
-batching</h2>
-<p>解释：</p>
-<ul>
-<li>built-in：内置在平台内的</li>
-<li>non-uniformed：每个instance有自己的batching queue，batch
-size和resource quotas都是独立配置的</li>
-</ul>
-<p>本节的design点：
-batch有严格的速率限制，既要不丢包，又要不违反SLO（在队列里等太久）</p>
-<h2 id="combined-operator-profiling">combined operator profiling</h2>
-<p>虽然有很多的call，但是distinct operator，因此采用5-tuple based
-profiling进行预测，并combine不同的operator</p>
-<ul>
-<li>p：输入数据大小</li>
-<li>b：batch size</li>
-<li>c：cpu相关资源配置</li>
-<li>g：gpu相关资源配置</li>
-<li>t：完成时间</li>
-</ul>
-<h2 id="scheduling">scheduling</h2>
-<p>这是一个带约束多项式的NP问题。最后用贪心去做。</p>
-<h2 id="managing-cold-start-with-lsth">managing cold start with
-lsth</h2>
-<p>负载的两个特点：</p>
-<ul>
-<li>长期周期性(LTP)：请求负载总体上呈现出昼夜交替的用户访问模式</li>
-<li>短期爆发性(STB)：在短时间内有许多突然变化（包括增加和减少）。</li>
-</ul>
-<p>解决方法：</p>
-<ol type="1">
-<li>维护两个窗口，一个是long-term（1天），一个是short-term（一小时）。</li>
-<li>5th作为prewarm，99th作为keep alive。</li>
-<li>long-term和short-term加权得到一个值</li>
-</ol>
-
-
-	<div class="row">
-    <embed src="/paper/asplos22-INFless-A-Native-Serverless-System-for-Low-Latency-High-Throughput-Inference.pdf" width="100%" height="1700" type="application/pdf">
-	</div>
-
-
-
+<h2 id="使用twosamplemr获取mr-base提供的数据">使用TwoSampleMR获取MR
+base提供的数据</h2>
+<p>因为MR base提供了很多数据，因此需要选择要使用的数据，也就是暴露的ID。
+假设我们选择的暴露是BMI，它的id是<code>ieu-a-2</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bmi &lt;- extract_instruments(outcomes=&#x27;ieu-a-2&#x27;, access_token=NULL) # 获取暴露数据</span><br><span class="line">head(bmi) # 查看暴露数据</span><br></pre></td></tr></table></figure>
+<p>以下的还不知道是什么意思</p>
+<p>关于extract_instruments()的使用，有几个参数需要大家注意一下：</p>
+<p>（1）第一个就是access_token这个参数，对于中国大陆地区的用户必须设置该参数为access_token=NULL，这样才能顺利获取数据，否则就需要开VPN获取谷歌授权。</p>
+<p>（2）第二个是参数p1，它是用来指定暴露中SNP的p值的，它的默认值是p1=5e-8，因此只有p值小于5e-8的SNP才会提取出来。当然如果没有SNP小于5e-8的话，我们通常可以设置p1=1e-5，不过这个时候就需要认真评估弱工具变量偏倚了。</p>
+<p>（3）第三个重要参数是clump以及与之相关的r2和kb，clump是一个逻辑型参数，只有clump=TRUE和clump=FALSE这两种情况。如果选择了参数值为clump=FALSE的话，那么r2和kb这两个参数就无效了，也即先不去除含有连锁不平衡的SNP。当clump=TRUE时，我们可以用r2和kb来确定去除连锁不平衡SNP的条件，具体内容我会在下期内容中进行详细讲解。默认情况下是clump=TRUE，r2=0.001和kb=10000。</p>
+<h2
+id="使用twosamplemr包读取本地文件">使用TwoSampleMR包读取本地文件</h2>
+<p>可以看这篇<a
+target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MjM5MTIzNjI1OA==&amp;mid=2247484572&amp;idx=1&amp;sn=397f6cf594d83a1aa85c8dfc4ad009a6&amp;chksm=a6b9ed5191ce6447472eda838c7fbddb575f5215955ce52551a6dde4d0721ffd84747a351f2d&amp;scene=21#wechat_redirect">推送</a>。
+我自己就还没试过</p>
+<h1 id="去除连锁不平衡ld">去除连锁不平衡(LD)</h1>
+<p>我们可以选择在提取数据的时候去除连锁不平衡的IV，也可以先提取数据，再去除。效果是完全一样的。</p>
+<h2 id="背景知识">背景知识</h2>
+<p>在做MR研究时，我们有一步非常重要，那就是去除存在连锁不平衡的IV。连锁不平衡主要是使用两个参数r2和kb来衡量：</p>
+<p>（1）r2：它是0~1之间的数据，r2=1表示两个SNP间是完全的连锁不平衡关系，r2=0则表示两个SNP间是完全连锁平衡的，也即这两个SNP的分配是完全随机的。</p>
+<p>（2）kb：它其实就是指考虑连锁不平衡的区域长度。在遗传学上我们认为在染色体上距离很近的遗传位点通常是“捆绑”在一起遗传给后代的，这也就导致距离很近的位点之间的r2会很大。在TwoSampleMR包中，我们去除连锁不平衡主要考虑的也是这两个参数。</p>
+<p>举个例子，如果设置r2=0.001和kb=10000，那这就表示去掉在10000kb范围内与最显著SNP的r2大于0.001的SNP；而设置成r2=0.3和kb=1000，那这表示的就是去掉在1000kb范围内与最显著SNP的r2大于0.3的SNP。</p>
+<p>从上面的解读中不难看出，随着r2的变小与kb的变大，被去除的存在连锁不平衡的SNP会越来越多，而最终剩下的IV会越来越少。在我之前的推送中曾以实例和大家探讨了IV数目对结果的影响（孟德尔随机化之高密度脂蛋白胆固醇（HDL-C）与心肌梗死的因果关系），一般IV个数越少，存在的混杂和多效性也就越少，但相应的统计效力不足；而IV数目的增多虽然能提高统计效力，但也会带来更多的偏倚。因此，调节好参数r2和kb就显得是一门技术活了！</p>
+<h2 id="在提取时去除ld">在提取时去除LD</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bmi &lt;- extract_instruments(outcomes=&#x27;ieu-a-2&#x27;, clump=TRUE, r2=0.01, kb=5000, access_token=NULL)</span><br></pre></td></tr></table></figure>
+<h2 id="先提取数据再去除ld">先提取数据，再去除LD</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bmi &lt;- extract_instruments(outcomes=&#x27;ieu-a-2&#x27;, clump=FALSE, access_token=NULL)</span><br><span class="line">exp_dat &lt;- clump_data(bmi, clump_r2=0.01, clump_kb=5000)</span><br></pre></td></tr></table></figure>
+<h1 id="提取iv在结局中的信息">提取IV在结局中的信息</h1>
+<p>在读取完暴露文件并去除掉存在连锁不平衡的SNP后，我们接下来要做的一件事就是提取IV在结局中的信息，完成这一步主要有两种方法：</p>
+<p>（1）利用TwoSampleMR获取MR base提供的结局信息</p>
+<p>（2）读取自己结局的GWAS文件并提取相关信息</p>
+<p>第一种方法使用起来非常简洁高效，可以批量读取多个结局文件，但是存在的问题是有的结局数据可能有问题（真的吗）；</p>
+<p>第二种方法一次读取一个GWAS文件，如果批量处理的话可能会占用大量内存，得不偿失。接下来我将为大家详细介绍一下这两种方法，希望大家能明白这两种读取方法的差异。</p>
+<h2
+id="读取自己结局的gwas文件并提取相关信息">读取自己结局的GWAS文件并提取相关信息</h2>
+<p>首先咱们先提取IV的信息并去除存在连锁不平衡的SNP，这里咱们还是以BMI作为暴露，但是ID号需要改成'ieu-a-835'，这主要是因为之前ID号’ieu-a-2’的GWAS是在混合人群中做的（也即把欧洲人、非洲人等不同人群合在一起做的GWAS），而’ieu-a-835’则是在欧洲人中做的。在之前的理论学习中，我曾和大家解释过人群的混杂会带来估计结果的偏倚，因此我们需要选择遗传背景一致的人群进行MR研究（如暴露和结局的GWAS都是在欧洲人群中进行的）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">library(TwoSampleMR)</span><br><span class="line">bmi_exp &lt;- extract_instruments(</span><br><span class="line"> outcomes=&#x27;ieu-a-835&#x27;,</span><br><span class="line"> clump=TRUE, r2=0.01,</span><br><span class="line"> kb=5000,access_token = NULL</span><br><span class="line">  )</span><br><span class="line">dim(bmi_exp)</span><br><span class="line"># [1] 80 15</span><br><span class="line">t2d_out &lt;- extract_outcome_data(</span><br><span class="line"> snps=bmi_exp$SNP,</span><br><span class="line"> outcomes=&#x27;ieu-a-26&#x27;,</span><br><span class="line"> proxies = FALSE,</span><br><span class="line"> maf_threshold = 0.01,</span><br><span class="line"> access_token = NULL</span><br><span class="line">)</span><br><span class="line">dim(t2d_out)</span><br></pre></td></tr></table></figure>
+<p>这里我要和大家简单介绍一下extract_outcome_data()函数的关键参数：</p>
+<p>snps：它是一串以rs开头的SNP ID</p>
+<p>outcomes：它是outcome在MR base中的ID；</p>
+<p>proxies：它表示是否使用代理SNP，默认值是TRUE，也即当一个SNP在outcome中找不到时可以使用与其存在强连锁不平衡的SNP信息来替代，我个人喜欢设置成FALSE。</p>
+<p>maf_threshold：它表示的是SNP在outcome中的最小等位基因频率，默认值是0.3，不过大样本GWAS可以适当调低，我这里设置的是0.01。</p>
+<p>access_token：大陆用户必须设置成access_token=NULL。</p>
+<h2 id="利用twosamplemr获取mr-base提供的结局信息">利用TwoSampleMR获取MR
+base提供的结局信息</h2>
+<p>见<a
+target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MjM5MTIzNjI1OA==&amp;mid=2247484596&amp;idx=1&amp;sn=b0176d1e98bc75ef71c0855d4de6cc6d&amp;chksm=a6b9ed7991ce646f645199399a3046739d7830d50b570ceab932b0f0b581bcf25418417c990e&amp;scene=21#wechat_redirect">推送</a></p>
+<h1 id="计算并解读mr结果">计算并解读MR结果</h1>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mydata &lt;- harmonise_data(</span><br><span class="line">       exposure_dat=bmi_exp,</span><br><span class="line">       outcome_dat=t2d_out,</span><br><span class="line">       action= 2</span><br><span class="line">       )</span><br></pre></td></tr></table></figure>
+<p>最后，咱们只要简单使用mr()函数即可，代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">res &lt;- mr(mydata)</span><br><span class="line">res</span><br></pre></td></tr></table></figure>
+<p>除了上述5种计算方法外，TwoSampleMR包还提供了很多计算方法，比如随机效应模型和固定效应模型等，感兴趣的朋友可以通过mr_method_list()函数来了解。</p>
+<h1 id="敏感性分析">敏感性分析</h1>
+<p>（1）异质性检验（Heterogeneity
+test）：主要是检验各个IV之间的差异，如果不同IV之间的差异大，那么这些IV的异质性就大。</p>
+<p>（2）多效性检验 （Pleiotropy
+test）：主要检验多个IV是否存在水平多效性，常用MR
+Egger法的截距项表示，如果该截距项与0差异很大，说明存在水平多效性。除此以外，MR-PRESSO包也是常用的检验水平多效性的R包。</p>
+<p>（3）逐个剔除检验 （Leave-one-out sensitivity
+test）：主要是逐个剔除IV后计算剩下IV的MR结果，如果剔除某个IV后其它IV估计出来的MR结果和总结果差异很大，说明MR结果对该IV是敏感的。</p>
+<h2 id="异质性检验">异质性检验</h2>
+<h2 id="多效性检验">多效性检验</h2>
+<h2 id="逐个剔除检验">逐个剔除检验</h2>
+<h1 id="画图">画图</h1>
 <!-- flag of hidden posts -->
       
     </div>
@@ -527,7 +527,7 @@ lsth</h2>
       
         <div class="post-tags">
           
-            <a href="/tags/asplos/" rel="tag"># asplos</a>
+            <a href="/tags/%E5%AD%9F%E5%BE%B7%E5%B0%94%E9%9A%8F%E6%9C%BA%E5%8C%96/" rel="tag"># 孟德尔随机化</a>
           
         </div>
       
@@ -679,9 +679,9 @@ lsth</h2>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background"><span class="nav-number">1.</span> <span class="nav-text">background</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#design"><span class="nav-number">2.</span> <span class="nav-text">Design</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#workflow"><span class="nav-number">2.1.</span> <span class="nav-text">Workflow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#built-in-non-uniformed-batching"><span class="nav-number">2.2.</span> <span class="nav-text">built-in, non-uniformed
-batching</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#combined-operator-profiling"><span class="nav-number">2.3.</span> <span class="nav-text">combined operator profiling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scheduling"><span class="nav-number">2.4.</span> <span class="nav-text">scheduling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#managing-cold-start-with-lsth"><span class="nav-number">2.5.</span> <span class="nav-text">managing cold start with
-lsth</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E6%9A%B4%E9%9C%B2%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">读取暴露文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8twosamplemr%E8%8E%B7%E5%8F%96mr-base%E6%8F%90%E4%BE%9B%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">2.1.</span> <span class="nav-text">使用TwoSampleMR获取MR
+base提供的数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8twosamplemr%E5%8C%85%E8%AF%BB%E5%8F%96%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">使用TwoSampleMR包读取本地文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%BB%E9%99%A4%E8%BF%9E%E9%94%81%E4%B8%8D%E5%B9%B3%E8%A1%A1ld"><span class="nav-number">3.</span> <span class="nav-text">去除连锁不平衡(LD)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86"><span class="nav-number">3.1.</span> <span class="nav-text">背景知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E6%8F%90%E5%8F%96%E6%97%B6%E5%8E%BB%E9%99%A4ld"><span class="nav-number">3.2.</span> <span class="nav-text">在提取时去除LD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E6%8F%90%E5%8F%96%E6%95%B0%E6%8D%AE%E5%86%8D%E5%8E%BB%E9%99%A4ld"><span class="nav-number">3.3.</span> <span class="nav-text">先提取数据，再去除LD</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E5%8F%96iv%E5%9C%A8%E7%BB%93%E5%B1%80%E4%B8%AD%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="nav-number">4.</span> <span class="nav-text">提取IV在结局中的信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E8%87%AA%E5%B7%B1%E7%BB%93%E5%B1%80%E7%9A%84gwas%E6%96%87%E4%BB%B6%E5%B9%B6%E6%8F%90%E5%8F%96%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF"><span class="nav-number">4.1.</span> <span class="nav-text">读取自己结局的GWAS文件并提取相关信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8twosamplemr%E8%8E%B7%E5%8F%96mr-base%E6%8F%90%E4%BE%9B%E7%9A%84%E7%BB%93%E5%B1%80%E4%BF%A1%E6%81%AF"><span class="nav-number">4.2.</span> <span class="nav-text">利用TwoSampleMR获取MR
+base提供的结局信息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E5%B9%B6%E8%A7%A3%E8%AF%BBmr%E7%BB%93%E6%9E%9C"><span class="nav-number">5.</span> <span class="nav-text">计算并解读MR结果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%8F%E6%84%9F%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-number">6.</span> <span class="nav-text">敏感性分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E8%B4%A8%E6%80%A7%E6%A3%80%E9%AA%8C"><span class="nav-number">6.1.</span> <span class="nav-text">异质性检验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%95%88%E6%80%A7%E6%A3%80%E9%AA%8C"><span class="nav-number">6.2.</span> <span class="nav-text">多效性检验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%90%E4%B8%AA%E5%89%94%E9%99%A4%E6%A3%80%E9%AA%8C"><span class="nav-number">6.3.</span> <span class="nav-text">逐个剔除检验</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%BB%E5%9B%BE"><span class="nav-number">7.</span> <span class="nav-text">画图</span></a></li></ol></div>
             
 
           </div>

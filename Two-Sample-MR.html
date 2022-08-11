@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="安装 第一次使用的时候需要安装 1234567install.packages(‘devtools’)# 安装最新版的TwoSampleMR包devtools::install_github(‘MRCIEU&#x2F;TwoSampleMR’)# 安装指定版本的TwoSampleMR包devtools::install_github(‘MRCIEU&#x2F;TwoSampleMR@0.4.26’) 加载安装好的包">
+<meta name="description" content="我们将孟德尔随机化的鲁棒方法分为三类  consensus method 共识方法 outlier-robust method 异常点鲁棒方法 modeling method 建模方法  Inverse-variance weighted 反方差加权法 该方法中文叫做逆方差加权法，它的特点是回归时不考虑截距项的存在并且用结局方差（se的二次方）的倒数作为权重来进行拟合 反方差加权法结合了多种遗传变">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Two Sample MR">
 <meta property="og:url" content="https://datawine.github.io/Two-Sample-MR.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="安装 第一次使用的时候需要安装 1234567install.packages(‘devtools’)# 安装最新版的TwoSampleMR包devtools::install_github(‘MRCIEU&#x2F;TwoSampleMR’)# 安装指定版本的TwoSampleMR包devtools::install_github(‘MRCIEU&#x2F;TwoSampleMR@0.4.26’) 加载安装好的包">
+<meta property="og:description" content="我们将孟德尔随机化的鲁棒方法分为三类  consensus method 共识方法 outlier-robust method 异常点鲁棒方法 modeling method 建模方法  Inverse-variance weighted 反方差加权法 该方法中文叫做逆方差加权法，它的特点是回归时不考虑截距项的存在并且用结局方差（se的二次方）的倒数作为权重来进行拟合 反方差加权法结合了多种遗传变">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-05-25T06:35:54.000Z">
-<meta property="article:modified_time" content="2022-05-25T07:38:26.418Z">
+<meta property="article:modified_time" content="2022-08-11T07:21:03.454Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="孟德尔随机化">
 <meta name="twitter:card" content="summary">
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.1k
+                  1.7k
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  7
+                  6
                 </span>
               
             </div>
@@ -433,83 +433,73 @@
       
 
       
-        <h1 id="安装">安装</h1>
-<p>第一次使用的时候需要安装</p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">install.packages<span class="punctuation">(</span>‘devtools’<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装最新版的TwoSampleMR包</span></span><br><span class="line">devtools<span class="operator">::</span>install_github<span class="punctuation">(</span>‘MRCIEU<span class="operator">/</span>TwoSampleMR’<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定版本的TwoSampleMR包</span></span><br><span class="line">devtools<span class="operator">::</span>install_github<span class="punctuation">(</span>‘MRCIEU<span class="operator">/</span>TwoSampleMR<span class="operator">@</span><span class="number">0.4</span>.26’<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
-<p>加载安装好的包</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">library(TwoSampleMR)</span><br></pre></td></tr></table></figure>
-<p>显示以下输出</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TwoSampleMR version 0.5.6 </span><br><span class="line">[&gt;] New: Option to use non-European LD reference panels for clumping etc</span><br><span class="line">[&gt;] Some studies temporarily quarantined to verify effect allele</span><br><span class="line">[&gt;] See news(package=&#x27;TwoSampleMR&#x27;) and https://gwas.mrcieu.ac.uk for further details</span><br></pre></td></tr></table></figure>
-<h1 id="读取暴露文件">读取暴露文件</h1>
-<p>有两种读取暴露文件的方法</p>
-<ul>
-<li>使用TwoSampleMR获取MR base提供的数据</li>
-<li>使用TwoSampleMR包读取本地文件</li>
-</ul>
-<h2 id="使用twosamplemr获取mr-base提供的数据">使用TwoSampleMR获取MR
-base提供的数据</h2>
-<p>因为MR base提供了很多数据，因此需要选择要使用的数据，也就是暴露的ID。
-假设我们选择的暴露是BMI，它的id是<code>ieu-a-2</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bmi &lt;- extract_instruments(outcomes=&#x27;ieu-a-2&#x27;, access_token=NULL) # 获取暴露数据</span><br><span class="line">head(bmi) # 查看暴露数据</span><br></pre></td></tr></table></figure>
-<p>以下的还不知道是什么意思</p>
-<p>关于extract_instruments()的使用，有几个参数需要大家注意一下：</p>
-<p>（1）第一个就是access_token这个参数，对于中国大陆地区的用户必须设置该参数为access_token=NULL，这样才能顺利获取数据，否则就需要开VPN获取谷歌授权。</p>
-<p>（2）第二个是参数p1，它是用来指定暴露中SNP的p值的，它的默认值是p1=5e-8，因此只有p值小于5e-8的SNP才会提取出来。当然如果没有SNP小于5e-8的话，我们通常可以设置p1=1e-5，不过这个时候就需要认真评估弱工具变量偏倚了。</p>
-<p>（3）第三个重要参数是clump以及与之相关的r2和kb，clump是一个逻辑型参数，只有clump=TRUE和clump=FALSE这两种情况。如果选择了参数值为clump=FALSE的话，那么r2和kb这两个参数就无效了，也即先不去除含有连锁不平衡的SNP。当clump=TRUE时，我们可以用r2和kb来确定去除连锁不平衡SNP的条件，具体内容我会在下期内容中进行详细讲解。默认情况下是clump=TRUE，r2=0.001和kb=10000。</p>
-<h2
-id="使用twosamplemr包读取本地文件">使用TwoSampleMR包读取本地文件</h2>
-<p>可以看这篇<a
-target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MjM5MTIzNjI1OA==&amp;mid=2247484572&amp;idx=1&amp;sn=397f6cf594d83a1aa85c8dfc4ad009a6&amp;chksm=a6b9ed5191ce6447472eda838c7fbddb575f5215955ce52551a6dde4d0721ffd84747a351f2d&amp;scene=21#wechat_redirect">推送</a>。
-我自己就还没试过</p>
-<h1 id="去除连锁不平衡ld">去除连锁不平衡(LD)</h1>
-<p>我们可以选择在提取数据的时候去除连锁不平衡的IV，也可以先提取数据，再去除。效果是完全一样的。</p>
-<h2 id="背景知识">背景知识</h2>
-<p>在做MR研究时，我们有一步非常重要，那就是去除存在连锁不平衡的IV。连锁不平衡主要是使用两个参数r2和kb来衡量：</p>
-<p>（1）r2：它是0~1之间的数据，r2=1表示两个SNP间是完全的连锁不平衡关系，r2=0则表示两个SNP间是完全连锁平衡的，也即这两个SNP的分配是完全随机的。</p>
-<p>（2）kb：它其实就是指考虑连锁不平衡的区域长度。在遗传学上我们认为在染色体上距离很近的遗传位点通常是“捆绑”在一起遗传给后代的，这也就导致距离很近的位点之间的r2会很大。在TwoSampleMR包中，我们去除连锁不平衡主要考虑的也是这两个参数。</p>
-<p>举个例子，如果设置r2=0.001和kb=10000，那这就表示去掉在10000kb范围内与最显著SNP的r2大于0.001的SNP；而设置成r2=0.3和kb=1000，那这表示的就是去掉在1000kb范围内与最显著SNP的r2大于0.3的SNP。</p>
-<p>从上面的解读中不难看出，随着r2的变小与kb的变大，被去除的存在连锁不平衡的SNP会越来越多，而最终剩下的IV会越来越少。在我之前的推送中曾以实例和大家探讨了IV数目对结果的影响（孟德尔随机化之高密度脂蛋白胆固醇（HDL-C）与心肌梗死的因果关系），一般IV个数越少，存在的混杂和多效性也就越少，但相应的统计效力不足；而IV数目的增多虽然能提高统计效力，但也会带来更多的偏倚。因此，调节好参数r2和kb就显得是一门技术活了！</p>
-<h2 id="在提取时去除ld">在提取时去除LD</h2>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bmi &lt;- extract_instruments(outcomes=&#x27;ieu-a-2&#x27;, clump=TRUE, r2=0.01, kb=5000, access_token=NULL)</span><br></pre></td></tr></table></figure>
-<h2 id="先提取数据再去除ld">先提取数据，再去除LD</h2>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bmi &lt;- extract_instruments(outcomes=&#x27;ieu-a-2&#x27;, clump=FALSE, access_token=NULL)</span><br><span class="line">exp_dat &lt;- clump_data(bmi, clump_r2=0.01, clump_kb=5000)</span><br></pre></td></tr></table></figure>
-<h1 id="提取iv在结局中的信息">提取IV在结局中的信息</h1>
-<p>在读取完暴露文件并去除掉存在连锁不平衡的SNP后，我们接下来要做的一件事就是提取IV在结局中的信息，完成这一步主要有两种方法：</p>
-<p>（1）利用TwoSampleMR获取MR base提供的结局信息</p>
-<p>（2）读取自己结局的GWAS文件并提取相关信息</p>
-<p>第一种方法使用起来非常简洁高效，可以批量读取多个结局文件，但是存在的问题是有的结局数据可能有问题（真的吗）；</p>
-<p>第二种方法一次读取一个GWAS文件，如果批量处理的话可能会占用大量内存，得不偿失。接下来我将为大家详细介绍一下这两种方法，希望大家能明白这两种读取方法的差异。</p>
-<h2
-id="读取自己结局的gwas文件并提取相关信息">读取自己结局的GWAS文件并提取相关信息</h2>
-<p>首先咱们先提取IV的信息并去除存在连锁不平衡的SNP，这里咱们还是以BMI作为暴露，但是ID号需要改成'ieu-a-835'，这主要是因为之前ID号’ieu-a-2’的GWAS是在混合人群中做的（也即把欧洲人、非洲人等不同人群合在一起做的GWAS），而’ieu-a-835’则是在欧洲人中做的。在之前的理论学习中，我曾和大家解释过人群的混杂会带来估计结果的偏倚，因此我们需要选择遗传背景一致的人群进行MR研究（如暴露和结局的GWAS都是在欧洲人群中进行的）。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">library(TwoSampleMR)</span><br><span class="line">bmi_exp &lt;- extract_instruments(</span><br><span class="line"> outcomes=&#x27;ieu-a-835&#x27;,</span><br><span class="line"> clump=TRUE, r2=0.01,</span><br><span class="line"> kb=5000,access_token = NULL</span><br><span class="line">  )</span><br><span class="line">dim(bmi_exp)</span><br><span class="line"># [1] 80 15</span><br><span class="line">t2d_out &lt;- extract_outcome_data(</span><br><span class="line"> snps=bmi_exp$SNP,</span><br><span class="line"> outcomes=&#x27;ieu-a-26&#x27;,</span><br><span class="line"> proxies = FALSE,</span><br><span class="line"> maf_threshold = 0.01,</span><br><span class="line"> access_token = NULL</span><br><span class="line">)</span><br><span class="line">dim(t2d_out)</span><br></pre></td></tr></table></figure>
-<p>这里我要和大家简单介绍一下extract_outcome_data()函数的关键参数：</p>
-<p>snps：它是一串以rs开头的SNP ID</p>
-<p>outcomes：它是outcome在MR base中的ID；</p>
-<p>proxies：它表示是否使用代理SNP，默认值是TRUE，也即当一个SNP在outcome中找不到时可以使用与其存在强连锁不平衡的SNP信息来替代，我个人喜欢设置成FALSE。</p>
-<p>maf_threshold：它表示的是SNP在outcome中的最小等位基因频率，默认值是0.3，不过大样本GWAS可以适当调低，我这里设置的是0.01。</p>
-<p>access_token：大陆用户必须设置成access_token=NULL。</p>
-<h2 id="利用twosamplemr获取mr-base提供的结局信息">利用TwoSampleMR获取MR
-base提供的结局信息</h2>
-<p>见<a
-target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MjM5MTIzNjI1OA==&amp;mid=2247484596&amp;idx=1&amp;sn=b0176d1e98bc75ef71c0855d4de6cc6d&amp;chksm=a6b9ed7991ce646f645199399a3046739d7830d50b570ceab932b0f0b581bcf25418417c990e&amp;scene=21#wechat_redirect">推送</a></p>
-<h1 id="计算并解读mr结果">计算并解读MR结果</h1>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mydata &lt;- harmonise_data(</span><br><span class="line">       exposure_dat=bmi_exp,</span><br><span class="line">       outcome_dat=t2d_out,</span><br><span class="line">       action= 2</span><br><span class="line">       )</span><br></pre></td></tr></table></figure>
-<p>最后，咱们只要简单使用mr()函数即可，代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">res &lt;- mr(mydata)</span><br><span class="line">res</span><br></pre></td></tr></table></figure>
-<p>除了上述5种计算方法外，TwoSampleMR包还提供了很多计算方法，比如随机效应模型和固定效应模型等，感兴趣的朋友可以通过mr_method_list()函数来了解。</p>
-<h1 id="敏感性分析">敏感性分析</h1>
-<p>（1）异质性检验（Heterogeneity
-test）：主要是检验各个IV之间的差异，如果不同IV之间的差异大，那么这些IV的异质性就大。</p>
-<p>（2）多效性检验 （Pleiotropy
-test）：主要检验多个IV是否存在水平多效性，常用MR
-Egger法的截距项表示，如果该截距项与0差异很大，说明存在水平多效性。除此以外，MR-PRESSO包也是常用的检验水平多效性的R包。</p>
-<p>（3）逐个剔除检验 （Leave-one-out sensitivity
-test）：主要是逐个剔除IV后计算剩下IV的MR结果，如果剔除某个IV后其它IV估计出来的MR结果和总结果差异很大，说明MR结果对该IV是敏感的。</p>
-<h2 id="异质性检验">异质性检验</h2>
-<h2 id="多效性检验">多效性检验</h2>
-<h2 id="逐个剔除检验">逐个剔除检验</h2>
-<h1 id="画图">画图</h1>
+        <p>我们将孟德尔随机化的鲁棒方法分为三类</p>
+<ol type="1">
+<li>consensus method 共识方法</li>
+<li>outlier-robust method 异常点鲁棒方法</li>
+<li>modeling method 建模方法</li>
+</ol>
+<h1 id="inverse-variance-weighted-反方差加权法">Inverse-variance
+weighted 反方差加权法</h1>
+<p>该方法中文叫做逆方差加权法，它的特点是回归时不考虑截距项的存在并且用结局方差（se的二次方）的倒数作为权重来进行拟合</p>
+<p>反方差加权法结合了多种遗传变异的汇总数据，提供了一个相当于在有个体水平数据的情况下用两阶段方法得到的估计值。
+这使得使用公开数据的孟德尔随机化分析得到了广泛的推广。然而，反方差加权法假设所有的遗传变体<strong>都是有效的工具变量</strong>，这个假设在实践中可能不成立。</p>
+<h1 id="consensus-method">Consensus method</h1>
+<h2 id="median-method">Median method</h2>
+<p>最直接的共识方法是中位数法。我们不是像IVW方法那样取比率估计值的加权平均值，而是取比率估计值的中位数。
+在线性和同质性假设下，所有作为有效工具变量的遗传变体都会估计相同的因果参数。
+我们把超过50%的变体是有效IV的假设称为 "多数有效 "假设。</p>
+<p>在大样本量中，这意味着有效IV的比率估计值都会趋于相同的数值。只要50%以上的遗传变异是有效的IV，这意味着比率估计的中位数将趋向于真实的因果效应。</p>
+<p>在简单的中位数方法中，所有的遗传变异在分析中得到了相同的权重。也可以计算出一个加权版的中位数方法。
+在加权中位数法中，我们考虑一个经验分布，其中每个变异体得到的权重相当于下列变量方差的倒数
+比值估计的倒数（与IVW方法中的权重相同）。</p>
+<h2 id="mode-based-estimation-method">Mode-based estimation method</h2>
+<p>"多元有效"假设指出，在大样本中比率估计值所取的所有不同数值中（我们称之为比率估计值），
+真正的因果效应是最大数量的遗传变异体所取的数值（即模数比率估计值）。</p>
+<p>这个假设允许在少于50%的变异体是有效IV的情况下识别真正的因果效应，前提是不存在更大的具有相同比率估计值的无效IV组。
+这个假设也被称为零模态杂交假设（ZEMPA）。</p>
+<p>在基于模式的估计方法中，为每个遗传变体构建一个以其比率估计值为中心的正态密度。
+这个密度的扩散取决于一个带宽参数，以及（对于基于模式的估计方法的加权版本）比率估计的精度。</p>
+<h1 id="outlier-robust-method">Outlier-robust method</h1>
+<p>接下来，我们提出了三种抑制离群值的方法。这些方法要么降低权重，要么从分析中删除具有离群比率估计值的遗传变体。
+MR-PRESSO和MR-Lasso方法将变异体从分析中移除，而MR-Robust则对变异体进行减权。</p>
+<h2 id="mr-presso-method">MR-PRESSO method</h2>
+<p>在MR-Pleiotropy残差和离群值（MR-PRESSO）方法中，IVW方法通过使用所有遗传变体进行加权回归来实现，并从回归方程中计算残差和（RSS）。
+RSS是衡量异质性的一个指标，等于Cochran的Q统计量。</p>
+<p>然后，进行IVW方法，依次从分析中省略每个遗传变体。如果RSS与模拟的预期分布相比大幅下降，那么该变体就从分析中删除。</p>
+<p>这个过程重复进行，直到没有更多的变体被从分析中删除。然后通过IVW方法利用剩余的遗传变体获得因果估计。</p>
+<h2 id="mr-robust">MR-Robust</h2>
+<p>在MR-Robust中，IVW方法再次通过加权线性回归实现，只是没有使用最小二乘回归，而是使用MM-估计与Tukey的偏重损失函数相结合。
+MM-估计（每个'M'代表'最大似然类型'）提供了对影响点的稳健性，Tukey损失函数提供了对异常值的稳健性。</p>
+<p>Tukey的损失函数是一个截断的二次函数，意味着异常值对分析的贡献程度有一个限制。
+这与最小二乘回归中使用的二次损失函数形成对比，后者是无界的，这意味着一个离群点对IVW估计的影响是无限的。</p>
+<h2 id="mr-lasso-method">MR-Lasso method</h2>
+<p>在MR-Lasso中，IVW回归模型通过为每个遗传变异体增加一个截距项。对于有效的IV，它应该是零，但对于无效的IV，它将是非零。</p>
+<h1 id="modeling-method">Modeling method</h1>
+<p>最后，我们介绍了四种稳健的方法，这些方法试图对无效IV的估计值的分布进行建模，或者对IV假设被违反的方式做出具体的假设。</p>
+<h2 id="mr-egger-method">MR-Egger method</h2>
+<p>MR-Egger方法与IVW方法类似，只是回归模型包含一个截距项。
+思考MR-Egger方法的一个直观方式是，它评估了与暴露有关的遗传关联和与结果有关的遗传关联之间是否存在着剂量-反应关系。</p>
+<h2 id="contamination-mixture-method">Contamination mixture method</h2>
+<p>污染混合法假定只有部分遗传变异是有效的IV，并在多元有效假设下提供一致的估计值。</p>
+<p>为了执行该方法，从比率估计中构建了一个似然函数。
+如果一个变体是有效的工具，那么它的比率估计值被假定为关于真实因果效应的正态分布。
+如果一个变体不是有效的工具，那么它的比率估计值被假定为关于零的正态分布</p>
+<h2 id="mr-mix-method">MR-Mix method</h2>
+<p>MR-Mix方法与污染混合法相似，只是该方法不是将遗传变体分为有效和无效的IV，而是将变体分为四类。</p>
+<ol type="1">
+<li>只直接影响暴露的变体（有效IVs）</li>
+<li>影响暴露和结果的变体</li>
+<li>只影响结果的变体</li>
+<li>既不影响暴露也不影响结果的变体。</li>
+</ol>
+<p>这使得对遗传变异的建模更加灵活，尽管可能导致在将遗传变异归入类别时有更多的不确定性。</p>
+<h2 id="mr-raps-method">MR-RAPS method</h2>
+<p>MR-Robust Adjusted Profile
+Score（RAPS）方法直接使用随机效应分布对遗传变体的多态效应进行建模。</p>
+<p>假设多效效应是关于零的正态分布，具有未知的方差，独立于与暴露的遗传关联。
+使用因果效应的轮廓似然函数和多态效应分布的方差获得估计值。
+为了提供对异常值的进一步稳健性，可以使用Tukey的偏重损失函数或Huber的损失函数。</p>
 <!-- flag of hidden posts -->
       
     </div>
@@ -679,9 +669,8 @@ test）：主要是逐个剔除IV后计算剩下IV的MR结果，如果剔除某�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E6%9A%B4%E9%9C%B2%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">读取暴露文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8twosamplemr%E8%8E%B7%E5%8F%96mr-base%E6%8F%90%E4%BE%9B%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">2.1.</span> <span class="nav-text">使用TwoSampleMR获取MR
-base提供的数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8twosamplemr%E5%8C%85%E8%AF%BB%E5%8F%96%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">使用TwoSampleMR包读取本地文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%BB%E9%99%A4%E8%BF%9E%E9%94%81%E4%B8%8D%E5%B9%B3%E8%A1%A1ld"><span class="nav-number">3.</span> <span class="nav-text">去除连锁不平衡(LD)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86"><span class="nav-number">3.1.</span> <span class="nav-text">背景知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E6%8F%90%E5%8F%96%E6%97%B6%E5%8E%BB%E9%99%A4ld"><span class="nav-number">3.2.</span> <span class="nav-text">在提取时去除LD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E6%8F%90%E5%8F%96%E6%95%B0%E6%8D%AE%E5%86%8D%E5%8E%BB%E9%99%A4ld"><span class="nav-number">3.3.</span> <span class="nav-text">先提取数据，再去除LD</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E5%8F%96iv%E5%9C%A8%E7%BB%93%E5%B1%80%E4%B8%AD%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="nav-number">4.</span> <span class="nav-text">提取IV在结局中的信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E8%87%AA%E5%B7%B1%E7%BB%93%E5%B1%80%E7%9A%84gwas%E6%96%87%E4%BB%B6%E5%B9%B6%E6%8F%90%E5%8F%96%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF"><span class="nav-number">4.1.</span> <span class="nav-text">读取自己结局的GWAS文件并提取相关信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8twosamplemr%E8%8E%B7%E5%8F%96mr-base%E6%8F%90%E4%BE%9B%E7%9A%84%E7%BB%93%E5%B1%80%E4%BF%A1%E6%81%AF"><span class="nav-number">4.2.</span> <span class="nav-text">利用TwoSampleMR获取MR
-base提供的结局信息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E5%B9%B6%E8%A7%A3%E8%AF%BBmr%E7%BB%93%E6%9E%9C"><span class="nav-number">5.</span> <span class="nav-text">计算并解读MR结果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%8F%E6%84%9F%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-number">6.</span> <span class="nav-text">敏感性分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E8%B4%A8%E6%80%A7%E6%A3%80%E9%AA%8C"><span class="nav-number">6.1.</span> <span class="nav-text">异质性检验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%95%88%E6%80%A7%E6%A3%80%E9%AA%8C"><span class="nav-number">6.2.</span> <span class="nav-text">多效性检验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%90%E4%B8%AA%E5%89%94%E9%99%A4%E6%A3%80%E9%AA%8C"><span class="nav-number">6.3.</span> <span class="nav-text">逐个剔除检验</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%BB%E5%9B%BE"><span class="nav-number">7.</span> <span class="nav-text">画图</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#inverse-variance-weighted-%E5%8F%8D%E6%96%B9%E5%B7%AE%E5%8A%A0%E6%9D%83%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">Inverse-variance
+weighted 反方差加权法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#consensus-method"><span class="nav-number">2.</span> <span class="nav-text">Consensus method</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#median-method"><span class="nav-number">2.1.</span> <span class="nav-text">Median method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mode-based-estimation-method"><span class="nav-number">2.2.</span> <span class="nav-text">Mode-based estimation method</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#outlier-robust-method"><span class="nav-number">3.</span> <span class="nav-text">Outlier-robust method</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mr-presso-method"><span class="nav-number">3.1.</span> <span class="nav-text">MR-PRESSO method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mr-robust"><span class="nav-number">3.2.</span> <span class="nav-text">MR-Robust</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mr-lasso-method"><span class="nav-number">3.3.</span> <span class="nav-text">MR-Lasso method</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#modeling-method"><span class="nav-number">4.</span> <span class="nav-text">Modeling method</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mr-egger-method"><span class="nav-number">4.1.</span> <span class="nav-text">MR-Egger method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#contamination-mixture-method"><span class="nav-number">4.2.</span> <span class="nav-text">Contamination mixture method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mr-mix-method"><span class="nav-number">4.3.</span> <span class="nav-text">MR-Mix method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mr-raps-method"><span class="nav-number">4.4.</span> <span class="nav-text">MR-RAPS method</span></a></li></ol></li></ol></div>
             
 
           </div>

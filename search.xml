@@ -149,6 +149,15 @@ href="https://datawine.github.io/mr-lesson-1.html">第一讲</a></li>
 <ul>
 <li><a
 href="https://datawine.github.io/mr-background.html">孟德尔随机化研究背景</a></li>
+<li><a
+href="https://datawine.github.io/One-Sample-MR.html">One-Sample-MR</a></li>
+<li><a
+href="https://datawine.github.io/Two-Sample-MR.html">Two-Sample-MR</a></li>
+<li><a
+href="https://datawine.github.io/MR-statistical-issues.html">一些MR的statistical问题</a></li>
+<li>[MR进阶]</li>
+<li><a
+href="https://datawine.github.io/mrcieu-twosamplemr.html">MR实战例子</a></li>
 <li>统计学原理
 <ul>
 <li><a
@@ -158,8 +167,6 @@ href="https://datawine.github.io/instrumental-variable.html">工具变量孟德�
 </ul></li>
 <li>孟德尔随机化方法
 <ul>
-<li><a href="https://datawine.github.io/wald-ratio.html">Wald
-Ratio</a></li>
 <li>IVW</li>
 <li>MR-Egger</li>
 </ul></li>
