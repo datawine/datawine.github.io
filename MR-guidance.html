@@ -87,7 +87,7 @@
 <meta property="og:description" content="该指南分为以下几个部分：  动机和范围 数据来源 遗传变异体的选择 变异体的协调 初级分析 补充和敏感性分析（一个部分是关于稳健方法，一个部分是关于其他方法） 数据表述 解释  关键结构流程 孟德尔随机化调查的目标是什么？  评估某项暴露的因果作用  需要关注以下两点  工具变量假设的有效性 基因-结果关联的精确性和相关性   量化intervention on 暴露  除了以上两点需要关注的，还">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-08-11T09:19:45.000Z">
-<meta property="article:modified_time" content="2022-08-11T09:37:02.038Z">
+<meta property="article:modified_time" content="2022-08-13T10:35:48.598Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="孟德尔随机化">
 <meta name="twitter:card" content="summary">
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  281
+                  5.3k
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  18
                 </span>
               
             </div>
@@ -495,7 +495,201 @@
 </ul></li>
 </ul></li>
 </ul>
+<p>几个问题</p>
+<ul>
+<li>Motivation and scope
+<ul>
+<li>What is the primary hypothesis of interest?</li>
+<li>What is the motivation for using Mendelian randomization?</li>
+<li>What is the scope of the investigation? What and how many primary
+analyses?</li>
+</ul></li>
+<li>Data sources
+<ul>
+<li>What type of Mendelian randomization investigation is this?</li>
+<li>One-sample or two-sample? Sample overlap?</li>
+<li>Summarized data or individual-level data?</li>
+<li>Drawn from same population?</li>
+<li>Relevance to applied research?</li>
+</ul></li>
+<li>Selection of genetic variants - how were the genetic variants
+chosen? Single or multiple gene regions?
+<ul>
+<li><ol type="a">
+<li>Biological rationale?</li>
+</ol></li>
+<li><ol start="2" type="a">
+<li>GWAS analysis? If so, what dataset? What was the p-value threshold?
+Clumping?</li>
+</ol></li>
+<li><ol start="3" type="a">
+<li>Were genetic variants excluded from the analysis? Associations with
+pleiotropic pathways?</li>
+</ol></li>
+<li><ol start="4" type="a">
+<li>How else was the validity of genetic variants as instrumental
+variables assessed?</li>
+</ol></li>
+</ul></li>
+<li>Variant harmonization (for two-sample analyses)
+<ul>
+<li>Was it checked that genetic variants were appropriately orientated
+across the datasets?</li>
+</ul></li>
+<li>Primary analysis
+<ul>
+<li>What was the primary analysis? What was the statistical method? How
+implemented? Multiple testing?</li>
+</ul></li>
+<li>Supplementary and sensitivity analyses
+<ul>
+<li>What analyses were performed to support and assess the validity of
+the primary analysis?</li>
+<li>For example: stricter criteria for variant selection, assess
+heterogeneity, robust methods, subgroup analysis, positive/negative
+controls, ‘leave-one-out’ analyses, colocalization (single gene
+region)</li>
+</ul></li>
+<li>Data presentation
+<ul>
+<li>How are the data and results presented to allow readers to assess
+the analysis and assumptions?</li>
+<li>For example: scatter plot, forest/funnel/radial plot, R2/F
+statistics, comparison of methods, power</li>
+</ul></li>
+<li>Interpretation
+<ul>
+<li>How have results been interpreted, particularly any numerical
+estimates?</li>
+</ul></li>
+</ul>
 <h1 id="motivation-and-scope">Motivation and scope</h1>
+<p>使用孟德尔随机化的潜在动机有很多，动机应该影响到如何进行分析以及如何安排和展示其结果的决定。
+孟德尔随机化分析的目的通常是为了检验一个因果假设，而且常常是为了估计一个因果效应。</p>
+<p>如果孟德尔随机化调查主要是为了评估暴露对结果是否有因果效应，那么估计暴露对结果的因果效应的大小就不那么重要了，甚至可能没有必要。
+这种分析的优先事项是找到满足工具变量假设的遗传变体，并在与感兴趣的因果问题相关的最大可用数据集中测试它们与结果的关联。</p>
+<p>相比之下，如果研究者试图估计暴露中的拟议干预措施对结果的量化影响，那么进一步的问题就变得更加重要。
+如遗传变异对特定干预措施的代理程度，与暴露的遗传关联是否在相关人群中估计，以及变量之间的关系在人群中是否是线性和同质的。</p>
+<p>调查者还应该考虑<strong>其分析的范围</strong>。
+如果调查的目的是了解疾病的病因，那么考虑一组有限的暴露和/或结果作为主要分析可能是合理的。
+而如果问题与公共卫生有关，那么考虑受暴露影响的广泛结果可能是值得的。
+最极端的是全表型孟德尔随机化调查，其中考虑了非常多的结果。
+这种分析通常被认为是探索性的或产生假设的，结果通常被视为临时性的，直到在独立的数据集中被复制。</p>
+<h1 id="data-sources">Data sources</h1>
+<p>下一个基本问题是将使用哪些数据源：分析中包括多少个数据集，以及分析是使用个人层面的数据还是汇总的数据。</p>
+<p>单样本和双样本设置都有好处和局限。
+单样本设置允许在单一人群样本中进行调查，这意味着孟德尔随机化和传统的流行病学发现（例如，来自多变量调整的回归）可以在同一个体中进行比较。</p>
+<p>在双样本环境下，提取两个样本的人群可能不同。如果两个样本之间的遗传变异与暴露或与多效途径上的变量的关联不同，这就有问题了，因为这可能影响工具变量假设的有效性。
+如果两个样本代表不同的种族群体，就会出现一个特别的问题，因为不同人群之间的连锁不平衡模式可能不同，这意味着在结果数据集中，一个遗传变异可能与暴露的关联不那么强烈（甚至完全没有）。
+另外，两个样本可能因人口特征（如年龄、性别、社会经济背景等）而有很大差异。这种差异不仅会影响因果估计的解释，也会影响因果推断的有效性。
+例如，在吸烟普遍的人群中，与吸烟强度有关的遗传变异可能与疾病结果密切相关，但在吸烟稀少的人群中则不然。
+单样本分析不存在这些问题，也不需要协调各数据集的遗传变异。
+单样本和双样本调查在弱工具偏差方面也有所不同。在没有样本重叠的双样本环境中，由弱工具引起的偏差是朝向无效的方向，并不会导致假阳性的发现。</p>
+<p>一个相关的问题是，分析是使用个人层面的数据还是汇总的数据进行的。尽管使用汇总数据通常是双样本设置的同义词，但两种选择（单样本与双样本、个体水平与汇总数据）的分析的好处和局限性是不同的。
+汇总数据通常可用于更大的样本量，这意味着检测因果效应的能力得到提高。公开的汇总数据的另一个优点是透明性，因为分析结果可以由能够获得相同数据的第三方复制。然而，只获得汇总的数据限制了可以进行的分析范围。
+此外，如果公布的汇总关联估计值已经针对暴露或结果的下游因果关系的变量进行了调整，那么碰撞偏倚可能是不可避免的（8.5节）。在产生汇总数据时，需要个人层面的数据来选择调整哪些变量，或者在人口的特定亚组或阶层中进行分析。</p>
+<p>最后，数据集的选择应以分析的动机为指导。如果相关的因果问题与某一特定人群有关，那么调查者应选择一个数据集来反映这一点。</p>
+<h1 id="selection-of-genetic-variants">Selection of genetic
+variants</h1>
+<h2 id="single-gene-region-or-polygenic-analysis">Single gene region or
+polygenic analysis</h2>
+<p>首先，有必要决定是使用单一基因区域的变体进行分析，还是使用基因组多个区域的变体（多基因分析）。
+前者具有特异性的优势--如果一个基因区与暴露有特定的生物学联系，那么孟德尔随机化调查作为对该特定暴露的因果作用的评估的有效性就更有说服力。
+然而，如果只有一个基因区被纳入分析，那么几个稳健的统计分析方法是不可能的，因为它们假设一些但不是所有的变体都违反了工具变量假设。
+同一基因区的变体很可能要么都是有效的工具，要么都是无效的。
+此外，当遗传变异都是有效的工具时，当遗传变异解释了暴露中最大比例的变异时，力量就会最大化--因此，多基因孟德尔随机化调查通常比只包括单一基因区变异的调查具有更大的力量。</p>
+<p>当分析是基于单一基因区时，可能是将单一变体纳入分析。
+然而，如果有多个变异体可以解释暴露中的独立变异，那么将其纳入将提高检测因果效应的能力，即使这些变异体是部分相关的。
+对于汇总的数据，应使用适当的方法来说明相关的变异体。
+如果一个基因区域的变体可以被认为是针对暴露的干预措施的代理（如他汀类药物的HMGCR基因区域的变体），那么该分析对于预测该干预措施的效果具有特别的意义。</p>
+<h2 id="biologically--or-statistically-driven-selection">Biologically-
+or statistically-driven selection</h2>
+<p>对于多基因分析，有两种选择变体的主要策略：一种是生物驱动的方法，一种是统计学驱动的方法。
+这两种方法并不相互排斥，决定包括哪些变体的总体决定可能包括两种方法的内容。</p>
+<p>选择遗传变体的生物学方法是包括来自与感兴趣的暴露有生物学联系的区域的变体。
+例如，一些针对维生素D的孟德尔随机化调查使用了四个基因区域的变体，这些基因区域在生物学上与维生素D的合成或代谢有关。
+然而，需要谨慎行事，因为生物学的理解很少是无懈可击的。</p>
+<p>在选择遗传变体时，一个常见的统计方法是包括所有在给定的统计学意义水平上与感兴趣的暴露相关的变体（通常是全基因组意义阈值，如p＜5×10-8）。
+当全基因组关联研究（GWAS）报告
+"命中"（即在给定的显著性阈值下与性状相关的变体）时，这些变体通常被 "修剪
+"或 "结块"，使用基于距离或基于相关的阈值来接近独立性。
+例如，一个基因区可能有数百个与性状相关的个体变体，但这些变体并不代表独立的信号。
+可以对变异体进行修剪，在每个500千字节的窗口中只包括一个变异体（也就是说，变异体必须至少相隔500000字节），或者只包括r2
+&lt; 0.01的相关变异体。
+如果变异体的集合没有被修剪到接近独立，那么变异体之间的相关性可能仍然存在，并且应该在汇总的数据分析中加以考虑；即使是500千字节的距离也可能不足以确保相关性接近于零。</p>
+<p>如果选择遗传变体仅仅是基于它们与暴露的关联，而不参考变体的功能，那么研究人员应该特别注意变体具有多效性的可能性。
+因此，一个更细微的变体选择方法是开始时选择遗传变体的统计学原理，但随后排除那些已知是多效性的变体或与代表结果的多效性途径的变量相关的变体。
+然而，与这种变量的遗传关联并不一定意味着违反了工具变量的假设。</p>
+<h2 id="dataset-for-variant-selection">Dataset for variant
+selection</h2>
+<p>通常情况下，变异体的选择是基于估计与暴露有关的遗传关系的数据集。
+然而，这导致了 "赢家的诅咒"--在首次发现基因关联的数据集中往往被高估。
+如果根据其与所分析的数据集中的暴露的关联来选择遗传变体，那么弱工具偏差就会加剧（在单样本环境中向观察性关联的方向发展，在双样本环境中向无效方向发展）。
+通过选择完全基于不同数据集的遗传变异体可以避免偏见。这可以导致 "三样本
+"分析，即在一个数据集中识别变体，并在不同的数据集中估计与暴露和结果的遗传关联。</p>
+<h2 id="summary">summary</h2>
+<ol type="1">
+<li>如果存在与暴露有生物学关系的遗传变体，那么考虑只用这些变体进行MR分析，并进行适当的敏感性分析。</li>
+<li>如果没有这样的变体，可以考虑最初使用不太严格的变体选择进行 "自由
+"的MR分析。如果估计值为空，那么就没有什么证据表明有因果效应。</li>
+<li>如果初始分析的估计值是非空洞的，那么就用不同的方法评估发现的稳健性：更严格的变体选择标准、leave-one-out
+analyses、稳健的方法、阳性/阴性对照、亚组分析、colocalization（对于基于单基因区的分析）。</li>
+</ol>
+<h1 id="variant-harmonization">Variant harmonization</h1>
+<p>有必要确保遗传关联是按同一等位基因的额外拷贝表达的。
+这一点尤其重要，因为并不是所有公开的数据资源都能正确地报告链的信息。</p>
+<p>例如，如果一个遗传变异是双列单核苷酸多态性（SNP），正链上的等位基因是A和G，那么负链上对应的碱基对将是T和C。
+在这种情况下，一个数据集可能报告每个额外的A等位基因拷贝的关联，而另一个是每个额外的T等位基因拷贝的关联--
+但这是同一个比较。
+等位基因和链的信息可以通过比较等位基因频率信息进行双重检查--如果A和T等位基因的等位基因频率相似，那么研究者可以更确信这是一个链的错配。</p>
+<p>对于复数变异体应更加小心--如果等位基因是A和T（或C和G），那么相同的等位基因会出现在正反两面的链上。
+在这种情况下，如果等位基因的频率接近50%，那么如果无法验证等位基因的方向是否正确，就有必要在分析中放弃该变体。</p>
+<h1 id="primary-analysis">Primary analysis</h1>
+<p>对于具有个体水平数据和汇总数据的孟德尔随机化，人们提出了不同的统计方法。
+两阶段方法（个体水平数据）和反方差加权法（汇总数据）是具有有效工具变量的最有效分析方法，因此一般应作为主要分析方法使用。</p>
+<p>其理由与变异体的选择相同：首先在假设所有遗传变异体都是有效工具变量的分析中评估因果效应的证据，然后（如果证明有因果效应）在进一步的分析中询问这一发现。
+我们建议在IVW方法中采用乘法随机效应模型，因为这考虑了变异体特定因果估计的异质性。
+即使研究者能够获得个体水平的数据，我们也建议计算汇总的数据并实施随机效应的IVW方法，以评估平衡多态性假设的稳健性。</p>
+<p>当有几个相关的暴露具有共同的遗传预测因子时，就需要对主要分析采取不同的方法，这意味着很难找到单个暴露的具体预测因子。
+在这种情况下，多变量孟德尔随机化方法可能是主要分析策略。2SLS和IVW方法都可以适用于多变量环境。</p>
+<h1 id="robust-methods-for-sensitivity-analysis">Robust methods for
+sensitivity analysis</h1>
+<p>稳健的分析方法被定义为在比标准IVW方法更弱的假设下可以提供有效的因果推断的一种方法。
+任何不执行一种或多种稳健方法的多基因孟德尔随机化调查都可能被视为有些不完整。
+调查人员应考虑使用多种方法，对基础多态性的性质做出不同的假设。</p>
+<p>虽然执行已提出的孟德尔随机化的每一种稳健方法是过分的，但调查者应选择合理的方法范围来评估其研究结果的敏感性。</p>
+<p>一个建议是执行MR-Egger、加权中位数方法以及基于模式的方法或污染混合方法，因为这些方法需要满足不同的假设以获得渐进一致的估计。
+如果所有方法的估计值都相似，那么任何因果关系的主张都是比较可信的。
+然而，估计值之间的差异并不一定意味着没有因果效应。不同的方法在不同的情况下会有更好和更差的表现，所以需要进行批判性的思考和判断。</p>
+<p>我们还建议，作为多基因孟德尔随机化调查的一部分，报告变体-特定因果估计之间的异质性措施，如Cochran的Q统计量或I2统计量。
+当多个遗传变体为因果效应提供一致的证据时，特别是当变体特异性因果估计之间的异质性不超过偶然性预期时，结论就更加可靠。
+即使所有的遗传变异体都是有效的工具，一些异质性也是可以预期的。
+然而，如果存在大量的异质性，特别是存在明显的异常值（可能代表多效变异体）或因果效应的证据取决于一个或少数变异体时，因果结论就不太可靠。</p>
+<h1 id="other-approaches-for-sensitivity-analysis">Other approaches for
+sensitivity analysis</h1>
+<p>敏感性分析不应局限于不同统计方法的应用。
+这对基于单一基因区的调查尤其重要，因为上面讨论的稳健性方法在这种情况下并不适用。
+评估稳健性的其他方法包括改变数据集和分析中遗传变异体的选择，使用阳性和阴性对照结果，撇除分析，同位素分析，亚组分析，以及检查与潜在的多效变量的关联。</p>
+<h1 id="data-presentation">Data presentation</h1>
+<p>散点图、森林图、漏斗图和径向图</p>
+<p>其他需要报告的重要信息包括R2统计量（当暴露是连续的）和（特别是在单样本环境下）F统计量，它是工具强度的衡量标准，可用于判断弱工具偏差的程度</p>
+<h1 id="interpretation">Interpretation</h1>
+<p>最后，我们将讨论孟德尔随机调查的结果的解释。</p>
+<p>首先，孟德尔随机化调查评估了暴露的遗传预测因子与结果的关联，或者说，暴露的遗传预测水平与结果的关联。
+暴露的遗传预测水平是否与结果相关的统计学检验有一个客观的解释，不做任何不可检验的假设。
+我们鼓励用这些术语对结果进行初步表述。
+相反，从观察性数据中进行因果推断总是依赖于不可检验的假设。
+在孟德尔随机化中，假设与遗传预测的暴露水平相关的观察结果差异，如果对该暴露进行干预也会出现。
+我们建议，在描述孟德尔随机化调查所证明的因果效应程度时，应采取谨慎的解释。
+适当的谨慎程度将取决于工具变量假设的合理性、不同方法和不同分析方法的估计值的一致性、敏感性和补充分析的结果等等。</p>
+<p>尽管如此，孟德尔随机化调查的结果往往被证明与随机试验的结果在质量上是一致的，这表明对孟德尔随机化调查结果的因果解释往往是合理的。
+孟德尔随机化调查在提供另一种病因学证据方面是值得的，即使工具变量假设永远不能被证明是毫无疑问的。
+然而，来自孟德尔随机化的估计值与来自试验的估计值之间可能存在数量上的差异，特别是遗传变异如何影响暴露与临床和药物干预如何影响暴露之间存在差异。
+因此，来自孟德尔随机化调查的因果估计值一般不应直接解释为实践中对暴露进行干预的预期影响。
+因此，孟德尔随机化调查的估计值最好被解释为因果假设的测试统计量，而不是在特定时间点的明确干预的估计影响。</p>
+<p>但是，即使孟德尔随机化调查主要是为了评估暴露的因果作用，因果估计仍然是有用的。
+例如，评估不同变体估计的异质性作为工具有效性的测试，或者比较不同分析方法的结果作为稳健性的评估。2
+SLS/IVW方法在结合多个有效工具变量的证据时提供了最有效的因果估计，其逻辑结果是，在相同的假设下，该方法对因果效应的存在提供了最有力的检验。</p>
 <!-- flag of hidden posts -->
       
     </div>
@@ -665,7 +859,13 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#motivation-and-scope"><span class="nav-number">1.</span> <span class="nav-text">Motivation and scope</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#motivation-and-scope"><span class="nav-number">1.</span> <span class="nav-text">Motivation and scope</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#data-sources"><span class="nav-number">2.</span> <span class="nav-text">Data sources</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#selection-of-genetic-variants"><span class="nav-number">3.</span> <span class="nav-text">Selection of genetic
+variants</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#single-gene-region-or-polygenic-analysis"><span class="nav-number">3.1.</span> <span class="nav-text">Single gene region or
+polygenic analysis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#biologically--or-statistically-driven-selection"><span class="nav-number">3.2.</span> <span class="nav-text">Biologically-
+or statistically-driven selection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dataset-for-variant-selection"><span class="nav-number">3.3.</span> <span class="nav-text">Dataset for variant
+selection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#summary"><span class="nav-number">3.4.</span> <span class="nav-text">summary</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#variant-harmonization"><span class="nav-number">4.</span> <span class="nav-text">Variant harmonization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#primary-analysis"><span class="nav-number">5.</span> <span class="nav-text">Primary analysis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#robust-methods-for-sensitivity-analysis"><span class="nav-number">6.</span> <span class="nav-text">Robust methods for
+sensitivity analysis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#other-approaches-for-sensitivity-analysis"><span class="nav-number">7.</span> <span class="nav-text">Other approaches for
+sensitivity analysis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#data-presentation"><span class="nav-number">8.</span> <span class="nav-text">Data presentation</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#interpretation"><span class="nav-number">9.</span> <span class="nav-text">Interpretation</span></a></li></ol></div>
             
 
           </div>
