@@ -155,7 +155,10 @@ href="https://datawine.github.io/One-Sample-MR.html">One-Sample-MR</a></li>
 href="https://datawine.github.io/Two-Sample-MR.html">Two-Sample-MR</a></li>
 <li><a
 href="https://datawine.github.io/MR-statistical-issues.html">一些MR的statistical问题</a></li>
-<li>[MR进阶]</li>
+<li><a
+href="https://datawine.github.io/MR-extensions.html">MR进阶</a></li>
+<li><a
+href="https://datawine.github.io/MR-guidance.html">如何进行MR研究</a></li>
 <li><a
 href="https://datawine.github.io/mrcieu-twosamplemr.html">MR实战例子</a></li>
 <li>统计学原理
@@ -164,11 +167,6 @@ href="https://datawine.github.io/mrcieu-twosamplemr.html">MR实战例子</a></li
 href="https://datawine.github.io/instrumental-variable.html">工具变量孟德尔随机化原理</a></li>
 <li>[R2]</li>
 <li>[F统计量]</li>
-</ul></li>
-<li>孟德尔随机化方法
-<ul>
-<li>IVW</li>
-<li>MR-Egger</li>
 </ul></li>
 <li>包的使用
 <ul>
