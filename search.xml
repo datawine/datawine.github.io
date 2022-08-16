@@ -47,6 +47,10 @@ href="https://datawine.github.io/eurosys22-Fireworks-A-Fast-Efficient-and-Safe-S
 A Fast, Efficient, and Safe Serverless Framework using VM-level post-JIT
 Snapshot</a>：serverless加速。通过一个train的过程，在entry
 point前面JIT再snapshot</li>
+<li><a
+href="https://datawine.github.io/eurosys22-Jiffy-Elastic-Far-Memory-for-Stateful-Serverless-Analytics.html">Jiffy:
+Elastic Far-Memory for Stateful Serverless
+Analytics</a>：很不错的一篇工作。主要是serverless的analytics任务的far-memory管理，灵感来源于内存的分块管理。比Pocket更精细了。</li>
 </ul>
 <h1 id="nsdi">NSDI</h1>
 <h2 id="section-3">2022</h2>

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="论文汇总," />
+  <meta name="keywords" content="eurosys," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="论文阅读列表">
+<meta name="description" content="Jiffy的设计灵感来自于操作系统中的虚拟内存设计：以块为单位分配far-memory。弹性地扩展分配给各个作业的内存资源，并以秒为单位满足即时作业的需求。 解决四个挑战  首先，每个无服务器analytics工作可以围绕多个阶段（或一个有向无环图）进行组织，每个阶段都有数万到数千的单独任务。需要一个有效的机制来维护memory-task映射。 其次，在无服务器的analytics中，向共享far">
 <meta property="og:type" content="article">
-<meta property="og:title" content="论文阅读">
-<meta property="og:url" content="https://datawine.github.io/paper-reading.html">
+<meta property="og:title" content="Jiffy: Elastic Far-Memory for Stateful Serverless Analytics">
+<meta property="og:url" content="https://datawine.github.io/eurosys22-Jiffy-Elastic-Far-Memory-for-Stateful-Serverless-Analytics.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="论文阅读列表">
+<meta property="og:description" content="Jiffy的设计灵感来自于操作系统中的虚拟内存设计：以块为单位分配far-memory。弹性地扩展分配给各个作业的内存资源，并以秒为单位满足即时作业的需求。 解决四个挑战  首先，每个无服务器analytics工作可以围绕多个阶段（或一个有向无环图）进行组织，每个阶段都有数万到数千的单独任务。需要一个有效的机制来维护memory-task映射。 其次，在无服务器的analytics中，向共享far">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-05-09T12:34:45.000Z">
-<meta property="article:modified_time" content="2022-08-16T08:57:03.931Z">
+<meta property="article:published_time" content="2022-08-16T08:54:30.000Z">
+<meta property="article:modified_time" content="2022-08-16T08:57:03.933Z">
 <meta property="article:author" content="Datawine">
-<meta property="article:tag" content="论文汇总">
+<meta property="article:tag" content="eurosys">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/paper-reading.html"/>
+  <link rel="canonical" href="https://datawine.github.io/eurosys22-Jiffy-Elastic-Far-Memory-for-Stateful-Serverless-Analytics.html"/>
 
 
 
 
 
-  <title>论文阅读 | Datawine's Blog</title>
+  <title>Jiffy: Elastic Far-Memory for Stateful Serverless Analytics | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/paper-reading.html">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/eurosys22-Jiffy-Elastic-Far-Memory-for-Stateful-Serverless-Analytics.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">论文阅读</h1>
+          <h1 class="post-title" itemprop="name headline">Jiffy: Elastic Far-Memory for Stateful Serverless Analytics</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-09T20:34:45+08:00">
-                2022-05-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-08-16T16:54:30+08:00">
+                2022-08-16
               </time>
             
 
@@ -368,8 +368,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/paper-reading.html#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="paper-reading.html" itemprop="commentsCount"></span>
+                <a href="/eurosys22-Jiffy-Elastic-Far-Memory-for-Stateful-Serverless-Analytics.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="eurosys22-Jiffy-Elastic-Far-Memory-for-Stateful-Serverless-Analytics.html" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  993
+                  1.6k
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  5
                 </span>
               
             </div>
@@ -433,140 +433,83 @@
       
 
       
-        <p>论文阅读列表</p>
-<span id="more"></span>
-<h1 id="asplos">ASPLOS</h1>
-<h2 id="section">2022</h2>
+        <p>Jiffy的设计灵感来自于操作系统中的虚拟内存设计：以块为单位分配far-memory。弹性地扩展分配给各个作业的内存资源，并以秒为单位满足即时作业的需求。</p>
+<p>解决四个挑战</p>
 <ul>
-<li><a href="https://datawine.github.io/.html"></a></li>
-<li><a
-href="https://datawine.github.io/asplos22-IceBreaker-Warming-Serverless-Functions-Better-with-Heterogeneity.html">IceBreaker:
-Warming Serverless Functions Better with
-Heterogeneity</a>：利用异质化机器的区别来优化serverless
-function的warmup</li>
-<li><a
-href="https://datawine.github.io/asplos22-INFless-A-Native-Serverless-System-for-Low-Latency-High-Throughput-Inference.html">INFless:
-A Native Serverless System for Low Latency High
-ThroughputInference</a>：主要对机器学习在serverless上的应用进行了适配</li>
-<li><a
-href="https://datawine.github.io/asplos22-FaaSFlow-Enable-Efficient-Workflow-Execution-for-Function-as-a-Service.html">FaaSFlow:
-Enable Efficient Workflow Execution for
-Function-as-a-Service</a>：主要对serverless的workflow进行了优化，改成了分布式函数状态存储和in-memory的数据传输</li>
-<li><a
-href="https://datawine.github.io/asplos22-Serverless-Computing-on-Heterogeneous-Computers.html">Serverless
-Computing on Heterogeneous
-Computers</a>：提出了一个FPGA+CPU+DPU的serverless平台，主要工作是做兼容的</li>
+<li>首先，每个无服务器analytics工作可以围绕多个阶段（或一个有向无环图）进行组织，每个阶段都有数万到数千的单独任务。需要一个有效的机制来维护memory-task映射。</li>
+<li>其次，在无服务器的analytics中，向共享far-memory系统读写的任务数量可能会迅速变化。因此，任务级隔离变得至关重要：新任务的到达和离开不应影响现有任务的性能。</li>
+<li>第三，无服务器任务与中间数据的解耦意味着任务的失败可能与中间数据无关。因此，我们需要对中间数据进行明确的生命周期管理的机制。</li>
+<li>第四，任务与中间数据的解耦也意味着内存容量弹性扩展时的数据分区变得具有挑战性，特别是对于无服务分析中使用的某些数据类型（例如键值存储）。事实上，天真地把这个任务委托给应用程序将需要大量的网络传输（在计算任务和远端存储系统之间）和每次容量扩展时的数据读/写操作。因此，我们需要新的机制来有效地实现远存系统内的数据分区。</li>
 </ul>
-<h1 id="atc">ATC</h1>
-<h2 id="section-1">2019</h2>
+<p>设计点</p>
 <ul>
-<li><a
-href="https://datawine.github.io/atc19-The-Design-and-Operation-of-CloudLab.html">The
-Design and Operation of
-CloudLab</a>：主要是讲分布式实验平台CloudLab的综述</li>
+<li>分层寻址，解决虚拟内存的管理的问题，挑战1/2</li>
+<li>数据的生命周期管理，解决因为serverless任务失败而数据空悬的问题，挑战3</li>
+<li>data repartition，解决内存扩缩容的情况，挑战4</li>
 </ul>
-<h1 id="eurosys">EuroSys</h1>
-<h2 id="section-2">2022</h2>
+<p>开源 <a
+target="_blank" rel="noopener" href="https://github.com/resource-disaggregation/jiffy">https://github.com/resource-disaggregation/jiffy</a></p>
+<h1 id="motivation">Motivation</h1>
+<p>Pocket的一些回顾</p>
 <ul>
-<li><a
-href="https://datawine.github.io/eurosys22-DeepRest-Deep-Resource-Estimation-for-Interactive-Microservices.html">DeepRest:
-Deep Resource Estimation for Interactive
-Microservices</a>：用深度学习的方法，提出API-based，估计微服务资源使用量</li>
-<li><a
-href="https://datawine.github.io/eurosys22-Fireworks-A-Fast-Efficient-and-Safe-Serverless-Framework-using-VM-level-post-JIT-Snapshot.html">Fireworks:
-A Fast, Efficient, and Safe Serverless Framework using VM-level post-JIT
-Snapshot</a>：serverless加速。通过一个train的过程，在entry
-point前面JIT再snapshot</li>
-<li><a
-href="https://datawine.github.io/eurosys22-Jiffy-Elastic-Far-Memory-for-Stateful-Serverless-Analytics.html">Jiffy:
-Elastic Far-Memory for Stateful Serverless
-Analytics</a>：很不错的一篇工作。主要是serverless的analytics任务的far-memory管理，灵感来源于内存的分块管理。比Pocket更精细了。</li>
+<li>Scalable centralized
+management：虽然数据存储本身分布在多个存储服务器上，但通过控制平面和元数据平面的存储管理功能在逻辑上是集中的</li>
+<li>Multi-tiered data
+storage：作业可以根据其性能和/或成本限制，在数据平面的DRAM、Flash或HDD层上存储数据</li>
+<li>Adding/removing memory
+servers：Pocket可以通过在数据平面增加更多的内存服务器来扩大内存容量</li>
 </ul>
-<h1 id="nsdi">NSDI</h1>
-<h2 id="section-3">2022</h2>
+<p><strong>Analytics execution with pocket</strong></p>
+<ol type="1">
+<li>当作业首次启动时，它向控制平面注册自己，要么指定它预期使用的内存资源量，要么提供Pocket可以用来估计的提示。</li>
+<li>控制器使用这些信息为作业分配资源，并通知元数据平面关于数据平面上的资源放置。</li>
+<li>当作业的无服务器计算任务首次尝试在作业分配的内存上读取或写入中间数据时，它会联系元数据服务以获得拥有其分配资源的内存服务器的IP地址。</li>
+<li>无服务器任务随后可以直接从内存服务器上访问数据。</li>
+<li>一旦任务完成，它就在控制平面上取消注册，以释放其资源。</li>
+</ol>
+<h2 id="limitations-of-pocket-resource-allocation">Limitations of Pocket
+Resource Allocation</h2>
+<p>Pocket的资源分配的核心挑战是，它以作业的粒度分配内存。
+在提交时，作业指定了它的内存需求；并且，Pocket在作业的整个生命周期内分配和保留与作业需求相等的内存资源，只有在作业明确取消注册时才释放这些资源。</p>
+<p>由于以下两个原因，这种job-level的资源分配是有问题的</p>
+<ol type="1">
+<li>首先，准确预测中间数据大小对许多分析工作来说是很难的。</li>
+<li>其次，即使可以准确地预测中间数据大小，Pocket的资源分配机制导致了性能下降和资源利用不足之间的标准权衡。</li>
+</ol>
+<h1 id="jiffy-design">Jiffy design</h1>
+<h2 id="hierarchical-addressing">Hierarchical Addressing</h2>
+<p>其实就是按照访问路径加前缀。比如T1.T4.B2_2代表T1-&gt;T2的中间数据存在了B2_2里。</p>
+<p>几个设计问题</p>
 <ul>
-<li><a
-href="https://datawine.github.io/nsdi22-Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks.html">Efficient
-Scheduling Policies for Microsecond-Scale
-Tasks</a>：开源。模拟。对比load balancing策略和core
-allocation策略对1us级别任务的性能影响。</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Buffer-based-End-to-end-Request-Event-Monitoring-in-the-Cloud.html">Buffer-based
-End-to-end Request Event Monitoring in the
-Cloud</a>：以请求粒度捕获请求延迟异常（RLA）相关的事件：缓冲区建模和请求级别的数据包注入</li>
-<li><a
-href="https://datawine.github.io/nsdi22-A-Case-for-Task-Sampling-based-Learning-for-Cluster-Job-Scheduling.html">A
-Case for Task Sampling based Learning for Cluster Job
-Scheduling</a>：提出使用空间特性（其实就是sample-based）来预测集群作业的Job
-Completion Time要比history-based更好。</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Starlight-Fast-Container-Provisioning-on-the-Edge-and-over-the-WAN.html">Starlight:
-Fast Container Provisioning on the Edge and over the
-WAN</a>：重新设计了容器provisioning的协议和流程等，来让在低带宽、高延时的网络中加速容器provisioning</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Closed-loop-Network-Performance-Monitoring-and-Diagnosis-with-SpiderMon.html">Closed-loop
-Network Performance Monitoring and Diagnosis with
-SpiderMon</a>：基于可编程交换机的网络异常监控。论文的亮点在于针对后验诊断（posterior
-diagnosis）、解决了现有的监控系统的两个问题：高覆盖率和低开销</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Collie-Finding-Performance-Anomalies-in-RDMA-Subsystems.html">Collie-Finding
-Performance Anomalies in RDMA
-Subsystems</a>：使用模拟退火搜索性能异常空间</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Performance-Interfaces-for-Network-Functions.html">Performance
-Interfaces for Network Functions</a>：提出了performance
-interface的概念，用符号执行和trace的一个简单执行来生成关于Performance
-Critical Variances的一个程序，和实际的NF一一对应</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Justitia-Software-Multi-Tenancy-in-Hardware-Kernel-Bypass-Networks.html">Justitia:
-Software Multi-Tenancy in Hardware Kernel-Bypass
-Networks</a>：对RDMA的多租户支持</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Zeta-A-Scalable-and-Robust-East-West-Communication-Framework-in-Large-Scale-Clouds.html">Zeta:
-A Scalable and Robust East-West Communication Framework in Large-Scale
-Clouds</a>：云网关的设计</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Cocktail-A-Multidimensional-Optimization-for-Model-Serving-in-Cloud.html">Cocktail:
-A Multidimensional Optimization for Model Serving in
-Cloud</a>：针对ensemble
-learning，在保证机器学习的准确率的情况下设计动态模型选择和购买算法，来保证经济效益</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Evolvable-Network-Telemetry-at-Facebook.html">Evolvable
-Network Telemetry at Facebook</a>：PCAT，一个production
-change-aware的遥测系统，处理快速发展的网络中的变化。我们建议使用一个change
-cube abstraction来系统地跟踪变化，并使用intent-based
-layering的设计来限制和跟踪变化。</li>
-<li><a
-href="https://datawine.github.io/nsdi22-SketchLib-Enabling-Efficient-Sketch-based-Monitoring-on-Programmable-Switches.html">SketchLib:
-Enabling Efficient Sketch-based Monitoring on Programmable
-Switches</a>：这篇文章主要是在p4交换机针对sketch应用进行优化。</li>
-<li><a
-href="https://datawine.github.io/nsdi22-HeteroSketch-Coordinating-Network-wide-Monitoring-in-Heterogeneous-and-Dynamic-Networks.html">HeteroSketch:
-Coordinating Network-wide Monitoring in Heterogeneous and Dynamic
-Networks</a>：主要解决sketch算法的在异质化硬件上的问题。首先用profiler测量硬件性能，再用optimizer根据性能放置sketch算法。</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Packet-Order-Matters-Improving-Application-Performance-by-Deliberately-Delaying-Packets.html">Packet
-Order Matters! Improving Application Performance by Deliberately
-Delaying
-Packets</a>：实际场景中，混杂流的包是交替到达的。论文提出将同一个流的包buffer一下，然后批处理统一发送，会提高效率。</li>
-<li><a
-href="https://datawine.github.io/nsdi22-How-to-diagnose-nanosecond-network-latencies-in-rich-end-host-stacks.html">How
-to diagnose nanosecond network latencies in rich end-host
-stacks</a>：改了基于intel-PT的perf，实现了一个full-stack的网络分析器</li>
-<li><a
-href="https://datawine.github.io/nsdi22-CloudCluster-Unearthing-the-Functional-Structure-of-a-Cloud-Service.html">CloudCluster:
-Unearthing the Functional Structure of a Cloud
-Service</a>：根据流量矩阵对同一个数据中心内的VM进行聚类</li>
-<li><a
-href="https://datawine.github.io/nsdi22-NetHint-White-Box-Networking-for-Multi-Tenant-Data-Centers.html">NetHint:
-White-Box Networking for Multi-Tenant Data
-Centers</a>：运营商提供给用户一套简单的拓扑信息，方便他们优化机器学习应用（或者说数据密集型应用）</li>
-<li><a
-href="https://datawine.github.io/nsdi22-Isolation-Mechanisms-for-High-Speed-Packet-Processing-Pipelines.html">Isolation
-Mechanisms for High-Speed Packet-Processing
-Pipelines</a>：本文介绍了Menshen，它是可编程交换机的可重构匹配表（RMT）管道的一个扩展，在不同的数据包处理模块之间实施隔离。</li>
+<li><strong>分层寻址与serverless系统政策解耦</strong>。也就是上层用什么公平性策略和底下这套decouple</li>
+<li><strong>地址转换在metadata服务器上执行</strong>。evaluation证明可扩展性已经够了</li>
+<li><strong>块大小</strong>，为了兼容，它采用了分析框架中通常用于文件的块大小，例如HDFS中的128MB</li>
+<li><strong>隔离粒度</strong>，虽然现在是根据task隔离的（前缀隔离），但是可以更细，手动添加前缀</li>
 </ul>
+<h2 id="data-lifetime-management">Data Lifetime Management</h2>
+<p>现有的用于无服务器分析的远端内存系统按作业级资源分配，也按作业粒度管理数据寿命--在作业明确取消注册时回收存储。
+无服务器分析的一个独特特点是，任务的中间数据与它的执行脱钩：虽然它的执行发生在无服务器计算平台上，但它产生和消耗的数据将驻留在远端内存系统上。
+这也导致了它们的故障域的解耦：在标准的机制下（例如，参考计数方法），当任务失败时，其相应的中间数据在远端内存系统中成为悬空状态。
+为了避免由此产生的低效率，我们需要额外的机制来有效地执行任务级数据寿命管理。</p>
+<p>通过整合lease management机制和分层寻址来解决这一问题。
+一个作业会定期更新目前正在运行的任务的地址前缀的租约。
+在一个特定的地址前缀的租约到期时，Jiffy在将数据flush持久性存储后收回分配给它的所有内存。其实就是保持前一跳和后一跳的一起维持。</p>
+<h2 id="flexible-data-repartitioning">Flexible Data Repartitioning</h2>
+<p>通过让块自己repartition，而不是compute task。</p>
+<p>分配给Jiffy数据结构的每个块都会跟踪当前用于存储数据的块内存容量的部分。
+每当使用量增长超过一个高的阈值，Jiffy就会反过来为相应的地址前缀分配一个新的块。
+随后，过载的区块会触发数据结构特定的补偿，将其部分数据转移到新区块。</p>
+<p>同样，当区块的使用量下降到低阈值以下时，Jiffy在地址前缀中识别出另一个使用量低的区块，该区块可以与之合并其数据。
+然后，该区块进行所需的重新分区，之后Jiffy将其deallocate。</p>
 
+
+	<div class="row">
+    <embed src="/paper/eurosys22-Jiffy-Elastic-Far-Memory-for-Stateful-Serverless-Analytics.pdf" width="100%" height="1700" type="application/pdf">
+	</div>
+
+
+
+<!-- flag of hidden posts -->
       
     </div>
     
@@ -583,7 +526,7 @@ Pipelines</a>：本文介绍了Menshen，它是可编程交换机的可重构匹
       
         <div class="post-tags">
           
-            <a href="/tags/%E8%AE%BA%E6%96%87%E6%B1%87%E6%80%BB/" rel="tag"># 论文汇总</a>
+            <a href="/tags/eurosys/" rel="tag"># eurosys</a>
           
         </div>
       
@@ -592,26 +535,6 @@ Pipelines</a>：本文介绍了Menshen，它是可编程交换机的可重构匹
       
       
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/mendelian-randomization.html" rel="next" title="孟德尔随机化">
-                <i class="fa fa-chevron-left"></i> 孟德尔随机化
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/r-learning.html" rel="prev" title="R语言学习">
-                R语言学习 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
 
       
@@ -755,7 +678,8 @@ Pipelines</a>：本文介绍了Menshen，它是可编程交换机的可重构匹
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#asplos"><span class="nav-number">1.</span> <span class="nav-text">ASPLOS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section"><span class="nav-number">1.1.</span> <span class="nav-text">2022</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#atc"><span class="nav-number">2.</span> <span class="nav-text">ATC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-1"><span class="nav-number">2.1.</span> <span class="nav-text">2019</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#eurosys"><span class="nav-number">3.</span> <span class="nav-text">EuroSys</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-2"><span class="nav-number">3.1.</span> <span class="nav-text">2022</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nsdi"><span class="nav-number">4.</span> <span class="nav-text">NSDI</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-3"><span class="nav-number">4.1.</span> <span class="nav-text">2022</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#motivation"><span class="nav-number">1.</span> <span class="nav-text">Motivation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#limitations-of-pocket-resource-allocation"><span class="nav-number">1.1.</span> <span class="nav-text">Limitations of Pocket
+Resource Allocation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jiffy-design"><span class="nav-number">2.</span> <span class="nav-text">Jiffy design</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hierarchical-addressing"><span class="nav-number">2.1.</span> <span class="nav-text">Hierarchical Addressing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#data-lifetime-management"><span class="nav-number">2.2.</span> <span class="nav-text">Data Lifetime Management</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flexible-data-repartitioning"><span class="nav-number">2.3.</span> <span class="nav-text">Flexible Data Repartitioning</span></a></li></ol></li></ol></div>
             
 
           </div>
