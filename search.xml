@@ -54,6 +54,10 @@ Analytics</a>：很不错的一篇工作。主要是serverless的analytics任务
 href="https://datawine.github.io/eurosys22-Memory-Deduplication-for-Serverless-Computing-with-Medes.html">Memory
 Deduplication for Serverless Computing with
 Medes</a>：感觉很有新意。是从warm的角度来优化serverless冷启动的，也就是warm一部分，总体来说应该是snapshot+diff，然后只保存diff。</li>
+<li><a
+href="https://datawine.github.io/eurosys22-FaaSnap-FaaS-Made-Fast-Using-Snapshot-based-VMs.html">FaaSnap:
+FaaS Made Fast Using Snapshot-based VMs</a>：把serverless snapshot
+restore的page fault问题优化到了极致</li>
 </ul>
 <h1 id="nsdi">NSDI</h1>
 <h2 id="section-3">2022</h2>
