@@ -8,7 +8,6 @@
 <h1 id="asplos">ASPLOS</h1>
 <h2 id="section">2022</h2>
 <ul>
-<li><a href="https://datawine.github.io/.html"></a></li>
 <li><a
 href="https://datawine.github.io/asplos22-IceBreaker-Warming-Serverless-Functions-Better-with-Heterogeneity.html">IceBreaker:
 Warming Serverless Functions Better with
@@ -51,6 +50,10 @@ point前面JIT再snapshot</li>
 href="https://datawine.github.io/eurosys22-Jiffy-Elastic-Far-Memory-for-Stateful-Serverless-Analytics.html">Jiffy:
 Elastic Far-Memory for Stateful Serverless
 Analytics</a>：很不错的一篇工作。主要是serverless的analytics任务的far-memory管理，灵感来源于内存的分块管理。比Pocket更精细了。</li>
+<li><a
+href="https://datawine.github.io/eurosys22-Memory-Deduplication-for-Serverless-Computing-with-Medes.html">Memory
+Deduplication for Serverless Computing with
+Medes</a>：感觉很有新意。是从warm的角度来优化serverless冷启动的，也就是warm一部分，总体来说应该是snapshot+diff，然后只保存diff。</li>
 </ul>
 <h1 id="nsdi">NSDI</h1>
 <h2 id="section-3">2022</h2>
