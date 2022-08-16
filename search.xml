@@ -42,6 +42,11 @@ CloudLab</a>：主要是讲分布式实验平台CloudLab的综述</li>
 href="https://datawine.github.io/eurosys22-DeepRest-Deep-Resource-Estimation-for-Interactive-Microservices.html">DeepRest:
 Deep Resource Estimation for Interactive
 Microservices</a>：用深度学习的方法，提出API-based，估计微服务资源使用量</li>
+<li><a
+href="https://datawine.github.io/eurosys22-Fireworks-A-Fast-Efficient-and-Safe-Serverless-Framework-using-VM-level-post-JIT-Snapshot.html">Fireworks:
+A Fast, Efficient, and Safe Serverless Framework using VM-level post-JIT
+Snapshot</a>：serverless加速。通过一个train的过程，在entry
+point前面JIT再snapshot</li>
 </ul>
 <h1 id="nsdi">NSDI</h1>
 <h2 id="section-3">2022</h2>
