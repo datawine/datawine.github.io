@@ -520,6 +520,13 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>https://datawine.github.io/tags/osdi/</loc>
+    <lastmod>2022-09-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
