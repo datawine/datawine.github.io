@@ -157,6 +157,14 @@ href="https://datawine.github.io/nsdi22-Isolation-Mechanisms-for-High-Speed-Pack
 Mechanisms for High-Speed Packet-Processing
 Pipelines</a>：本文介绍了Menshen，它是可编程交换机的可重构匹配表（RMT）管道的一个扩展，在不同的数据包处理模块之间实施隔离。</li>
 </ul>
+<h1 id="www">WWW</h1>
+<h2 id="section-5">2022</h2>
+<ul>
+<li><a
+href="https://datawine.github.io/www22-Accelerating-Serverless-Computing-by-Harvesting-Idle-Resources.html">Accelerating
+Serverless Computing by Harvesting Idle
+Resources</a>：使用RL对serverless资源用量进行建模，把over-provisioned的function的资源给under-provisioned的function</li>
+</ul>
 ]]></content>
       <categories>
         <category>论文</category>
