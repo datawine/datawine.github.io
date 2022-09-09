@@ -59,8 +59,22 @@ href="https://datawine.github.io/eurosys22-FaaSnap-FaaS-Made-Fast-Using-Snapshot
 FaaS Made Fast Using Snapshot-based VMs</a>：把serverless snapshot
 restore的page fault问题优化到了极致</li>
 </ul>
-<h1 id="nsdi">NSDI</h1>
+<h1 id="isca">ISCA</h1>
 <h2 id="section-3">2022</h2>
+<ul>
+<li><a
+href="https://datawine.github.io/isca22-HiveMind-A-Hardware-Software-System-Stack-for-Serverless-Edge-Swarms.html">HiveMind:
+A Hardware-Software System Stack for Serverless Edge
+Swarms</a>：serverless+edge
+computing优化。主要利用serverless的可扩展性，在集中式和分布式之间取平衡，用serverless去做之前集中式的部分。</li>
+<li><a
+href="https://datawine.github.io/isca22-Lukewarm-Serverless-Functions-Characterization-and-Optimization.html">Lukewarm
+Serverless Functions: Characterization and
+Optimization</a>：针对serverless的warm instance交互运行导致的cache
+miss，设计了FIFO的L2 prefetch</li>
+</ul>
+<h1 id="nsdi">NSDI</h1>
+<h2 id="section-4">2022</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/nsdi22-Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks.html">Efficient
