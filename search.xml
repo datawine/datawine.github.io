@@ -165,8 +165,16 @@ href="https://datawine.github.io/osdi14-The-Mystery-Machine-End-to-end-Performan
 Mystery Machine: End-to-end Performance Analysis of Large-scale Internet
 Services</a>：通过在全连接图上迭代，得到多服务间因果分析。</li>
 </ul>
+<h2 id="section-6">2018</h2>
+<ul>
+<li><a
+href="https://datawine.github.io/osdi18-Capturing-and-Enhancing-In-Situ-System-Observability-for-Failure-Detection.html">Capturing
+and Enhancing In Situ System Observability for Failure
+Detection</a>：通过inter-process和inter-thread的error
+log来增加可观测性。一个设计点是indirection的处理。</li>
+</ul>
 <h1 id="sigcomm">SIGCOMM</h1>
-<h2 id="section-6">2022</h2>
+<h2 id="section-7">2022</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/sigcomm22-SPRIGHT-Extracting-the-Server-from-Serverless-Computing-High-performance-eBPF-based-Event-driven-Shared-memory-Processing.html">SPRIGHT:
@@ -175,7 +183,7 @@ eBPF-based Event-driven, Shared-memory Processing</a>：利用eBPF和share
 memory对serverless chain的数据平面进行性能优化</li>
 </ul>
 <h1 id="www">WWW</h1>
-<h2 id="section-7">2022</h2>
+<h2 id="section-8">2022</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/www22-Accelerating-Serverless-Computing-by-Harvesting-Idle-Resources.html">Accelerating
