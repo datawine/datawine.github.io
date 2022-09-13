@@ -11,6 +11,15 @@
   </url>
   
   <url>
+    <loc>https://datawine.github.io/tpds12-Precise-Scalable-and-Online-Request-Tracing-for-Multitier-Services-of-Black-Boxes.html</loc>
+    
+    <lastmod>2022-09-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://datawine.github.io/mendelian-randomization.html</loc>
     
     <lastmod>2022-08-15</lastmod>
@@ -304,13 +313,6 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6/</loc>
-    <lastmod>2022-09-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://datawine.github.io/tags/dpdk/</loc>
     <lastmod>2022-09-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -326,6 +328,13 @@
   
   <url>
     <loc>https://datawine.github.io/tags/ovs/</loc>
+    <lastmod>2022-09-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://datawine.github.io/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6/</loc>
     <lastmod>2022-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -409,6 +418,13 @@
   </url>
   
   <url>
+    <loc>https://datawine.github.io/tags/llvm/</loc>
+    <lastmod>2022-09-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://datawine.github.io/tags/moongen/</loc>
     <lastmod>2022-09-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -423,21 +439,7 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/llvm/</loc>
-    <lastmod>2022-09-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://datawine.github.io/tags/osdi/</loc>
-    <lastmod>2022-09-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://datawine.github.io/tags/pktgen/</loc>
     <lastmod>2022-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -451,7 +453,7 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/ssh/</loc>
+    <loc>https://datawine.github.io/tags/pktgen/</loc>
     <lastmod>2022-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -472,6 +474,13 @@
   </url>
   
   <url>
+    <loc>https://datawine.github.io/tags/ssh/</loc>
+    <lastmod>2022-09-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://datawine.github.io/tags/www/</loc>
     <lastmod>2022-09-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -479,14 +488,14 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/ycsb/</loc>
+    <loc>https://datawine.github.io/tags/tpds/</loc>
     <lastmod>2022-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/git/</loc>
+    <loc>https://datawine.github.io/tags/ycsb/</loc>
     <lastmod>2022-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -501,6 +510,13 @@
   
   <url>
     <loc>https://datawine.github.io/tags/%E5%85%B1%E4%BA%AB%E5%AD%98%E5%82%A8/</loc>
+    <lastmod>2022-09-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://datawine.github.io/tags/git/</loc>
     <lastmod>2022-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
