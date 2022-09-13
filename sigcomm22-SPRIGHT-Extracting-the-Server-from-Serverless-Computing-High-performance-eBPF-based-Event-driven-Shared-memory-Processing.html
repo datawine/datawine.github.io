@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="ssh," />
+  <meta name="keywords" content="sigcomm," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="前几天跑S6的框架，然后在一个ssh的环节报错。">
+<meta name="description" content="Background 造成性能开销的原因：核心是数据平面的设计过于复杂  数据拷贝、上下文切换、中断 额外的protocol处理 不必要的序列化、反序列化 sidecar的设计很冗余  System design of SPRIGHT Overview of SPRIGHT 几个组件  SPRIGHT controller 平台级别 和kubelet交互 和autoscaler、placement">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ssh-permissions-are-too-open解决方法">
-<meta property="og:url" content="https://datawine.github.io/ssh-permissions-are-too-open-error.html">
+<meta property="og:title" content="SPRIGHT: Extracting the Server from Serverless Computing! High-performance eBPF-based Event-driven, Shared-memory Processing">
+<meta property="og:url" content="https://datawine.github.io/sigcomm22-SPRIGHT-Extracting-the-Server-from-Serverless-Computing-High-performance-eBPF-based-Event-driven-Shared-memory-Processing.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="前几天跑S6的框架，然后在一个ssh的环节报错。">
+<meta property="og:description" content="Background 造成性能开销的原因：核心是数据平面的设计过于复杂  数据拷贝、上下文切换、中断 额外的protocol处理 不必要的序列化、反序列化 sidecar的设计很冗余  System design of SPRIGHT Overview of SPRIGHT 几个组件  SPRIGHT controller 平台级别 和kubelet交互 和autoscaler、placement">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-05-07T14:47:34.000Z">
-<meta property="article:modified_time" content="2022-05-07T14:48:00.983Z">
+<meta property="article:published_time" content="2022-09-13T09:52:20.000Z">
+<meta property="article:modified_time" content="2022-09-13T09:54:40.612Z">
 <meta property="article:author" content="Datawine">
-<meta property="article:tag" content="ssh">
+<meta property="article:tag" content="sigcomm">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/ssh-permissions-are-too-open-error.html"/>
+  <link rel="canonical" href="https://datawine.github.io/sigcomm22-SPRIGHT-Extracting-the-Server-from-Serverless-Computing-High-performance-eBPF-based-Event-driven-Shared-memory-Processing.html"/>
 
 
 
 
 
-  <title>ssh-permissions-are-too-open解决方法 | Datawine's Blog</title>
+  <title>SPRIGHT: Extracting the Server from Serverless Computing! High-performance eBPF-based Event-driven, Shared-memory Processing | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/ssh-permissions-are-too-open-error.html">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/sigcomm22-SPRIGHT-Extracting-the-Server-from-Serverless-Computing-High-performance-eBPF-based-Event-driven-Shared-memory-Processing.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">ssh-permissions-are-too-open解决方法</h1>
+          <h1 class="post-title" itemprop="name headline">SPRIGHT: Extracting the Server from Serverless Computing! High-performance eBPF-based Event-driven, Shared-memory Processing</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-07T22:47:34+08:00">
-                2022-05-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-09-13T17:52:20+08:00">
+                2022-09-13
               </time>
             
 
@@ -349,8 +349,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index">
-                    <span itemprop="name">其他</span>
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
                   </a>
                 </span>
 
@@ -368,8 +368,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/ssh-permissions-are-too-open-error.html#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="ssh-permissions-are-too-open-error.html" itemprop="commentsCount"></span>
+                <a href="/sigcomm22-SPRIGHT-Extracting-the-Server-from-Serverless-Computing-High-performance-eBPF-based-Event-driven-Shared-memory-Processing.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="sigcomm22-SPRIGHT-Extracting-the-Server-from-Serverless-Computing-High-performance-eBPF-based-Event-driven-Shared-memory-Processing.html" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  152
+                  314
                 </span>
               
 
@@ -433,21 +433,77 @@
       
 
       
-        <p>前几天跑S6的框架，然后在一个ssh的环节报错。</p>
-<span id="more"></span>
-<h1 id="具体错误">具体错误</h1>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Permissions 0777 for &#x27;/Users/username/.ssh/id_rsa&#x27; are too open.</span><br><span class="line">It is recommended that your private key files are NOT accessible by others.</span><br><span class="line">This private key will be ignored.</span><br></pre></td></tr></table></figure>
-<p>大概意思就是权限太松了。</p>
-<h1 id="解决方法">解决方法</h1>
-<p>只需要将<code>~/.ssh/id_rsa</code>的权限调整为只有自己可读就好了。</p>
-<p>众所周知，<code>r=4</code>为可读，<code>w=2</code>为可写，<code>x=1</code>为可执行。三个分别是<code>user</code>、<code>group</code>和<code>other</code>。权限位相或即可。</p>
-<p>所以</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chmod 400 ~/.ssh/id_rsa</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">或者</span></span><br><span class="line">chmod 600 ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
-<h1 id="参考资料">参考资料</h1>
+        <h1 id="background">Background</h1>
+<p>造成性能开销的原因：核心是数据平面的设计过于复杂</p>
 <ul>
-<li>https://stackoverflow.com/questions/9270734/ssh-permissions-are-too-open-error</li>
+<li>数据拷贝、上下文切换、中断</li>
+<li>额外的protocol处理</li>
+<li>不必要的序列化、反序列化</li>
+<li>sidecar的设计很冗余</li>
 </ul>
+<h1 id="system-design-of-spright">System design of SPRIGHT</h1>
+<h2 id="overview-of-spright">Overview of SPRIGHT</h2>
+<p>几个组件</p>
+<ol type="1">
+<li>SPRIGHT controller</li>
+<li>平台级别</li>
+<li>和kubelet交互</li>
+<li>和autoscaler、placement engine交互</li>
+<li>SPRIGHT gateway</li>
+<li>反向代理</li>
+<li>和共享内存交互</li>
+<li>一个chain一个gateway</li>
+<li>Direct Function Routing (DFR)</li>
+<li>一些安全措施</li>
+<li>eBPF交互</li>
+</ol>
+<h2 id="optimizing-communication-within-function-chains">Optimizing
+communication within function chains</h2>
+<ul>
+<li>per-chain独有的共享大页内存</li>
+<li>通过packet descriptors交互
+<ul>
+<li>下一个function的ID</li>
+<li>pointer to the data in the shared memory</li>
+</ul></li>
+<li>zero copy
+<ul>
+<li>通过维护eBPF中的一个socket map，通过function ID找到target socket
+info（比如文件描述符）</li>
+</ul></li>
+</ul>
+<p>相比于DPDK的busy-polling，这种方式虽然有一些overhead，但是用的CPU更少。</p>
+<h2 id="event-driven-proxy-eproxy-sproxy">Event-driven proxy (EPROXY
+&amp; SPROXY)</h2>
+<p>主要负责</p>
+<ul>
+<li>提供原来的sidecar proxy的功能</li>
+<li>提供metric collection，比如三层的packet rate或者七层的request
+rate</li>
+</ul>
+<h2 id="security-domains-in-spright">Security domains in SPRIGHT</h2>
+<p>包含两个部分</p>
+<ul>
+<li>private共享内存池for each chain（通过DPDK的支持实现）</li>
+<li>inter-function packet descriptor filtering</li>
+</ul>
+<h2
+id="ebpf-based-dataplane-acceleration-for-external-communication">eBPF-based
+dataplane acceleration for external communication</h2>
+<p>通过eBPF的XDP/TC hooks来加速和外部的通信。</p>
+<h2 id="event-driven-protocol-adaptation">Event-driven protocol
+adaptation</h2>
+<p>在gateway向function pod发送消息之前，添加了一个protocol adaptation
+hook</p>
 
+
+	<div class="row">
+    <embed src="/paper/sigcomm22-SPRIGHT-Extracting-the-Server-from-Serverless-Computing-High-performance-eBPF-based-Event-driven-Shared-memory-Processing.pdf" width="100%" height="1700" type="application/pdf">
+	</div>
+
+
+
+<!-- flag of hidden posts -->
       
     </div>
     
@@ -464,7 +520,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ssh/" rel="tag"># ssh</a>
+            <a href="/tags/sigcomm/" rel="tag"># sigcomm</a>
           
         </div>
       
@@ -473,26 +529,6 @@
       
       
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/dpdk-install.html" rel="next" title="dpdk安装踩坑实录">
-                <i class="fa fa-chevron-left"></i> dpdk安装踩坑实录
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/memsentry-source-code.html" rel="prev" title="memsentry项目源码注释">
-                memsentry项目源码注释 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
 
       
@@ -636,7 +672,11 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E9%94%99%E8%AF%AF"><span class="nav-number">1.</span> <span class="nav-text">具体错误</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">解决方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background"><span class="nav-number">1.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#system-design-of-spright"><span class="nav-number">2.</span> <span class="nav-text">System design of SPRIGHT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#overview-of-spright"><span class="nav-number">2.1.</span> <span class="nav-text">Overview of SPRIGHT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#optimizing-communication-within-function-chains"><span class="nav-number">2.2.</span> <span class="nav-text">Optimizing
+communication within function chains</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#event-driven-proxy-eproxy-sproxy"><span class="nav-number">2.3.</span> <span class="nav-text">Event-driven proxy (EPROXY
+&amp; SPROXY)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#security-domains-in-spright"><span class="nav-number">2.4.</span> <span class="nav-text">Security domains in SPRIGHT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ebpf-based-dataplane-acceleration-for-external-communication"><span class="nav-number">2.5.</span> <span class="nav-text">eBPF-based
+dataplane acceleration for external communication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#event-driven-protocol-adaptation"><span class="nav-number">2.6.</span> <span class="nav-text">Event-driven protocol
+adaptation</span></a></li></ol></li></ol></div>
             
 
           </div>
