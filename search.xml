@@ -189,6 +189,11 @@ memory对serverless chain的数据平面进行性能优化</li>
 href="https://datawine.github.io/tpds12-Precise-Scalable-and-Online-Request-Tracing-for-Multitier-Services-of-Black-Boxes.html">Precise,
 Scalable, and Online Request Tracing for Multitier Services of Black
 Boxes</a>：本文是基于kprobe的一个tracing工作。一个新颖点在于除了普通的逻辑之外还提出了一些新的图关系和图表示。</li>
+<li><a
+href="https://datawine.github.io/tpds17-Failure-Diagnosis-for-Distributed-Systems-Using-Targeted-Fault-Injection.html">Failure
+Diagnosis for Distributed Systems Using Targeted Fault
+Injection</a>：针对分布式系统的特点提出了Target Fault
+Injection，通过利用分布式组件的执行流知识来控制注入位置。</li>
 </ul>
 <h1 id="www">WWW</h1>
 <h2 id="section-9">2022</h2>
