@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="osdi," />
 
 
 
@@ -79,12 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Datawine&#39;s Blog">
-<meta property="og:url" content="https://datawine.github.io/archives/page/7/index.html">
+<meta name="description" content="文章写的太好了 主要贡献  基于SVM的SLO violation的detection和localization 基于RL的SLO violation的mitigation Online Training和performance anomaly injection framework  基于K8s的开源https:&#x2F;&#x2F;gitlab.engr.illinois.edu&#x2F;DEPEND&#x2F;firm.git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FIRM: An Intelligent Fine-grained Resource Management Framework for SLO-Oriented Microservices">
+<meta property="og:url" content="https://datawine.github.io/osdi20-FIRM-An-Intelligent-Fine-grained-Resource-Management-Framework-for-SLO-Oriented-Microservices.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="文章写的太好了 主要贡献  基于SVM的SLO violation的detection和localization 基于RL的SLO violation的mitigation Online Training和performance anomaly injection framework  基于K8s的开源https:&#x2F;&#x2F;gitlab.engr.illinois.edu&#x2F;DEPEND&#x2F;firm.git">
 <meta property="og:locale">
+<meta property="article:published_time" content="2022-09-17T09:32:16.000Z">
+<meta property="article:modified_time" content="2022-09-17T09:33:56.991Z">
 <meta property="article:author" content="Datawine">
+<meta property="article:tag" content="osdi">
 <meta name="twitter:card" content="summary">
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/archives/page/7/"/>
+  <link rel="canonical" href="https://datawine.github.io/osdi20-FIRM-An-Intelligent-Fine-grained-Resource-Management-Framework-for-SLO-Oriented-Microservices.html"/>
 
 
 
 
 
-  <title>归档 | Datawine's Blog</title>
+  <title>FIRM: An Intelligent Fine-grained Resource Management Framework for SLO-Oriented Microservices | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -278,411 +283,283 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/osdi20-FIRM-An-Intelligent-Fine-grained-Resource-Management-Framework-for-SLO-Oriented-Microservices.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">FIRM: An Intelligent Fine-grained Resource Management Framework for SLO-Oriented Microservices</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-09-17T17:32:16+08:00">
+                2022-09-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 30 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2022">2022</h1>
-          </div>
-        
-        
 
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/pktgen-install.html" itemprop="url">
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
               
-                <span itemprop="name">pktgen-dpdk安装踩坑实录</span>
+                <a href="/osdi20-FIRM-An-Intelligent-Fine-grained-Resource-Management-Framework-for-SLO-Oriented-Microservices.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="osdi20-FIRM-An-Intelligent-Fine-grained-Resource-Management-Framework-for-SLO-Oriented-Microservices.html" itemprop="commentsCount"></span>
+                </a>
               
-            </a>
-        
-      </h2>
+            
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T22:55:38+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
+          
+          
 
-    </header>
-  </article>
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  305
+                </span>
+              
 
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/linux-thread-state.html" itemprop="url">
-              
-                <span itemprop="name">linux查看线程状态</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T22:53:34+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/lua-learning.html" itemprop="url">
-              
-                <span itemprop="name">lua学习</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T22:53:00+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
+        <p>文章写的太好了</p>
+<p>主要贡献</p>
+<ul>
+<li>基于SVM的SLO violation的detection和localization</li>
+<li>基于RL的SLO violation的mitigation</li>
+<li>Online Training和performance anomaly injection framework</li>
+</ul>
+<p>基于K8s的开源<a
+target="_blank" rel="noopener" href="https://gitlab.engr.illinois.edu/DEPEND/firm.git">https://gitlab.engr.illinois.edu/DEPEND/firm.git</a></p>
+<h1 id="background-and-characterization">Background and
+Characterization</h1>
+<p>Definition</p>
+<ol type="1">
+<li>service dependency graph</li>
+<li>execution history graph</li>
+<li>critical path</li>
+</ol>
+<p>Insights</p>
+<ol type="1">
+<li>关键路径的行为本身就会变动，是<strong>dynamic</strong>的</li>
+<li><strong>有大延迟的微服务不一定是SLO
+violations的根本原因</strong></li>
+<li>现有的mitigation方法有scale out和scale
+up，但是都是<strong>基于static policies的</strong>，并不合适</li>
+</ol>
+<h1 id="the-firm-framework">The FIRM Framework</h1>
+<h2 id="tracing-coordinator">Tracing Coordinator</h2>
+<p>用的是基于OpenTracing的方案。</p>
+<p>选取的指标：</p>
+<p>cAdvisor / Prometheus</p>
+<ul>
+<li>cpu_usage_seconds_total</li>
+<li>memory_usage_bytes</li>
+<li>fs_write/read_seconds</li>
+<li>fs_usage_bytes</li>
+<li>network_transmit/receive_bytes_total</li>
+<li>processes</li>
+</ul>
+<p>Linux perf</p>
+<ul>
+<li>offcore_response.*.llc_hit/miss.local_DRAM</li>
+<li>offcore_response.*.llc_hit/miss.remote_DRAM</li>
+</ul>
+<h2 id="critical-path-extractor">Critical Path Extractor</h2>
+<p>就是一个有向无环图的最长路。定义了三种workflow</p>
+<ul>
+<li>parallel</li>
+<li>sequential</li>
+<li>background：不向parent span返回values的</li>
+</ul>
+<h2 id="critical-component-extractor">Critical Component Extractor</h2>
+<p>主要提取两个关键指标</p>
+<ul>
+<li>Per-CP Variability: Relative Importance
+<ul>
+<li>T_{CP}=，对于每一个instance i来说，他的relative
+importance就是Pearson correlation coefficient。PCC(T_{CP}, T_{i})</li>
+</ul></li>
+<li>Per-Instance Variability: Congestion Intensity
+<ul>
+<li>就是T_{99}/T_{50}</li>
+</ul></li>
+</ul>
+<p>把这两个指标喂进SVM里面，进行dynamic筛选</p>
+<h2 id="slo-violation-mitigation-using-rl">SLO Violation Mitigation
+Using RL</h2>
+<p>RL Primer和Why RL介绍的不错</p>
+<h2 id="action-execution">Action Execution</h2>
+<ul>
+<li>CPU Actions用cgroups</li>
+<li>Memory Actions用Intel MBA和Intel CAT</li>
+<li>I/O Actions用cgroups里面的blkio</li>
+<li>Network Actions用Hierarchical Token Bucket</li>
+</ul>
+<h2 id="performance-anomaly-injector">Performance Anomaly Injector</h2>
+<p>用的是一些现成的benchmark工具</p>
 
-        
-        
-        
 
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/moongen-learning.html" itemprop="url">
-              
-                <span itemprop="name">moongen学习</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T22:51:40+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
+	<div class="row">
+    <embed src="/paper/osdi20-FIRM-An-Intelligent-Fine-grained-Resource-Management-Framework-for-SLO-Oriented-Microservices.pdf" width="100%" height="1700" type="application/pdf">
+	</div>
 
 
 
+<!-- flag of hidden posts -->
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/p4-learning.html" itemprop="url">
-              
-                <span itemprop="name">p4学习</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T22:50:33+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/memsentry-source-code.html" itemprop="url">
-              
-                <span itemprop="name">memsentry项目源码注释</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T22:49:31+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/ssh-permissions-are-too-open-error.html" itemprop="url">
-              
-                <span itemprop="name">ssh-permissions-are-too-open解决方法</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T22:47:34+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/dpdk-install.html" itemprop="url">
-              
-                <span itemprop="name">dpdk安装踩坑实录</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T22:44:34+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/ycsb-learning.html" itemprop="url">
-              
-                <span itemprop="name">ycsb学习</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T22:43:10+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/smartnic-learning.html" itemprop="url">
-              
-                <span itemprop="name">smartnic学习</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T22:43:02+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/osdi/" rel="tag"># osdi</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/page/6/">&lt;</a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/archives/page/8/">8</a><a class="page-number" href="/archives/page/9/">9</a><a class="extend next" rel="next" href="/archives/page/8/">&gt;</a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -690,6 +567,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -710,8 +596,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -781,6 +676,24 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background-and-characterization"><span class="nav-number">1.</span> <span class="nav-text">Background and
+Characterization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#the-firm-framework"><span class="nav-number">2.</span> <span class="nav-text">The FIRM Framework</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tracing-coordinator"><span class="nav-number">2.1.</span> <span class="nav-text">Tracing Coordinator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#critical-path-extractor"><span class="nav-number">2.2.</span> <span class="nav-text">Critical Path Extractor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#critical-component-extractor"><span class="nav-number">2.3.</span> <span class="nav-text">Critical Component Extractor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#slo-violation-mitigation-using-rl"><span class="nav-number">2.4.</span> <span class="nav-text">SLO Violation Mitigation
+Using RL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#action-execution"><span class="nav-number">2.5.</span> <span class="nav-text">Action Execution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#performance-anomaly-injector"><span class="nav-number">2.6.</span> <span class="nav-text">Performance Anomaly Injector</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -965,6 +878,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
