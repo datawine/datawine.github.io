@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="eurosys," />
 
 
 
@@ -79,12 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Datawine&#39;s Blog">
-<meta property="og:url" content="https://datawine.github.io/tags/iperf/index.html">
+<meta name="description" content="如题目所说，解决分布式系统中instrumentation的context propagation问题。 论文认为，分布式系统中的context propagation可以分成两个部分  the instrumentation of the system components to propagate context  只和被插桩的系统和系统的并行性有关  the tool logic itsel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Universal context propagation for distributed system instrumentation">
+<meta property="og:url" content="https://datawine.github.io/null.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="如题目所说，解决分布式系统中instrumentation的context propagation问题。 论文认为，分布式系统中的context propagation可以分成两个部分  the instrumentation of the system components to propagate context  只和被插桩的系统和系统的并行性有关  the tool logic itsel">
 <meta property="og:locale">
+<meta property="article:published_time" content="2022-09-26T06:52:40.000Z">
+<meta property="article:modified_time" content="2022-09-27T14:28:10.100Z">
 <meta property="article:author" content="Datawine">
+<meta property="article:tag" content="eurosys">
 <meta name="twitter:card" content="summary">
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/tags/iperf/"/>
+  <link rel="canonical" href="https://datawine.github.io/null.html"/>
 
 
 
 
 
-  <title>标签: iperf | Datawine's Blog</title>
+  <title>Universal context propagation for distributed system instrumentation | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -278,54 +283,287 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>iperf<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/null.html">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/compare-docker-dpdk-ovs+dpdk.html" itemprop="url">
-              
-                <span itemprop="name">比较docker默认网络模式、dpdk、ovs+dpdk三种网络性能测试</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Universal context propagation for distributed system instrumentation</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T22:58:56+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-09-26T14:52:40+08:00">
+                2022-09-26
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/null.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="null.html" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  924
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    </div>
+      
 
+      
+        <p>如题目所说，解决分布式系统中instrumentation的context
+propagation问题。</p>
+<p>论文认为，分布式系统中的context propagation可以分成两个部分</p>
+<ul>
+<li>the instrumentation of the system components to propagate context
+<ul>
+<li>只和被插桩的系统和系统的并行性有关</li>
+</ul></li>
+<li>the tool logic itself - what the metadata is, such as IDs, tags, or
+timings, and when it changes
+<ul>
+<li>取决于工具本身</li>
+</ul></li>
+</ul>
+<p>论文提出了一种通用的底层格式，即袋式上下文（baggage
+context），这是一种交叉切割工具上下文的中间表示方法。
+它使上面提到的系统工具的上下文传播与工具逻辑完全脱钩。</p>
+<ul>
+<li>设计包袱式上下文，这是一个
+"窄腰"，将上下文的传播与跨领域的工具逻辑解耦。包袱式上下文很简单，但其表现力足以代表许多分布式数据类型，并保留其正确的合并语义。</li>
+<li>提出了一个分层架构，将系统开发者和跨领域工具开发者的关注点分开，使系统的独立工具化，以及多个跨领域工具的部署和进化成为可能。</li>
+<li>定义包袱定义语言（BDL），将嵌套的并发数据类型编译到包袱文本上，允许交叉工具开发者用简单的
+"执行流范围内的变量 "来编程。</li>
+<li>在Java和Go中实现跟踪平面栈。</li>
+<li>通过实施几个跨领域工具并在多个现有的分布式系统上部署，展示了Tracing
+Plane的实用性和效率。</li>
+</ul>
+<h1 id="background">Background</h1>
+<p>这边感觉总结的不错。</p>
+<p>和系统/系统并行性相关的</p>
+<ul>
+<li>跨组件边界时的序列化/反序列化</li>
+<li>branch</li>
+<li>join</li>
+</ul>
+<p>和工具逻辑有关的</p>
+<ul>
+<li>update</li>
+<li>query</li>
+</ul>
+<h1 id="interfaces">Interfaces</h1>
+<h2 id="interface-for-system-instrumentation">Interface for System
+Instrumentation</h2>
+<p>系统开发者的主要关注点是对系统进行检测。他并不在乎工具怎么实现。</p>
+<ul>
+<li>BRANCH/JOIN</li>
+<li>SERIALIZE/DESERIALIZE</li>
+<li>TRIM：限制baggage的大小</li>
+</ul>
+<h2 id="interface-for-cross-cutting-tools">Interface for Cross-Cutting
+Tools</h2>
+<p>工具开发者的主要关注点是指定工具使用的数据类型。BDL的目标是将baggage上下文中携带的数据的规范与数据如何编码的实现细节分开。</p>
+<h1 id="baggage-context-design">Baggage context design</h1>
+<p>在两套接口中间，是一个intermediate baggage context representation。
+这个baggage context ir主要由两部分组成：</p>
+<ul>
+<li>一个核心的baggage context
+representation，来提供了几个基本的属性</li>
+<li>data types到【包括nesting and multiplexing的core
+representation】的映射</li>
+</ul>
+<h2 id="core-representation">Core Representation</h2>
+<p>core representation封装了前面提到的system
+instrumentation在propagate的时候的五个最小的操作。并不涉及任何cross-cutting
+tools的内容。</p>
+<ul>
+<li>Idempotent Merge：tenant ID或者trace
+ID这种write-once的contexts。所以需要在BRANCH和JOIN的位置处理。（这里怎么理解？）</li>
+<li>懒惰解决：在合并的时候，如果说需要merge两个值，最后取最大最小值。因为core
+representation不负责理解baggage，所以这种留给用户自己做。</li>
+<li>关联式合并：这边也没有很看懂</li>
+<li>Order-Preserving Merge：merge是保顺序的merge</li>
+</ul>
+<h2 id="representing-data-types">Representing Data Types</h2>
+<p>为一系列不同的数据类型设计了编码，以保证在任意BRANCH和JOIN的情况下保持正确的语义。</p>
+<h2 id="conflict-free-replicated-data-types">Conflict-Free Replicated
+Data Types</h2>
+<p>在BRANCH和JOIN的过程中，借鉴现有的无冲突复制数据类型（CRDTs）的全面工作，这种复制的数据结构具有确定性的合并行为，并提供强大的最终一致性。</p>
+<h2 id="layering-summary">Layering Summary</h2>
+<p>图不错。</p>
+<h1 id="implementation">Implementation</h1>
+<p>zipkin为example的implementation</p>
+<h2 id="core-representation-1">core representation</h2>
+<p>按照per-atom的字母顺序进行归并merge。</p>
+<h2 id="atom-encoding">atom encoding</h2>
+<p>所有BDL数据类型共享的中间编码方案，它可以实现嵌套和寻址，并提供字段和工具的隔离和复用。</p>
+<p>大概就是加一些头，来标识。同时有一些编码上的trick</p>
+<h2 id="section"></h2>
+<!-- flag of hidden posts -->
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/eurosys/" rel="tag"># eurosys</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -333,6 +571,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -353,8 +600,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -424,6 +680,25 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background"><span class="nav-number">1.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#interfaces"><span class="nav-number">2.</span> <span class="nav-text">Interfaces</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#interface-for-system-instrumentation"><span class="nav-number">2.1.</span> <span class="nav-text">Interface for System
+Instrumentation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#interface-for-cross-cutting-tools"><span class="nav-number">2.2.</span> <span class="nav-text">Interface for Cross-Cutting
+Tools</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#baggage-context-design"><span class="nav-number">3.</span> <span class="nav-text">Baggage context design</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#core-representation"><span class="nav-number">3.1.</span> <span class="nav-text">Core Representation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#representing-data-types"><span class="nav-number">3.2.</span> <span class="nav-text">Representing Data Types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conflict-free-replicated-data-types"><span class="nav-number">3.3.</span> <span class="nav-text">Conflict-Free Replicated
+Data Types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#layering-summary"><span class="nav-number">3.4.</span> <span class="nav-text">Layering Summary</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#implementation"><span class="nav-number">4.</span> <span class="nav-text">Implementation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#core-representation-1"><span class="nav-number">4.1.</span> <span class="nav-text">core representation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#atom-encoding"><span class="nav-number">4.2.</span> <span class="nav-text">atom encoding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section"><span class="nav-number">4.3.</span> <span class="nav-text"></span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -608,6 +883,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

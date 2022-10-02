@@ -293,234 +293,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/tpds12-Precise-Scalable-and-Online-Request-Tracing-for-Multitier-Services-of-Black-Boxes.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Datawine's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/tpds12-Precise-Scalable-and-Online-Request-Tracing-for-Multitier-Services-of-Black-Boxes.html" itemprop="url">Precise, Scalable, and Online Request Tracing for Multitier Services of Black Boxes</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-09-13T20:36:55+08:00">
-                2022-09-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
-                    <span itemprop="name">论文</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/tpds12-Precise-Scalable-and-Online-Request-Tracing-for-Multitier-Services-of-Black-Boxes.html#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::https://datawine.github.io/tpds12-Precise-Scalable-and-Online-Request-Tracing-for-Multitier-Services-of-Black-Boxes.html" class="cy_cmt_count" data-xid="tpds12-Precise-Scalable-and-Online-Request-Tracing-for-Multitier-Services-of-Black-Boxes.html" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  619
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>本文是基于kprobe的一个tracing工作。一个新颖点在于除了普通的逻辑之外还提出了一些新的图关系和图表示。</p>
-<p>主要贡献有三个方面。</p>
-<ul>
-<li>首先，为黑盒子的多层服务提出了一种精确的请求追踪算法，它只使用与应用无关的知识。</li>
-<li>其次，我们提出了一种新的图来表示每个请求的因果路径。同时使用聚合因果路径模式来表示重复执行的因果路，进一步提出了因果路径模式的衍生性能指标，即组件的延迟百分比。</li>
-<li>第三，开发了两种机制，按需追踪和采样，以显著提高系统的可扩展性。这边对trace的采样实际上值得注意！因为会发生漏一些东西的情况。</li>
-</ul>
-<h1 id="precisetracer-design">PreciseTracer design</h1>
-<h2 id="precisetracer-architecture">PreciseTracer Architecture</h2>
-<p>图2</p>
-<ul>
-<li>TCP
-Tracer记录目标应用程序组件的相关交互活动，并将这些日志输出到Correlator
-<ul>
-<li>Gather部署在每个服务节点上，负责收集部署在同一节点上的服务的日志。Gather只关心在数据中心的范围内，服务请求何时开始、结束，以及组件何时接收或发送消息。Gather记录五个属性：（活动类型、时间戳、上下文标识符、消息标识符）和消息大小。对于每个活动，我们使用四元组（主机名、程序名、进程ID、线程ID）来描述其上下文标识符，并使用五元组（发送方的IP、发送方的端口、接收方的IP、接收方的端口、消息大小）来描述其消息标识符。</li>
-<li>部署在分析节点上的Coordinator负责控制每个服务节点上的Gather</li>
-</ul></li>
-<li>Correlator负责将不同组件的这些活动日志关联到因果路径
-<ul>
-<li>Ranker负责选择候选活动来组成因果路径</li>
-<li>Engine从Ranker的输出构建因果路径，然后报告因果路径</li>
-</ul></li>
-<li>根据Correlator产生的因果路径，Analyzer提取有用信息，并报告分析结果
-<ul>
-<li>Classifier负责将因果路径分类为不同的模式</li>
-<li>Extractor提供因果路径模式的分析结果</li>
-</ul></li>
-</ul>
-<p>使用因果路径集合而不是</p>
-<h2 id="abstractions">Abstractions</h2>
-<p>percentage就是用BEGIN到END的时间去除对应的时间。</p>
-<h2 id="tracing-algorithm">Tracing Algorithm</h2>
-<p>因为算法没有记录直接因果关系，所以是通过一个sliding
-window去做reconstruct的。</p>
-<h2 id="improving-the-system-scalability">Improving the System
-Scalability</h2>
-<p>基于kprobe。</p>
-
-
-	<div class="row">
-    <embed src="/paper/tpds12-Precise-Scalable-and-Online-Request-Tracing-for-Multitier-Services-of-Black-Boxes.html" width="100%" height="1700" type="application/pdf">
-	</div>
-
-
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://datawine.github.io/istio-learning-1.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2202,6 +1974,194 @@ dpdk的VNF实验环境。</p>
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/linux-thread-state.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/linux-thread-state.html" itemprop="url">linux查看线程状态</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-07T22:53:34+08:00">
+                2022-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index">
+                    <span itemprop="name">其他</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/linux-thread-state.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::https://datawine.github.io/linux-thread-state.html" class="cy_cmt_count" data-xid="linux-thread-state.html" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  43
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>查看线程状态的简单方法。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/linux-thread-state.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -2252,7 +2212,7 @@ dpdk的VNF实验环境。</p>
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2342,7 +2302,7 @@ dpdk的VNF实验环境。</p>
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">26.4k</span>
+    <span title="Site words total count">25.8k</span>
   
 </div>
 
