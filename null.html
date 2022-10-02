@@ -87,7 +87,7 @@
 <meta property="og:description" content="如题目所说，解决分布式系统中instrumentation的context propagation问题。 论文认为，分布式系统中的context propagation可以分成两个部分  the instrumentation of the system components to propagate context  只和被插桩的系统和系统的并行性有关  the tool logic itsel">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-09-26T06:52:40.000Z">
-<meta property="article:modified_time" content="2022-09-27T14:28:10.100Z">
+<meta property="article:modified_time" content="2022-10-02T13:49:30.124Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="eurosys">
 <meta name="twitter:card" content="summary">
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  924
+                  934
                 </span>
               
 
@@ -520,7 +520,18 @@ Data Types</h2>
 <h2 id="atom-encoding">atom encoding</h2>
 <p>所有BDL数据类型共享的中间编码方案，它可以实现嵌套和寻址，并提供字段和工具的隔离和复用。</p>
 <p>大概就是加一些头，来标识。同时有一些编码上的trick</p>
-<h2 id="section"></h2>
+<h2
+id="example-complex-data-types-overflow-conflict-free-replicated-data-types">Example
+/ Complex Data Types / Overflow / Conflict-Free Replicated Data
+Types</h2>
+
+
+	<div class="row">
+    <embed src="/paper/eurosys18-Universal-context-propagation-for-distributed-system-instrumentation.pdf" width="100%" height="1700" type="application/pdf">
+	</div>
+
+
+
 <!-- flag of hidden posts -->
       
     </div>
@@ -693,7 +704,9 @@ Data Types</h2>
               <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background"><span class="nav-number">1.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#interfaces"><span class="nav-number">2.</span> <span class="nav-text">Interfaces</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#interface-for-system-instrumentation"><span class="nav-number">2.1.</span> <span class="nav-text">Interface for System
 Instrumentation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#interface-for-cross-cutting-tools"><span class="nav-number">2.2.</span> <span class="nav-text">Interface for Cross-Cutting
 Tools</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#baggage-context-design"><span class="nav-number">3.</span> <span class="nav-text">Baggage context design</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#core-representation"><span class="nav-number">3.1.</span> <span class="nav-text">Core Representation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#representing-data-types"><span class="nav-number">3.2.</span> <span class="nav-text">Representing Data Types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conflict-free-replicated-data-types"><span class="nav-number">3.3.</span> <span class="nav-text">Conflict-Free Replicated
-Data Types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#layering-summary"><span class="nav-number">3.4.</span> <span class="nav-text">Layering Summary</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#implementation"><span class="nav-number">4.</span> <span class="nav-text">Implementation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#core-representation-1"><span class="nav-number">4.1.</span> <span class="nav-text">core representation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#atom-encoding"><span class="nav-number">4.2.</span> <span class="nav-text">atom encoding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section"><span class="nav-number">4.3.</span> <span class="nav-text"></span></a></li></ol></li></ol></div>
+Data Types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#layering-summary"><span class="nav-number">3.4.</span> <span class="nav-text">Layering Summary</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#implementation"><span class="nav-number">4.</span> <span class="nav-text">Implementation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#core-representation-1"><span class="nav-number">4.1.</span> <span class="nav-text">core representation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#atom-encoding"><span class="nav-number">4.2.</span> <span class="nav-text">atom encoding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#example-complex-data-types-overflow-conflict-free-replicated-data-types"><span class="nav-number">4.3.</span> <span class="nav-text">Example
+&#x2F; Complex Data Types &#x2F; Overflow &#x2F; Conflict-Free Replicated Data
+Types</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -734,7 +747,7 @@ Data Types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" h
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">25.8k</span>
+    <span title="Site words total count">25.9k</span>
   
 </div>
 
