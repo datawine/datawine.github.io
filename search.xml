@@ -243,15 +243,21 @@ Tracing: Dynamic Causal Monitoring for Distributed
 Systems</a>：distributed tracing，贡献点在于dynamic instrumentation +
 happened-before join关系。</li>
 </ul>
+<h1 id="ton">TON</h1>
+<h2 id="section-15">2018</h2>
+<ul>
+<li><a href="">Root Cause Analysis of Anomalies of Multitier Services in
+Public Clouds</a></li>
+</ul>
 <h1 id="tpds">TPDS</h1>
-<h2 id="section-15">2012</h2>
+<h2 id="section-16">2012</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/tpds12-Precise-Scalable-and-Online-Request-Tracing-for-Multitier-Services-of-Black-Boxes.html">Precise,
 Scalable, and Online Request Tracing for Multitier Services of Black
 Boxes</a>：本文是基于kprobe的一个tracing工作。一个新颖点在于除了普通的逻辑之外还提出了一些新的图关系和图表示。</li>
 </ul>
-<h2 id="section-16">2017</h2>
+<h2 id="section-17">2017</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/tpds17-Failure-Diagnosis-for-Distributed-Systems-Using-Targeted-Fault-Injection.html">Failure
@@ -260,7 +266,7 @@ Injection</a>：针对分布式系统的特点提出了Target Fault
 Injection，通过利用分布式组件的执行流知识来控制注入位置。</li>
 </ul>
 <h1 id="www">WWW</h1>
-<h2 id="section-17">2022</h2>
+<h2 id="section-18">2022</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/www22-Accelerating-Serverless-Computing-by-Harvesting-Idle-Resources.html">Accelerating
@@ -323,6 +329,87 @@ href="https://datawine.github.io/mr-others.html">孟德尔随机化及其他</a>
       <tags>
         <tag>孟德尔随机化</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Root Cause Analysis of Anomalies of Multitier Services in Public Clouds</title>
+    <url>/null.html</url>
+    <content><![CDATA[<p>这篇工作主要解决公有云上多租户场景下的性能问题的根因定位。
+工作主要包括两部分：一个非侵入式的data collection subsystem和一个root
+cause localization subsystem。 本文的主要贡献</p>
+<ul>
+<li>帮助云运营商准确定位任何异常情况的根源，无论根源是在同一租户还是来自其他租户。</li>
+<li>提出了一种非侵入式的方法来捕捉多层组件的复杂的依赖关系，这提高了我们的根源定位系统的可行性。</li>
+<li>解决方案能够在虚拟机和流程层面上定位根本原因，甚至在异常现象是由多个原因造成的情况下也能找出根本原因。</li>
+<li>设计了一种基于监测应用层和底层基础设施的两步定位算法，以及一种random
+walk procedure。实验表明，该算法优于以往的工作。</li>
+</ul>
+<h1 id="types-of-anomaly-propagation-and-system-architecture">Types of
+anomaly propagation and system architecture</h1>
+<p>两种</p>
+<ol type="1">
+<li>Internal
+factor：异常可能沿着服务调用的路径在多层次服务的组件之间传播</li>
+<li>External
+factor：异常可能从其他租户的虚拟机传播到服务的一个虚拟机上，因为他们竞争同一个物理服务器的资源</li>
+</ol>
+<h1 id="system-overall-architecture">system overall architecture</h1>
+<p>当用户发现有一个请求的返回延时非常长的时候，提交一个异常。系统通过两步来确定异常。</p>
+<ol type="1">
+<li>找到所有可能引起异常的原因，构建anomaly propagation graph。
+<ol type="1">
+<li>trace online requests，collect and save data</li>
+<li>construct a VM communication graph</li>
+<li>考虑colocation的影响，完善anomaly propagation graph</li>
+</ol></li>
+<li>确定anomaly propagation graph里面每个点是root cause的可能性。
+<ol type="1">
+<li>compute the service time of each component within the multitier
+service and monitor the resource utilization</li>
+<li>提出了一个概念：similarity，使用上面收集的信息来计算similarity</li>
+<li>通过random walk算法，incorporate the probability of VMs</li>
+</ol></li>
+</ol>
+<h1 id="anomaly-propagation-graph">anomaly propagation graph</h1>
+<h2 id="request-tracing-of-multitier-services">request tracing of
+multitier services</h2>
+<p>主要用了别人的工具PreciseTracer，这是一个给予Systemtap的kernel
+instrumentation。</p>
+<h2 id="vcg-construction">VCG construction</h2>
+<p>然后就需要把PreciseTracer的调用链转换成VM Communication
+Graph，VCG。核心问题是一个VM可能出现好几次，怎么确定edge的方向？</p>
+<p>其实很好理解，对于从j到i的Send和从i到j的Recv，他们两个在同一个host上，且Recv在Send前，那么创建一条边，从i到j。</p>
+<h2 id="apg-construction">APG construction</h2>
+<p>非常简单，通过Openstack的nova接口，看看哪些VM co-locate了。</p>
+<h1 id="root-cause-localization">root cause localization</h1>
+<p>两个核心点</p>
+<ol type="1">
+<li>metric data和同一条causal path上的response
+time的similarity能够反应root
+cause。本质来说就是root更容易更busy，这个busy就导致response
+time上升，这中间是有正向关系的</li>
+<li>为了防止时间上的巧合，采用random
+walk来自然地通过一些条件来筛选。也就是如果co-located的vm发生竞争，那么它们应该similarity都很高。</li>
+</ol>
+<h2 id="metrics-data-collection">metrics data collection</h2>
+<p>主要采集两个指标</p>
+<ol type="1">
+<li>service time
+computation，也就是send和recv之间+recv和send之间的时间差，也就是两个span相减</li>
+<li>resource utilization collection，用的ganglia</li>
+</ol>
+<h2 id="similarity-calculating">similarity calculating</h2>
+<p>用的PCC：对于直接通信的也就是VCG上的vm，用service
+time作为指标计算PCC；对于co-located的，在竞争的资源指标里面选一个PCC最大的。需要解决两个问题</p>
+<ol type="1">
+<li>找到有同样causal path的历史数据：通过拓扑排序</li>
+<li>确定进行比较的开始时间和结束时间：结束时间是用户提交异常的时间，开始时间是性能开始下降的时间，请求时间除以平均请求时间大于一个阈值的最早时间。</li>
+</ol>
+<h2 id="random-walk-over-apg">random walk over APG</h2>
+<p>similarity大并不意味着是root cause，为此进行random walk。</p>
+<p>起点是异常发生的VM，然后定义了一些规则。最后，让walker走很多步，more
+visits on a certain VM implies that the VM is more likely to be a root
+cause</p>
+]]></content>
   </entry>
   <entry>
     <title>Istio学习（一）</title>
