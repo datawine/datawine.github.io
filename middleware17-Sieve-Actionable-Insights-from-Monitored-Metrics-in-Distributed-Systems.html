@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="middleware," />
 
 
 
@@ -79,12 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Datawine&#39;s Blog">
-<meta property="og:url" content="https://datawine.github.io/categories/%E8%AE%BA%E6%96%87/page/5/index.html">
+<meta name="description" content="本篇文章主要解决两个分布式追踪的问题：metric selection和dependency graph Sieve建立在两个核心组件上：  a metrics reduction framework  首先通过观察一段时间内的信号，自动过滤掉不重要的指标，从而降低指标的维度。  a metrics dependency extractor  通过测试Granger因果关系，使用预测因果关系模型推">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sieve: Actionable Insights from Monitored Metrics in Distributed Systems">
+<meta property="og:url" content="https://datawine.github.io/middleware17-Sieve-Actionable-Insights-from-Monitored-Metrics-in-Distributed-Systems.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="本篇文章主要解决两个分布式追踪的问题：metric selection和dependency graph Sieve建立在两个核心组件上：  a metrics reduction framework  首先通过观察一段时间内的信号，自动过滤掉不重要的指标，从而降低指标的维度。  a metrics dependency extractor  通过测试Granger因果关系，使用预测因果关系模型推">
 <meta property="og:locale">
+<meta property="article:published_time" content="2022-10-23T08:40:52.000Z">
+<meta property="article:modified_time" content="2022-10-24T07:46:46.372Z">
 <meta property="article:author" content="Datawine">
+<meta property="article:tag" content="middleware">
 <meta name="twitter:card" content="summary">
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/categories/论文/page/5/"/>
+  <link rel="canonical" href="https://datawine.github.io/middleware17-Sieve-Actionable-Insights-from-Monitored-Metrics-in-Distributed-Systems.html"/>
 
 
 
 
 
-  <title>分类: 论文 | Datawine's Blog</title>
+  <title>Sieve: Actionable Insights from Monitored Metrics in Distributed Systems | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -278,199 +283,316 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block category">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>论文<small>分类</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/middleware17-Sieve-Actionable-Insights-from-Monitored-Metrics-in-Distributed-Systems.html">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/nsdi22-Closed-loop-Network-Performance-Monitoring-and-Diagnosis-with-SpiderMon.html" itemprop="url">
-              
-                <span itemprop="name">Closed-loop Network Performance Monitoring and Diagnosis with SpiderMon</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Sieve: Actionable Insights from Monitored Metrics in Distributed Systems</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-17T15:23:12+08:00"
-              content="2022-05-17" >
-          05-17
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-10-23T16:40:52+08:00">
+                2022-10-23
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/middleware17-Sieve-Actionable-Insights-from-Monitored-Metrics-in-Distributed-Systems.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="middleware17-Sieve-Actionable-Insights-from-Monitored-Metrics-in-Distributed-Systems.html" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi22-Starlight-Fast-Container-Provisioning-on-the-Edge-and-over-the-WAN.html" itemprop="url">
-              
-                <span itemprop="name">nsdi22-Starlight-Fast Container Provisioning on the Edge and over the WAN</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-16T20:33:27+08:00"
-              content="2022-05-16" >
-          05-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
+        <p>本篇文章主要解决两个分布式追踪的问题：metric selection和dependency
+graph</p>
+<p>Sieve建立在两个核心组件上：</p>
+<ul>
+<li>a metrics reduction framework
+<ul>
+<li>首先通过观察一段时间内的信号，自动过滤掉不重要的指标，从而降低指标的维度。</li>
+</ul></li>
+<li>a metrics dependency extractor
+<ul>
+<li>通过测试Granger因果关系，使用预测因果关系模型推断系统中分布式组件之间的度量依赖关系。</li>
+</ul></li>
+</ul>
+<p>开源 <a
+target="_blank" rel="noopener" href="https://sieve-microservices.github.io/">https://sieve-microservices.github.io/</a></p>
+<h1 id="sieve-overview">Sieve overview</h1>
+<p>最直接的一个观点是，观测所有component的所有metrics是没必要的。</p>
+<p>sieve的工作流程可以分成三步：</p>
+<ol type="1">
+<li>Load the
+application：通过offline给application加负载，通过communication非侵入式地得到call
+graph，还得到metrics</li>
+<li>Reduce metrics：通过cluster得到代表性的metrics</li>
+<li>Identify dependencies：通过call graph和上面得到的metrics，看call
+graph上的组件是否有相互影响的metrics，如果有就连一条边</li>
+</ol>
+<h1 id="design">Design</h1>
+<h2 id="load-the-application">load the application</h2>
+<p><strong>obtaining metrics</strong>。记录metric time
+series。主要采集两种指标：system metrics和application metrics。</p>
+<p><strong>obtaining call graph</strong>。已知有几种方法能够获得call
+graph：</p>
+<ul>
+<li>instrumentation</li>
+<li>tcpdump这种从network traffic入手</li>
+<li>ptrace去追踪网络相关的API</li>
+</ul>
+<p>论文中采用的是sysdig，但仍然也是采取观察系统调用的方式。
+利用一个内核模块，sysdig将系统调用作为事件流提供给用户应用程序。
+该事件流还包含被监控进程的信息，因此网络调用可以被映射到微服务组件，即使它们是在容器中运行。</p>
+<p>此外，它可以通过用户定义的filter提取communication peer。</p>
+<p>采用sysdig，有两个优点：</p>
+<ol type="1">
+<li>非侵入式</li>
+<li>overhead小</li>
+</ol>
+<h2 id="reduce-metrics">reduce metrics</h2>
+<p>论文中采用的是k-shape方法进行降维。相比之下，PCA不容易解释，random
+projections牺牲了精度，同时在不同的运行中有不同的结果（稳定性问题）。</p>
+<p><strong>filtering unvarying
+metrics</strong>。先把var小于0.002的筛掉，这些metrics不怎么变，所以没用。</p>
+<p><strong>k-shape clustering</strong>。
+k-shape主要关注时间序列的形状上的相似性。k-shape使用shape-based distance
+(SBD)。 好像具体出处是这篇论文：《k-Shape: Efficient and Accurate
+Clustering of Time Series》</p>
+<p>根据sieve的数据特性，论文做出了三个具体的调整</p>
+<ol type="1">
+<li>k-shape要求长度一致，于是论文加了spline interpolation of the third
+order (cubic)做插值</li>
+<li>根据名称的相似性（例如通过Jaro距离计算相似性）对度量时间序列进行预聚类，并使用这些聚类作为初始分配，而不是默认的随机分配</li>
+<li>k-shape要求实现决定cluster的最终数量。论文迭代改变这个最终数量，并且用silhouette
+value来衡量quality of clusters</li>
+</ol>
+<p><strong>representative
+metrics</strong>。就是从cluster里面选一个代表元，这个代表元是cluster
+center的SBD最近的metric。</p>
+<h2 id="identify-dependencies">identify dependencies</h2>
+<p>使用call graph来reduce the number of components that need to be
+investigated。 具体来说，就是把一个组件的representative
+metric和neighbour component的representative
+metric做pair-wise的比较。</p>
+<p>比较用的是Granger Causality
+test，这种test有助于确定一个时间序列是否有助于预测另一个时间序列。
+这个test后面的直觉是，如果一个指标X对另一个指标Y有格兰杰因果关系，那么与只使用Y的历史相比，我们可以通过使用X和Y的历史更好地预测Y。</p>
+<p>论文中用最小二乘法建立了pair-wise的线性模型，还加了一个延迟，比较是否有因果关系用的是F-test。
+此外还有一些别的设计考虑。</p>
+<p>然后如果有因果关系，就加一条有向边。</p>
+<h1 id="application">application</h1>
+<h2 id="sharelatex">sharelatex</h2>
+<p>sharelatex是一个微服务应用。我们使用Sieve的依赖关系图，为sharelatex提出了扩容的策略，具体来说，提出了</p>
+<ol type="1">
+<li>指导性指标（即在扩展规则中使用的指标）</li>
+<li>扩展行动（即与通过增加/减少受最低/最高阈值限制的实例数量来应对不同负载有关的行动）</li>
+<li>扩展条件（即基于指导性指标触发相应扩展行动的条件）</li>
+</ol>
+<p><strong>试验结果</strong>：sieve找到了一个比CPU-usage更好的指标http-requests_Project_id_GET_mean。</p>
+<h2 id="openstack">openstack</h2>
+<p>做openstack上问题的根因分析。引擎比较了应用程序两个不同版本的依赖图：（1）正确的版本；（2）有问题的版本。</p>
+<p>这里给了一套根因分析的流程，感觉可以参考一下。（C是correct
+version，F是faulty version）</p>
+<ol type="1">
+<li>analyzes the presence or absence of metrics between C and F
+versions，如果有不一样，很可能问题出在这上面（感觉很奇怪？）</li>
+<li>使用第1步的结果，根据组件的新颖性得分（即新的或被丢弃的指标总数）对组件进行排名，产生一组初始的有趣的组件，用于RCA。</li>
+<li>聚类聚集了在一段时间内表现出类似行为的组件指标。对于RCA来说，具有新的或被抛弃的指标的聚类与该组件的未改变的聚类相比，应该是更有趣的（有一些例外，在下面解释）。对于一个给定的组件，我们计算其集群的新颖性分数，作为新的和被丢弃的指标数量的总和，并产生一个{组件，指标列表}对的列表，其中指标列表考虑来自具有较高新颖性分数的集群的指标。
+<ol type="1">
+<li>此外，我们跟踪一个组件的集群在C和F版本之间的相似性（反之亦然）。这样做是为了识别两个事件。(1)
+版本之间边的出现（或消失）；以及(2)
+C和F版本之间保持的关系的属性变化</li>
+<li>如果集群x和y（分别属于component
+A和B）各自的metric构成在C和F版本之间没有明显的变化，则称为
+"版本间保持"</li>
+<li>通过Jaccard similarity coefficient来算相似度</li>
+</ol></li>
+<li>进一步过滤</li>
+<li>最后得到一个{component, metric list} pairs</li>
+</ol>
+<p>We expect the RCA engine’s outcome to include the Neutron component,
+along with metrics related to VM launches and networking.</p>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi22-A-Case-for-Task-Sampling-based-Learning-for-Cluster-Job-Scheduling.html" itemprop="url">
-              
-                <span itemprop="name">nsdi22-A-Case-for-Task-Sampling-based-Learning-for-Cluster-Job-Scheduling</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-16T18:17:01+08:00"
-              content="2022-05-16" >
-          05-16
-        </time>
-      </div>
-
-    </header>
-  </article>
+	<div class="row">
+    <embed src="/paper/middleware17-Sieve-Actionable-Insights-from-Monitored-Metrics-in-Distributed-Systems.pdf" width="100%" height="1700" type="application/pdf">
+	</div>
 
 
-      
-        
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi22-Buffer-based-End-to-end-Request-Event-Monitoring-in-the-Cloud.html" itemprop="url">
-              
-                <span itemprop="name">nsdi22-Buffer-based End-to-end Request Event Monitoring in the Cloud</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-09T21:23:11+08:00"
-              content="2022-05-09" >
-          05-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/paper-reading.html" itemprop="url">
-              
-                <span itemprop="name">论文阅读</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-09T20:34:45+08:00"
-              content="2022-05-09" >
-          05-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi22-Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks.html" itemprop="url">
-              
-                <span itemprop="name">nsdi22-Efficient Scheduling Policies for Microsecond-Scale Tasks</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-09T20:23:57+08:00"
-              content="2022-05-09" >
-          05-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+<!-- flag of hidden posts -->
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/middleware/" rel="tag"># middleware</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/categories/%E8%AE%BA%E6%96%87/page/4/">&lt;</a><a class="page-number" href="/categories/%E8%AE%BA%E6%96%87/">1</a><span class="space">&hellip;</span><a class="page-number" href="/categories/%E8%AE%BA%E6%96%87/page/4/">4</a><span class="page-number current">5</span>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -478,6 +600,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -498,8 +629,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -569,6 +709,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#sieve-overview"><span class="nav-number">1.</span> <span class="nav-text">Sieve overview</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#design"><span class="nav-number">2.</span> <span class="nav-text">Design</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#load-the-application"><span class="nav-number">2.1.</span> <span class="nav-text">load the application</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reduce-metrics"><span class="nav-number">2.2.</span> <span class="nav-text">reduce metrics</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#identify-dependencies"><span class="nav-number">2.3.</span> <span class="nav-text">identify dependencies</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#application"><span class="nav-number">3.</span> <span class="nav-text">application</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sharelatex"><span class="nav-number">3.1.</span> <span class="nav-text">sharelatex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#openstack"><span class="nav-number">3.2.</span> <span class="nav-text">openstack</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -753,6 +909,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
