@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="asplos," />
 
 
 
@@ -79,12 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Datawine&#39;s Blog">
-<meta property="og:url" content="https://datawine.github.io/archives/page/11/index.html">
+<meta name="description" content="获得log的原始数据，用时序关系为边的自动机构造workflow图，获得workflow的异常。难点在于异步和并发带来的interleaved。 通过fork和join解决异步、通过标识符集解决并行问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CloudSeer: Workflow Monitoring">
+<meta property="og:url" content="https://datawine.github.io/asplos16-CloudSeer-Workflow-Monitoring-of-Cloud-Infrastructures-via-Interleaved-Logs.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="获得log的原始数据，用时序关系为边的自动机构造workflow图，获得workflow的异常。难点在于异步和并发带来的interleaved。 通过fork和join解决异步、通过标识符集解决并行问题。">
 <meta property="og:locale">
+<meta property="article:published_time" content="2022-11-10T17:51:32.000Z">
+<meta property="article:modified_time" content="2022-11-10T18:45:46.842Z">
 <meta property="article:author" content="Datawine">
+<meta property="article:tag" content="asplos">
 <meta name="twitter:card" content="summary">
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/archives/page/11/"/>
+  <link rel="canonical" href="https://datawine.github.io/asplos16-CloudSeer-Workflow-Monitoring-of-Cloud-Infrastructures-via-Interleaved-Logs.html"/>
 
 
 
 
 
-  <title>归档 | Datawine's Blog</title>
+  <title>CloudSeer: Workflow Monitoring | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -278,374 +283,283 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/asplos16-CloudSeer-Workflow-Monitoring-of-Cloud-Infrastructures-via-Interleaved-Logs.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">CloudSeer: Workflow Monitoring</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-11-11T01:51:32+08:00">
+                2022-11-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 29 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2022">2022</h1>
-          </div>
-        
-        
 
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/dlopen-source-code.html" itemprop="url">
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
               
-                <span itemprop="name">dlopen源码分析</span>
+                <a href="/asplos16-CloudSeer-Workflow-Monitoring-of-Cloud-Infrastructures-via-Interleaved-Logs.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="asplos16-CloudSeer-Workflow-Monitoring-of-Cloud-Infrastructures-via-Interleaved-Logs.html" itemprop="commentsCount"></span>
+                </a>
               
-            </a>
-        
-      </h2>
+            
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T22:27:38+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
+          
+          
 
-    </header>
-  </article>
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.7k
+                </span>
+              
 
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/network-attack-and-defense-semester.html" itemprop="url">
-              
-                <span itemprop="name">2018年网络攻防小学期</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T21:27:10+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%EF%BC%9AM1%E5%8D%A1%E5%A4%A7%E5%AE%9E%E9%AA%8C.html" itemprop="url">
-              
-                <span itemprop="name">网络攻防：M1卡大实验</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T21:21:58+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
+        <p>获得log的原始数据，用时序关系为边的自动机构造workflow图，获得workflow的异常。难点在于异步和并发带来的interleaved。
+通过fork和join解决异步、通过标识符集解决并行问题。</p>
+<span id="more"></span>
+<h1 id="intro">Intro</h1>
+<p>CloudSeer主要解决以下几个challenges</p>
+<p><strong>处理interleaved logs</strong>：
+当云基础设施并行地执行多个任务时，来自不同执行的日志信息通常在日志文件中交错出现。
+即使在单一的执行中，不同服务之间的异步操作也会以不同的方式交织日志信息。
+为了恢复工作流信息，有必要确定日志信息和任务执行之间的对应关系，但这并不简单。</p>
+<p><strong>在线监测</strong></p>
+<p><strong>检测没有明确错误信息的问题</strong>：
+执行问题可以以不同的形式表现出来。其中一些可能不容易被注意到，例如，性能下降和没有明确错误信息的无声故障</p>
+<p><strong>提供工作流程信息</strong>：
+作为一种监控方法，仅仅报告一个故障是不够的，管理员还需要诊断故障并采取进一步的行动。
+failure的上下文，特别是工作流，对于指导管理员缩小和隔离可能的原因是非常有用的。监控方法应该利用日志信息，在故障报告中包含这些信息。</p>
+<h1 id="overview">Overview</h1>
+<h2 id="cloud-infrastructure-example-openstack">Cloud-Infrastructure
+Example: OpenStack</h2>
+<p>描述了Openstack是如何启动VM的</p>
+<h2 id="logging-characteristics">Logging Characteristics</h2>
+<p>我们意识到有两个日志特征使得基于日志的工作流监控并不直接。</p>
+<p>首先，除了由同步任务执行引起的消息交错，来自同一执行的日志消息也可能是交错的。这是由异步操作引起的，它通过不同的服务进程创建了多个执行路径。
+因此，来自不同路径的日志信息可能交错在一起，没有固定的顺序，使得任务工作流的监控更加复杂。</p>
+<p>第二，与任务执行相关的日志信息通常没有单一和独特的标识符。
+在云基础设施中，每个服务都管理着自己的资源（例如，用户、虚拟机和图像由不同的服务管理），并根据资源类型用标识符记录它们。
+在任务执行期间，这些标识符可能不会在不同的服务之间传播，因为不同的服务不会分享关于不同资源的知识。</p>
+<h2 id="demonstration-of-cloudseer">Demonstration of CloudSeer</h2>
+<p>CloudSeer的主要思路包括三个阶段</p>
+<ul>
+<li>The Task Automaton：根据log
+template建立自动机。为了解决异步问题，增加fork和join两种特殊节点</li>
+<li>Checking Interleaved
+Sequence：对同一个自动机，可能存在并行运行。为此，通过标识符集来区分并行运行的自动机的状态。</li>
+<li>Interpreting
+Results：当传入的消息（或缺乏消息）满足分歧标准时，CloudSeer能够报告分歧的自动机实例，表明有问题的执行。</li>
+</ul>
+<h1 id="modeling-task-based-log-sequences">Modeling Task-Based Log
+Sequences</h1>
+<p>离线建模过程从正确的任务执行所产生的日志中创建自动机。
+对于每个要建模的任务，建模过程从该任务的多次执行中获取日志序列。建模过程包括以下三个步骤。</p>
+<h2 id="preprocessing">Preprocessing</h2>
+<p>使用正则表达式提取信息，并通过出现次数从循环、条件选择和周期性的背景任务中删除了不规则的日志信息。</p>
+<h2 id="mining-temporal-dependencies">Mining Temporal Dependencies</h2>
+<p>为了获得时序关系，定义了两种关系：strong和weak。前者是a总发生在b前面，且中间没东西，后者是a发生在b前面，但是中间可能插了一些东西。</p>
+<p>为了获得时序关系，主要就是简单的三步：枚举所有对、获得满足strong/weak的对、迭代。</p>
+<h2 id="constructing-automata">Constructing Automata</h2>
+<p>根据上一步构建自动机。</p>
+<h1 id="checking-interleaved-log-sequences">Checking Interleaved Log
+Sequences</h1>
+<p>在在线检查阶段，CloudSeer使用之前离线建模阶段的任务自动机来检查叶间的日志序列。
+这个检查阶段的输入和输出如下。CloudSeer每次从日志流中获取一条日志消息。输入的消息属于正在生成的一些交错的日志序列中的一个。
+基于任务自动机，CloudSeer输出</p>
+<ol type="1">
+<li>一个接受的自动机实例，如果最后一条消息完成了一个正确的日志序列；</li>
+<li>一个错误的自动机实例，如果最后一条消息符合问题检测标准；</li>
+<li>没有输出，表明预期有更多的日志消息。</li>
+</ol>
+<p>首先，CloudSeer需要从多个任务自动机中选择一个正确的自动机来检查属于当前日志序列的传入日志消息。
+它的主要思想是使用一个自动机组G来跟踪被检查序列的所有可能的自动机。</p>
+<p>然后，我们以两种方式扩展算法1中所示的检查算法。
+首先，新算法同时保持多个自动机组来跟踪交错序列，其中每个自动机组跟踪一个任务执行的日志消息。
+其次，为了避免在所有自动机组上详尽地尝试每一个传入的消息，该算法将一个标识符集与每个自动机组联系起来，这有助于确定即时使用的适当自动机组。</p>
+<p>有三种可能</p>
+<ol type="1">
+<li>only one automaton group left;</li>
+<li>multiple automaton groups taking m;</li>
+<li>none of the selected automaton groups to take m</li>
+</ol>
+<p>分别有不同的处理方法，这边不仔细介绍了，比较简单，一些brute-force和一些启发式算法。</p>
+<p><strong>问题检测</strong>。
+我们在CloudSeer中实现了两个简单的标准来检测常见的执行问题。
+这两个标准是基于执行问题的两种常见表现形式：（1）错误信息的存在，表明任务失败；（2）信息的缺失或延迟，表明任务失败或性能下降。</p>
+<p>当错误信息（由其记录级别决定）到达时，错误信息标准生效，算法2中的检查算法导致分歧状态，如第24行所示。
+然后，该准则应用计算最大标识符集（ComputeMaxIdentifierSets）和获取自动机群（GetAutomatonGroups）的功能来识别和输出可能与错误信息相关的最可能的自动机群。</p>
+<p>超时准则标记任何在指定时间段内没有接收任何信息的自动机组。
+标记的自动机组成为算法2的输出。超时值在不同的系统和配置中可能有所不同。确定这样的值不在本文的范围内，我们把它留给未来的工作。</p>
 
-        
-        
-        
 
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%EF%BC%9AM1%E5%8D%A1%E5%B0%8F%E5%AE%9E%E9%AA%8C.html" itemprop="url">
-              
-                <span itemprop="name">网络攻防：M1卡小实验</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T21:21:44+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
+	<div class="row">
+    <embed src="/paper/asplos16-CloudSeer-Workflow-Monitoring-of-Cloud-Infrastructures-via-Interleaved-Logs.pdf" width="100%" height="1700" type="application/pdf">
+	</div>
 
 
 
+<!-- flag of hidden posts -->
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E5%9B%9B%EF%BC%89%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E4%B8%8E%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%BC%8F%E6%B4%9E.html" itemprop="url">
-              
-                <span itemprop="name">网络攻防小学期（四）逆向工程与二进制漏洞</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T21:20:37+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%BA%8C%EF%BC%89%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F%E4%B8%8E%E4%BF%9D%E5%AF%86-%E5%AF%86%E7%A0%81.html" itemprop="url">
-              
-                <span itemprop="name">网络攻防小学期（二）信息隐藏与保密-密码</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T21:16:55+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%B8%89%EF%BC%89%E7%BD%91%E7%AB%99%E5%AE%89%E5%85%A8.html" itemprop="url">
-              
-                <span itemprop="name">网络攻防小学期（三）网站安全</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T21:16:22+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%B8%80%EF%BC%89%E7%BD%91%E7%BB%9C%E4%BE%A6%E6%9F%A5%E4%B8%8E%E5%8F%96%E8%AF%81%E5%88%86%E6%9E%90.html" itemprop="url">
-              
-                <span itemprop="name">网络攻防小学期（一）网络侦查与取证分析</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T21:15:05+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/change-python-default-version.html" itemprop="url">
-              
-                <span itemprop="name">更换python默认版本</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T21:07:33+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/asplos/" rel="tag"># asplos</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/page/10/">&lt;</a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/10/">10</a><span class="page-number current">11</span>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -653,6 +567,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -673,8 +596,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -744,6 +676,25 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#overview"><span class="nav-number">2.</span> <span class="nav-text">Overview</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cloud-infrastructure-example-openstack"><span class="nav-number">2.1.</span> <span class="nav-text">Cloud-Infrastructure
+Example: OpenStack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#logging-characteristics"><span class="nav-number">2.2.</span> <span class="nav-text">Logging Characteristics</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#demonstration-of-cloudseer"><span class="nav-number">2.3.</span> <span class="nav-text">Demonstration of CloudSeer</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#modeling-task-based-log-sequences"><span class="nav-number">3.</span> <span class="nav-text">Modeling Task-Based Log
+Sequences</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#preprocessing"><span class="nav-number">3.1.</span> <span class="nav-text">Preprocessing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mining-temporal-dependencies"><span class="nav-number">3.2.</span> <span class="nav-text">Mining Temporal Dependencies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#constructing-automata"><span class="nav-number">3.3.</span> <span class="nav-text">Constructing Automata</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#checking-interleaved-log-sequences"><span class="nav-number">4.</span> <span class="nav-text">Checking Interleaved Log
+Sequences</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -928,6 +879,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
