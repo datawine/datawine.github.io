@@ -87,7 +87,7 @@
 <meta property="og:description" content="论文阅读列表">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-05-09T12:34:45.000Z">
-<meta property="article:modified_time" content="2022-11-27T05:31:27.245Z">
+<meta property="article:modified_time" content="2022-11-27T11:25:02.413Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="论文汇总">
 <meta name="twitter:card" content="summary">
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.6k
+                  2.7k
                 </span>
               
 
@@ -736,8 +736,14 @@ you want to trace your distributed system? Key design insights from
 years of practical
 experience</a>：一篇14年的关于分布式追踪的前瞻式文章，其风格很像综述。</li>
 </ul>
+<h2 id="section-22">2020</h2>
+<ul>
+<li><a href="">ViperProbe: Rethinking Microservice Observability with
+eBPF / ViperProbe: Using eBPF Metrics to Improve Microservice
+Observability</a>：</li>
+</ul>
 <h1 id="security">Security</h1>
-<h2 id="section-22">2023</h2>
+<h2 id="section-23">2023</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/security23-An-Efficient-Design-of-Intelligent-Network-Data-Plane.html">An
@@ -745,7 +751,7 @@ Efficient Design of Intelligent Network Data
 Plane</a>：本文实际上是将决策树的inference阶段offload到可编程交换机上，因为大小比较产生的状态爆炸问题是本文最重要的贡献。</li>
 </ul>
 <h1 id="sc">SC</h1>
-<h2 id="section-23">2018</h2>
+<h2 id="section-24">2018</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/sc18-A-Year-in-the-Life-of-a-Parallel-File-System.html">A
@@ -754,7 +760,7 @@ System</a>：这篇论文主要是对两个leadership-level的high-performance
 computing centers的IO性能进行为期一年的测量。</li>
 </ul>
 <h1 id="sigcomm">SIGCOMM</h1>
-<h2 id="section-24">2022</h2>
+<h2 id="section-25">2022</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/sigcomm22-SPRIGHT-Extracting-the-Server-from-Serverless-Computing-High-performance-eBPF-based-Event-driven-Shared-memory-Processing.html">SPRIGHT:
@@ -762,15 +768,26 @@ Extracting the Server from Serverless Computing! High-performance
 eBPF-based Event-driven, Shared-memory Processing</a>：利用eBPF和share
 memory对serverless chain的数据平面进行性能优化</li>
 </ul>
+<h1 id="sigmetrics">SIGMETRICS</h1>
+<h2 id="section-26">2014</h2>
+<ul>
+<li><a
+href="https://datawine.github.io/sigmetrics14-IntroPerf-Transparent-Context-Sensitive-Multi-Layer-Performance-Inference-using-System-Stack-Traces.html">IntroPerf:
+Transparent Context-Sensitive Multi-Layer Performance Inference using
+System Stack Traces</a>：核心观点是OS
+tracer一般是由系统调用触发的，系统调用和函数调用之间有gap。
+文章主要是通过Event Tracing Framework for Windows(ETW)采集的system call
+stack去反向构造延时，通过call stack来推断函数调用，基于此进行分析。</li>
+</ul>
 <h1 id="socc">SoCC</h1>
-<h2 id="section-25">2016</h2>
+<h2 id="section-27">2016</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/socc16-Automating-Failure-Testing-Research-at-Internet-Scale.html">Automating
 Failure Testing Research at Internet Scale</a>：netflix的fault
 injection框架。</li>
 </ul>
-<h2 id="section-26">2020</h2>
+<h2 id="section-28">2020</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/socc20-Sequoia-enabling-quality-of-service-in-serverless-computing.html">Sequoia:
@@ -779,7 +796,7 @@ Computing</a>：论文提出了一个针对serverless
 functions和chains的、以QoS为优化目标的调度器</li>
 </ul>
 <h1 id="sp">S&amp;P</h1>
-<h2 id="section-27">2014</h2>
+<h2 id="section-29">2014</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/sp14-Stealing-Webpages-Rendered-on-Your-Browser-by-Exploiting-GPU-Vulnerabilities.html">Stealing
@@ -788,7 +805,7 @@ Vulnerabilities</a>：论文主要针对GPU memory可能存在的data
 exfiltration提出攻击。</li>
 </ul>
 <h1 id="sosp">SOSP</h1>
-<h2 id="section-28">2015</h2>
+<h2 id="section-30">2015</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/sosp15-Pivot-Tracing-Dynamic-Causal-Monitoring-for-Distributed-Systems.html">Pivot
@@ -797,7 +814,7 @@ Systems</a>：distributed tracing，贡献点在于dynamic instrumentation +
 happened-before join关系。</li>
 </ul>
 <h1 id="ton">TON</h1>
-<h2 id="section-29">2018</h2>
+<h2 id="section-31">2018</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/ton18-Root-Cause-Analysis-of-Anomalies-of-Multitier-Services-in-Public-Clouds.html">Root
@@ -808,14 +825,14 @@ contention（函数本身layer之间故障的传播）和external
 contention（资源竞争）。</li>
 </ul>
 <h1 id="tpds">TPDS</h1>
-<h2 id="section-30">2012</h2>
+<h2 id="section-32">2012</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/tpds12-Precise-Scalable-and-Online-Request-Tracing-for-Multitier-Services-of-Black-Boxes.html">Precise,
 Scalable, and Online Request Tracing for Multitier Services of Black
 Boxes</a>：本文是基于kprobe的一个tracing工作。一个新颖点在于除了普通的逻辑之外还提出了一些新的图关系和图表示。</li>
 </ul>
-<h2 id="section-31">2013</h2>
+<h2 id="section-33">2013</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/tpds13-Toward-Fine-Grained-Unsupervised-Scalable-Performance-Diagnosis-for-Production-Cloud-Computing-Systems.html">Toward
@@ -824,7 +841,7 @@ Production Cloud Computing
 Systems</a>：文章主要是用插桩去采样信息（基本还是执行时间），用call
 tree去做分类，通过CoV找到异常分类，通过RPCA在异常分类中找到异常组件。</li>
 </ul>
-<h2 id="section-32">2015</h2>
+<h2 id="section-34">2015</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/tpds16-Wait-Analysis-of-Distributed-Systems-Using-Kernel-Tracing.html">Wait
@@ -832,7 +849,7 @@ Analysis of Distributed Systems Using Kernel
 Tracing</a>：这篇文章核心是在对distributed
 system里面的等待原因进行根因分析。主要是看因为什么wait了、wait了几次。</li>
 </ul>
-<h2 id="section-33">2017</h2>
+<h2 id="section-35">2017</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/tpds17-Failure-Diagnosis-for-Distributed-Systems-Using-Targeted-Fault-Injection.html">Failure
@@ -841,7 +858,7 @@ Injection</a>：针对分布式系统的特点提出了Target Fault
 Injection，通过利用分布式组件的执行流知识来控制注入位置。</li>
 </ul>
 <h1 id="www">WWW</h1>
-<h2 id="section-34">2022</h2>
+<h2 id="section-36">2022</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/www22-Accelerating-Serverless-Computing-by-Harvesting-Idle-Resources.html">Accelerating
@@ -994,7 +1011,7 @@ Resources</a>：使用RL对serverless资源用量进行建模，把over-provisio
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">47</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1037,7 +1054,7 @@ Resources</a>：使用RL对serverless资源用量进行建模，把over-provisio
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#asplos"><span class="nav-number">1.</span> <span class="nav-text">ASPLOS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section"><span class="nav-number">1.1.</span> <span class="nav-text">2016</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-1"><span class="nav-number">1.2.</span> <span class="nav-text">2022</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#atc"><span class="nav-number">2.</span> <span class="nav-text">ATC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-2"><span class="nav-number">2.1.</span> <span class="nav-text">2015</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-3"><span class="nav-number">2.2.</span> <span class="nav-text">2019</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#eurosys"><span class="nav-number">3.</span> <span class="nav-text">EuroSys</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-4"><span class="nav-number">3.1.</span> <span class="nav-text">2018</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-5"><span class="nav-number">3.2.</span> <span class="nav-text">2022</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#icdcs"><span class="nav-number">4.</span> <span class="nav-text">ICDCS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-6"><span class="nav-number">4.1.</span> <span class="nav-text">2013</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#isca"><span class="nav-number">5.</span> <span class="nav-text">ISCA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-7"><span class="nav-number">5.1.</span> <span class="nav-text">2017</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-8"><span class="nav-number">5.2.</span> <span class="nav-text">2022</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#middleware"><span class="nav-number">6.</span> <span class="nav-text">Middleware</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-9"><span class="nav-number">6.1.</span> <span class="nav-text">2017</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ndss"><span class="nav-number">7.</span> <span class="nav-text">NDSS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-10"><span class="nav-number">7.1.</span> <span class="nav-text">2020</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-11"><span class="nav-number">7.2.</span> <span class="nav-text">2022</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nsdi"><span class="nav-number">8.</span> <span class="nav-text">NSDI</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-12"><span class="nav-number">8.1.</span> <span class="nav-text">2011</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-13"><span class="nav-number">8.2.</span> <span class="nav-text">2013</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-14"><span class="nav-number">8.3.</span> <span class="nav-text">2015</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-15"><span class="nav-number">8.4.</span> <span class="nav-text">2022</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#osdi"><span class="nav-number">9.</span> <span class="nav-text">OSDI</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-16"><span class="nav-number">9.1.</span> <span class="nav-text">2014</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-17"><span class="nav-number">9.2.</span> <span class="nav-text">2016</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-18"><span class="nav-number">9.3.</span> <span class="nav-text">2018</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-19"><span class="nav-number">9.4.</span> <span class="nav-text">2020</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#others"><span class="nav-number">10.</span> <span class="nav-text">Others</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-20"><span class="nav-number">10.1.</span> <span class="nav-text">2013</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-21"><span class="nav-number">10.2.</span> <span class="nav-text">2014</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#security"><span class="nav-number">11.</span> <span class="nav-text">Security</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-22"><span class="nav-number">11.1.</span> <span class="nav-text">2023</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sc"><span class="nav-number">12.</span> <span class="nav-text">SC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-23"><span class="nav-number">12.1.</span> <span class="nav-text">2018</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sigcomm"><span class="nav-number">13.</span> <span class="nav-text">SIGCOMM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-24"><span class="nav-number">13.1.</span> <span class="nav-text">2022</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#socc"><span class="nav-number">14.</span> <span class="nav-text">SoCC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-25"><span class="nav-number">14.1.</span> <span class="nav-text">2016</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-26"><span class="nav-number">14.2.</span> <span class="nav-text">2020</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sp"><span class="nav-number">15.</span> <span class="nav-text">S&amp;P</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-27"><span class="nav-number">15.1.</span> <span class="nav-text">2014</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sosp"><span class="nav-number">16.</span> <span class="nav-text">SOSP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-28"><span class="nav-number">16.1.</span> <span class="nav-text">2015</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ton"><span class="nav-number">17.</span> <span class="nav-text">TON</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-29"><span class="nav-number">17.1.</span> <span class="nav-text">2018</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tpds"><span class="nav-number">18.</span> <span class="nav-text">TPDS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-30"><span class="nav-number">18.1.</span> <span class="nav-text">2012</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-31"><span class="nav-number">18.2.</span> <span class="nav-text">2013</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-32"><span class="nav-number">18.3.</span> <span class="nav-text">2015</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-33"><span class="nav-number">18.4.</span> <span class="nav-text">2017</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#www"><span class="nav-number">19.</span> <span class="nav-text">WWW</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-34"><span class="nav-number">19.1.</span> <span class="nav-text">2022</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#asplos"><span class="nav-number">1.</span> <span class="nav-text">ASPLOS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section"><span class="nav-number">1.1.</span> <span class="nav-text">2016</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-1"><span class="nav-number">1.2.</span> <span class="nav-text">2022</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#atc"><span class="nav-number">2.</span> <span class="nav-text">ATC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-2"><span class="nav-number">2.1.</span> <span class="nav-text">2015</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-3"><span class="nav-number">2.2.</span> <span class="nav-text">2019</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#eurosys"><span class="nav-number">3.</span> <span class="nav-text">EuroSys</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-4"><span class="nav-number">3.1.</span> <span class="nav-text">2018</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-5"><span class="nav-number">3.2.</span> <span class="nav-text">2022</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#icdcs"><span class="nav-number">4.</span> <span class="nav-text">ICDCS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-6"><span class="nav-number">4.1.</span> <span class="nav-text">2013</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#isca"><span class="nav-number">5.</span> <span class="nav-text">ISCA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-7"><span class="nav-number">5.1.</span> <span class="nav-text">2017</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-8"><span class="nav-number">5.2.</span> <span class="nav-text">2022</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#middleware"><span class="nav-number">6.</span> <span class="nav-text">Middleware</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-9"><span class="nav-number">6.1.</span> <span class="nav-text">2017</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ndss"><span class="nav-number">7.</span> <span class="nav-text">NDSS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-10"><span class="nav-number">7.1.</span> <span class="nav-text">2020</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-11"><span class="nav-number">7.2.</span> <span class="nav-text">2022</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nsdi"><span class="nav-number">8.</span> <span class="nav-text">NSDI</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-12"><span class="nav-number">8.1.</span> <span class="nav-text">2011</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-13"><span class="nav-number">8.2.</span> <span class="nav-text">2013</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-14"><span class="nav-number">8.3.</span> <span class="nav-text">2015</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-15"><span class="nav-number">8.4.</span> <span class="nav-text">2022</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#osdi"><span class="nav-number">9.</span> <span class="nav-text">OSDI</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-16"><span class="nav-number">9.1.</span> <span class="nav-text">2014</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-17"><span class="nav-number">9.2.</span> <span class="nav-text">2016</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-18"><span class="nav-number">9.3.</span> <span class="nav-text">2018</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-19"><span class="nav-number">9.4.</span> <span class="nav-text">2020</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#others"><span class="nav-number">10.</span> <span class="nav-text">Others</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-20"><span class="nav-number">10.1.</span> <span class="nav-text">2013</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-21"><span class="nav-number">10.2.</span> <span class="nav-text">2014</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-22"><span class="nav-number">10.3.</span> <span class="nav-text">2020</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#security"><span class="nav-number">11.</span> <span class="nav-text">Security</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-23"><span class="nav-number">11.1.</span> <span class="nav-text">2023</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sc"><span class="nav-number">12.</span> <span class="nav-text">SC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-24"><span class="nav-number">12.1.</span> <span class="nav-text">2018</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sigcomm"><span class="nav-number">13.</span> <span class="nav-text">SIGCOMM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-25"><span class="nav-number">13.1.</span> <span class="nav-text">2022</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sigmetrics"><span class="nav-number">14.</span> <span class="nav-text">SIGMETRICS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-26"><span class="nav-number">14.1.</span> <span class="nav-text">2014</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#socc"><span class="nav-number">15.</span> <span class="nav-text">SoCC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-27"><span class="nav-number">15.1.</span> <span class="nav-text">2016</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-28"><span class="nav-number">15.2.</span> <span class="nav-text">2020</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sp"><span class="nav-number">16.</span> <span class="nav-text">S&amp;P</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-29"><span class="nav-number">16.1.</span> <span class="nav-text">2014</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sosp"><span class="nav-number">17.</span> <span class="nav-text">SOSP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-30"><span class="nav-number">17.1.</span> <span class="nav-text">2015</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ton"><span class="nav-number">18.</span> <span class="nav-text">TON</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-31"><span class="nav-number">18.1.</span> <span class="nav-text">2018</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tpds"><span class="nav-number">19.</span> <span class="nav-text">TPDS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-32"><span class="nav-number">19.1.</span> <span class="nav-text">2012</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-33"><span class="nav-number">19.2.</span> <span class="nav-text">2013</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-34"><span class="nav-number">19.3.</span> <span class="nav-text">2015</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-35"><span class="nav-number">19.4.</span> <span class="nav-text">2017</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#www"><span class="nav-number">20.</span> <span class="nav-text">WWW</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-36"><span class="nav-number">20.1.</span> <span class="nav-text">2022</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1078,7 +1095,7 @@ Resources</a>：使用RL对serverless资源用量进行建模，把over-provisio
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">26.9k</span>
+    <span title="Site words total count">27k</span>
   
 </div>
 
