@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="osdi," />
+  <meta name="keywords" content="socc," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="文章想要实现非侵入式的性能异常检测。非侵入式是通过读log实现的。 性能异常检测（我理解应该是没有根因分析或者ranking）则是通过log内的信息去reconstruct workflow。 非侵入式根据log推断objects之间的关系，针对这个关系和时间来推断性能异常。亮点在于关系的定义和处理上，但是objects和type的提取比较工程。 该算法输出一个系统堆栈结构（S3）图--一个有向无">
+<meta name="description" content="本文基于分布式跟踪系统(Jaeger)实现了一种新的performance profiling，把trace分成四层进行分析。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Non-Intrusive Performance Profiling for Entire Software Stacks Based on the Flow Reconstruction Principle">
-<meta property="og:url" content="https://datawine.github.io/osdi16-Non-Intrusive-Performance-Profiling-for-Entire-Software-Stacks-Based-on-the-Flow-Reconstruction-Principle.html">
+<meta property="og:title" content="tprof: Performance profiling via structural aggregation and automated analysis of distributed systems traces">
+<meta property="og:url" content="https://datawine.github.io/socc21-tprof-Performance-profiling-via-structural-aggregation-and-automated-analysis-of-distributed-systems-traces.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="文章想要实现非侵入式的性能异常检测。非侵入式是通过读log实现的。 性能异常检测（我理解应该是没有根因分析或者ranking）则是通过log内的信息去reconstruct workflow。 非侵入式根据log推断objects之间的关系，针对这个关系和时间来推断性能异常。亮点在于关系的定义和处理上，但是objects和type的提取比较工程。 该算法输出一个系统堆栈结构（S3）图--一个有向无">
+<meta property="og:description" content="本文基于分布式跟踪系统(Jaeger)实现了一种新的performance profiling，把trace分成四层进行分析。">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-11-02T05:46:06.000Z">
-<meta property="article:modified_time" content="2022-11-29T12:30:16.272Z">
+<meta property="article:published_time" content="2022-11-29T02:11:01.000Z">
+<meta property="article:modified_time" content="2022-11-29T12:10:49.290Z">
 <meta property="article:author" content="Datawine">
-<meta property="article:tag" content="osdi">
+<meta property="article:tag" content="socc">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/osdi16-Non-Intrusive-Performance-Profiling-for-Entire-Software-Stacks-Based-on-the-Flow-Reconstruction-Principle.html"/>
+  <link rel="canonical" href="https://datawine.github.io/socc21-tprof-Performance-profiling-via-structural-aggregation-and-automated-analysis-of-distributed-systems-traces.html"/>
 
 
 
 
 
-  <title>Non-Intrusive Performance Profiling for Entire Software Stacks Based on the Flow Reconstruction Principle | Datawine's Blog</title><meta name="robots" content="noindex">
+  <title>tprof: Performance profiling via structural aggregation and automated analysis of distributed systems traces | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/osdi16-Non-Intrusive-Performance-Profiling-for-Entire-Software-Stacks-Based-on-the-Flow-Reconstruction-Principle.html">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/socc21-tprof-Performance-profiling-via-structural-aggregation-and-automated-analysis-of-distributed-systems-traces.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Non-Intrusive Performance Profiling for Entire Software Stacks Based on the Flow Reconstruction Principle</h1>
+          <h1 class="post-title" itemprop="name headline">tprof: Performance profiling via structural aggregation and automated analysis of distributed systems traces</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-11-02T13:46:06+08:00">
-                2022-11-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-11-29T10:11:01+08:00">
+                2022-11-29
               </time>
             
 
@@ -368,8 +368,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/osdi16-Non-Intrusive-Performance-Profiling-for-Entire-Software-Stacks-Based-on-the-Flow-Reconstruction-Principle.html#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="osdi16-Non-Intrusive-Performance-Profiling-for-Entire-Software-Stacks-Based-on-the-Flow-Reconstruction-Principle.html" itemprop="commentsCount"></span>
+                <a href="/socc21-tprof-Performance-profiling-via-structural-aggregation-and-automated-analysis-of-distributed-systems-traces.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="socc21-tprof-Performance-profiling-via-structural-aggregation-and-automated-analysis-of-distributed-systems-traces.html" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  707
+                  1k
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  3
                 </span>
               
             </div>
@@ -433,60 +433,67 @@
       
 
       
-        <p>文章想要实现非侵入式的性能异常检测。非侵入式是通过读log实现的。
-性能异常检测（我理解应该是没有根因分析或者ranking）则是通过log内的信息去reconstruct
-workflow。
-非侵入式根据log推断objects之间的关系，针对这个关系和时间来推断性能异常。亮点在于关系的定义和处理上，但是objects和type的提取比较工程。
-该算法输出一个系统堆栈结构（S3）图--一个有向无环图（DAG）。
-其中每个节点代表一个对象类型，每个有向边捕获一个高级对象类型（父）和一个低级对象类型（子）之间的层次关系。</p>
+        <p>本文基于分布式跟踪系统(Jaeger)实现了一种新的performance
+profiling，把trace分成四层进行分析。</p>
 <span id="more"></span>
-<p>基于一个原则-Flow Reconstruction Principle：log里面的信息足够。</p>
-<p>主要包括几个步骤</p>
-<ol type="1">
-<li>从log信息里提取object identifiers</li>
-<li>将object identifiers和type关联起来</li>
-<li>监测object type之间的关联关系</li>
-<li>确定specific object
-instances（这个就是在已有关联关系的基础上得到类似Section 2的图）</li>
-<li>确定execution structure和objects之间的层次结构</li>
-</ol>
-<h1 id="system-stack-structure-graph">System Stack Structure Graph</h1>
-<p>主要就是说明如何构建System Stack Structure的。</p>
-<p>ID parsing：拿到比如machine IP、process ID、thread ID和文件名等</p>
-<p>type：比如是一个process、thread、IP、hostname。具体就是用一些启发式的方法，比如在identifiers上下文找。
-注意：只是做区分，并不需要了解语义。</p>
-<p>correlation：定义correlated：两个objects出现在同一个log里面。subsumes：一种特殊关系，i与j有关，j不和任何同类型的相关。
-此外，还进一步细分，得到type-relation
-graph，除了empty之外有correlation的objects之间连边：</p>
+<p>一方面，性能分析主要是单机+平均值，没法处理分布式和tail
+latency的情况；另一方面，分布式追踪是一条一条的，很难处理。
+论文的核心论点是：用分布式+aggregation解决上面的问题。</p>
+<p>tprof将trace按照四个维度分层</p>
 <ul>
-<li>empty：没出现在一起</li>
-<li>1:1：近似与等价，就是两个object强相关，出现在一起。比如IP和Host，在没有remapping的情况下</li>
-<li>1:n：比如fork这个过程。</li>
-<li>m:n：存在一些复用。</li>
-</ul>
-<p>精度：需要log够多，精度才高。</p>
-<p>生成System Stack Structure，输入是事件和type-relation
-graph，主要是三步：</p>
+<li>在顶层，所有的trace被汇总到一起，并提供整体的统计数据（平均延迟、尾部延迟等）</li>
+<li>在第二层，trace是按请求类型组织的。例如，向社交网络发布新消息的post将与read
+post的请求分开</li>
+<li>在第三层，根据trace结构或者使用的服务/操作进行划分。例如，有cache
+miss并查询数据库的trace将与有cache hit的trace分开</li>
+<li>在第四层，trace分组的依据是每个span都有相同的子span，且顺序一致。
 <ul>
-<li>合并1:1的nodes</li>
-<li>处理m:n的nodes：处理方法是增加信息。也就是通过扩大来减少可能的模糊信息。比如只看TID（线程ID）没有用，但是一条log里面如果有TID，也会有PID和host。这个加起来就有意义了</li>
-<li>Filter
-non-objects：有一些节点仅仅只是别的node的并集，且这些子集node不相交，那就把这些并集删掉。</li>
+<li>定义subspans是span一定在干些什么的时间啊（图4很清楚了）</li>
+</ul></li>
 </ul>
-<h1 id="implementation">Implementation</h1>
-<p>比较工程。</p>
-<h1 id="evaluation">Evaluation</h1>
-<p>回答了几个问题</p>
-<ul>
-<li>系统能减少用户多少时间：叫了14个工程师来用</li>
-<li>现实世界中是否满足Flow Reconstruction
-Principle：分析日志与objects之间的关系，发现几乎所有的日志都包括至少一个object</li>
-<li>创建的关系精确度：得到图之后手动分析，精确度96%</li>
-</ul>
+<h1 id="tprof">tprof</h1>
+<h2 id="layers-12-operation-analysis">Layers 1/2: Operation
+analysis</h2>
+<p>第一层：所有可用的trace被分组，形成一个代表系统整体行为的组。
+这使我们能够像现有的粗粒度性能分析器一样分析系统。</p>
+<p>第二层：追踪是根据请求类型来分组的。
+默认情况下，tprof使用跟踪中的根跨度（通常是一个API端点）来分组，但请求类型的识别可以由用户定义（例如，基于一个属性）。</p>
+<p>tprof计算每个操作的延迟平均值、标准偏差和第50/99个百分位数以及总体延迟，还有纯运行时间，也就是减去子span的时间。
+the operation durations excluding time periods where one or more of the
+operation’s child spans is running</p>
+<h2 id="layer-3-span-and-child-analysis">Layer 3: Span and child
+analysis</h2>
+<p>具有相同的span和相同的父/子关系的trace被分成一组。但是只考虑结构，不考虑顺序。</p>
+<p>tprof以span的角度计算aggregation和child diff。 child diff指的是span
+start、子span、span end之间的时间差。</p>
+<h2 id="layer-4-subspan-analysis">Layer 4: Subspan analysis</h2>
+<p>在第四层中，我们在分组过程中同时考虑了trace的结构和跨度的顺序。</p>
+<p>tprof定义了一个新的概念叫subspans。比如图4中。 Group
+1好理解，就是A在B和C都没有运行的时候肯定在跑些什么，那就是subspans。
+Group 2的A1是因为他调用了C，所以A1这段肯定也在跑些什么。</p>
+<h2 id="aggregate-trace-visualization">Aggregate trace
+visualization</h2>
+<p>subspan分析的一个主要好处是能够根据average span和subspans
+duration合成一个 "总体 "跟踪。</p>
+<p>Theorem
+1：如果不用平均值计算，可能会计算出非法的一个结果。论文中例子给的是如果不用平均值，用的是99th，就overlap了。显然。</p>
+<h2 id="tail-latency-support">Tail latency support</h2>
+<p>tprof根据用户定义的阈值（例如90%），将该组进一步细分为"正常"trace和"尾部"trace。
+超过阈值百分数的最慢的请求被标记为尾部请求，其余的被标记为正常请求。</p>
+<h2 id="automated-performance-diagnosis">Automated performance
+diagnosis</h2>
+<p>为了帮助用户进行性能诊断，tprof分析了汇总的统计数据，并自动生成了一份报告。</p>
+<p>在第一层，tprof识别出所有可用trace中最慢的操作。</p>
+<p>在第二层中，tprof缩小到第一层中看到的速度减慢影响最大的请求类型。
+此外，tprof通过比较尾部和正常trace，对减速是否是尾部特有的进行分类。
+比率超过了一个阈值，tprof就将其标记为尾部问题。阈值默认为4倍。</p>
+<p>由于一个操作可能在一个trace中的多个span中被使用（例如对数据库的多次调用），tprof使用第3层的数据来缩小具体的问题span以及span中的缓慢区域。</p>
+<p>最后，tprof分析了第4层的数据，以确定哪个第4层组最能表现出有问题的subspan。
+通过计算和排序，找出<strong>经常出现且占其span很大一部分的缓慢subspan</strong>。</p>
 
 
 	<div class="row">
-    <embed src="/paper/osdi16-Non-Intrusive-Performance-Profiling-for-Entire-Software-Stacks-Based-on-the-Flow-Reconstruction-Principle.pdf" width="100%" height="1700" type="application/pdf">
+    <embed src="/paper/socc21-tprof-Performance-profiling-via-structural-aggregation-and-automated-analysis-of-distributed-systems-traces.pdf" width="100%" height="1700" type="application/pdf">
 	</div>
 
 
@@ -508,7 +515,7 @@ Principle：分析日志与objects之间的关系，发现几乎所有的日志�
       
         <div class="post-tags">
           
-            <a href="/tags/osdi/" rel="tag"># osdi</a>
+            <a href="/tags/socc/" rel="tag"># socc</a>
           
         </div>
       
@@ -660,7 +667,11 @@ Principle：分析日志与objects之间的关系，发现几乎所有的日志�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#system-stack-structure-graph"><span class="nav-number">1.</span> <span class="nav-text">System Stack Structure Graph</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#implementation"><span class="nav-number">2.</span> <span class="nav-text">Implementation</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#evaluation"><span class="nav-number">3.</span> <span class="nav-text">Evaluation</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tprof"><span class="nav-number">1.</span> <span class="nav-text">tprof</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#layers-12-operation-analysis"><span class="nav-number">1.1.</span> <span class="nav-text">Layers 1&#x2F;2: Operation
+analysis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#layer-3-span-and-child-analysis"><span class="nav-number">1.2.</span> <span class="nav-text">Layer 3: Span and child
+analysis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#layer-4-subspan-analysis"><span class="nav-number">1.3.</span> <span class="nav-text">Layer 4: Subspan analysis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#aggregate-trace-visualization"><span class="nav-number">1.4.</span> <span class="nav-text">Aggregate trace
+visualization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tail-latency-support"><span class="nav-number">1.5.</span> <span class="nav-text">Tail latency support</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#automated-performance-diagnosis"><span class="nav-number">1.6.</span> <span class="nav-text">Automated performance
+diagnosis</span></a></li></ol></li></ol></div>
             
 
           </div>
