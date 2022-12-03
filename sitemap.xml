@@ -625,6 +625,13 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>https://datawine.github.io/tags/icse/</loc>
+    <lastmod>2022-12-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
