@@ -268,6 +268,11 @@ Pipelines</a>：本文介绍了Menshen，它是可编程交换机的可重构匹
 <h2 id="section-17">2014</h2>
 <ul>
 <li><a
+href="https://datawine.github.io/osdi14-lprof-A-Non-intrusive-Request-Flow-Profiler-for-Distributed-Systems.html">lprof:
+A Non-intrusive Request Flow Profiler for Distributed
+Systems</a>：lprof通过bytecode的静态分析，从runtime logs里面infers the
+request-flow来实现zero-instrumentation的性能监测</li>
+<li><a
 href="https://datawine.github.io/osdi14-The-Mystery-Machine-End-to-end-Performance-Analysis-of-Large-scale-Internet-Services.html">The
 Mystery Machine: End-to-end Performance Analysis of Large-scale Internet
 Services</a>：通过在全连接图上迭代，得到多服务间因果分析。</li>
