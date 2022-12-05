@@ -490,7 +490,14 @@ Injection</a>：针对分布式系统的特点提出了Target Fault
 Injection，通过利用分布式组件的执行流知识来控制注入位置。</li>
 </ul>
 <h1 id="www">WWW</h1>
-<h2 id="section-41">2022</h2>
+<h2 id="section-41">2013</h2>
+<ul>
+<li><a
+href="https://datawine.github.io/www13-Understanding-latency-variations-of-black-box-services.html">Understanding
+latency variations of black box
+services</a>：框架采集对一个给定服务的请求流，以及它们的监测属性，还有为每个请求提供服务的延迟。最终目的是给定延迟间隔，找到解释它的监测属性的子集。</li>
+</ul>
+<h2 id="section-42">2022</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/www22-Accelerating-Serverless-Computing-by-Harvesting-Idle-Resources.html">Accelerating
