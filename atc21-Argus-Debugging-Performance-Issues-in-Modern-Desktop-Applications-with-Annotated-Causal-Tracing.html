@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="linux," />
+  <meta name="keywords" content="atc," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="服务器 重启后无法通过外网访问，此时需要添加路由表项。 添加时出现错误：SIOCADDRT:Network is unreachable">
+<meta name="description" content="这篇文章主要处理desktop application的各种异步、并发、交互等等操作导致的因果关系存在误差的问题。 主要提出了强边&#x2F;弱边、异常（关键）路径搜索算法、正常&#x2F;异常执行的比较算法。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="route add报错SIOCADDRT:Network is unreachable解决方案">
-<meta property="og:url" content="https://datawine.github.io/route%20add-siocaddrt-network-is-unreachable.html">
+<meta property="og:title" content="Argus: Debugging Performance Issues in Modern Desktop Applications with Annotated Causal Tracing">
+<meta property="og:url" content="https://datawine.github.io/atc21-Argus-Debugging-Performance-Issues-in-Modern-Desktop-Applications-with-Annotated-Causal-Tracing.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="服务器 重启后无法通过外网访问，此时需要添加路由表项。 添加时出现错误：SIOCADDRT:Network is unreachable">
+<meta property="og:description" content="这篇文章主要处理desktop application的各种异步、并发、交互等等操作导致的因果关系存在误差的问题。 主要提出了强边&#x2F;弱边、异常（关键）路径搜索算法、正常&#x2F;异常执行的比较算法。">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-05-07T14:59:48.000Z">
-<meta property="article:modified_time" content="2022-05-07T15:00:42.581Z">
+<meta property="article:published_time" content="2022-12-29T11:27:20.000Z">
+<meta property="article:modified_time" content="2022-12-29T13:07:30.304Z">
 <meta property="article:author" content="Datawine">
-<meta property="article:tag" content="linux">
+<meta property="article:tag" content="atc">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/route add-siocaddrt-network-is-unreachable.html"/>
+  <link rel="canonical" href="https://datawine.github.io/atc21-Argus-Debugging-Performance-Issues-in-Modern-Desktop-Applications-with-Annotated-Causal-Tracing.html"/>
 
 
 
 
 
-  <title>route add报错SIOCADDRT:Network is unreachable解决方案 | Datawine's Blog</title>
+  <title>Argus: Debugging Performance Issues in Modern Desktop Applications with Annotated Causal Tracing | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/route%20add-siocaddrt-network-is-unreachable.html">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/atc21-Argus-Debugging-Performance-Issues-in-Modern-Desktop-Applications-with-Annotated-Causal-Tracing.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">route add报错SIOCADDRT:Network is unreachable解决方案</h1>
+          <h1 class="post-title" itemprop="name headline">Argus: Debugging Performance Issues in Modern Desktop Applications with Annotated Causal Tracing</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-07T22:59:48+08:00">
-                2022-05-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-12-29T19:27:20+08:00">
+                2022-12-29
               </time>
             
 
@@ -349,8 +349,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index">
-                    <span itemprop="name">其他</span>
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
                   </a>
                 </span>
 
@@ -368,8 +368,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/route%20add-siocaddrt-network-is-unreachable.html#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="route add-siocaddrt-network-is-unreachable.html" itemprop="commentsCount"></span>
+                <a href="/atc21-Argus-Debugging-Performance-Issues-in-Modern-Desktop-Applications-with-Annotated-Causal-Tracing.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="atc21-Argus-Debugging-Performance-Issues-in-Modern-Desktop-Applications-with-Annotated-Causal-Tracing.html" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  216
+                  2.7k
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  9
                 </span>
               
             </div>
@@ -433,27 +433,148 @@
       
 
       
-        <p>服务器 重启后无法通过外网访问，此时需要添加路由表项。</p>
-<p>添加时出现错误：SIOCADDRT:Network is unreachable</p>
+        <p>这篇文章主要处理desktop
+application的各种异步、并发、交互等等操作导致的因果关系存在误差的问题。
+主要提出了强边/弱边、异常（关键）路径搜索算法、正常/异常执行的比较算法。</p>
 <span id="more"></span>
-<h1 id="问题描述">问题描述</h1>
-<p>错误信息：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SIOCADDRT:Network is unreachable</span><br></pre></td></tr></table></figure>
-<h1 id="解决方法">解决方法</h1>
-<p>这个错误的原因是因为gateway和IP不在一个网段内。</p>
-<p>通过ifconfig查找相应添加的device的网段。</p>
-<p>如：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">eth0      Link encap:Ethernet  HWaddr 0c:c4:7a:dc:76:aa  </span><br><span class="line">          inet addr:202.112.237.33  Bcast:202.112.237.255  Mask:255.255.255.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:226265 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:15405 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000 </span><br><span class="line">          RX bytes:18275659 (18.2 MB)  TX bytes:3133390 (3.1 MB)</span><br><span class="line">          Memory:c7220000-c723ffff</span><br></pre></td></tr></table></figure>
-<p>那么gateway的数值就应该是<code>202.112.237.1</code></p>
-<p>route命令为：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo route add default gw 202.112.237.1 dev eth0</span><br></pre></td></tr></table></figure>
-<p>PS:
-当初就是<code>eth0</code>写成了<code>eth1</code>导致这个错误的发生</p>
-<h1 id="参考资料">参考资料</h1>
+<p>桌面应用里面有大量的异步、并发交互，这让传统的使用casual
+tracing的性能异常检测误差很大。
+argus引入了一个新的强边和弱边的概念来明确建模和注释跟踪图的模糊性；
+一个新的beam-search-based的诊断算法来选择存在模糊性的最可能的因果路径；
+以及一种比较正常和非正常执行的因果路径的新方法。</p>
+<p>强边代表段之间的连接，必是因果关系，如发送和接收IPC消息。弱边代表模糊关系。
+例如，当一个线程唤醒另一个线程时，它可能是一种因果关系，或者只是常规操作系统调度。
+Argus通过利用操作语义和call stack，进一步boost或prune不必要的弱边。</p>
+<p>主要是针对噪音。</p>
+<h1 id="background">Background</h1>
+<p>作者通过一个例子，总结了call graph的两种出现噪音的现象：</p>
 <ul>
-<li>https://www.jianshu.com/p/0bd0c0c7bc73</li>
+<li>over-connections：通常发生在线程内的执行边界丢失的情况下
+<ul>
+<li>Dispatch message batching：（这个其实没太理解）在callback里面的event
+loops通常处理很多不同的消息。这些消息就被错误的同时连在一起</li>
+<li>Piggyback
+optimization：这个很好理解，在跨越系统边界的时候捎带多个任务。这样被捎带的两边就错误的多了很多边</li>
+<li>Non-causal
+wake-up：存在通过互斥进行同步的因果关系，但是唤醒并不一定有因果关系，现在的工具默认唤醒就是有</li>
+</ul></li>
+<li>under-connections
+<ul>
+<li>Data dependency：数据依赖导致的因果关系通常不会被记录下来</li>
+<li>Shared data flags：现在的工作没有跟踪共享内存通信</li>
+</ul></li>
 </ul>
+<h1 id="design">Design</h1>
+<p>四个关键要求</p>
+<ul>
+<li>minimal instrumentation</li>
+<li>support closed-source components</li>
+<li>extract rich information from heterogeneous components with minimal
+manual effort</li>
+<li>incur low runtime overhead</li>
+</ul>
+<p>主要框架</p>
+<ul>
+<li>tracer</li>
+<li>grapher</li>
+<li>debugger</li>
+</ul>
+<h1 id="argus-tracer">Argus Tracer</h1>
+<p>Argus通过扩展现有的macOS内核追踪支持（改了500行代码），来追踪内核和低级库内的事件，包括追踪系统调用、线程调度、中断、延时调用和Mach消息。</p>
+<p>Argus记录内核事件，以确定线程执行的时间和它们的因果关系。 包括</p>
+<ul>
+<li>所有的系统调用：
+简单地记录了大多数系统调用的返回值，但也记录了一部分的call stack</li>
+<li>三种类型的线程调度事件：等待、唤醒、抢占</li>
+<li>内核对延时调用的实现</li>
+<li>在内核中对Mach消息追踪，而不仅仅是通过系统调用追踪</li>
+</ul>
+<p>Argus还在用户空间记录了所有进程的虚拟内存布局图、所有正在运行的进程的虚拟内存映射、启动的进程也会被记录。</p>
+<p>Argus还追踪四个闭源的macOS框架，即AppKit、libdispatch.dylib、CoreFoundation和CoreGraphics。
+因为这些框架是闭源的，所以追踪事件是通过binary
+instrumentation添加的，机制类似于Detour</p>
+<p>为了处理under-connection连接不足的问题，作者在CoreGraphics中注释了少量的数据标志。
+Argus用watchpoint
+registers监控各自的虚拟地址。对这些地址的读或写将调用一个信号处理程序记录跟踪事件。
+Argus在CoreFoundation中添加代码来安装这个信号处理器。</p>
+<p>Argus可以使用相同的watchpoint机制来追踪应用程序中的共享数据。
+为了帮助开发者找到这些共享数据，Argus提供了一个轻量级的工具。
+这个工具使用ldb来记录并找到导致控制流分歧的operand，这些operand很可能是数据标志。</p>
+<h1 id="argus-grapher">Argus Grapher</h1>
+<p>Argus使用trace log来建立一个annotated trace graph。
+首先确定图的顶点，然后在顶点之间添加注释的边。
+注释的边包含类型元数据，以表明强边和弱边。</p>
+<p><strong>Argus首先确定了图顶点。</strong>
+使用各种跟踪事件作为边界，Argus将每个线程的执行分割成独立的执行段。</p>
+<p>首先，Argus splits nesting of tasks executed from dispatch queues。
+如果一个dispatch_callout的执行调用了其他几个dispatch_callout，每个task都会被分开。</p>
+<p>第二，Argus识别批处理模式，如图1中的dispatch_mig_server()，并将它分割。</p>
+<p>第三，当一个等待操作阻塞了一个线程的执行时，Argus在阻塞等待的入口处将执行分割成独立的段。
+其理由是，阻塞等待通常是作为事件处理的最后一步来完成的。</p>
+<p>最后，当通信两端不同时，Argus使用Mach消息来分割执行。
+Argus维护一个peer集合，包括消息的直接发送者或接收者以及消息的受益者。
+当两个连续的消息具有不重叠的对等体集时，Argus会用Mach
+message来分割。</p>
+<p>通过使用这四个标准分割线程执行，Argus避免了由于批处理和捎带优化而导致的潜在over-connection。</p>
+<p><strong>基于表1中的规则，Argus注释了三种类型的边：强、弱和提升的弱。</strong></p>
+<p>首先，Argus通过识别与顶点相关的Mach消息、调度队列、延时调用和数据标志跟踪事件，并找到相应的对等事件和对等顶点来增加强边。</p>
+<p>其次，Argus通过识别线程调度跟踪事件并找到对应于对操作的事件和顶点来添加边。
+Argus只在上下文明确表明因果关系时才添加强边，比如一个条件变量的信号和等待操作。否则，Argus只添加弱边。</p>
+<p>第三，由于Argus根据启发式方法将线程的执行分成若干段（图顶点），而这些启发式方法可能并不有效，因此Argus在这些相邻的执行段之间添加了弱边。</p>
+<p>滥用弱边可能会在诊断过程中产生过多的误报，所以Argus利用高级语义来避免在相邻的执行段之间添加不必要的弱边。
+首先，如果一个线程的两个段的调用栈没有共同的符号或共享公认的系统库批处理API，Argus就不会在它们之间添加弱边。
+其次，由于等待和唤醒事件大多来自系统调用，Argus利用系统调用语义来确定弱边的必要性。
+最后，macOS中的内核任务作为一个委托人，为许多应用程序提供服务，如I/O处理和定时的延迟调用。
+内核任务线程每个段为不同的请求服务，它们之间没有因果关系，所以在这些内核任务执行段之间没有添加弱边。</p>
+<h1 id="argus-debugger">Argus Debugger</h1>
+<p>Argus引入了一种新诊断算法，以有效探索可能与性能异常有关的因果路径。
+它还引入了一种新的子图比较机制，以找到异常执行时跟踪图中不存在但正常执行时却存在于图中的缺失顶点。</p>
+<h2 id="causal-path-searchbeam-search">Causal Path Search—Beam
+Search</h2>
+<p>类似于宽度优先搜索，但在每个搜索步骤中，它根据成本函数对下一级图形顶点进行排序，并只存储β个（所谓的beam
+width）最佳的顶点。</p>
+<p>Argus customizes its beam search with a lookback scheme such that the
+algorithm evaluates the cost function for multiple levels of edges
+before pruning. Argus evaluates the vertices and prunes them with β only
+after the search advances the configured lookback steps to avoiding
+pruning paths with weak edges too early.</p>
+<p>Argus的波束搜索算法有两个关键优势。
+首先，与暴力搜索相比，波束搜索只探索最有希望的顶点，这一点至关重要，因为跟踪图是非常复杂的，有数百万条边；
+搜索所有路径的效率太低，而且考虑到图的不精确性，会导致有太多的选项需要考虑。
+其次，与局部搜索方法（如爬山）相比，波束搜索包含了更多可能的因果路径，因为它对部分解决方案进行排名，而且排名在探索过程中会发生变化。</p>
+<h2 id="subgraph-comparison">Subgraph Comparison</h2>
+<p>如果我们只在用异常性能问题构建的跟踪图上运行因果关系分析，在某些情况下可能不会暴露出根本原因。
+比如是因为"少了些什么"。
+因此在异常跟踪图中没有顶点可以被正确识别为根本原因。</p>
+<p>Argus通过首先构建正常和异常执行的跟踪图来解决这个问题。
+然后，它在正常跟踪图上使用波束搜索方法来识别该图中的因果路径，该路径对应于在异常执行期间不发生的所需的正常行为。
+我们把这些因果路径称为子图。Argus然后使用子图中的顶点来识别异常执行中缺少的根本原因。</p>
+<p>Argus首先在正常图中确定一个与异常图中的异常顶点相当的基线顶点。
+在Argus确定了一个基线顶点后，它使用算法1获得了它的因果路径。
+其结果是正常跟踪图的一个子图，从基线顶点到某个结束顶点的根。</p>
+<p>Argus从最相关的因果路径检查子图。
+从结束顶点V开始，它的执行部分是由某个线程T执行的，Argus在异常跟踪图中找出也是由T执行的顶点。
+对于每个被识别的顶点，Argus检查它的行为是否与V不同，在这种情况下，它被标记为可疑的顶点。
+如果没有发现这样的顶点，Argus会对子图中的下一个顶点重复这一程序。
+否则，对于每个有传入边的可疑顶点，Argus递归地重复子图比较，将可疑顶点视为初始异常顶点。</p>
+<p>递归程序有效地通过顶点不断向后工作，最终在异常追踪图中找到一组没有传入边的根本原因候选顶点。
+然后，Argus返回其到原始异常顶点的路径具有最低惩罚分数的顶点，确定该顶点为根本原因。</p>
+<h2 id="debug-information">Debug Information</h2>
+<p>Argus进一步提供了异常顶点和根本原因顶点的调用上下文，以帮助开发人员在代码中定位错误。为此，Argus检查了它在图顶点中附加的调用堆栈。</p>
+<h2 id="diagnosis-for-spinning-pinwheel-in-macos">Diagnosis for Spinning
+Pinwheel in macOS</h2>
+<p>主要是两种：LongRunning和LongWait。</p>
+<p>LongRunning可以通过Search-Beam方法找到。 LongWait可以通过Subgraph
+Comparison方式找到。</p>
 
+
+	<div class="row">
+    <embed src="/paper/atc21-Argus-Debugging-Performance-Issues-in-Modern-Desktop-Applications-with-Annotated-Causal-Tracing.pdf" width="100%" height="1700" type="application/pdf">
+	</div>
+
+
+
+<!-- flag of hidden posts -->
       
     </div>
     
@@ -470,7 +591,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/linux/" rel="tag"># linux</a>
+            <a href="/tags/atc/" rel="tag"># atc</a>
           
         </div>
       
@@ -479,26 +600,6 @@
       
       
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/compare-docker-dpdk-ovs+dpdk.html" rel="next" title="比较docker默认网络模式、dpdk、ovs+dpdk三种网络性能测试">
-                <i class="fa fa-chevron-left"></i> 比较docker默认网络模式、dpdk、ovs+dpdk三种网络性能测试
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/mendelian-randomization.html" rel="prev" title="孟德尔随机化">
-                孟德尔随机化 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
 
       
@@ -642,7 +743,9 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">解决方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background"><span class="nav-number">1.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#design"><span class="nav-number">2.</span> <span class="nav-text">Design</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#argus-tracer"><span class="nav-number">3.</span> <span class="nav-text">Argus Tracer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#argus-grapher"><span class="nav-number">4.</span> <span class="nav-text">Argus Grapher</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#argus-debugger"><span class="nav-number">5.</span> <span class="nav-text">Argus Debugger</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#causal-path-searchbeam-search"><span class="nav-number">5.1.</span> <span class="nav-text">Causal Path Search—Beam
+Search</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#subgraph-comparison"><span class="nav-number">5.2.</span> <span class="nav-text">Subgraph Comparison</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#debug-information"><span class="nav-number">5.3.</span> <span class="nav-text">Debug Information</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#diagnosis-for-spinning-pinwheel-in-macos"><span class="nav-number">5.4.</span> <span class="nav-text">Diagnosis for Spinning
+Pinwheel in macOS</span></a></li></ol></li></ol></div>
             
 
           </div>
