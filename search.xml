@@ -55,6 +55,10 @@ Region的执行时间。论文用了两层filter，本地过滤器负责丢弃�
 <h2 id="section-4">2019</h2>
 <ul>
 <li><a
+href="https://datawine.github.io/atc19-Detecting-Asymmetric-Application-layer-Denial-of-Service-Attacks-In-Flight-with-FineLame.html">Detecting
+Asymmetric Application-layer Denial-of-Service Attacks In-Flight with
+FineLame</a>：eBPF+KMeans基于资源指标检测非对称DoS攻击。</li>
+<li><a
 href="https://datawine.github.io/atc19-The-Design-and-Operation-of-CloudLab.html">The
 Design and Operation of
 CloudLab</a>：主要是讲分布式实验平台CloudLab的综述</li>
