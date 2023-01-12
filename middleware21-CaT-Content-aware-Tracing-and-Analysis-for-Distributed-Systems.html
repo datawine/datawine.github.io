@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="nsdi," />
+  <meta name="keywords" content="middleware," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="background 解决的核心问题： container provisioning outside the cloud，比如在mobile and edge computing上，会受到network traffic的影响而变得很慢。渐进式的方法并不能解决这个问题。 starlight是一个用于container provisioning的加速器。通过重新设计容器部署协议、文件系统和image存">
+<meta name="description" content="用strace&#x2F;ebpf做tracing，同时采集数据内容。用哈希计算内容的相似性，进行异常&#x2F;正常的对比。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="nsdi22-Starlight-Fast Container Provisioning on the Edge and over the WAN">
-<meta property="og:url" content="https://datawine.github.io/nsdi22-Starlight-Fast-Container-Provisioning-on-the-Edge-and-over-the-WAN.html">
+<meta property="og:title" content="CaT: Content-aware Tracing and Analysis for Distributed Systems">
+<meta property="og:url" content="https://datawine.github.io/middleware21-CaT-Content-aware-Tracing-and-Analysis-for-Distributed-Systems.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="background 解决的核心问题： container provisioning outside the cloud，比如在mobile and edge computing上，会受到network traffic的影响而变得很慢。渐进式的方法并不能解决这个问题。 starlight是一个用于container provisioning的加速器。通过重新设计容器部署协议、文件系统和image存">
+<meta property="og:description" content="用strace&#x2F;ebpf做tracing，同时采集数据内容。用哈希计算内容的相似性，进行异常&#x2F;正常的对比。">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-05-16T12:33:27.000Z">
-<meta property="article:modified_time" content="2022-05-17T10:16:42.525Z">
+<meta property="article:published_time" content="2023-01-12T11:40:29.000Z">
+<meta property="article:modified_time" content="2023-01-12T11:58:19.791Z">
 <meta property="article:author" content="Datawine">
-<meta property="article:tag" content="nsdi">
+<meta property="article:tag" content="middleware">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/nsdi22-Starlight-Fast-Container-Provisioning-on-the-Edge-and-over-the-WAN.html"/>
+  <link rel="canonical" href="https://datawine.github.io/middleware21-CaT-Content-aware-Tracing-and-Analysis-for-Distributed-Systems.html"/>
 
 
 
 
 
-  <title>nsdi22-Starlight-Fast Container Provisioning on the Edge and over the WAN | Datawine's Blog</title><meta name="robots" content="noindex">
+  <title>CaT: Content-aware Tracing and Analysis for Distributed Systems | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/nsdi22-Starlight-Fast-Container-Provisioning-on-the-Edge-and-over-the-WAN.html">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/middleware21-CaT-Content-aware-Tracing-and-Analysis-for-Distributed-Systems.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">nsdi22-Starlight-Fast Container Provisioning on the Edge and over the WAN</h1>
+          <h1 class="post-title" itemprop="name headline">CaT: Content-aware Tracing and Analysis for Distributed Systems</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-16T20:33:27+08:00">
-                2022-05-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-01-12T19:40:29+08:00">
+                2023-01-12
               </time>
             
 
@@ -368,8 +368,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/nsdi22-Starlight-Fast-Container-Provisioning-on-the-Edge-and-over-the-WAN.html#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="nsdi22-Starlight-Fast-Container-Provisioning-on-the-Edge-and-over-the-WAN.html" itemprop="commentsCount"></span>
+                <a href="/middleware21-CaT-Content-aware-Tracing-and-Analysis-for-Distributed-Systems.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="middleware21-CaT-Content-aware-Tracing-and-Analysis-for-Distributed-Systems.html" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.8k
+                  240
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  6
+                  1
                 </span>
               
             </div>
@@ -433,96 +433,43 @@
       
 
       
-        <h1 id="background">background</h1>
-<p>解决的核心问题：</p>
-<p>container provisioning outside the cloud，比如在mobile and edge
-computing上，会受到network
-traffic的影响而变得很慢。渐进式的方法并不能解决这个问题。</p>
-<p>starlight是一个用于container
-provisioning的加速器。通过重新设计容器部署协议、文件系统和image存储格式，将配置与开发脱钩。</p>
-<p>开源，<a
-target="_blank" rel="noopener" href="https://github.com/mc256/starlight">https://github.com/mc256/starlight</a></p>
-<h1 id="motivation">motivation</h1>
-<p>是什么导致optimizing provisioning difficult？</p>
-<h2
-id="pull-based-protocol其实是registry的并发连接个数限制导致排队延时">pull-based
-protocol（其实是registry的并发连接个数限制导致排队延时）</h2>
-<p>用户主动从registry去pull他们需要的层。当outside the
-cloud的时候会产生排队延时。因为registry的实现限制了每个client的并发连接个数在2-3。</p>
-<p>eStargz[58]使用文件系统的文件访问跟踪来确定压缩层中的文件顺序，从而进一步加剧了排队情况。然而，在实践中，由于多线程和运行时的配置，容器工作负载的文件访问顺序并不是完全确定的。容器的启动因此而变慢，因为多个HTTP请求由于文件访问顺序混乱而在注册表中排队并相互延迟。</p>
-<h2 id="layer-based-structure">layer-based structure</h2>
-<p>container image是以a stack of independent
-layer的形式构造的。这让optimizing provisioning更加困难</p>
+        <p>用strace/ebpf做tracing，同时采集数据内容。用哈希计算内容的相似性，进行异常/正常的对比。</p>
+<span id="more"></span>
+<h1 id="cats-design-and-architecture">CaT’s Design and Architecture</h1>
+<p><strong>CaTracer</strong>。</p>
+<p>主要跟踪以下信息：
+连接/接受（连接/接受一个套接字），发送（SND）/接收（RCV）（从套接字写/读），打开（打开一个文件），以及写（WR）/读（RD）（从一个文件描述写/读）</p>
+<p>生成的一个Log的例子： &lt;type:SND, pid:123, socket:TCP, src:node1,
+dst:node2, size:12, message:“Hello world!”&gt;</p>
+<p><strong>Trace Processor</strong>。
+用来把上面的Log改一改喂进Falcon里面。</p>
+<p><strong>HB Model Generator</strong>。
+用的也是Falcon的东西，生成happens-before关系。</p>
+<p><strong>CaSolver</strong>。 利用哈希算出相似关系。</p>
+<p><strong>Visualizer</strong>。 可视化</p>
+<h1 id="cats-algorithms-and-prototype">CaT’s Algorithms and
+Prototype</h1>
+<h2 id="content-aware-tracing">Content-aware tracing</h2>
+<p><strong>CatStrace</strong>。 基于命令行的strace改的。</p>
+<p><strong>CatBpf</strong>。 用go写的。</p>
+<h2 id="similarity-based-analysis">Similarity-based analysis</h2>
+<p>分成两步</p>
 <ul>
-<li>Distributed Metadata
+<li>the signatures computation
 <ul>
-<li>每一层有自己的metadata（包括这一层有哪些文件），同时这个metadata还is
-intermingled with file contents</li>
-<li>再考虑一下eStargz：由于标准的容器图像缺乏文件元数据，eStargz在每一层的末尾都存储一个内容表（ToC）。不幸的是，压缩层的大小和ToC的确切开始都没有在图像元数据中编码。这又意味着每个图层至少有两个甚至三个HTTP请求：一个是确定其压缩图像文件的大小，另一个是在结束前的估计位置检索该图层的ToC，如果ToC比预期的大，则可能有第三个请求。</li>
+<li>min-wise hashing</li>
 </ul></li>
-<li>Layer vs. File Granularity
+<li>the processing of events’ signatures
 <ul>
-<li>改变文件内容或者改变metadata时需要我们首先把它从原来的只读层复制到顶部的读写层。这种复制浪费了很多资源</li>
-</ul></li>
-<li>Limited Layer-reuse
-<ul>
-<li>对stack里面的low-level的层改动会导致级联效应，也就是它上面的所有层都需要被更新</li>
+<li>用Locality Sensitive Hash减少对比空间 + 用Jaccard index计算结果</li>
 </ul></li>
 </ul>
-<h2 id="no-explicit-update-support">no explicit update support</h2>
-<p>在worker的生命周期中，我们会出于不同的原因多次部署容器：初始配置、软件更新、安全补丁等等。由于用户的流动性和边缘数据中心的有限资源，这种情况在边缘工作者上甚至更为常见（§2.1）。</p>
-<p>这不仅导致了频繁的配置，也意味着worker的内容高度多样化：随着worker的更新和重新使用，本地存储中可用的容器镜像的版本也因worker而异。如上所述，这种更新是一个优化的机会，因为许多文件事实上并没有改变（§3.2）。</p>
-<h1 id="设计原则">设计原则</h1>
-<p>有以下的设计原则</p>
-<ul>
-<li>尽早启动容器</li>
-<li>只向worker发送他们需要的东西</li>
-<li>基于push来避免昂贵的往返</li>
-<li>优先考虑工作者的性能而不是云</li>
-</ul>
-<p>得到了以下的设计点</p>
-<ul>
-<li>provisioning协议不应该resemble the stack-of-layer structure of
-container
-images。相反，它应该是基于push的，并以文件而不是层的粒度进行操作。文件的列表和顺序应该在多个层和容器中共同优化。</li>
-<li>provisioning协议应该将文件元数据和内容干净地分开，并首先发送元数据。这允许Starlight通过挂载一个
-"模拟 "文件系统提前启动容器，同时在后台下载内容。</li>
-<li>配置协议应该让工作者explicitly request
-updates，并指定他们在本地可以使用的内容。</li>
-<li>通过在registry附近放置一个代理来避免改变registry，这样我们就可以在不影响现有工作者的情况下改变provisioning协议。</li>
-<li>proxy应该根据worker已经拥有的东西按需创建provisioning
-packages。这使得更新worker的效率更高，avoids inflating the registry with
-packages for every conceivable
-update，并将计算负担放在云上，因为那里更便宜（§2.1）。支持这一点需要为每个容器存储一个内容表和文件元数据。</li>
-<li>使用seekable的向后兼容的格式来存储压缩层，允许Starlight和传统的worker使用相同的压缩层文件和标准的registries，并避免膨胀的registry大小。</li>
-<li>使用标准的容器镜像来支持现有的构建、存储和服务容器的工具的大型生态系统。</li>
-</ul>
-<h2 id="delta-bundle-protocol">delta bundle protocol</h2>
-<p>provisioning request包括了name和version of the requested container
-image</p>
-<p>response包括两个部分：header和body，header中包括了requested
-container's filesystem的扁平化视图</p>
-<h2 id="proxy-and-directory-database">proxy and directory database</h2>
-<p>尽管名字叫proxy，但它不仅仅是一个代理服务器或一个简单的桥梁。</p>
-<p>它负责优化和建立发送给worker的delta
-bundle，以及收集和分析用于这种优化的文件系统痕迹。</p>
-<h2 id="snapshotter-plugin">snapshotter plugin</h2>
-<p>containerd
-snapshotter守护进程管理着容器文件系统的生命周期：从下载图像到跟踪容器挂载的文件系统的变化。我们利用基于快照器插件的设计[7]，编写了一个快照器插件来支持Starlight的供应。图3显示了Starlight快照器插件的概况，它包括两个组件：下载器和元数据管理器。快照器还维护着StarlightFS的用户空间组件的状态--每个挂载的容器实例都有一个。</p>
-<h2 id="starlight-filesystem">starlight filesystem</h2>
-<p>这个定制的文件系统有两个目标。首先，我们需要提前启动容器，只使用它们的SLM。第二，我们想在各层和图像之间重用文件内容。由于OverlayFS和其他文件系统不支持这两个特性，我们使用FUSE[33]来实现StarlightFS。</p>
-<h1 id="总结">总结</h1>
-<ul>
-<li>重新设计worker-cloud部署协议。首先发送所有文件元数据，允许容器在文件内容可用之前启动。它使用基于push的方法来避免昂贵的往返请求：worker可以指定他们已经存储的内容，所以我们只按照他们需要的顺序发送他们需要的文件。</li>
-<li>在worker端，我们使用一个新的文件系统，在元数据可用时立即挂载文件，使我们的自定义snapshotter插件能够快速启动容器，同时在后台下载文件内容。当一个容器打开一个内容待定的文件时，我们会阻止它，直到内容可用。</li>
-<li>worker连接到云中的一个新的proxy组件，该组件实现了新的协议。proxy跨layer和container按需优化文件的列表和顺序，从而减少重复，使更新更快。该proxy与现有的基础设施透明地工作：压缩层存储在一个标准的registry中，传统的worker可以正常地连接到该registry。</li>
-<li>一个seekable的压缩层格式允许代理将单个压缩文件发送给worker，而不必先解压存储的层。这种格式的开销很低（平均为4.2%），并与现有的worker和registry向后兼容，因此没有必要以两种格式存储容器image。</li>
-</ul>
-<h1 id="文章正文">文章正文</h1>
+<h2 id="visual-representation">Visual representation</h2>
+<p>染相同的颜色代表内容接近。</p>
 
 
 	<div class="row">
-    <embed src="/paper/nsdi22-Starlight-Fast-Container-Provisioning-on-the-Edge-and-over-the-WAN.pdf" width="100%" height="1700" type="application/pdf">
+    <embed src="/paper/middleware21-CaT-Content-aware-Tracing-and-Analysis-for-Distributed-Systems.pdf" width="100%" height="1700" type="application/pdf">
 	</div>
 
 
@@ -544,7 +491,7 @@ snapshotter守护进程管理着容器文件系统的生命周期：从下载图
       
         <div class="post-tags">
           
-            <a href="/tags/nsdi/" rel="tag"># nsdi</a>
+            <a href="/tags/middleware/" rel="tag"># middleware</a>
           
         </div>
       
@@ -696,8 +643,8 @@ snapshotter守护进程管理着容器文件系统的生命周期：从下载图
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background"><span class="nav-number">1.</span> <span class="nav-text">background</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#motivation"><span class="nav-number">2.</span> <span class="nav-text">motivation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pull-based-protocol%E5%85%B6%E5%AE%9E%E6%98%AFregistry%E7%9A%84%E5%B9%B6%E5%8F%91%E8%BF%9E%E6%8E%A5%E4%B8%AA%E6%95%B0%E9%99%90%E5%88%B6%E5%AF%BC%E8%87%B4%E6%8E%92%E9%98%9F%E5%BB%B6%E6%97%B6"><span class="nav-number">2.1.</span> <span class="nav-text">pull-based
-protocol（其实是registry的并发连接个数限制导致排队延时）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#layer-based-structure"><span class="nav-number">2.2.</span> <span class="nav-text">layer-based structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#no-explicit-update-support"><span class="nav-number">2.3.</span> <span class="nav-text">no explicit update support</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="nav-number">3.</span> <span class="nav-text">设计原则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#delta-bundle-protocol"><span class="nav-number">3.1.</span> <span class="nav-text">delta bundle protocol</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#proxy-and-directory-database"><span class="nav-number">3.2.</span> <span class="nav-text">proxy and directory database</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#snapshotter-plugin"><span class="nav-number">3.3.</span> <span class="nav-text">snapshotter plugin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#starlight-filesystem"><span class="nav-number">3.4.</span> <span class="nav-text">starlight filesystem</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E6%AD%A3%E6%96%87"><span class="nav-number">5.</span> <span class="nav-text">文章正文</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#cats-design-and-architecture"><span class="nav-number">1.</span> <span class="nav-text">CaT’s Design and Architecture</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cats-algorithms-and-prototype"><span class="nav-number">2.</span> <span class="nav-text">CaT’s Algorithms and
+Prototype</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#content-aware-tracing"><span class="nav-number">2.1.</span> <span class="nav-text">Content-aware tracing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#similarity-based-analysis"><span class="nav-number">2.2.</span> <span class="nav-text">Similarity-based analysis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#visual-representation"><span class="nav-number">2.3.</span> <span class="nav-text">Visual representation</span></a></li></ol></li></ol></div>
             
 
           </div>
