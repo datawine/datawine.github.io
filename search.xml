@@ -81,8 +81,10 @@ application的各种异步、并发、交互等等操作导致的因果关系存
 <h1 id="eurosys">EuroSys</h1>
 <h2 id="section-7">2018</h2>
 <ul>
-<li><a href="">Scrub: Online TroubleShooting for Large Mission-Critical
-Applications</a></li>
+<li><a
+href="https://datawine.github.io/eurosys18-Scrub-Online-TroubleShooting-for-Large-Mission-Critical-Applications.html">Scrub:
+Online TroubleShooting for Large Mission-Critical
+Applications</a>：针对极致的性能需求，对故障排除的query相关进行了优化。</li>
 <li><a
 href="https://datawine.github.io/eurosys18-Universal-context-propagation-for-distributed-system-instrumentation.html">Universal
 context propagation for distributed system
