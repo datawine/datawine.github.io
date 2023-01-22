@@ -332,6 +332,13 @@
   </url>
   
   <url>
+    <loc>https://datawine.github.io/tags/istio/</loc>
+    <lastmod>2023-01-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://datawine.github.io/tags/%E5%AD%9F%E5%BE%B7%E5%B0%94%E9%9A%8F%E6%9C%BA%E5%8C%96/</loc>
     <lastmod>2023-01-22</lastmod>
     <changefreq>weekly</changefreq>
@@ -347,13 +354,6 @@
   
   <url>
     <loc>https://datawine.github.io/tags/asplos/</loc>
-    <lastmod>2023-01-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://datawine.github.io/tags/istio/</loc>
     <lastmod>2023-01-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -402,14 +402,14 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/icse/</loc>
+    <loc>https://datawine.github.io/tags/isca/</loc>
     <lastmod>2023-01-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/isca/</loc>
+    <loc>https://datawine.github.io/tags/icse/</loc>
     <lastmod>2023-01-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -556,14 +556,14 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/ton/</loc>
+    <loc>https://datawine.github.io/tags/tpds/</loc>
     <lastmod>2023-01-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/tpds/</loc>
+    <loc>https://datawine.github.io/tags/ton/</loc>
     <lastmod>2023-01-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -584,13 +584,6 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/git/</loc>
-    <lastmod>2023-01-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://datawine.github.io/tags/%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/</loc>
     <lastmod>2023-01-22</lastmod>
     <changefreq>weekly</changefreq>
@@ -599,6 +592,13 @@
   
   <url>
     <loc>https://datawine.github.io/tags/%E5%85%B1%E4%BA%AB%E5%AD%98%E5%82%A8/</loc>
+    <lastmod>2023-01-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://datawine.github.io/tags/git/</loc>
     <lastmod>2023-01-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -649,6 +649,13 @@
   </url>
   
   <url>
+    <loc>https://datawine.github.io/categories/%E5%B7%A5%E5%85%B7/</loc>
+    <lastmod>2023-01-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://datawine.github.io/categories/%E8%AF%AD%E8%A8%80/</loc>
     <lastmod>2023-01-22</lastmod>
     <changefreq>weekly</changefreq>
@@ -657,13 +664,6 @@
   
   <url>
     <loc>https://datawine.github.io/categories/%E8%AE%BA%E6%96%87/</loc>
-    <lastmod>2023-01-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://datawine.github.io/categories/%E5%B7%A5%E5%85%B7/</loc>
     <lastmod>2023-01-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
