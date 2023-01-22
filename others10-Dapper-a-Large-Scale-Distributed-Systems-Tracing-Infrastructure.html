@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="eurosys," />
+  <meta name="keywords" content="others," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="如题目所说，解决分布式系统中instrumentation的context propagation问题。 论文认为，分布式系统中的context propagation可以分成两个部分  the instrumentation of the system components to propagate context  只和被插桩的系统和系统的并行性有关  the tool logic itsel">
+<meta name="description" content="分布式追踪的鼻祖文章。介绍spans、traces的概念。通过对common facilities的手动修改插桩实现分布式追踪。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Universal context propagation for distributed system instrumentation">
-<meta property="og:url" content="https://datawine.github.io/null.html">
+<meta property="og:title" content="Dapper, a Large-Scale Distributed Systems Tracing Infrastructure">
+<meta property="og:url" content="https://datawine.github.io/others10-Dapper-a-Large-Scale-Distributed-Systems-Tracing-Infrastructure.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="如题目所说，解决分布式系统中instrumentation的context propagation问题。 论文认为，分布式系统中的context propagation可以分成两个部分  the instrumentation of the system components to propagate context  只和被插桩的系统和系统的并行性有关  the tool logic itsel">
+<meta property="og:description" content="分布式追踪的鼻祖文章。介绍spans、traces的概念。通过对common facilities的手动修改插桩实现分布式追踪。">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-09-26T06:52:40.000Z">
-<meta property="article:modified_time" content="2022-10-02T13:57:43.456Z">
+<meta property="article:published_time" content="2023-01-22T07:23:37.000Z">
+<meta property="article:modified_time" content="2023-01-22T09:14:08.880Z">
 <meta property="article:author" content="Datawine">
-<meta property="article:tag" content="eurosys">
+<meta property="article:tag" content="others">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/null.html"/>
+  <link rel="canonical" href="https://datawine.github.io/others10-Dapper-a-Large-Scale-Distributed-Systems-Tracing-Infrastructure.html"/>
 
 
 
 
 
-  <title>Universal context propagation for distributed system instrumentation | Datawine's Blog</title><meta name="robots" content="noindex">
+  <title>Dapper, a Large-Scale Distributed Systems Tracing Infrastructure | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/null.html">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/others10-Dapper-a-Large-Scale-Distributed-Systems-Tracing-Infrastructure.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Universal context propagation for distributed system instrumentation</h1>
+          <h1 class="post-title" itemprop="name headline">Dapper, a Large-Scale Distributed Systems Tracing Infrastructure</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-09-26T14:52:40+08:00">
-                2022-09-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-01-22T15:23:37+08:00">
+                2023-01-22
               </time>
             
 
@@ -368,8 +368,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/null.html#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="null.html" itemprop="commentsCount"></span>
+                <a href="/others10-Dapper-a-Large-Scale-Distributed-Systems-Tracing-Infrastructure.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="others10-Dapper-a-Large-Scale-Distributed-Systems-Tracing-Infrastructure.html" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  997
+                  836
                 </span>
               
 
@@ -433,108 +433,94 @@
       
 
       
-        <p>如题目所说，解决分布式系统中instrumentation的context
-propagation问题。</p>
-<p>论文认为，分布式系统中的context propagation可以分成两个部分</p>
-<ul>
-<li>the instrumentation of the system components to propagate context
-<ul>
-<li>只和被插桩的系统和系统的并行性有关</li>
-</ul></li>
-<li>the tool logic itself - what the metadata is, such as IDs, tags, or
-timings, and when it changes
-<ul>
-<li>取决于工具本身</li>
-</ul></li>
-</ul>
-<p>论文提出了一种通用的底层格式，即袋式上下文（baggage
-context），这是一种交叉切割工具上下文的中间表示方法。
-它使上面提到的系统工具的上下文传播与工具逻辑完全脱钩。</p>
-<ul>
-<li>设计包袱式上下文，这是一个
-"窄腰"，将上下文的传播与跨领域的工具逻辑解耦。包袱式上下文很简单，但其表现力足以代表许多分布式数据类型，并保留其正确的合并语义。</li>
-<li>提出了一个分层架构，将系统开发者和跨领域工具开发者的关注点分开，使系统的独立工具化，以及多个跨领域工具的部署和进化成为可能。</li>
-<li>定义包袱定义语言（BDL），将嵌套的并发数据类型编译到包袱文本上，允许交叉工具开发者用简单的
-"执行流范围内的变量 "来编程。</li>
-<li>在Java和Go中实现跟踪平面栈。</li>
-<li>通过实施几个跨领域工具并在多个现有的分布式系统上部署，展示了Tracing
-Plane的实用性和效率。</li>
-</ul>
-<h1 id="background">Background</h1>
-<p>这边感觉总结的不错。</p>
-<p>和系统/系统并行性相关的</p>
-<ul>
-<li>跨组件边界时的序列化/反序列化</li>
-<li>branch</li>
-<li>join</li>
-</ul>
-<p>和工具逻辑有关的</p>
-<ul>
-<li>update</li>
-<li>query</li>
-</ul>
-<h1 id="interfaces">Interfaces</h1>
-<h2 id="interface-for-system-instrumentation">Interface for System
-Instrumentation</h2>
-<p>系统开发者的主要关注点是对系统进行检测。他并不在乎工具怎么实现。</p>
-<ul>
-<li>BRANCH/JOIN</li>
-<li>SERIALIZE/DESERIALIZE</li>
-<li>TRIM：限制baggage的大小</li>
-</ul>
-<h2 id="interface-for-cross-cutting-tools">Interface for Cross-Cutting
-Tools</h2>
-<p>工具开发者的主要关注点是指定工具使用的数据类型。BDL的目标是将baggage上下文中携带的数据的规范与数据如何编码的实现细节分开。</p>
-<h1 id="baggage-context-design">Baggage context design</h1>
-<p>在两套接口中间，是一个intermediate baggage context representation。
-这个baggage context ir主要由两部分组成：</p>
-<ul>
-<li>一个核心的baggage context
-representation，来提供了几个基本的属性</li>
-<li>data types到【包括nesting and multiplexing的core
-representation】的映射</li>
-</ul>
-<h2 id="core-representation">Core Representation</h2>
-<p>core representation封装了前面提到的system
-instrumentation在propagate的时候的五个最小的操作。并不涉及任何cross-cutting
-tools的内容。</p>
-<ul>
-<li>Idempotent Merge：tenant ID或者trace
-ID这种write-once的contexts。所以需要在BRANCH和JOIN的位置处理。（这里怎么理解？）</li>
-<li>懒惰解决：在合并的时候，如果说需要merge两个值，最后取最大最小值。因为core
-representation不负责理解baggage，所以这种留给用户自己做。</li>
-<li>关联式合并：这边也没有很看懂</li>
-<li>Order-Preserving Merge：merge是保顺序的merge</li>
-</ul>
-<h2 id="representing-data-types">Representing Data Types</h2>
-<p>为一系列不同的数据类型设计了编码，以保证在任意BRANCH和JOIN的情况下保持正确的语义。</p>
-<h2 id="conflict-free-replicated-data-types">Conflict-Free Replicated
-Data Types</h2>
-<p>在BRANCH和JOIN的过程中，借鉴现有的无冲突复制数据类型（CRDTs）的全面工作，这种复制的数据结构具有确定性的合并行为，并提供强大的最终一致性。</p>
-<h2 id="layering-summary">Layering Summary</h2>
-<p>图不错。</p>
-<h1 id="implementation">Implementation</h1>
-<p>zipkin为example的implementation</p>
-<h2 id="core-representation-1">core representation</h2>
-<p>按照per-atom的字母顺序进行归并merge。</p>
-<h2 id="atom-encoding">atom encoding</h2>
-<p>所有BDL数据类型共享的中间编码方案，它可以实现嵌套和寻址，并提供字段和工具的隔离和复用。</p>
-<p>大概就是加一些头，来标识。同时有一些编码上的trick</p>
-<h2
-id="example-complex-data-types-overflow-conflict-free-replicated-data-types">Example
-/ Complex Data Types / Overflow / Conflict-Free Replicated Data
-Types</h2>
-<h1 id="discussion">discussion</h1>
-<p>pivot tracing里面虽然也有baggage，但是不是用来做decouple的。</p>
-<p>Pivot Tracing [53] introduced a related, but more restricted concept
-of baggage as a generic set of key-value pairs that follows execution.
-Pivot Tracing does not decouple cross-cutting tools from
-instrumentation, and its baggage is not order preserving, a requirement
-for lexicographic merge.</p>
+        <p>分布式追踪的鼻祖文章。介绍spans、traces的概念。通过对common
+facilities的手动修改插桩实现分布式追踪。</p>
+<span id="more"></span>
+<p>两个最重要的goal：ubiquitous deployment和continuous monitoring。
+这两个goal导致了三个要求：Low overhead、Application-level
+transparency（用户感觉不到）、Scalability。</p>
+<p>本文最大的设计难点在于true application-level transparency。
+是通过restricting Dapper’s core tracing instrumentation to a small
+corpus of ubiquitous threading, control flow, and RPC library
+code实现的</p>
+<h1 id="distributed-tracing-in-dapper">Distributed Tracing in
+Dapper</h1>
+<p>这句话很重要： since all applications use the same threading model,
+control flow and RPC system, we found that it was possible to restrict
+instrumentation to a small set of common libraries</p>
+<h2 id="trace-trees-and-spans">Trace trees and spans</h2>
+<p>对trace trees、spans进行了概念性的介绍</p>
+<h2 id="instrumentation-points">Instrumentation points</h2>
+<p>分成三个部分</p>
+<ol type="1">
+<li>在thread-local storage增加trace context</li>
+<li>Google的开发者用同一个control
+flow库，因此可以在callback中保存creator的trace
+context，并和调用callback的线程联系起来，解决异步问题</li>
+<li>Google的开发者都用gRPC，因此在gRPC插桩</li>
+</ol>
+<h2 id="annotations">Annotations</h2>
+<p>可以在代码里增加annotations来增加自定义桩点。</p>
+<h2 id="sampling">Sampling</h2>
+<p>支持sampling</p>
+<h2 id="trace-collection">Trace collection</h2>
+<p>Trace collection分成三步：每个instrumented binaries写log file；Dapper
+daemon把他们pull出来；放Bigtable里，一行是一个trace。</p>
+<p>实现out-of-band的trace collection出于两个原因</p>
+<ol type="1">
+<li>不影响性能</li>
+<li>in-band意味着span的生命周期和message强绑定，但情况并不是这样。很多RPC不是perfectly
+nested的</li>
+</ol>
+<h2 id="security-and-privacy-considerations">Security and privacy
+considerations</h2>
+<p>由于安全和隐私问题是不可协商的，Dapper存储RPC方法的名称，但此时不记录任何有效载荷数据。
+如果真的要一些和逻辑相关的信息，用户可以选择使用annotations。</p>
+<h1 id="dapper-deployment-status">Dapper Deployment Status</h1>
+<h2 id="dapper-runtime-library">Dapper runtime library</h2>
+<p>少于1000行的C++、少于800行的Java、annotations又加了500行代码</p>
+<h2 id="production-coverage">Production coverage</h2>
+<p>并没有准确数字，而是估计基本上每台机器、每个进程都用了。</p>
+<p>然后讲了一些其他的事情，比如dapper不能够覆盖一些特殊情况，dapper可以被关闭等等。</p>
+<h2 id="use-of-trace-annotations">Use of trace annotations</h2>
+<p>annotations被程序员用来做分布式log或者分类trace用；java程序员用annotation多一些。</p>
+<h1 id="managing-tracing-overhead">Managing Tracing Overhead</h1>
+<p>evaluation，包括trace生成开销、trace收集开销、对生产环境workload的影响、采样。</p>
+<h1 id="general-purpose-dapper-tools">General-Purpose Dapper Tools</h1>
+<h2 id="the-dapper-depot-api">The Dapper Depot API</h2>
+<p>Dapper "Depot API"，或DAPI，提供对regional Dapper存储库（或
+"Depots"）中分布式trace的直接访问。 可以通过trace
+id、批量访问、通过索引访问。</p>
+<h2 id="the-dapper-user-interface">The Dapper user interface</h2>
+<p>介绍了一下GUI。</p>
+<h1 id="experiences">Experiences</h1>
+<h2 id="using-dapper-during-development">Using Dapper during
+development</h2>
+<p>一个来自于Google
+AdWords的例子。包括Dapper带来的帮助、使用的一些细节、不足之处、最终效果
+（Ads
+Review团队估计，使用从Dapper追踪平台收集到的数据，他们的延迟数字已经提高了两个数量级）</p>
+<p>此外还与Google的异常监测平台整合。</p>
+<h2 id="addressing-long-tail-latency">Addressing long tail latency</h2>
+<p>long tail latency
+debugging的工程师使用Dapper，有了一些对系统的理解。</p>
+<h2 id="inferring-service-dependencies">Inferring service
+dependencies</h2>
+<p>Google的Service Dependencies用了Dapper</p>
+<h2 id="network-usage-of-different-services">Network usage of different
+services</h2>
+<p>应用级的集群间网络活动分析任务</p>
+<h2 id="layered-and-shared-storage-systems">Layered and Shared Storage
+Systems</h2>
+<p>分层共享的存储系统中，要确定最终用户的资源消耗模式并不容易。使用Dapper进行汇总、排名。</p>
+<h2 id="firefighting-with-dapper">Firefighting with Dapper</h2>
+<p>在一些紧急情况下，可以直接在Dapper daemon上查看数据。</p>
+<h1 id="other-lessons-learned">Other Lessons Learned</h1>
+<p>其实是讲不足之处：没法处理buffer、batching、找到的是直接原因不是根本原因（比如排队）</p>
 
 
 	<div class="row">
-    <embed src="/paper/eurosys18-Universal-context-propagation-for-distributed-system-instrumentation.pdf" width="100%" height="1700" type="application/pdf">
+    <embed src="/paper/others10-Dapper-a-Large-Scale-Distributed-Systems-Tracing-Infrastructure.pdf" width="100%" height="1700" type="application/pdf">
 	</div>
 
 
@@ -556,7 +542,7 @@ for lexicographic merge.</p>
       
         <div class="post-tags">
           
-            <a href="/tags/eurosys/" rel="tag"># eurosys</a>
+            <a href="/tags/others/" rel="tag"># others</a>
           
         </div>
       
@@ -708,12 +694,13 @@ for lexicographic merge.</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background"><span class="nav-number">1.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#interfaces"><span class="nav-number">2.</span> <span class="nav-text">Interfaces</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#interface-for-system-instrumentation"><span class="nav-number">2.1.</span> <span class="nav-text">Interface for System
-Instrumentation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#interface-for-cross-cutting-tools"><span class="nav-number">2.2.</span> <span class="nav-text">Interface for Cross-Cutting
-Tools</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#baggage-context-design"><span class="nav-number">3.</span> <span class="nav-text">Baggage context design</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#core-representation"><span class="nav-number">3.1.</span> <span class="nav-text">Core Representation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#representing-data-types"><span class="nav-number">3.2.</span> <span class="nav-text">Representing Data Types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conflict-free-replicated-data-types"><span class="nav-number">3.3.</span> <span class="nav-text">Conflict-Free Replicated
-Data Types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#layering-summary"><span class="nav-number">3.4.</span> <span class="nav-text">Layering Summary</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#implementation"><span class="nav-number">4.</span> <span class="nav-text">Implementation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#core-representation-1"><span class="nav-number">4.1.</span> <span class="nav-text">core representation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#atom-encoding"><span class="nav-number">4.2.</span> <span class="nav-text">atom encoding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#example-complex-data-types-overflow-conflict-free-replicated-data-types"><span class="nav-number">4.3.</span> <span class="nav-text">Example
-&#x2F; Complex Data Types &#x2F; Overflow &#x2F; Conflict-Free Replicated Data
-Types</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#discussion"><span class="nav-number">5.</span> <span class="nav-text">discussion</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#distributed-tracing-in-dapper"><span class="nav-number">1.</span> <span class="nav-text">Distributed Tracing in
+Dapper</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#trace-trees-and-spans"><span class="nav-number">1.1.</span> <span class="nav-text">Trace trees and spans</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#instrumentation-points"><span class="nav-number">1.2.</span> <span class="nav-text">Instrumentation points</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#annotations"><span class="nav-number">1.3.</span> <span class="nav-text">Annotations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sampling"><span class="nav-number">1.4.</span> <span class="nav-text">Sampling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#trace-collection"><span class="nav-number">1.5.</span> <span class="nav-text">Trace collection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#security-and-privacy-considerations"><span class="nav-number">1.6.</span> <span class="nav-text">Security and privacy
+considerations</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dapper-deployment-status"><span class="nav-number">2.</span> <span class="nav-text">Dapper Deployment Status</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dapper-runtime-library"><span class="nav-number">2.1.</span> <span class="nav-text">Dapper runtime library</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#production-coverage"><span class="nav-number">2.2.</span> <span class="nav-text">Production coverage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#use-of-trace-annotations"><span class="nav-number">2.3.</span> <span class="nav-text">Use of trace annotations</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#managing-tracing-overhead"><span class="nav-number">3.</span> <span class="nav-text">Managing Tracing Overhead</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#general-purpose-dapper-tools"><span class="nav-number">4.</span> <span class="nav-text">General-Purpose Dapper Tools</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-dapper-depot-api"><span class="nav-number">4.1.</span> <span class="nav-text">The Dapper Depot API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-dapper-user-interface"><span class="nav-number">4.2.</span> <span class="nav-text">The Dapper user interface</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#experiences"><span class="nav-number">5.</span> <span class="nav-text">Experiences</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#using-dapper-during-development"><span class="nav-number">5.1.</span> <span class="nav-text">Using Dapper during
+development</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#addressing-long-tail-latency"><span class="nav-number">5.2.</span> <span class="nav-text">Addressing long tail latency</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#inferring-service-dependencies"><span class="nav-number">5.3.</span> <span class="nav-text">Inferring service
+dependencies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#network-usage-of-different-services"><span class="nav-number">5.4.</span> <span class="nav-text">Network usage of different
+services</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#layered-and-shared-storage-systems"><span class="nav-number">5.5.</span> <span class="nav-text">Layered and Shared Storage
+Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#firefighting-with-dapper"><span class="nav-number">5.6.</span> <span class="nav-text">Firefighting with Dapper</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#other-lessons-learned"><span class="nav-number">6.</span> <span class="nav-text">Other Lessons Learned</span></a></li></ol></div>
             
 
           </div>
