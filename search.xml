@@ -377,6 +377,9 @@ Android</a>：Hubble是一个method-tracing系统，在所有支持的和即将�
 instruments every non-inlined bytecode method’s entry and
 exit，以记录method的名称和时间戳。trace
 points被记录到一个内存中的环形缓冲器中，旧的数据会不断被覆盖。这些数据只有在检测到性能问题时才会被保存下来，使工程师在检测到异常情况之前就能及时获得宝贵的、详细的运行时间数据。</li>
+<li><a
+href="https://datawine.github.io/osdi22-XRP-In-Kernel-Storage-Functions-with-eBPF.html">XRP:
+In Kernel Storage Functions with eBPF</a>：</li>
 </ul>
 <h1 id="others">Others</h1>
 <h2 id="section-29">2010</h2>

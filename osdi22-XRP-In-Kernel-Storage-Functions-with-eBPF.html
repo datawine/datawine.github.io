@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="osdi," />
 
 
 
@@ -79,12 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Datawine&#39;s Blog">
-<meta property="og:url" content="https://datawine.github.io/archives/page/3/index.html">
+<meta name="description" content="基于eBPF，利用NVMe驱动中的interrupt handler来加速存储。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XRP: In-Kernel Storage Functions with eBPF">
+<meta property="og:url" content="https://datawine.github.io/osdi22-XRP-In-Kernel-Storage-Functions-with-eBPF.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="基于eBPF，利用NVMe驱动中的interrupt handler来加速存储。">
 <meta property="og:locale">
+<meta property="article:published_time" content="2023-03-21T03:25:29.000Z">
+<meta property="article:modified_time" content="2023-03-21T08:22:26.796Z">
 <meta property="article:author" content="Datawine">
+<meta property="article:tag" content="osdi">
 <meta name="twitter:card" content="summary">
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/archives/page/3/"/>
+  <link rel="canonical" href="https://datawine.github.io/osdi22-XRP-In-Kernel-Storage-Functions-with-eBPF.html"/>
 
 
 
 
 
-  <title>归档 | Datawine's Blog</title>
+  <title>XRP: In-Kernel Storage Functions with eBPF | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -278,411 +283,274 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/osdi22-XRP-In-Kernel-Storage-Functions-with-eBPF.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">XRP: In-Kernel Storage Functions with eBPF</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-03-21T11:25:29+08:00">
+                2023-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 29 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2022">2022</h1>
-          </div>
-        
-        
 
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/icse15-A-Flexible-and-Non-intrusive-Approach-for-Computing-Complex-Structural-Coverage-Metrics.html" itemprop="url">
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
               
-                <span itemprop="name">A Flexible and Non-intrusive Approach for Computing Complex Structural Coverage Metrics</span>
+                <a href="/osdi22-XRP-In-Kernel-Storage-Functions-with-eBPF.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="osdi22-XRP-In-Kernel-Storage-Functions-with-eBPF.html" itemprop="commentsCount"></span>
+                </a>
               
-            </a>
-        
-      </h2>
+            
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-12-03T20:41:50+08:00"
-              content="2022-12-03" >
-          12-03
-        </time>
-      </div>
+          
+          
 
-    </header>
-  </article>
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  806
+                </span>
+              
 
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/osdi14-lprof-A-Non-intrusive-Request-Flow-Profiler-for-Distributed-Systems.html" itemprop="url">
-              
-                <span itemprop="name">lprof: A Non-intrusive Request Flow Profiler for Distributed Systems</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-12-03T19:59:59+08:00"
-              content="2022-12-03" >
-          12-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sigmetrics14-Non-intrusive-Out-of-band-and-Out-of-the-box-Systems-Monitoring-in-the-Cloud.html" itemprop="url">
-              
-                <span itemprop="name">sigmetrics14-Non-intrusive, Out-of-band and Out-of-the-box Systems Monitoring in the Cloud</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-11-29T20:40:41+08:00"
-              content="2022-11-29" >
-          11-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/socc21-tprof-Performance-profiling-via-structural-aggregation-and-automated-analysis-of-distributed-systems-traces.html" itemprop="url">
-              
-                <span itemprop="name">tprof: Performance profiling via structural aggregation and automated analysis of distributed systems traces</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-11-29T10:11:01+08:00"
-              content="2022-11-29" >
-          11-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
+        <p>基于eBPF，利用NVMe驱动中的interrupt handler来加速存储。</p>
+<span id="more"></span>
+<p>开源 <a target="_blank" rel="noopener" href="https://github.com/xrp-project/XRP"
+class="uri">https://github.com/xrp-project/XRP</a></p>
+<h1 id="background-and-motivation">Background and Motivation</h1>
+<h2 id="software-is-now-the-storage-bottleneck">Software is Now the
+Storage Bottleneck</h2>
+<p>现在的NVMe存储设备能够达到7GB/s，延迟能够低至3us。</p>
+<p><strong>Where is the time going？</strong></p>
+<p>最耗时的是file system (ext4)，然后是block layer (bio)和kernel
+crossing。 软件开销占了48.6%。</p>
+<p><strong>Why not just bypass the kernel?</strong></p>
+<ul>
+<li>kernel bypass权限全开</li>
+<li>必须要自己重写file system</li>
+<li>没有可靠的isolation</li>
+<li>user space没有有效的中断机制，所以必须poll，导致资源被浪费</li>
+<li>一个processor有多个polling
+thread，CPU竞争和sync的缺失会导致性能下降</li>
+</ul>
+<h2 id="the-potential-benefit-of-bpf">The Potential Benefit of BPF</h2>
+<p>当一个查找需要一连串的前置查询的时候，可能会产生一系列最后并没有用到的数据，这些查询可以被BPF加速。（就是减少数据传输）</p>
+<p><strong>What about io_uring?</strong>
+io_uring是一个新的Linux系统调用框架，它允许进程提交成批的异步I/O请求，这就摊薄了用户-内核的crossing开销。
+不过io_uring仍然需要穿过整个层。</p>
+<h1 id="design-challenges-and-principles">Design Challenges and
+Principles</h1>
+<p><strong>Challenge 1: address translation and security</strong></p>
+<p>NVMe驱动程序不能访问文件系统元数据。</p>
+<p><strong>Challenge 2: concurrency and caching</strong></p>
+<p>A write issued from the file system will only be reflected in the
+page cache, which is not visible to XRP. In addition, any writes that
+modify the layout of the data structure (e.g., modify the pointers to
+the next block) that are issued concurrently to read requests could lead
+XRP to accidentally fetch the wrong data. Both of these could be
+addressed by locking, but accessing locks from within the NVMe interrupt
+handler may be expensive.</p>
+<p><strong>Observation</strong></p>
+<p>The files of many storage engines remain relatively stable. Accessing
+these immutable on-disk storage structures requires less synchronization
+effort.</p>
+<p><strong>Design Principle</strong></p>
+<ul>
+<li>One file at a time. 将XRP的chained
+resubmission限制在一个文件内。这样简化了address translation和access
+control，还减少了需要push到NVMe driver的metadata</li>
+<li>Stable data structures.
+XRP针对结构（比如指针）不怎么变化的数据结构。</li>
+<li>User-managed caches. XRP不和page
+cache对接。如果blocks在内核页面缓存中被cached，XRP函数不能安全地并发运行。</li>
+<li>Slow path fallback. XRP是best
+effort的，如果traversal失败了，就回退到用户态的实现方式。</li>
+</ul>
+<h1 id="xrp-design-and-implementation">XRP Design and
+Implementation</h1>
+<h2 id="resubmission-logic">Resubmission Logic</h2>
+<p>当一个NVMe请求完成后，设备会产生一个中断，导致内核上下文切换到中断处理程序中。
+对于每个在中断上下文中完成的NVMe请求，XRP调用其相关的BPF函数（图4中的bpf_func_0），其指针存储在kernel
+I/O request struct（即struct bio）的一个字段中。
+调用BPF函数后，XRP调用metadata
+digest，这通常是一个文件系统状态的digest，使XRP能够翻译下一次重新提交的逻辑地址。
+最后，XRP通过设置NVMe请求中的相应字段来准备下一次NVMe命令的重新提交，它将请求附加到该核心的NVMe提交队列（SQ）。</p>
+<h3 id="bpf-hook">BPF Hook</h3>
+<p>定义了一种新的BPF类型 - <code>BPF_PROG_TYPE_XRP</code>。
+主要讲了一下几个字段的用处。</p>
+<p>scratch可能比较重要。
+scratch是一个4KB的缓冲区，用来从user到BPF传递参数、在I/O之间存储intermediate
+data、向user返回data。</p>
+<p>下面文章的这句话其实没理解： Letting the user supply a scratch buffer
+(instead of using BPF map) avoids the overhead of processes and
+functions having to call bpf_map_lookup_elem to access the scratch
+buffer.</p>
+<h3 id="bpf-verifier">BPF Verifier</h3>
+<h3 id="the-metadata-digest">The Metadata Digest</h3>
+<h3 id="resubmitting-nvme-requests">Resubmitting NVMe Requests</h3>
+<!-- flag of hidden posts -->
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/socc19-An-automated-cross-layer-instrumentation-framework-for-diagnosing-performance-problems-in-distributed-applications.html" itemprop="url">
-              
-                <span itemprop="name">An automated, cross-layer instrumentation framework for diagnosing performance problems in distributed applications</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-11-28T22:22:29+08:00"
-              content="2022-11-28" >
-          11-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/fse-esec17-short-paper-QEMU-based-framework-for-non-intrusive-virtual-machine-instrumentation-and-introspection.html" itemprop="url">
-              
-                <span itemprop="name">short-paper-QEMU-based framework for non-intrusive virtual machine instrumentation and introspection</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-11-28T19:13:28+08:00"
-              content="2022-11-28" >
-          11-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/others20-ViperProbe-Using-eBPF-Metrics-to-Improve-Microservice-Observability.html" itemprop="url">
-              
-                <span itemprop="name">ViperProbe: Using eBPF Metrics to Improve Microservice Observability</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-11-27T19:25:42+08:00"
-              content="2022-11-27" >
-          11-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sigmetrics14-IntroPerf-Transparent-Context-Sensitive-Multi-Layer-Performance-Inference-using-System-Stack-Traces.html" itemprop="url">
-              
-                <span itemprop="name">IntroPerf: Transparent Context-Sensitive Multi-Layer Performance Inference using System Stack Traces</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-11-27T13:35:50+08:00"
-              content="2022-11-27" >
-          11-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/tpds16-Wait-Analysis-of-Distributed-Systems-Using-Kernel-Tracing.html" itemprop="url">
-              
-                <span itemprop="name">Wait Analysis of Distributed Systems Using Kernel Tracing</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-11-11T03:02:06+08:00"
-              content="2022-11-11" >
-          11-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/asplos16-CloudSeer-Workflow-Monitoring-of-Cloud-Infrastructures-via-Interleaved-Logs.html" itemprop="url">
-              
-                <span itemprop="name">CloudSeer-Workflow-Monitoring-of-Cloud-Infrastructures-via-Interleaved-Logs</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-11-11T01:51:32+08:00"
-              content="2022-11-11" >
-          11-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/osdi/" rel="tag"># osdi</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/page/2/">&lt;</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/14/">14</a><a class="extend next" rel="next" href="/archives/page/4/">&gt;</a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -690,6 +558,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -710,8 +587,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -781,6 +667,25 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background-and-motivation"><span class="nav-number">1.</span> <span class="nav-text">Background and Motivation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#software-is-now-the-storage-bottleneck"><span class="nav-number">1.1.</span> <span class="nav-text">Software is Now the
+Storage Bottleneck</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-potential-benefit-of-bpf"><span class="nav-number">1.2.</span> <span class="nav-text">The Potential Benefit of BPF</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#design-challenges-and-principles"><span class="nav-number">2.</span> <span class="nav-text">Design Challenges and
+Principles</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xrp-design-and-implementation"><span class="nav-number">3.</span> <span class="nav-text">XRP Design and
+Implementation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#resubmission-logic"><span class="nav-number">3.1.</span> <span class="nav-text">Resubmission Logic</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bpf-hook"><span class="nav-number">3.1.1.</span> <span class="nav-text">BPF Hook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bpf-verifier"><span class="nav-number">3.1.2.</span> <span class="nav-text">BPF Verifier</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-metadata-digest"><span class="nav-number">3.1.3.</span> <span class="nav-text">The Metadata Digest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#resubmitting-nvme-requests"><span class="nav-number">3.1.4.</span> <span class="nav-text">Resubmitting NVMe Requests</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -965,6 +870,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
