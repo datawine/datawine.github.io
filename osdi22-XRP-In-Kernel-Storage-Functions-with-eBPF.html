@@ -87,7 +87,7 @@
 <meta property="og:description" content="基于eBPF，利用NVMe驱动中的interrupt handler来加速存储。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-03-21T03:25:29.000Z">
-<meta property="article:modified_time" content="2023-03-21T08:22:26.796Z">
+<meta property="article:modified_time" content="2023-03-28T05:28:09.944Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="osdi">
 <meta name="twitter:card" content="summary">
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  806
+                  1.4k
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  5
                 </span>
               
             </div>
@@ -506,8 +506,35 @@ data、向user返回data。</p>
 functions having to call bpf_map_lookup_elem to access the scratch
 buffer.</p>
 <h3 id="bpf-verifier">BPF Verifier</h3>
+<p>上面定义的数据结构里面，data和scratch是PTR_TO_MEM格式的，其余都是SCALAR_TYPE。</p>
+<p>本文还改了BPF
+verifier，允许BPF_PROG_TYPE_XRP的is_valid_access()回调将data或scratch的大小传递给验证器，以便它能够执行边界检查。</p>
 <h3 id="the-metadata-digest">The Metadata Digest</h3>
+<p>在传统的存储栈中，磁盘数据结构中的逻辑块偏移量由文件系统进行转换，以确定要读取的下一个物理块。
+这个转换步骤也执行了访问控制和安全，防止在没有映射到开放文件的区域中进行读取。</p>
+<p>在XRP中，查找的下一个逻辑地址是由BPF调用后的next_addr字段给出。
+然而，将这个逻辑地址翻译成物理地址是一个挑战，因为中断处理程序没有文件的概念，也不执行物理地址翻译。
+为了解决这个问题，本文实现了metadata
+digest，这是文件系统和中断处理程序之间的一个thin
+interface，让文件系统与中断处理程序共享其逻辑到物理块的映射。</p>
+<p>主要是由update_mapping和lookup_mapping组成。 update函数is called
+within the file
+system，实现logical-to-physical的更新。此外update函数还通过防止BPF函数请求打开文件以外的block的resubmission来执行访问控制。
+lookup函数is called within the interrupt
+handler，返回一个给定的offset和length的mapping。</p>
+<p>后面讲了一些数据结构可能竞争的处理。总体来说是无锁的。</p>
 <h3 id="resubmitting-nvme-requests">Resubmitting NVMe Requests</h3>
+<p>Resubmission包括了复用数据结构以节省kmalloc开销和fanout两个设计点。</p>
+<h2 id="synchronization-limitations">Synchronization Limitations</h2>
+<p>不管是eBPF自带的自旋锁还是自己实现的spinlock，都存在一些限制。</p>
+<h2 id="interaction-with-linux-schedulers">Interaction with Linux
+Schedulers</h2>
+<p>当多进程共享一个核的时候，像Optane
+SSD这种微秒级的存储设备会interferes with Linux的CFS。
+比如当I/O-heavy进程和compute-heavy进程在同一个核上运行的时候，I/O-heavy进程产生的中断会在compute-heavy的时间片内被处理。
+不过文章没有解决，只是把这个问题提出来了。</p>
+<h1 id="case-studies">Case Studies</h1>
+<p>主要是两个函数：bpf_prog_load（libbpf里面的函数）；read_xrp像是pread的扩展，主要加了bpf_prog_load返回的文件描述符和对scratch的指针。</p>
 <!-- flag of hidden posts -->
       
     </div>
@@ -612,7 +639,7 @@ buffer.</p>
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -680,7 +707,8 @@ buffer.</p>
               <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background-and-motivation"><span class="nav-number">1.</span> <span class="nav-text">Background and Motivation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#software-is-now-the-storage-bottleneck"><span class="nav-number">1.1.</span> <span class="nav-text">Software is Now the
 Storage Bottleneck</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-potential-benefit-of-bpf"><span class="nav-number">1.2.</span> <span class="nav-text">The Potential Benefit of BPF</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#design-challenges-and-principles"><span class="nav-number">2.</span> <span class="nav-text">Design Challenges and
 Principles</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xrp-design-and-implementation"><span class="nav-number">3.</span> <span class="nav-text">XRP Design and
-Implementation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#resubmission-logic"><span class="nav-number">3.1.</span> <span class="nav-text">Resubmission Logic</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bpf-hook"><span class="nav-number">3.1.1.</span> <span class="nav-text">BPF Hook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bpf-verifier"><span class="nav-number">3.1.2.</span> <span class="nav-text">BPF Verifier</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-metadata-digest"><span class="nav-number">3.1.3.</span> <span class="nav-text">The Metadata Digest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#resubmitting-nvme-requests"><span class="nav-number">3.1.4.</span> <span class="nav-text">Resubmitting NVMe Requests</span></a></li></ol></li></ol></li></ol></div>
+Implementation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#resubmission-logic"><span class="nav-number">3.1.</span> <span class="nav-text">Resubmission Logic</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bpf-hook"><span class="nav-number">3.1.1.</span> <span class="nav-text">BPF Hook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bpf-verifier"><span class="nav-number">3.1.2.</span> <span class="nav-text">BPF Verifier</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-metadata-digest"><span class="nav-number">3.1.3.</span> <span class="nav-text">The Metadata Digest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#resubmitting-nvme-requests"><span class="nav-number">3.1.4.</span> <span class="nav-text">Resubmitting NVMe Requests</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#synchronization-limitations"><span class="nav-number">3.2.</span> <span class="nav-text">Synchronization Limitations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#interaction-with-linux-schedulers"><span class="nav-number">3.3.</span> <span class="nav-text">Interaction with Linux
+Schedulers</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#case-studies"><span class="nav-number">4.</span> <span class="nav-text">Case Studies</span></a></li></ol></div>
             
 
           </div>
