@@ -87,7 +87,7 @@
 <meta property="og:description" content="基于eBPF，利用NVMe驱动中的interrupt handler来加速存储。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-03-21T03:25:29.000Z">
-<meta property="article:modified_time" content="2023-03-28T05:28:09.944Z">
+<meta property="article:modified_time" content="2023-04-06T03:16:17.823Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="osdi">
 <meta name="twitter:card" content="summary">
@@ -535,6 +535,22 @@ SSD这种微秒级的存储设备会interferes with Linux的CFS。
 不过文章没有解决，只是把这个问题提出来了。</p>
 <h1 id="case-studies">Case Studies</h1>
 <p>主要是两个函数：bpf_prog_load（libbpf里面的函数）；read_xrp像是pread的扩展，主要加了bpf_prog_load返回的文件描述符和对scratch的指针。</p>
+<p>分别实现了</p>
+<ul>
+<li>BPF-KV，一个kv store</li>
+<li>WiredTiger，MongoDB的后端</li>
+</ul>
+<h1 id="evaluation">Evaluation</h1>
+<p>主要回答四个问题</p>
+<ul>
+<li>overhead</li>
+<li>XRP如何scale to multiple threads</li>
+<li>XRP能够支持什么样的操作
+<ul>
+<li>这个其实只是做了range query的实验，在figure 8</li>
+</ul></li>
+<li>XRP对real-world kv store的加速效果</li>
+</ul>
 <!-- flag of hidden posts -->
       
     </div>
@@ -708,7 +724,7 @@ SSD这种微秒级的存储设备会interferes with Linux的CFS。
 Storage Bottleneck</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-potential-benefit-of-bpf"><span class="nav-number">1.2.</span> <span class="nav-text">The Potential Benefit of BPF</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#design-challenges-and-principles"><span class="nav-number">2.</span> <span class="nav-text">Design Challenges and
 Principles</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xrp-design-and-implementation"><span class="nav-number">3.</span> <span class="nav-text">XRP Design and
 Implementation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#resubmission-logic"><span class="nav-number">3.1.</span> <span class="nav-text">Resubmission Logic</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bpf-hook"><span class="nav-number">3.1.1.</span> <span class="nav-text">BPF Hook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bpf-verifier"><span class="nav-number">3.1.2.</span> <span class="nav-text">BPF Verifier</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-metadata-digest"><span class="nav-number">3.1.3.</span> <span class="nav-text">The Metadata Digest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#resubmitting-nvme-requests"><span class="nav-number">3.1.4.</span> <span class="nav-text">Resubmitting NVMe Requests</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#synchronization-limitations"><span class="nav-number">3.2.</span> <span class="nav-text">Synchronization Limitations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#interaction-with-linux-schedulers"><span class="nav-number">3.3.</span> <span class="nav-text">Interaction with Linux
-Schedulers</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#case-studies"><span class="nav-number">4.</span> <span class="nav-text">Case Studies</span></a></li></ol></div>
+Schedulers</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#case-studies"><span class="nav-number">4.</span> <span class="nav-text">Case Studies</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#evaluation"><span class="nav-number">5.</span> <span class="nav-text">Evaluation</span></a></li></ol></div>
             
 
           </div>
