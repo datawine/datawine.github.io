@@ -87,7 +87,7 @@
 <meta property="og:description" content="Hubble是一个method-tracing系统，在所有支持的和即将由华为制造的安卓设备上运行，以帮助调试性能问题。 Hubble instruments every non-inlined bytecode method’s entry and exit，以记录method的名称和时间戳。 trace points被记录到一个内存中的环形缓冲器中，旧的数据会不断被覆盖。 这些数据只有在检测到性">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-12-10T08:29:23.000Z">
-<meta property="article:modified_time" content="2022-12-10T08:55:19.556Z">
+<meta property="article:modified_time" content="2023-04-07T11:04:37.364Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="osdi">
 <meta name="twitter:card" content="summary">
@@ -472,14 +472,6 @@ around，所以最古老的数据会被覆盖掉。</li>
 </ul></li>
 <li>每个被追踪的线程都会写到一个属于自己的私有环形缓冲区。Hubble在系统中最多保留N个缓冲区，来自最近在前台执行的N个线程。较旧的缓冲区将被系统回收。</li>
 </ul>
-
-
-	<div class="row">
-    <embed src="/paper/osdi22-Hubble-Performance-Debugging-with-In-Production-Just-In-Time-Method-Tracing-on-Android.pdf" width="100%" height="1700" type="application/pdf">
-	</div>
-
-
-
 <!-- flag of hidden posts -->
       
     </div>
