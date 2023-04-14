@@ -87,7 +87,7 @@
 <meta property="og:description" content="本文提出了performance annotations的概念（性能Metrics是特征Features的函数）。 通过插桩、动态分析得到records，通过回归树和混合模型进行建模。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-01-01T07:29:28.000Z">
-<meta property="article:modified_time" content="2023-01-01T08:40:08.947Z">
+<meta property="article:modified_time" content="2023-04-07T11:10:33.165Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="eurosys">
 <meta name="twitter:card" content="summary">
@@ -519,14 +519,6 @@ Freud收集标量变量的值，同时我们也通过遍历指针来提取堆对
 如果部分记录不能用一个足够简单和准确的回归模型，如果不能找到进一步分割这部分记录的条件，那么我们就根据指标值（y，而不是x1，x2，...）对该部分的记录进行聚类。</p>
 <p>在聚类之后，无论是对特定的分区还是对整个数据集，我们仍然试图为每个聚类确定一个依赖于特征的模型，以及基于特征值的定义条件。
 如果这也失败了，我们就求助于每个聚类的更简单的概率表征，我们首先尝试用回归的方法对每个聚类的数据进行建模，然后用一个与输入无关的模型。</p>
-
-
-	<div class="row">
-    <embed src="/paper/eurosys20-Analyzing-System-Performance-with-Probabilistic-Performance-Annotations.pdf" width="100%" height="1700" type="application/pdf">
-	</div>
-
-
-
 <!-- flag of hidden posts -->
       
     </div>
