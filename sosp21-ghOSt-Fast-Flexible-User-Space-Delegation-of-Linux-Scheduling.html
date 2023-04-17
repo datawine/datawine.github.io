@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="sosp," />
 
 
 
@@ -79,12 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Datawine&#39;s Blog">
-<meta property="og:url" content="https://datawine.github.io/archives/2022/05/page/6/index.html">
+<meta name="description" content="kernel scheduling mechanism和policy definition分开，将Linux的调度策略部分delegate到用户态，实现user-defined的linux调度策略。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ghOSt: Fast &amp; Flexible User-Space Delegation of Linux Scheduling">
+<meta property="og:url" content="https://datawine.github.io/sosp21-ghOSt-Fast-Flexible-User-Space-Delegation-of-Linux-Scheduling.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="kernel scheduling mechanism和policy definition分开，将Linux的调度策略部分delegate到用户态，实现user-defined的linux调度策略。">
 <meta property="og:locale">
+<meta property="article:published_time" content="2023-04-14T02:46:38.000Z">
+<meta property="article:modified_time" content="2023-04-17T08:43:40.780Z">
 <meta property="article:author" content="Datawine">
+<meta property="article:tag" content="sosp">
 <meta name="twitter:card" content="summary">
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/archives/2022/05/page/6/"/>
+  <link rel="canonical" href="https://datawine.github.io/sosp21-ghOSt-Fast-Flexible-User-Space-Delegation-of-Linux-Scheduling.html"/>
 
 
 
 
 
-  <title>归档 | Datawine's Blog</title>
+  <title>ghOSt: Fast & Flexible User-Space Delegation of Linux Scheduling | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -278,262 +283,429 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      <span class="archive-page-counter">
-        
-        
-         
-        
-        OK! 目前共计 31 篇日志。 继续努力。
-      </span>
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/sosp21-ghOSt-Fast-Flexible-User-Space-Delegation-of-Linux-Scheduling.html">
 
-      
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
 
         
         
+          <h1 class="post-title" itemprop="name headline">ghOSt: Fast & Flexible User-Space Delegation of Linux Scheduling</h1>
         
 
-        
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-04-14T10:46:38+08:00">
+                2023-04-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2022">2022</h1>
-          </div>
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%EF%BC%9AM1%E5%8D%A1%E5%B0%8F%E5%AE%9E%E9%AA%8C.html" itemprop="url">
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
               
-                <span itemprop="name">网络攻防：M1卡小实验</span>
+                <span class="post-meta-item-text">分类于</span>
               
-            </a>
-        
-      </h2>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T21:21:44+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
+                
+                
+              
+            </span>
+          
 
-    </header>
-  </article>
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/sosp21-ghOSt-Fast-Flexible-User-Space-Delegation-of-Linux-Scheduling.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="sosp21-ghOSt-Fast-Flexible-User-Space-Delegation-of-Linux-Scheduling.html" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
 
+          
+          
 
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  15
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E5%9B%9B%EF%BC%89%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E4%B8%8E%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%BC%8F%E6%B4%9E.html" itemprop="url">
-              
-                <span itemprop="name">网络攻防小学期（四）逆向工程与二进制漏洞</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T21:20:37+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%BA%8C%EF%BC%89%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F%E4%B8%8E%E4%BF%9D%E5%AF%86-%E5%AF%86%E7%A0%81.html" itemprop="url">
-              
-                <span itemprop="name">网络攻防小学期（二）信息隐藏与保密-密码</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T21:16:55+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%B8%89%EF%BC%89%E7%BD%91%E7%AB%99%E5%AE%89%E5%85%A8.html" itemprop="url">
-              
-                <span itemprop="name">网络攻防小学期（三）网站安全</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T21:16:22+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
+        <p>kernel scheduling mechanism和policy
+definition分开，将Linux的调度策略部分delegate到用户态，实现user-defined的linux调度策略。</p>
+<span id="more"></span>
+<p>tailoring policies for specific workload能够大幅提高某些指标。
+然而，因为调度算法实现在内核中，对新的调度算法的designing、implementing和deploying挑战性太大。</p>
+<p>在之前的工作中，存在以下几种问题：</p>
+<ol type="1">
+<li>需要大量应用的修改</li>
+<li>需要dedicated资源</li>
+<li>需要application-specific的内核修改</li>
+</ol>
+<p>ghOSt的目标是to fundamentally change how scheduling policies are
+designed, implemented and deployed. ghOSt provide the agility of
+userspace development and ease of deployment, while still enabling
+us-sacle scheduling. ghOSt将kernel scheduling mechanism和policy
+definition分开了。</p>
+<h1 id="background-and-design-goals">Background and Design Goals</h1>
+<p><strong>Scheduling in Linux</strong></p>
+<p>Linux主要通过scheduling classes来支持对多种调度机制的实现。</p>
+<p><strong>Implementing schedulers is hard</strong></p>
+<ol type="1">
+<li>通常使用low-level的语言实现
+<ol type="1">
+<li>导致用常用库</li>
+<li>不能用pupular debug工具</li>
+</ol></li>
+<li>depend on并且interact with复杂的同步机制</li>
+<li>长期维护困难</li>
+</ol>
+<p><strong>Deploying schedulers is even harder</strong></p>
+<p>kernel rollouts需要进行大量的工作。</p>
+<p><strong>User-level threading is not enough</strong></p>
+<p>虽然有一些用户态的线程调度，但是这些用户态的线程调度是inherently
+unpredictable的。 主要是因为native thread不受用户态调度算法的控制。
+极端情况下，一个holding user-level
+lock的线程可能被内核de-schedule，造成死锁。
+现在的解决方法要么隔离核，这将导致负载低的时候浪费资源。 要么听由native
+thread scheduler安排。</p>
+<p><strong>Custom scheduling via BPF is insufficient</strong></p>
+<ol type="1">
+<li>BPF的表达能力有限，访问内核数据结构的能力也有限</li>
+<li>更重要的是，BPF程序是同步的，会block
+CPU，要求马上决定。而异步方案能够晚点响应，可以考虑的事情更多。</li>
+</ol>
+<h2 id="design-goals">Design Goals</h2>
+<ul>
+<li>Policies should be easy to implement and test</li>
+<li>Scheduling expressiveness and efficiency</li>
+<li>Enabling scheduling decisions beyond the per-CPU
+model：不仅需要增加per-CPU的调度，还需要增加集中式的调度，以及其他中间方案</li>
+<li>Supporting multiple concurrent policies</li>
+<li>Non-disruptive updates and fault
+isolation：调度策略应该与主机内核解耦，并且ghOSt必须允许新策略的部署、更新、回滚，甚至崩溃，而不会产生机器重启的成本。</li>
+</ul>
+<h1 id="design">Design</h1>
+<p><strong>ghOSt overview</strong></p>
+<p>ghOSt在用户态实现agents，主要负责make scheduling
+decisions，并instruct内核how to schedule native threads on CPUs。
+ghOSt在内核态实现一个scheduling class，类似于常用的CFS class。</p>
+<p><strong>Partitioning the machine</strong></p>
+<p>ghOSt支持以CPU为粒度进行隔离，隔离抽象为enclave。
+这么做是有意义的，特别是在一台机器上运行不同的工作负载时。
+通过机器的拓扑结构来设置这些飞地的粒度通常是有用的，比如每NUMA-socket或每AMD-CCX。
+飞地也有助于隔离故障，将agent崩溃的损害限制在它所属的飞地内。</p>
+<p><strong>ghOSt userspace agents</strong></p>
+<p>每个由ghOSt管理的CPU都有一个local agent，如图2所示。
+在per-CPU的情况下，每个agent负责自己CPU的线程调度决策。
+在集中式的情况下，一个全局agent负责调度飞地中的所有CPU。所有其他的local
+agent是不活跃的。 每个agent在Linux pthread中实现，所有agent belongs to
+the same userspace process。</p>
+<h2 id="kernel-to-agent-communication">Kernel-to-Agent
+Communication</h2>
+<p><strong>Exposing thread state to the agents</strong></p>
+<p>为了让agent对其权限范围内的线程做出调度决定，内核必须将线程状态暴露给agent。</p>
+<ul>
+<li>一种方法是将现有的内核数据结构内存映射到用户空间，如task_structs。然而，这些数据结构的可用性和格式在不同的内核和内核版本之间是不同的。</li>
+<li>另一种方法是通过sysfs文件暴露线程状态，以/proc/pid/...的方式。然而，文件系统的API对于快速路径操作来说效率很低，因此很难支持us规模的策略：open/read/fseek，最初是为块设备设计的，太慢而且复杂（例如，需要错误处理和数据解析）。</li>
+</ul>
+<p>受分布式系统的启发，ghOSt使用<strong>消息</strong>作为一种有效而简单的解决方案。</p>
+<p><strong>ghOSt messages</strong></p>
+<p>Table 1列了定义的message类型。</p>
+<p><strong>Message queues</strong></p>
+<p>消息是通过消息队列传递给agent的。
+ghOSt下每个线程都会被assigned一个队列，所有关于该线程状态变化的消息都传递到该队列。
+在per-CPU的例子中，每个线程都被分配到一个与它要运行的CPU相对应的队列中（图2，左）。（注：从图上看来，一个线程或者CPU对应最多一个队列，但一个队列可以对应多个线程或者CPU）
+在集中式的例子中，所有线程都被分配到全局队列（图2，右）。
+CPU事件的消息，如TIMER_TICK，被路由到与CPU相关的agent线程的队列中。</p>
+<p>虽然有很多方法来实现队列，但ghOSt选择在<em>共享内存中使用自定义队列</em>，以有效地处理agent唤醒。</p>
+<p>以前的队列机制对ghOSt来说是不够的，因为它们只存在于特定的内核版本。
+例如，BPF系统通过BPF环形缓冲区将BPF事件传递给用户空间，最近版本的Linux也通过io_urings将异步I/O消息传递给用户空间。
+这些都是快速的无锁环形缓冲器，可以同步消费者/生产者的访问。
+然而，较早的Linux内核和其他操作系统并不支持它们。</p>
+<p><strong>Thread-to-queue association</strong></p>
+<p>在ghOSt的飞地初始化之后，在飞地中有一个单一的默认队列。
+agent可以使用CREATE/DESTROY_QUEUE()的API来创建/销毁队列。
+添加到ghOSt的线程被默认指定为向默认队列发布消息。
+agent可以通过ASSOCIATE_QUEUE()改变这一分配。</p>
+<p><strong>Queue-to-agent association</strong></p>
+<p>一个队列可以被配置为在消息产生到队列时唤醒一个或多个agent。
+agent可以通过CONFIG_QUEUE_WAKEUP()配置唤醒行为。</p>
+<p>在per-CPU的例子中，每个队列正好与一个CPU相关，并被配置为唤醒相应的agent。
+在集中式的例子中，队列由全局agent持续轮询，所以唤醒是多余的，因此没有配置。</p>
+<p>agent的唤醒使用标准的内核机制来唤醒一个阻塞的线程。
+这涉及到识别要唤醒的agent线程，将其标记为可运行，可选择向目标CPU发送一个中断以触发reschedule，并执行上下文切换到agent线程。</p>
+<p><strong>Moving threads between queues/CPUs</strong></p>
+<p>在per-CPU的例子中，为了实现CPU之间的负载均衡和work-stealing，agent可以通过ASSOCIATE_QUEUE()改变消息从线程到队列的路由。
+正确协调跨队列的消息路由到agent取决于agent的实现（在用户空间）。</p>
+<p>如果一个线程的association从一个队列改变到另一个队列，而原来的队列中还有待处理的消息，那么关联操作就会失败。
+在这种情况下，agent必须在ASSOCIATE_QUEUE()之前处理完原始队列中的消息。</p>
+<p><strong>Synchronizing agents with the kernel</strong></p>
+<p>agent在通过消息观察到的系统状态上进行操作。
+然而，当agent正在做出调度决定时，新的消息可能会进入队列，从而改变该决定。
+这个挑战对于per-CPU的例子和集中式调度的例子略有不同。</p>
+<p>无论怎样，ghOSt用agent/线程序列号来解决这个挑战： -
+每个agent都有一个序列号，Aseq，每当有消息被发布到与该agent相关的队列中时，该序列号就会递增。第3.2节中解释了在per-CPU的场景下中对Aseq的使用。
+-
+每个线程T都有一个序列号，Tseq，每当该线程发布一个新的状态变化消息，MT，这个序列号就会增加。当一个agent
+pop自己的队列时，它同时收到一个消息和其相关的序列号：（MT，Tseq）。第3.3节中解释了如何使用Tseq进行集中调度。</p>
+<p><strong>Exposing sequence numbers via shared memory</strong></p>
+<p>ghOSt允许agent通过映射到agent的地址空间的<em>status
+words</em>，有效地轮询关于线程和CPU状态的辅助信息。
+文中为了简洁起见，只讨论了使用status
+words来暴露上述的Aseq和Tseq给agent的这种用法。
+当内核更新一个线程或agent的序列号时，它也更新相应的status words。
+然后，agent就可以从shared mapping中的status words里读取序列号。</p>
+<h2 id="agent-to-kernel-communication">Agent-to-Kernel
+Communication</h2>
+<p><strong>Sending scheduling decisions via transactions</strong></p>
+<p>agent通过向内核提交transaction发送调度决定。 受transactional
+memory和数据库系统的启发，ghOSt通过共享内存设计并实现了自己的transaction
+API。 agent通过TXN_CREATE()帮助函数在共享内存中open a new transaction。
+agent写下要调度的线程的TID和要调度的线程的CPU的ID。
+当transaction被填写完整后，agent通过TXNS_COMMIT()系统调用将其提交给内核，这就启动了提交程序并触发了内核启动上下文切换。</p>
+<p><strong>Group commits</strong> 批处理系统调用分摊开销。</p>
+<p><strong>Sequence numbers and transactions</strong>
+在per-CPU的例子中，提交事务的agent将其CPU让给它正在调度的目标线程。
+当agent运行时，发布到队列的消息不会导致唤醒，因为agent已经在运行。
+然而，队列中的新消息可能来自于更高优先级的线程，如果agent意识到这一点，将会影响调度决策。
+agent只有在下一次唤醒时才有机会检查该消息，这就太晚了。
+ghOSt通过序列号来解决per-CPU情况下的这个问题。</p>
+<p>一个agent通过检查agent线程的status
+words来轮询其Aseq，利用Aseq在有新消息发布到与该agent相关的队列时被递增的特性实现检查。
+操作的顺序是：</p>
+<ol type="1">
+<li>读取Aseq；</li>
+<li>从队列中读取消息；</li>
+<li>做出调度决定；</li>
+<li>将Aseq和transaction一起发送到TXNS_COMMIT()</li>
+</ol>
+<p>如果与transaction一起发送的Aseq比内核观察到的当前Aseq要早（即，有新消息被发布到agent的队列中），transaction将被视为"stale"，并将触发ESTALE错误失败。
+然后，agent排空其队列以检索较新的消息并重复这一过程。</p>
+<p><strong>Accelerating scheduling with BPF</strong></p>
+<p>ghOSt提供的用户级灵活性并不是免费的：消息传递和分组调度最多产生5us（见§4.1的表3）；
+在集中式调度模型中，一个线程可能会等待整个集中式调度循环，直到一个调度决定以它的名义被提交（§4.4的30us）。</p>
+<p>ghOSt允许通过一个，由agent
+attach到内核的pick_next_task()函数的，自定义BPF程序来recover lost CPU
+time。
+当一个CPU闲置，而agent还没有发出transaction时，BPF程序会发出自己的transaction，挑选一个线程在该CPU上运行。
+BPF程序通过一个shared-memory window into the agent's address
+space与agent通信。 而agent如何使用BPF
+infrastructure在CPU上调度线程的具体细节是调度策略的一部分。 ghOSt
+BPF程序本质上是agent本身的扩展，因此BPF字节码通过libbpf被嵌入到agent
+binary中。</p>
+<h2 id="the-centralized-scheduler">The Centralized Scheduler</h2>
+<p>这一节主要讲实现集中式调度的一些细节。</p>
+<p><strong>One global agent with a single queue</strong></p>
+<p>对于集中式来说，是a single global agent polling a single message
+queue and making scheduling decisions for all CPUs managed under ghOSt。
+如果一个指定的CPU已经运行了一个ghOSt线程，该transaction将抢占之前的线程，而运行新的线程。</p>
+<p><strong>Avoiding preemption of the global agent</strong></p>
+<p>全局agent必须持续运行，因为任何抢占将直接导致调度延迟。
+为了防止全局agent被更高优先级的内核调度类引发的抢占，ghOSt给所有agent分配了一个高的内核优先级，类似于实时调度。
+换句话说，机器中的其他线程，无论是ghOSt还是非ghOSt，都不能抢占agent线程。
+然而，这种优先权的分配将破坏系统的稳定，除非小心处理。例如，大多数系统都有每个CPU的守护工作线程，它们必须在其指定的CPU上运行。</p>
+<p>ghOSt通过以下方式维持系统的稳定性：
+所有不活动的agent都会立即退出，腾出它们的CPU。
+每当一个非ghOSt线程需要在全局agent的CPU上运行时，全局agent就会执行
+"热移交 "到另一个CPU上的非活动agent。
+例如，如果内核CFS调度器试图在全局agent正在运行的CPU上运行时，全局agent将首先找到一个空闲的CPU，然后唤醒该CPU上不活跃的agent作为新全局agent。
+一旦新的CPU运行全局agent，旧的全局agent就会yield，允许CFS线程运行在原来的CPU上。</p>
+<p><strong>Sequence numbers and centralized scheduling</strong></p>
+<p>在某些时候，全局agent可能对一个线程的状态有不一致的看法。
+例如，一个线程T可能发布一个THREAD_WAKEUP消息。
+全局agent收到这个消息并决定将T安排在CPU 1。
+同时，系统中的某个实体调用了sched_setaffinity()，导致了THREAD_AFFINITY消息，禁止T在CPU
+1上运行。 我们需要一种机制来确保安排T在CPU 1上的transaction将失效。</p>
+<p>原则上，我们可以使用agent序列号，就像上面为per-CPU的例子所描述的那样。
+然而，全局agent必须支持成千上万的线程，这些线程不断向全局队列发布消息，使得排空队列很费时间。
+与per-CPU例子中的本地agent不同，全局agent没有放弃自己的CPU。 The global
+agent must only verify that it is up-to-date with respect to the thread
+T being scheduled right now.</p>
+<p>ghOSt用线程序列号来解决这个问题。
+每条排队的消息MT都打上线程序列号Tseq的tag，如（MT，Tseq）。
+当agent提交线程T的transaction时，它将transaction与它所知道的T的最新序列号Tseq一起发送。
+当内核收到事务时，它验证Tseq对于transaction中的线程来说是最新的。否则，该事务将以ESTALE错误失败。</p>
+<h2 id="fault-isolation-and-dynamic-upgrades">Fault Isolation and
+Dynamic Upgrades</h2>
+<p><strong>Interaction with other kernel scheduling classes</strong></p>
+<p>ghOSt的设计目标之一是使现有系统能够轻松采用。
+因此，即使ghOSt策略有问题，我们仍然希望ghOSt管理的线程能够与系统中的其他线程良好地互动。
+我们希望避免ghOSt线程对其他线程造成非预期的后果，如饥饿、优先级倒置、死锁等。</p>
+<p>我们通过给ghOSt的内核调度器类分配一个<em>比默认的调度器类--通常是CFS--在内核的调度类层次结构中更低的优先级</em>来实现这一目标。
+其结果是，系统中的大多数线程将抢占ghOSt线程。
+ghOSt线程的抢占会导致THREAD_PREEMPT消息的产生，触发相关agent（运行在不同的高优先级调度类中）做出调度决定。
+agent进一步决定如何处理抢占的问题。</p>
+<p><strong>Dynamic upgrades and rollbacks</strong></p>
+<p>ghOSt通过以下方式实现动态升级：(a)更换agent，同时保持enclave
+infrastructure的完整，或(b)摧毁enclave，从头开始。</p>
+<p><strong>Replacing agents and destroying enclaves</strong></p>
+<p>用户空间的代码可以查询并判断一个agent是否连接到一个enclave。
+为了升级一个agent，我们同时运行旧的和新的agent；新的agent暂停运行，直到旧的agent崩溃或退出，不再连接。
+新agent从内核中提取飞地中所有线程的状态并恢复调度。</p>
+<p>如果这个过程失败了，内核或用户空间的代码都可以摧毁飞地。摧毁enclave会杀死该enclave中的所有agent，使系统中的其他enclave保持完整，并自动将被摧毁的enclave中的所有线程移回CFS。
+此时，这些线程仍在正常运行，但由CFS而不是ghOSt调度。</p>
+<p><strong>ghOSt watchdog</strong></p>
+<p>ghOSt或任何其他内核调度器中的调度错误会对整个系统产生影响。
+例如，一个ghOSt线程可能在持有内核mutex的时候被抢占，如果它太久没有被调度，它可能会拖慢其他线程，包括那些在CFS或其他ghOSt
+enclave的线程。 同样地，如果GC和I/O
+poller等关键线程没有被调度，机器也会陷入停滞。</p>
+<p>作为一种安全机制，ghOSt会自动销毁有行为不良的agent的enclave。
+例如，当内核检测到一个agent没有在用户可配置的毫秒数内安排一个可运行的线程时，它将销毁一个飞地。</p>
+<h1 id="evaluation">Evaluation</h1>
+<p>主要从以下几个方面进行实验</p>
+<ul>
+<li>micro-benchmark（LoC、message delivery overhead、local
+scheduling、remote scheduling和global agent scalability）</li>
+<li>Comparison to custom centralized schedulers</li>
+<li>google snap/google search上的表现</li>
+<li>缓解L1TF/MDS攻击</li>
+</ul>
+<!-- flag of hidden posts -->
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/%E7%BD%91%E7%BB%9C%E6%94%BB%E9%98%B2%E5%B0%8F%E5%AD%A6%E6%9C%9F%EF%BC%88%E4%B8%80%EF%BC%89%E7%BD%91%E7%BB%9C%E4%BE%A6%E6%9F%A5%E4%B8%8E%E5%8F%96%E8%AF%81%E5%88%86%E6%9E%90.html" itemprop="url">
-              
-                <span itemprop="name">网络攻防小学期（一）网络侦查与取证分析</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T21:15:05+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/change-python-default-version.html" itemprop="url">
-              
-                <span itemprop="name">更换python默认版本</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-07T21:07:33+08:00"
-              content="2022-05-07" >
-          05-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/sosp/" rel="tag"># sosp</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2022/05/page/5/">&lt;</a><a class="page-number" href="/archives/2022/05/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2022/05/page/5/">5</a><span class="page-number current">6</span>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -541,6 +713,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -561,8 +742,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -632,6 +822,25 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background-and-design-goals"><span class="nav-number">1.</span> <span class="nav-text">Background and Design Goals</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#design-goals"><span class="nav-number">1.1.</span> <span class="nav-text">Design Goals</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#design"><span class="nav-number">2.</span> <span class="nav-text">Design</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#kernel-to-agent-communication"><span class="nav-number">2.1.</span> <span class="nav-text">Kernel-to-Agent
+Communication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#agent-to-kernel-communication"><span class="nav-number">2.2.</span> <span class="nav-text">Agent-to-Kernel
+Communication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-centralized-scheduler"><span class="nav-number">2.3.</span> <span class="nav-text">The Centralized Scheduler</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fault-isolation-and-dynamic-upgrades"><span class="nav-number">2.4.</span> <span class="nav-text">Fault Isolation and
+Dynamic Upgrades</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#evaluation"><span class="nav-number">3.</span> <span class="nav-text">Evaluation</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -816,6 +1025,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
