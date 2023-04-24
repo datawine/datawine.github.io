@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="sosp," />
 
 
 
@@ -79,12 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Datawine&#39;s Blog">
-<meta property="og:url" content="https://datawine.github.io/tags/others/index.html">
+<meta name="description" content="基于eBPF和ghOSt，在用户态实现用户自定义的数据包调度算法。 核心思想是map work to execution resources。 用户定义自己需要的数据包调度算法，并在应用中调用API实现部署和交互。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Syrup: User-Defined Scheduling Across the Stack">
+<meta property="og:url" content="https://datawine.github.io/sosp21-Syrup-User-Defined-Scheduling-Across-the-Stack.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="基于eBPF和ghOSt，在用户态实现用户自定义的数据包调度算法。 核心思想是map work to execution resources。 用户定义自己需要的数据包调度算法，并在应用中调用API实现部署和交互。">
 <meta property="og:locale">
+<meta property="article:published_time" content="2023-04-17T09:30:56.000Z">
+<meta property="article:modified_time" content="2023-04-19T07:40:17.048Z">
 <meta property="article:author" content="Datawine">
+<meta property="article:tag" content="sosp">
 <meta name="twitter:card" content="summary">
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/tags/others/"/>
+  <link rel="canonical" href="https://datawine.github.io/sosp21-Syrup-User-Defined-Scheduling-Across-the-Stack.html"/>
 
 
 
 
 
-  <title>标签: others | Datawine's Blog</title>
+  <title>Syrup: User-Defined Scheduling Across the Stack | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -278,194 +283,346 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>others<small>标签</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/sosp21-Syrup-User-Defined-Scheduling-Across-the-Stack.html">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/others10-Dapper-a-Large-Scale-Distributed-Systems-Tracing-Infrastructure.html" itemprop="url">
-              
-                <span itemprop="name">Dapper, a Large-Scale Distributed Systems Tracing Infrastructure</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Syrup: User-Defined Scheduling Across the Stack</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-01-22T15:23:37+08:00"
-              content="2023-01-22" >
-          01-22
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-04-17T17:30:56+08:00">
+                2023-04-17
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/sosp21-Syrup-User-Defined-Scheduling-Across-the-Stack.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="sosp21-Syrup-User-Defined-Scheduling-Across-the-Stack.html" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  10
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/tsc22-Capturing-Request-Execution-Path-for-Understanding-Service-Behavior-and-Detecting-Anomalies-without-Code-Instrumentation.html" itemprop="url">
-              
-                <span itemprop="name">Capturing Request Execution Path for Understanding Service Behavior and Detecting Anomalies without Code Instrumentation</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-12-23T19:19:51+08:00"
-              content="2022-12-23" >
-          12-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/icpads20-A-protocol-independent-container-network-observability-analysis-system-based-on-eBPF.html" itemprop="url">
-              
-                <span itemprop="name">A protocol-independent container network observability analysis system based on eBPF</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-12-15T17:06:40+08:00"
-              content="2022-12-15" >
-          12-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/others20-ViperProbe-Using-eBPF-Metrics-to-Improve-Microservice-Observability.html" itemprop="url">
-              
-                <span itemprop="name">ViperProbe: Using eBPF Metrics to Improve Microservice Observability</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-11-27T19:25:42+08:00"
-              content="2022-11-27" >
-          11-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/others14-So-you-want-to-trace-your-distributed-system-Key-design-insights-from-years-of-practical-experience.html" itemprop="url">
-              
-                <span itemprop="name">So, you want to trace your distributed system? Key design insights from years of practical experience</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-11-10T13:49:37+08:00"
-              content="2022-11-10" >
-          11-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/others13-Performance-troubleshooting-in-data-centers-an-annotated-bibliography.html" itemprop="url">
-              
-                <span itemprop="name">Performance troubleshooting in data centers: an annotated bibliography?</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-09-19T17:11:39+08:00"
-              content="2022-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+        <p>基于eBPF和ghOSt，在用户态实现用户自定义的数据包调度算法。
+核心思想是map work to execution resources。
+用户定义自己需要的数据包调度算法，并在应用中调用API实现部署和交互。</p>
+<span id="more"></span>
+<p>调度器的共同特点：map work to execution resources。
+调度策略与workload的适配很重要。
+然而，实现自己的调度算法的成本/门槛太高，要么就是kernel
+hacking，要么就是building specialized full-stack system。</p>
+<p>syrup认为，应用开发者应该能够express their preferred scheduling
+policies to the underlying systems。 syrup将调度视为一个matching
+problem。 给三个后端提供hooks：eBPF软件，eBPF硬件和ghOSt。
+其中eBPF软件用于在内核协议栈中部署matching function。
+eBPF硬件允许syrup利用可编程网络设备。 ghOSt负责offload线程调度。</p>
+<h1 id="motivation">Motivation</h1>
+<h2 id="user-defined-scheduling-matters">User-defined Scheduling
+Matters</h2>
+<p>为了展示调度的重要性，论文以一个非常简单的工作负载场景为例：
+一个6线程的RocksDB服务器，处理同质的GET请求，服务时间为10-12us。
+所有线程都有一个绑定到相同UDP端口的套接字。
+让Linux将传入的数据报分配给套接字。</p>
+<p>Linux的vanilla scheduling使用5元组的哈希值将数据报分配给套接字。
+然而，图2显示它的效果不是很好，因为基于哈希的调度方案在5元组（50）和套接字（6）数量较少的情况下会导致不平衡，而比预期更多的5元组被随机分配到同一个套接字，使其过载。</p>
+<p>需要注意的是，虽然round
+robin策略对这个工作负载来说比较好，但它不是万能的。对于其他工作负载类型，locality可能更重要。
+如果没有基于哈希的调度，像Linux的RFS这样的、将网络处理放在与接收应用程序相同的核心上的优化，是不可能的实现的。
+一个使用RFS的netperf
+TCP_RR测试已经被证明比没有RFS的测试要高出200%的吞吐量。
+因此，调度的灵活性和可定制性是现代操作系统的一个必要特征。</p>
+<p>大多数现有的系统并没有提供调度的灵活性。
+上游的Linux内核基本上只支持六种调度策略（CFS, BATCH, IDLE, FIFO, RR,
+DEAD-LINE），即使在定制的内核中增加一个新的策略也需要大量的开发工作。
+因此，应用程序开发人员经常为他们想要以不同方式调度的每个应用程序类别建立一个新的定制框架或数据平面系统。这种方法有很大的缺点：</p>
+<ul>
+<li>即使是对新的调度策略进行原型化，也需要相当大的开发努力。</li>
+<li>这些数据平面通常使用特殊的API，与建立在现有系统（如Linux）之上的常用应用程序不兼容。</li>
+<li>随着周围基础设施的变化，维护这种专门的每一个应用系统是非常耗时和昂贵的。</li>
+</ul>
+<h2 id="scheduling-requirements">Scheduling Requirements</h2>
+<ul>
+<li>Expressibility</li>
+<li>Cross-layer deployment</li>
+<li>Low overhead</li>
+<li>Multi-tenancy and Isolation</li>
+</ul>
+<h1 id="syrup-design">Syrup Design</h1>
+<h2 id="workflow-overview">Workflow Overview</h2>
+<ol type="1">
+<li>首先，想要使用Syrup的应用程序的开发者或管理员通过在一个单独的文件中实现一个简单的C接口来指定想要的调度策略。</li>
+<li>应用程序代码然后调用syr_deploy_policy
+函数，它需要两个参数：一个描述所需调度策略的文件和一个或多个策略的目标部署钩子。这个函数与全系统的Syrup守护程序syrupd沟通，后者为策略部署做所有繁重的工作。</li>
+<li>守护进程根据目标调度钩子，将策略文件编译成二进制文件或object文件</li>
+<li>守护进程在用户指定的钩子中跨栈部署。</li>
+<li>用户空间应用程序和部署在不同钩子上的Syrup策略可以选择性地交流信息，如负载、延迟统计、或预期完成时间。该交流时通过类似键值存储的map抽象实现的。map是在策略文件中定义的，并在部署时由syrupd设置。应用程序在运行过程中可以随时更新或部署新的策略。如果没有部署Syrup策略，应用程序会使用底层运行时和操作系统的默认调度策略运行。</li>
+</ol>
+<h2 id="scheduling-as-a-matching-problem">Scheduling as a Matching
+Problem</h2>
+<p>Syrup通过将调度视为一个有趣的在线匹配问题来实现这一目标。
+调度策略被表示为输入和处理输入的执行者之间的匹配函数。输入可以是任何支持的工作单位，执行者可以是任何系统处理组件。</p>
+<p>Syrup目前支持网络数据包、连接和线程作为输入，支持网卡队列、内核和网络套接字作为执行者。
+每当有新的输入可供处理时，Syrup策略就会运行，例如，一个数据包到达或一个线程可运行，或一个执行器可使用。</p>
+<p>Syrup的匹配抽象提供了通用性，因为它可以用于各种粒度的决策。
+小到将数据包放置到网络协议栈处理的核心，大到将作业放置到数据中心的机器。
+此外，在线匹配将调度分解为一系列的小决策，提高了复杂策略的可组合性和可理解性。
+例如，在Linux中优化数据包的处理，首先是将数据包分配给网卡队列，然后是分配给网络堆栈处理的核心，最后是分配给应用级套接字。
+Syrup用户可以为这些决策中的每一项定义和部署不同的独立调度策略。</p>
+<p>将调度作为每个应用的在线匹配来实现，还具有可靠性和隔离性的优势。
+Syrup确保每个策略只处理属于部署它的应用程序的输入。
+一个性能不好或有错误的策略将只影响部署它的应用程序，从而导致比单一的系统范围的策略更可靠。
+恶意应用程序只能通过占用一些执行器来影响整个系统的性能，这种行为可以通过资源管理器快速检测和处理。</p>
+<h2 id="specifying-a-policy-in-syrup">Specifying a policy in Syrup</h2>
+<p>为了define a scheduling
+policy，用户需要实现一个schedule函数，指定input和output。（此处的input和output是之前提到的意思）
+调度决策的实际执行，例如，当使用SO_REUSEPORT时，将数据包分配给一个特定的网络套接字，是hook-specific的，由Syrup框架专门处理。</p>
+<p>schedule函数应该返回一个uint32_t，这个值是一个application-specific并且hook-specific的一个map的key。
+比如connection scheduling的场景里，这个map里的存的就是network sockets。
+还有两个特别的返回值类型，PASS和DROP。PASS让系统用default策略，DROP就会把这个input丢了。</p>
+<p>这里给了个例子，还比较直观。</p>
+<h2 id="cross-layer-communication">Cross-layer communication</h2>
+<p>主要是通过提供key-value store API的map实现的。 除了作为executor
+containers（这个是什么意思呢？）的maps之外，应用程序还可以声明和填充自定义的maps。
+用户定义的Maps在策略文件中声明，并由syrupd pin to
+sysfs，以便同一用户的不同程序可以访问它们。
+我们可以用文件系统的权限来控制对map的访问。</p>
+<h2 id="syrupd-for-multi-tenancy-and-isolation">Syrupd for multi-tenancy
+and isolation</h2>
+<p>Syrupd提供了跨应用的隔离，在将策略加载到scheduling
+hook之前，它安装检查以确保每个策略只处理属于该策略应用的输入。</p>
+<h1 id="syrup-implementation">Syrup Implementation</h1>
+<h2 id="ebpf-ghost">eBPF &amp; ghOSt</h2>
+<p>这两段主要是介绍eBPF和ghOSt的能力的。
+之所以需要ghOSt，是因为内核调度器子系统中的eBPF钩子非常少，而且大多数钩子都与可观察性有关，而不是决策。
+因此，syrup选择使用ghOSt将线程调度卸载到用户空间。</p>
+<p>The coarser granularity of thread scheduling allows us to do so,
+while, e.g., offloading per-packet scheduling decisions to userspace
+would add too much context-switch overhead.
+上面这句话没特别理解，但是总之最后的调度好像是线程级别的？</p>
+<h2 id="supported-hooks">Supported Hooks</h2>
+<ul>
+<li>Thread scheduler hook，允许用户使用ghOSt定义线程调度策略</li>
+<li>Socket Select
+hook，在同一个端口上监听的、使用SO_REUSEPORT选项的TCP或者UDP网络套接字中选择一个</li>
+<li>CPU Redirect hook，允许用户steer packets to specific cores for
+kernel network stack processing</li>
+<li>XDP_DRV和XDP_SKB
+hooks允许Syrup在包进入协议栈之前就处理具体的数据包，一个可能的做法是将这些包重定向到userspace的AF_XDP
+network sockets上，以实现kernel-bypass-like的性能</li>
+<li>XDP Offload hook允许用户在smartNICs上运行策略，以编程方式steer
+packets to the NIC RX queues</li>
+</ul>
+<h2 id="cross-application-isolation">Cross-application Isolation</h2>
+<p>Syrup允许为不同的应用程序同时部署多个用户定义的策略，并提供以下保证：</p>
+<ul>
+<li>由一个应用程序加载的策略只能访问属于该应用程序的输入。</li>
+<li>一个应用程序加载的策略代码不能对属于其他应用程序或内核的内存进行未经授权的访问。</li>
+</ul>
+<p>第一点通过守护进程syrupd实现。调用syrup_deploy_policy()函数的应用程序向该守护进程发送请求，而不是将eBPF程序加载到内核本身。
+第二点主要是eBPF verifier实现的。</p>
+<p>ghOSt隔离就不用说了。</p>
+<h2 id="specifying-inputs-and-executors">Specifying Inputs and
+Executors</h2>
+<p>Syrupd和Syrup用户必须指定每个策略处理的输入和策略可以使用的执行器（executor）。</p>
+<p>指定执行器是很简单的。对于网络协议栈上层的hook，执行者是<strong>network
+socket</strong>，在同一端口上监听数据包/连接。
+用户使用套接字和程序的文件描述符向Syrup注册他们创建的第一个套接字，然后将此套接字和后续套接字添加到策略部署时创建的相关executor
+map中。 应用程序控制每个套接字所使用的map
+index，让schedule函数能够仅仅通过返回该map的索引来做出调度决定。</p>
+<p>对于其余的调度hook，executor是<strong>服务器的硬件资源，即CPU或网卡队列</strong>。
+Syrupd目前为每个应用程序静态地分配了一些这样的资源，并使用内核或队列ID将它们添加到每个策略map中。
+与套接字的情况类似，策略通过返回相关map的索引来做出调度决定。</p>
+<p>对于输入，eBPF和ghOSt后端之间存在着差异。</p>
+<p>对于网络协议栈的上层，每个Syrup程序都与一组套接字相关。
+操作系统确保每个Syrup程序处理数据报（对于UDP来说）或建立连接的SYN包（对于TCP来说）作为输入指向该套接字。
+对于网络堆栈的下层，Syrupd做了繁重的工作，过滤输入到正确的策略程序。
+在这两种情况下，策略程序都会收到<strong>一组指向数据包及其元数据的指针</strong>，它可以对其进行处理以做出调度决定。</p>
+<p>对于ghOSt部署的策略，用户需要通过函数调用向策略注册线程，并将其添加到map中。
+然后，<strong>线程ID和发生的线程状态变化类型</strong>被作为输入传给调度程序。</p>
+<p>网络协议栈和线程调度之间存在着显著的区别。 它们的选择方向是反的。
+在线程调度中，当一个执行器/内核变得可用时，策略会选择其中一个线程/输入。
+而网络协议栈策略在输入变得可用时选择一个执行器。</p>
+<h1 id="evaluation">Evaluation</h1>
+<p>主要是以下四点</p>
+<ul>
+<li>syrup是否能够express并implement不同的scheduling policies</li>
+<li>syrup能否跨层调度</li>
+<li>syrup的调度策略在不同的hook之间是否是可移植的</li>
+<li>syrup的性能开销</li>
+</ul>
+<!-- flag of hidden posts -->
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/sosp/" rel="tag"># sosp</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -473,6 +630,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -493,8 +659,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -564,6 +739,26 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#motivation"><span class="nav-number">1.</span> <span class="nav-text">Motivation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#user-defined-scheduling-matters"><span class="nav-number">1.1.</span> <span class="nav-text">User-defined Scheduling
+Matters</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scheduling-requirements"><span class="nav-number">1.2.</span> <span class="nav-text">Scheduling Requirements</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#syrup-design"><span class="nav-number">2.</span> <span class="nav-text">Syrup Design</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#workflow-overview"><span class="nav-number">2.1.</span> <span class="nav-text">Workflow Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scheduling-as-a-matching-problem"><span class="nav-number">2.2.</span> <span class="nav-text">Scheduling as a Matching
+Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#specifying-a-policy-in-syrup"><span class="nav-number">2.3.</span> <span class="nav-text">Specifying a policy in Syrup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cross-layer-communication"><span class="nav-number">2.4.</span> <span class="nav-text">Cross-layer communication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#syrupd-for-multi-tenancy-and-isolation"><span class="nav-number">2.5.</span> <span class="nav-text">Syrupd for multi-tenancy
+and isolation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#syrup-implementation"><span class="nav-number">3.</span> <span class="nav-text">Syrup Implementation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ebpf-ghost"><span class="nav-number">3.1.</span> <span class="nav-text">eBPF &amp; ghOSt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#supported-hooks"><span class="nav-number">3.2.</span> <span class="nav-text">Supported Hooks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cross-application-isolation"><span class="nav-number">3.3.</span> <span class="nav-text">Cross-application Isolation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#specifying-inputs-and-executors"><span class="nav-number">3.4.</span> <span class="nav-text">Specifying Inputs and
+Executors</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#evaluation"><span class="nav-number">4.</span> <span class="nav-text">Evaluation</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -748,6 +943,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

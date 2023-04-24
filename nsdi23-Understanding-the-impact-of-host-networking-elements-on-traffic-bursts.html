@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="nsdi," />
 
 
 
@@ -79,12 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Datawine&#39;s Blog">
-<meta property="og:url" content="https://datawine.github.io/tags/others/index.html">
+<meta name="description" content="基于eBPF和可编程交换机采集in-host和in-network的per-packet时间戳。在此基础上进行了一些针对burst的分析工作。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Understanding the impact of host networking elements on traffic bursts">
+<meta property="og:url" content="https://datawine.github.io/nsdi23-Understanding-the-impact-of-host-networking-elements-on-traffic-bursts.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="基于eBPF和可编程交换机采集in-host和in-network的per-packet时间戳。在此基础上进行了一些针对burst的分析工作。">
 <meta property="og:locale">
+<meta property="article:published_time" content="2023-04-19T07:43:51.000Z">
+<meta property="article:modified_time" content="2023-04-24T06:35:16.467Z">
 <meta property="article:author" content="Datawine">
+<meta property="article:tag" content="nsdi">
 <meta name="twitter:card" content="summary">
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/tags/others/"/>
+  <link rel="canonical" href="https://datawine.github.io/nsdi23-Understanding-the-impact-of-host-networking-elements-on-traffic-bursts.html"/>
 
 
 
 
 
-  <title>标签: others | Datawine's Blog</title>
+  <title>Understanding the impact of host networking elements on traffic bursts | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -278,194 +283,304 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>others<small>标签</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/nsdi23-Understanding-the-impact-of-host-networking-elements-on-traffic-bursts.html">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/others10-Dapper-a-Large-Scale-Distributed-Systems-Tracing-Infrastructure.html" itemprop="url">
-              
-                <span itemprop="name">Dapper, a Large-Scale Distributed Systems Tracing Infrastructure</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Understanding the impact of host networking elements on traffic bursts</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-01-22T15:23:37+08:00"
-              content="2023-01-22" >
-          01-22
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-04-19T15:43:51+08:00">
+                2023-04-19
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/nsdi23-Understanding-the-impact-of-host-networking-elements-on-traffic-bursts.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="nsdi23-Understanding-the-impact-of-host-networking-elements-on-traffic-bursts.html" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/tsc22-Capturing-Request-Execution-Path-for-Understanding-Service-Behavior-and-Detecting-Anomalies-without-Code-Instrumentation.html" itemprop="url">
-              
-                <span itemprop="name">Capturing Request Execution Path for Understanding Service Behavior and Detecting Anomalies without Code Instrumentation</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-12-23T19:19:51+08:00"
-              content="2022-12-23" >
-          12-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/icpads20-A-protocol-independent-container-network-observability-analysis-system-based-on-eBPF.html" itemprop="url">
-              
-                <span itemprop="name">A protocol-independent container network observability analysis system based on eBPF</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-12-15T17:06:40+08:00"
-              content="2022-12-15" >
-          12-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/others20-ViperProbe-Using-eBPF-Metrics-to-Improve-Microservice-Observability.html" itemprop="url">
-              
-                <span itemprop="name">ViperProbe: Using eBPF Metrics to Improve Microservice Observability</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-11-27T19:25:42+08:00"
-              content="2022-11-27" >
-          11-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/others14-So-you-want-to-trace-your-distributed-system-Key-design-insights-from-years-of-practical-experience.html" itemprop="url">
-              
-                <span itemprop="name">So, you want to trace your distributed system? Key design insights from years of practical experience</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-11-10T13:49:37+08:00"
-              content="2022-11-10" >
-          11-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/others13-Performance-troubleshooting-in-data-centers-an-annotated-bibliography.html" itemprop="url">
-              
-                <span itemprop="name">Performance troubleshooting in data centers: an annotated bibliography?</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-09-19T17:11:39+08:00"
-              content="2022-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+        <p>基于eBPF和可编程交换机采集in-host和in-network的per-packet时间戳。在此基础上进行了一些针对burst的分析工作。</p>
+<span id="more"></span>
+<p>研究表明，traffic is bursty across a wide range of timescales in
+diverse contexts。 然而，host networking对traffic
+burstiness的调节作用却很少被研究。 本文希望能够填补这一空白。</p>
+<p>我们要问的是，是什么原因导致what causes the traffic to emerge from
+hosts in bursts？
+burstiness是否是流量的一个尺度不变的属性，也就是说，流量是否在广泛的时间尺度上保持其burstiness，或者microbursts在粗略的时间尺度上会变得平稳？
+传统的突发应对措施，如TCP pacing和数据包调度，是否能有效遏制bursts？
+当然，host network非常复杂，这让研究impact of host
+networking变得非常复杂。</p>
+<p>Valinor由两个主要部分组成：</p>
+<ol type="1">
+<li>基于eBPF的in-host时间戳框架（Valinor-H），基本在软件栈处理的最后阶段收集出口数据包元数据</li>
+<li>in-network数据包时间戳框架（Valinor-N），该框架在网卡之后立即在可编程交换机数据平面上捕捉数据包到达的时间戳，并将时间戳数据发送到离线服务器进行收集、存储和突发度分析</li>
+</ol>
+<h1 id="background">Background</h1>
+<ul>
+<li>self-similarity：自相似性</li>
+<li>Hurst exponent
+<ul>
+<li>0.5 &lt; H &lt; 1：self-similar timeseries with long-term positive
+autocorrelations</li>
+<li>H = 0.5：completely uncorrelated series</li>
+<li>0 &lt; H &lt; 0.5：mean-reverting timeseries，high value和low
+value交替</li>
+</ul></li>
+</ul>
+<p>self-similarity的一些practical implications</p>
+<ul>
+<li>排队性能和缓冲区的大小。自相似性对排队性能有很大影响。从排队论的角度来看，自相似性的决定性特征是，队列长度分布的衰减比短距离依赖性流量的衰减要慢得多（在短距离依赖性流量下，例如泊松过程，是多项式的，而不是指数式的）[66]。对于强自相似的流量，平均队列长度随着缓冲区大小而增加[54]。这意味着具有强自相似性流量的网络应该部署小的缓冲区来控制排队延迟。</li>
+<li>吞吐量和延时的权衡。先前的工作表明，联合提供低延迟和高吞吐量会受到自相似性的不利影响。</li>
+<li>流量预测和burst应对措施。自相似性流量中存在的相关结构可以被检测和利用，以预测大于RTT的时间尺度的未来流量。例如，具有大于RTT的控制循环的resource
+provisioning技术（如多尺度拥堵控制、重新路由和拓扑重布线）增强了自相似流量的性能。</li>
+</ul>
+<h1 id="approaches-to-measuring-traffic-bursts">Approaches to measuring
+traffic bursts</h1>
+<p>主要是讲采集per packet时间戳的design space。</p>
+<h1 id="valinor-measurement-framework">Valinor measurement
+framework</h1>
+<p>设计目标</p>
+<ol type="1">
+<li>提供对主机网络流量的可见性，以及shape of the traffic on the
+wire</li>
+<li>提供数据包到达的高分辨率时间戳，与不断增加的链路带宽和更快的数据包处理管道保持一致</li>
+<li>提供对不同规模和时间范围内的流量形状和burst的洞察力</li>
+</ol>
+<p>我们设计并实现了Valinor，这是一个测量框架，包括两个主要的时间戳，从主机和网络的角度研究数据包的到达。首先，我们设计了Valinor-H，通过选择tc
+eBPF钩来研究主机对其出口流量的看法。为了捕捉流量突发的外部情况，我们设计了Valinor-N，一个可编程结构的时间戳模块。</p>
+<h2 id="valinor-h-burst-measurement-in-hosts">Valinor-H: burst
+measurement in hosts</h2>
+<p>Valinor-H提供了visibilty into the impact of the software stack on
+traffic, immediately before the traffic is passed to the NIC。
+框架包括两个部分</p>
+<ul>
+<li>data
+plane：遵循一套严格的类似C语言的指令，每次sk_buff到达时，都会在tc
+qdisc执行</li>
+<li>write handler：确定添加新的时间戳条目的正确位置并更新数据结构</li>
+</ul>
+<p>通过主机内测量框架，网络操作人员可以验证发送方主机传输路径上的高层网络处理层的操作。
+在这个阶段，Valinor-H可以捕获进入网卡的流量，其中包括从qdiscos、跨端口层和应用程序输出的流量。
+为了捕捉网络核心中的流量行为，并以每包为单位，我们在下一节介绍Valinor-N。</p>
+<h2 id="valinor-n-in-network-burst-measurement">Valinor-N: in-network
+burst measurement</h2>
+<p>主机中基于软件的测量与粗粒度的sk_buff到达量有关，并在NIC功能（即环形调度器和分段卸载）之前实现。
+因此，捕获的流量行为可能与on the wire的行为不一致。
+为了填补这一空白，引入了基于可编程交换机数据平面的Valinor网络内变体。</p>
+<p>Valinor-N由三部分组成：</p>
+<ol type="1">
+<li>switch component</li>
+<li>采集器数据平面</li>
+<li>分析组件</li>
+</ol>
+<p>Valinor-N能够</p>
+<ol type="1">
+<li>在关键路径之外，以零开销捕获每包到达的时间戳</li>
+<li>收集和存储以线速到达的时间戳条目</li>
+<li>对时间戳数据进行各种分析，以提供不同规模的流量burstiness的深入分析</li>
+</ol>
+<p><strong>Valinor交换机</strong></p>
+<p>交换机数据面程序使用PISA架构中的mirroring和timestamping功能。
+对于每一个符合用户定义的流量过滤器的数据包，Valinor-N将到达时间戳、排队延迟和原始数据包的大小以及它的l-4层头信息，append到一个具有预先定义的Valinor头的特殊IP数据包。
+然后，该数据包被发送到一个收集器服务器。部署在流量端点之间通信的关键路径之外的服务器机器，汇总时间戳信息并进行离线分析。</p>
+<p><strong>时间戳收集</strong></p>
+<p>采集器机器具有基于DPDK的用户空间数据包处理框架，它解析到达的数据包，并将时间戳信息与流量元数据一起存储到内存中的Redis实例。然后通过查询数据存储进行时间戳数据的分析。
+以线速度接收时间戳数据包并将其存储在持久性存储中，对收集器组件的设计提出了一些可扩展性的挑战。
+为了确保软件能够以线速度耗尽网卡缓冲区，我们指定了多个工作线程来读取和处理传入的数据包。
+在解析了时间戳头之后，工作线程提取了时间戳数据，并将它们发送给负责与Redis通信的其他工作线程。然后，分析框架检索存储的元数据，利用时间戳进行突发分析。</p>
+<p>Valinor-N的Redis worker有一些优化。</p>
+<p><strong>离线时间戳处理</strong></p>
+<p>Valinor设计的最后一部分是离线时间戳分析框架，它查询Redis数据结构并对时间戳数据进行分析。
+它能够通过测量数据包的到达时间来报告流量突发性的各种统计数据。
+例如，在下一节中，论文报告了对scaling行为的发现，这是由sender机器中的各种数据包处理组件引起的。
+论文报告了以字节为单位的实际突发大小、到达间分布、排队延迟和各种突发时间序列分析。
+离线处理框架用Python实现。</p>
+<h1 id="findings">Findings</h1>
+<p>我们部署了Valinor来分析各种工作负载和配置的突发性。我们的结果表明：</p>
+<ul>
+<li>在先前的自我相似性研究中，主机网络在形成和抑制ursts中起着重要作用，这一点基本上被忽略了。</li>
+<li>网络处理栈的较低层（如分段卸载和网卡调度）压缩了基于软件的流量整形和主动队列管理解决方案的有效性。</li>
+<li>software
+pacing有很大的局限性。对于短流量和大流量混合的工作负载，网络处理堆栈的较低层掩盖了基于软件的流量调整的影响。对于具有非常短的流量的工作负载，软件步调可以减弱突发事件，但会导致RTT的大幅增加和吞吐量的大幅下降。</li>
+<li>网卡驱动器的缓冲区大小和进程调度可以reshape bursts。</li>
+</ul>
+<!-- flag of hidden posts -->
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nsdi/" rel="tag"># nsdi</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -473,6 +588,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -493,8 +617,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -564,6 +697,26 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background"><span class="nav-number">1.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#approaches-to-measuring-traffic-bursts"><span class="nav-number">2.</span> <span class="nav-text">Approaches to measuring
+traffic bursts</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#valinor-measurement-framework"><span class="nav-number">3.</span> <span class="nav-text">Valinor measurement
+framework</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#valinor-h-burst-measurement-in-hosts"><span class="nav-number">3.1.</span> <span class="nav-text">Valinor-H: burst
+measurement in hosts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#valinor-n-in-network-burst-measurement"><span class="nav-number">3.2.</span> <span class="nav-text">Valinor-N: in-network
+burst measurement</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#findings"><span class="nav-number">4.</span> <span class="nav-text">Findings</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -748,6 +901,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
