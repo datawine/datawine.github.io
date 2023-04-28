@@ -336,6 +336,10 @@ NICs：通过实现RDMA协议和架构的co-design，最小化片上数据结构
 <li>Transparent GPU Sharing in Container Clouds for Deep Learning
 Workloads：相比于之前的应用层方案，本文提出了OS-level的GPU共享方案。TGS利用自适应速率控制和透明的统一内存，同时实现高GPU利用率和性能隔离。</li>
 <li><a
+href="https://datawine.github.io/nsdi23-Hostping-Diagnosing-Intra-host-Network-Bottlenecks-in-RDMA-Servers.html">Hostping:
+Diagnosing Intra-host Network Bottlenecks in RDMA
+Servers</a>：利用拨测，采集intra-host的带宽、延迟与各种总线利用率，判断RDMA服务器中intra-host瓶颈的位置。</li>
+<li><a
 href="https://datawine.github.io/nsdi23-Understanding-the-impact-of-host-networking-elements-on-traffic-bursts.html">Understanding
 the impact of host networking elements on traffic
 bursts</a>：基于eBPF和可编程交换机采集in-host和in-network的per-packet时间戳。在此基础上进行了一些针对burst的分析工作。</li>
