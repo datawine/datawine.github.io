@@ -2081,6 +2081,11 @@ Orchestrator</a>：以库的形式，给每个function部署ingress和egress控�
 href="https://datawine.github.io/nsdi23-Understanding-RDMA-Microarchitecture-Resources-for-Performance-Isolation.html">Understanding
 RDMA Microarchitecture Resources for Performance
 Isolation</a>：通过耗尽RDMA的共享微架构，一个租户能对另一个租户施加大幅性能影响。文章分析了RDMA的各种操作对性能的不同影响，并开发了一个测试套件来复现不同种类的影响（其实是攻击）。</li>
+<li><a
+href="https://datawine.github.io/nsdi23-Following-the-Data-Not-the-Function-Rethinking-Function-Orchestration-in-Serverless-Computing.html">Following
+the Data, Not the Function: Rethinking Function Orchestration in
+Serverless
+Computing</a>：创建了数据桶来存储中间数据（比如函数返回的结果），并将orchestration的功能变成由桶触发。</li>
 </ul>
 <h1 id="osdi">OSDI</h1>
 <h2 id="section-25">2014</h2>
