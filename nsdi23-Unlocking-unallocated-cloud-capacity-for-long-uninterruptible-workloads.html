@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="ycsb," />
+  <meta name="keywords" content="nsdi," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="主要总结Yahoo的数据库测试项目YCSB的使用（针对redis）。">
+<meta name="description" content="文章初步解决了long-running任务在HVM上的运行问题。 通过对Harvest VM的特征分析发现，虽然HVM的资源空间和时间多样性很大，但是资源inter-change时间分布在一段时间内是相对稳定的。 因此，即使不知道资源变化的确切时间，但变化之间的时间分布是已知的。 主要包括以下几个核心设计点： 预测资源变少的概率；将长任务与更稳定的HVM相匹配、将短任务与不稳定的HVM相匹配；维护">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ycsb学习">
-<meta property="og:url" content="https://datawine.github.io/ycsb-learning.html">
+<meta property="og:title" content="Unlocking unallocated cloud capacity for long, uninterruptible workloads">
+<meta property="og:url" content="https://datawine.github.io/nsdi23-Unlocking-unallocated-cloud-capacity-for-long-uninterruptible-workloads.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="主要总结Yahoo的数据库测试项目YCSB的使用（针对redis）。">
+<meta property="og:description" content="文章初步解决了long-running任务在HVM上的运行问题。 通过对Harvest VM的特征分析发现，虽然HVM的资源空间和时间多样性很大，但是资源inter-change时间分布在一段时间内是相对稳定的。 因此，即使不知道资源变化的确切时间，但变化之间的时间分布是已知的。 主要包括以下几个核心设计点： 预测资源变少的概率；将长任务与更稳定的HVM相匹配、将短任务与不稳定的HVM相匹配；维护">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-05-07T14:43:10.000Z">
-<meta property="article:modified_time" content="2022-05-07T14:43:42.411Z">
+<meta property="article:published_time" content="2023-05-11T10:48:02.000Z">
+<meta property="article:modified_time" content="2023-05-11T12:10:49.322Z">
 <meta property="article:author" content="Datawine">
-<meta property="article:tag" content="ycsb">
+<meta property="article:tag" content="nsdi">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/ycsb-learning.html"/>
+  <link rel="canonical" href="https://datawine.github.io/nsdi23-Unlocking-unallocated-cloud-capacity-for-long-uninterruptible-workloads.html"/>
 
 
 
 
 
-  <title>ycsb学习 | Datawine's Blog</title>
+  <title>Unlocking unallocated cloud capacity for long, uninterruptible workloads | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/ycsb-learning.html">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/nsdi23-Unlocking-unallocated-cloud-capacity-for-long-uninterruptible-workloads.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">ycsb学习</h1>
+          <h1 class="post-title" itemprop="name headline">Unlocking unallocated cloud capacity for long, uninterruptible workloads</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-07T22:43:10+08:00">
-                2022-05-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-05-11T18:48:02+08:00">
+                2023-05-11
               </time>
             
 
@@ -349,8 +349,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index">
-                    <span itemprop="name">工具</span>
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
                   </a>
                 </span>
 
@@ -368,8 +368,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/ycsb-learning.html#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="ycsb-learning.html" itemprop="commentsCount"></span>
+                <a href="/nsdi23-Unlocking-unallocated-cloud-capacity-for-long-uninterruptible-workloads.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="nsdi23-Unlocking-unallocated-cloud-capacity-for-long-uninterruptible-workloads.html" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.2k
+                  2.4k
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  6
+                  8
                 </span>
               
             </div>
@@ -433,164 +433,105 @@
       
 
       
-        <p>主要总结Yahoo的数据库测试项目YCSB的使用（针对redis）。</p>
+        <p>文章初步解决了long-running任务在HVM上的运行问题。 通过对Harvest
+VM的特征分析发现，虽然HVM的资源空间和时间多样性很大，但是资源inter-change时间分布在一段时间内是相对稳定的。
+因此，即使不知道资源变化的确切时间，但变化之间的时间分布是已知的。
+主要包括以下几个核心设计点：
+预测资源变少的概率；将长任务与更稳定的HVM相匹配、将短任务与不稳定的HVM相匹配；维护一个相对稳定的HVM池。</p>
 <span id="more"></span>
-<p>github网址：https://github.com/brianfrankcooper/YCSB</p>
-<h1 id="安装">安装</h1>
+<p>文章对一个Microsoft的Harvest VM进行了特征分析，discover large spatial
+vairations in their stability and resources。
+文章通过预测哪些HVMs将足够稳定，可以在没有抢占的情况下运行任务，来利用这种多样性。</p>
+<h1 id="introduction">Introduction</h1>
+<p>Harvest
+VM是与其他常规（按需、高优先级）虚拟机共处的可变大小的虚拟机。
+当一个新的常规虚拟机被分配到服务器上时，HVM的容量就会缩小，而当一个常规虚拟机结束时，它就会增加。</p>
+<p>Large harvested
+capacity克服了主要的capacity瓶颈，让金融、科学、地理、能源和气象部门的许多大规模应用能够在云中经济地运行。
+然而，由于抢占，HVM的资源变化会大大减慢这些长时间、不能间断的应用执行。</p>
+<p>之前的努力试图用调度、资源获取和负载平衡技术来掩盖这种开销，但是这些技术不适合长时间、不能间断的应用。
+它们经常使用检查指向、迁移、复制或应用程序级别变化的组合。</p>
+<h1 id="characterization-motivation">Characterization &amp;
+Motivation</h1>
+<h2 id="harvest-vms">Harvest VMs</h2>
+<p>主要回答以下几个问题：</p>
 <ul>
-<li><p>需要安装</p>
+<li>HVMs的稳定性：HVMs变化的频率和程度如何？
 <ul>
-<li>java</li>
-<li>maven</li>
+<li>Size of CMT core
+changes：不同集群的平均变化幅度在大约5到13个SMT核心（同时多线程核心或硬件线程）之间。考虑到HVM的典型最小规模为2-8个SMT核心，并且考虑到1-2个核心是流行的常规VM规模，这些都是很大的变化。这样大的变化可能对应用产生重大的性能影响（包括正面和负面）。</li>
+<li>Frequency of
+changes：变化间时间具有高变异性和长尾。对于较高的活动群组（C1-C6），我们看到93-72%的变化在一小时之内，平均变化时间为26-224分钟，第95百分位数为1.2-11.2小时。对于较低的活动群组（C7-C8），我们看到61-55%的变化在一小时内，平均8-10小时，第95百分位数为几天。</li>
 </ul></li>
-<li><p>直接下载编译好的版本（不推荐）</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -O --location https://github.com/brianfrankcooper/YCSB/releases/download/0.15.0/ycsb-0.15.0.tar.gz</span><br><span class="line">tar xfvz ycsb-0.15.0.tar.gz</span><br><span class="line">cd ycsb-0.15.0</span><br></pre></td></tr></table></figure></li>
-<li><p>使用java或者maven编译</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git clone http://github.com/brianfrankcooper/YCSB.git</span><br><span class="line">cd YCSB</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">只安装redis测试部分</span></span><br><span class="line">mvn -pl com.yahoo.ycsb:redis-binding -am clean package</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装全部测试功能</span></span><br><span class="line">mvn clean package</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h1 id="概述">概述</h1>
-<p>详细说明：https://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload</p>
-<p>运行workload一共有六个部分</p>
+<li>HVMs的空间和时间多样性：How do different HVMs compare and how do
+they change over time?
 <ul>
-<li>设置数据库</li>
-<li>选择合适的DB interface</li>
-<li>选择合适的负载</li>
-<li>选择合适的runtime parameters</li>
-<li>load选择好的workload</li>
-<li>run选择好的workload</li>
-</ul>
-<h2 id="设置数据库">设置数据库</h2>
-<p>简要的说，就是创建名为<code>usertable</code>的表，因为ycsb默认的是对<code>usertable</code>进行相关操作。</p>
-<p>而对于redis，则不需要相关的操作。</p>
-<h2 id="选择合适的db-interface">选择合适的DB interface</h2>
-<p>YCSB的操作是通过DB interface来实现的。最基本的DB
-interface是<code>com.yahoo.ycsb.BasicDB</code>，会将输出输出到<code>System.out</code>里。可以通过继承DB
-interface来自定义DB interface，也可以使用原有的DB interface。</p>
-<h2 id="选择合适的workload">选择合适的workload</h2>
-<p>当前版本提供了六种workload</p>
-<h3 id="workload-a-update-heavy-workload">Workload A: Update heavy
-workload</h3>
-<p>This workload has a mix of 50/50 reads and writes. An application
-example is a session store recording recent actions.</p>
-<h3 id="workload-b-read-mostly-workload">Workload B: Read mostly
-workload</h3>
-<p>This workload has a 95/5 reads/write mix. Application example: photo
-tagging; add a tag is an update, but most operations are to read
-tags.</p>
-<h3 id="workload-c-read-only">Workload C: Read only</h3>
-<p>This workload is 100% read. Application example: user profile cache,
-where profiles are constructed elsewhere (e.g., Hadoop).</p>
-<h3 id="workload-d-read-latest-workload">Workload D: Read latest
-workload</h3>
-<p>In this workload, new records are inserted, and the most recently
-inserted records are the most popular. Application example: user status
-updates; people want to read the latest.</p>
-<h3 id="workload-e-short-ranges">Workload E: Short ranges</h3>
-<p>In this workload, short ranges of records are queried, instead of
-individual records. Application example: threaded conversations, where
-each scan is for the posts in a given thread (assumed to be clustered by
-thread id).</p>
-<h3 id="workload-f-read-modify-write">Workload F: Read-modify-write</h3>
-<p>In this workload, the client will read a record, modify it, and write
-back the changes. Application example: user database, where user records
-are read and modified by the user or to record user activity.</p>
-<h3 id="自定义workload">自定义Workload</h3>
-<p>当然也可以自定义workload：https://github.com/brianfrankcooper/YCSB/wiki/Implementing-New-Workloads</p>
-<p>一般常用的workload
-property如<code>fieldcount</code>，<code>fieldlength</code>，<code>requestdistribution</code>等。</p>
-<p>全部properties如下：</p>
-<p>The property files used with the core workload generator can specify
-values for the following properties:</p>
+<li>对于每个HVM，在每个1小时的时间窗口，我们测量收获的内核（1小时内的时间平均值）和稳定性（变化的数量）</li>
+<li>最差的10%的HVMs可以在一小时内见证几十次变化，而相对稳定的
+50%的HVMs在一小时内最多出现一次变化。</li>
+<li>一个特定的HVM的稳定性和资源也会随着时间的推移而变化</li>
+</ul></li>
+<li>工作负载的影响：长期的、不间断的工作负载的运行时间与HVMs的资源变化是如何比较的？
 <ul>
-<li><strong>fieldcount</strong>: the number of fields in a record
-(default: 10)</li>
-<li><strong>fieldlength</strong>: the size of each field (default:
-100)</li>
-<li><strong>readallfields</strong>: should reads read all fields (true)
-or just one (false) (default: true)</li>
-<li><strong>readproportion</strong>: what proportion of operations
-should be reads (default: 0.95)</li>
-<li><strong>updateproportion</strong>: what proportion of operations
-should be updates (default: 0.05)</li>
-<li><strong>insertproportion</strong>: what proportion of operations
-should be inserts (default: 0)</li>
-<li><strong>scanproportion</strong>: what proportion of operations
-should be scans (default: 0)</li>
-<li><strong>readmodifywriteproportion</strong>: what proportion of
-operations should be read a record, modify it, write it back (default:
-0)</li>
-<li><strong>requestdistribution</strong>: what distribution should be
-used to select the records to operate on – uniform, zipfian or latest
-(default: uniform)</li>
-<li><strong>maxscanlength</strong>: for scans, what is the maximum
-number of records to scan (default: 1000)</li>
-<li><strong>scanlengthdistribution</strong>: for scans, what
-distribution should be used to choose the number of records to scan, for
-each scan, between 1 and maxscanlength (default: uniform)</li>
-<li><strong>insertorder</strong>: should records be inserted in order by
-key (“ordered”), or in hashed order (“hashed”) (default: hashed)</li>
-<li><strong>operationcount</strong>: number of operations to perform. If
-set to zero then YCSB will run until maxexecutiontime is reached (which
-by default is indefinitely). Note that if your workload or command line
-parameters do not specify an operation count it will defualt to
-zero.</li>
-<li><strong>maxexecutiontime</strong>: maximum execution time in
-seconds. The benchmark runs until either the operation count has
-exhausted or the maximum specified time has elapsed, whichever is
-earlier. If unspecified the defualt is to run indefinitely.</li>
-<li><strong>table</strong>: the name of the table (default:
-usertable)</li>
-<li><strong>recordcount</strong>: number of records to load into the
-database initially (default: 0)</li>
-<li><strong>core_workload_insertion_retry_limit</strong>: number of
-attempts for any failed insert operation (default: 0)</li>
-<li><strong>core_workload_insertion_retry_interval</strong>: interval
-between retries, in seconds (default: 3)</li>
+<li>主要内容在下一节</li>
+</ul></li>
 </ul>
-<h2 id="选择合适的runtime-parameter">选择合适的runtime parameter</h2>
-<p>主要是</p>
+<h2 id="target-workloads">Target Workloads</h2>
+<p>这一节研究了一个主要云供应商的两个大规模生产应用：
+(1)一个在石油和天然气领域的应用，执行地震成像模拟，和(2)一个基因组学应用，分析遗传物质以确定各种属性（例如，人类的疾病敏感性和植物的物理特征）。</p>
+<p>结果表明，任务运行时间的范围和HVM
+inter-change时间的范围有相当大的重叠。
+这意味着这些工作负载中的任务在典型的Harvest虚拟机上执行期间可能会目睹一些资源变化事件。（也就是可能收到资源变化事件的影响）</p>
+<p>Figure 5的实验证明了这一点</p>
+<h2 id="opportunities-for-improvement">Opportunities for
+Improvement</h2>
+<p>为了提高我们在HVMs上的目标工作负载的效率，论文提出了以下observation：</p>
 <ul>
-<li><code>-threads</code> : <strong>the number of client
-threads</strong>.</li>
-<li><code>-target</code> : <strong>the target number of operations per
-second</strong>.</li>
-<li><code>-s</code> : <strong>status</strong>.十秒打印一次状态</li>
+<li>任务运行时间（在一个作业内或跨作业）和HVM的inter-change时间都有很大的差异，而且它们的范围有很大的重叠。这就提供了一个机会，将长任务与更稳定的HVM相匹配，将短任务与不稳定的HVM相匹配，从而通过最大限度地减少抢占和降低成本来有效利用HVM。</li>
+<li>有些HVM比其他的更稳定，而且HVM的稳定性会随着时间的推移而改变。通过获取和保留更多即时稳定的HVM，有机会改善工作负载的执行时间。</li>
 </ul>
-<h2 id="load-data">load data</h2>
-<p>需要指定<code>redis.host</code>，<code>redis.port</code>。（可以指定<code>redis.password</code>和<code>redis.cluster</code>）</p>
-<p>以上参数也可以在命令中指定，比如</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/ycsb load redis -s -P workloads/workloada -p &quot;redis.host=127.0.0.1&quot; -p &quot;redis.port=6379&quot;</span><br></pre></td></tr></table></figure>
-<h2 id="run-data">run data</h2>
-<p>同理</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/ycsb run redis -s -P workloads/workloada -p &quot;redis.host=127.0.0.1&quot; -p &quot;redis.port=6379&quot;</span><br></pre></td></tr></table></figure>
-<h1 id="一些注意事项">一些注意事项</h1>
-<h2 id="ycsb不支持对key的长度的修改">ycsb不支持对key的长度的修改</h2>
-<p>issue网址：https://github.com/brianfrankcooper/YCSB/issues/587</p>
-<p>ycsb对key命名规则是两种，<code>hashed</code>模式会生成<code>user</code>加固定长度的一串hash值，而<code>ordered</code>模式会按照<code>user</code>加顺序的方式来命名。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">insertorder=hashed      # user6284781860667377211, user8517097267634966620, user1820151046732198393</span><br><span class="line">insertorder=ordered     # user1, user2, user3032</span><br></pre></td></tr></table></figure>
-<h2 id="ycsb运行时错误read-time-out">ycsb运行时错误：Read time out</h2>
-<p>错误类似于</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">redis.clients.jedis.exceptions.JedisConnectionException: java.net.SocketTimeoutException: Read timed out</span><br><span class="line"></span><br><span class="line">at redis.clients.jedis.Protocol.process(Protocol.java:79)</span><br><span class="line">at redis.clients.jedis.Protocol.read(Protocol.java:131)</span><br><span class="line">at redis.clients.jedis.Connection.getIntegerReply(Connection.java:188)</span><br><span class="line">at redis.clients.jedis.Jedis.sismember(Jedis.java:1266)</span><br></pre></td></tr></table></figure>
-<p>当数据量变大之后，延时可能会变成几秒，而Jedis默认的是<code>2</code>秒的超时限制。</p>
-<p>修改redis的src文件夹的RedisClient.java</p>
-<p>将</p>
-<p><code>jedis = new Jedis(host, port);</code></p>
-<p>修改为</p>
-<p><code>jedis = new Jedis(host, port, 10000);</code></p>
-<p>即从默认的2秒上升为10秒。</p>
-<h1 id="参考资料">参考资料</h1>
-<ul>
-<li>ycsb github地址：https://github.com/brianfrankcooper/YCSB</li>
-<li>ycsb
-流程介绍：https://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload</li>
-<li>ycsb
-workload介绍：https://github.com/brianfrankcooper/YCSB/wiki/Implementing-New-Workloads</li>
-<li>ycsb 不支持对key长度的修改
-issue网址：https://github.com/brianfrankcooper/YCSB/issues/587</li>
-<li>ycsb 运行时错误：read time out
-解决方法博客网址：https://github.com/brianfrankcooper/YCSB/issues/587</li>
-</ul>
-
+<h1 id="design">Design</h1>
+<p>图6显示了SLACKSCHED的架构和三个主要实体的协调（以紫色显示）。</p>
+<ol type="1">
+<li>per-node的节点管理器，在集群中的每个节点上运行，负责报告节点的健康状况和在节点上运行任务。在HVM的情况下，它也负责传达HVM上的即时资源可用性。</li>
+<li>per-job的作业管理器，负责管理单个作业中的任务进度。</li>
+<li>一个集群范围内的资源管理器（RM），接收来自作业管理器的资源请求，安排和映射这些请求到节点，并将资源分配传达给作业管理器。然后，工作管理员根据分配的资源在节点上启动容器化程序。</li>
+</ol>
+<p>SLACKSCHED由两个关键组件组成（以蓝色显示）：Scheduler和Acquirer。
+Scheduler扩展了默认的协调器调度器，并利用任务运行时间的多样性和HVM资源的变化来匹配任务和HVM。
+Acquirer与Provider和资源管理器互动，以获取和维护一组低成本的HVM，收获更多的资源，并对工作负载足够稳定。</p>
+<h2 id="scheduler">Scheduler</h2>
+<p>主要分成两个部分：预测引擎，预测每个HVM在未来的稳定性；匹配器，根据任务持续时间和HVM的稳定性将任务与HVM匹配。</p>
+<h3 id="prediction-engine">Prediction Engine</h3>
+<p>文章没有进行point
+estimation，而是采取了另一种基于分布的预测和条件概率的方法。
+与之前的工作类似，文章以inter-change时间分布为条件来估计特定HVM的下一次变更前的剩余时间。
+文章发现，inter-change时间分布在一段时间内是相对稳定的。因此，即使不知道资源变化的确切时间，但变化之间的时间分布是已知的。</p>
+<p><strong>Workflow。</strong>对过去D天（文章中D=1）的inter-change事件分布进行滚动snapshot，以估计completion
+probability。
+并且将一个任务和HVM的完成概率近似为HVM在给定任务的生命周期内不会缩减的概率。（为什么是近似：因为实际上即使HVM的资源缩减，任务仍然可能完成）</p>
+<p>分两步来计算完成概率。首先，我们估计在某一特定HVM上的任务有效期内发生资源变化事件的可能性。其次，我们估计这个资源变化事件是一个收缩事件的可能性。</p>
+<h3 id="match-maker">Match Maker</h3>
+<p>给了Completion probability计算的公式，并不复杂。</p>
+<p><strong>延迟调度。</strong>
+在某些情况下，等待一个更稳定的节点（即具有更好的完成概率）可能是一个更好的选择，而不是从当前可用的资源中挑选。
+在不了解未来的情况下，决定是等待还是用当前的最佳资源运行是很有挑战性的。
+我们可以实现一个简单的方法，只有当HVM提供了一个阈值的完成概率时，才在它上面启动任务。
+然而，这可能会导致调度器无限期地延迟。
+为了解决这个问题，我们通过估计从各种决策选择中得到的预期完成时间来形成等待的成本和收益。</p>
+<p><strong>Workflow。</strong> Match
+Maker使用等式2将任务安排在给出最佳预期完成时间的节点上。
+如果这个节点目前没有资源，那么它就等待，并在下一次调度迭代时重新考虑这个决定。</p>
+<h2 id="acquirer">Acquirer</h2>
+<p>理想情况下，我们希望维护一组HVM，其稳定性与任务的运行时间相匹配。然而，除了任务运行时间信息外，这还需要对以下方面有充分的了解：
+(1)未分配的资源如何分布在数据中心的服务器上，以及(2)这些资源在任何时间点的稳定性如何。作为一个用户（或集群协调者），这些信息是不可用的，也不可能建模。即使作为提供者，这些指标也只是即时可用，而HVM模式可能会随着时间的推移而改变（图3）。</p>
+<p>解决方法是采用“exploration-exploitation”。
+Acquirer从一个随机的HVM组合开始，定期识别最差的HVM并将其淘汰，逐渐形成一个更稳定的HVM池。
+Acquirer将"最差"定义为最近改变的HVMs。
+当HVM池相对于provider可以返回的HVM来说不稳定时，这个简单的策略是有效的。</p>
+<p>在文章的实现中，Acquirer每小时运行一次，并处理10%的分配的HVMs。
+同时，它向供应商请求同等数量的新的HVM，以保持相同数量的集群资源。</p>
+<!-- flag of hidden posts -->
       
     </div>
     
@@ -607,7 +548,7 @@ issue网址：https://github.com/brianfrankcooper/YCSB/issues/587</li>
       
         <div class="post-tags">
           
-            <a href="/tags/ycsb/" rel="tag"># ycsb</a>
+            <a href="/tags/nsdi/" rel="tag"># nsdi</a>
           
         </div>
       
@@ -616,26 +557,6 @@ issue网址：https://github.com/brianfrankcooper/YCSB/issues/587</li>
       
       
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/smartnic-learning.html" rel="next" title="smartnic学习">
-                <i class="fa fa-chevron-left"></i> smartnic学习
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/dpdk-install.html" rel="prev" title="dpdk安装踩坑实录">
-                dpdk安装踩坑实录 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
 
       
@@ -779,10 +700,9 @@ issue网址：https://github.com/brianfrankcooper/YCSB/issues/587</li>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.1.</span> <span class="nav-text">设置数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84db-interface"><span class="nav-number">2.2.</span> <span class="nav-text">选择合适的DB interface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84workload"><span class="nav-number">2.3.</span> <span class="nav-text">选择合适的workload</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#workload-a-update-heavy-workload"><span class="nav-number">2.3.1.</span> <span class="nav-text">Workload A: Update heavy
-workload</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#workload-b-read-mostly-workload"><span class="nav-number">2.3.2.</span> <span class="nav-text">Workload B: Read mostly
-workload</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#workload-c-read-only"><span class="nav-number">2.3.3.</span> <span class="nav-text">Workload C: Read only</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#workload-d-read-latest-workload"><span class="nav-number">2.3.4.</span> <span class="nav-text">Workload D: Read latest
-workload</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#workload-e-short-ranges"><span class="nav-number">2.3.5.</span> <span class="nav-text">Workload E: Short ranges</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#workload-f-read-modify-write"><span class="nav-number">2.3.6.</span> <span class="nav-text">Workload F: Read-modify-write</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89workload"><span class="nav-number">2.3.7.</span> <span class="nav-text">自定义Workload</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84runtime-parameter"><span class="nav-number">2.4.</span> <span class="nav-text">选择合适的runtime parameter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#load-data"><span class="nav-number">2.5.</span> <span class="nav-text">load data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#run-data"><span class="nav-number">2.6.</span> <span class="nav-text">run data</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">3.</span> <span class="nav-text">一些注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ycsb%E4%B8%8D%E6%94%AF%E6%8C%81%E5%AF%B9key%E7%9A%84%E9%95%BF%E5%BA%A6%E7%9A%84%E4%BF%AE%E6%94%B9"><span class="nav-number">3.1.</span> <span class="nav-text">ycsb不支持对key的长度的修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ycsb%E8%BF%90%E8%A1%8C%E6%97%B6%E9%94%99%E8%AF%AFread-time-out"><span class="nav-number">3.2.</span> <span class="nav-text">ycsb运行时错误：Read time out</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#characterization-motivation"><span class="nav-number">2.</span> <span class="nav-text">Characterization &amp;
+Motivation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#harvest-vms"><span class="nav-number">2.1.</span> <span class="nav-text">Harvest VMs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#target-workloads"><span class="nav-number">2.2.</span> <span class="nav-text">Target Workloads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#opportunities-for-improvement"><span class="nav-number">2.3.</span> <span class="nav-text">Opportunities for
+Improvement</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#design"><span class="nav-number">3.</span> <span class="nav-text">Design</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#scheduler"><span class="nav-number">3.1.</span> <span class="nav-text">Scheduler</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#prediction-engine"><span class="nav-number">3.1.1.</span> <span class="nav-text">Prediction Engine</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#match-maker"><span class="nav-number">3.1.2.</span> <span class="nav-text">Match Maker</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#acquirer"><span class="nav-number">3.2.</span> <span class="nav-text">Acquirer</span></a></li></ol></li></ol></div>
             
 
           </div>
