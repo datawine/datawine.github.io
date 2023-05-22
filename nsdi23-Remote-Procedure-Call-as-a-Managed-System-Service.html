@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="tpds," />
+  <meta name="keywords" content="nsdi," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="本篇文章更像是大杂烩（因为很多在引自己组里的文章）。提了一个ECCT，把分布式系统的线程之间的等待原因也标注出来了。">
+<meta name="description" content="通过dynamic binding、将marshalling放在每台机器的一个集中服务上、架构设计，改变了原有的RPC库+sidecar的实现，实现热更新、RPC-as-a-Service、模块化policy enforcement。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Diagnosing Performance Variations by Comparing Multi-Level Execution Traces">
-<meta property="og:url" content="https://datawine.github.io/tpds17-Diagnosing-Performance-Variations-by-Comparing-Multi-Level-Execution-Traces.html">
+<meta property="og:title" content="Remote Procedure Call as a Managed System Service">
+<meta property="og:url" content="https://datawine.github.io/nsdi23-Remote-Procedure-Call-as-a-Managed-System-Service.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="本篇文章更像是大杂烩（因为很多在引自己组里的文章）。提了一个ECCT，把分布式系统的线程之间的等待原因也标注出来了。">
+<meta property="og:description" content="通过dynamic binding、将marshalling放在每台机器的一个集中服务上、架构设计，改变了原有的RPC库+sidecar的实现，实现热更新、RPC-as-a-Service、模块化policy enforcement。">
 <meta property="og:locale">
-<meta property="article:published_time" content="2023-01-12T03:54:47.000Z">
-<meta property="article:modified_time" content="2023-01-12T07:31:26.014Z">
+<meta property="article:published_time" content="2023-05-15T11:41:46.000Z">
+<meta property="article:modified_time" content="2023-05-22T08:41:43.455Z">
 <meta property="article:author" content="Datawine">
-<meta property="article:tag" content="tpds">
+<meta property="article:tag" content="nsdi">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/tpds17-Diagnosing-Performance-Variations-by-Comparing-Multi-Level-Execution-Traces.html"/>
+  <link rel="canonical" href="https://datawine.github.io/nsdi23-Remote-Procedure-Call-as-a-Managed-System-Service.html"/>
 
 
 
 
 
-  <title>Diagnosing Performance Variations by Comparing Multi-Level Execution Traces | Datawine's Blog</title><meta name="robots" content="noindex">
+  <title>Remote Procedure Call as a Managed System Service | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/tpds17-Diagnosing-Performance-Variations-by-Comparing-Multi-Level-Execution-Traces.html">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/nsdi23-Remote-Procedure-Call-as-a-Managed-System-Service.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Diagnosing Performance Variations by Comparing Multi-Level Execution Traces</h1>
+          <h1 class="post-title" itemprop="name headline">Remote Procedure Call as a Managed System Service</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-01-12T11:54:47+08:00">
-                2023-01-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-05-15T19:41:46+08:00">
+                2023-05-15
               </time>
             
 
@@ -368,8 +368,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/tpds17-Diagnosing-Performance-Variations-by-Comparing-Multi-Level-Execution-Traces.html#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="tpds17-Diagnosing-Performance-Variations-by-Comparing-Multi-Level-Execution-Traces.html" itemprop="commentsCount"></span>
+                <a href="/nsdi23-Remote-Procedure-Call-as-a-Managed-System-Service.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="nsdi23-Remote-Procedure-Call-as-a-Managed-System-Service.html" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  899
+                  3k
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  10
                 </span>
               
             </div>
@@ -433,63 +433,147 @@
       
 
       
-        <p>本篇文章更像是大杂烩（因为很多在引自己组里的文章）。提了一个ECCT，把分布式系统的线程之间的等待原因也标注出来了。</p>
+        <p>通过dynamic
+binding、将marshalling放在每台机器的一个集中服务上、架构设计，改变了原有的RPC库+sidecar的实现，实现热更新、RPC-as-a-Service、模块化policy
+enforcement。</p>
 <span id="more"></span>
-<p>TraceCompare，这是一个能够自动识别用户空间和内核层面上同一任务的执行组之间差异的框架。
-许多性能问题表现为变化，我们的框架很容易识别。
-我们的比较算法考虑到所有影响分析执行的完成时间的线程。
-差异与应用程序代码相关联，以促进对所发现问题的纠正。
-任务执行的性能特征由一个新的数据结构表示，称为增强型调用上下文树（ECCT）。</p>
-<h1 id="design">Design</h1>
-<p>TraceCompare的设计和实现分成四个部分。</p>
-<ul>
-<li>一个数据模型，在数据库中存储任务执行的性能特征</li>
-<li>通过追踪来记录建立这个数据库所需的信息，并使其开销最小</li>
-<li>用于从trace中建立数据库的算法</li>
-<li>高亮显示各组任务执行之间差异的用户界面</li>
-</ul>
-<h2 id="data-model">Data Model</h2>
-<p><strong>增强型调用上下文树（ECCT）。</strong></p>
-<p>对于所有时间都花在CPU上且涉及单线程的执行，ECCT的结构与CCT的结构是一致的。
-在分析执行过程中，使用相关call stack中花费的时间来注释每个节点。</p>
-<p>对于包含CPU外等待时间或涉及多个线程（可能分布在多个主机上）的执行，CCT得到了增强。
-首先，对于任何非CPU的等待时间，一个以等待原因命名的人工函数（定时器、块设备、网络、抢占......）被推到堆栈上。
-第二，每当一个线程在等待另一个线程时，第二个线程的堆栈就会与第一个线程的堆栈相连接。
-当线程之间有一连串的依赖关系时，这个规则可以根据需要递归应用。
-这些依赖关系可以是直接的（一个线程在等待另一个线程计算结果或执行动作），也可以是间接的（一个线程在等待另一个线程释放资源，如CPU或mutex）。</p>
-<h2 id="tracing-task-execution">Tracing Task Execution</h2>
-<p>本文用的是LTTng。</p>
-<p>为了能够在不同的执行之间进行比较，有必要对事件进行解复用。</p>
-<p>有时，Linux内核的现有事件可以用于这一目的。例如，syscall_exit_accept事件和syscall_entry_shutdown事件。
-如果不行，就只能将LTTng-UST的探针必须静态地插入到源代码中。</p>
-<p>同时利用另外一篇工作里介绍的关键路径算法来寻找线程之间的阻塞关系。</p>
-<p>本文还想在用户不需要改代码的情况下进行检测。 因此preload
-lttng-profile。每次定时器结束或者syscall的时候都会捕获call
-stack，并发出一个有时间戳的LTTng-UST事件。
-为了提高性能，只对持续时间超过阈值的系统调用进行用户空间堆栈的捕获（100ms）。
-系统调用的持续时间由一个内核模块来跟踪。</p>
-<h2 id="building-a-task-execution-database">Building a Task Execution
-Database</h2>
-<p>主要分成四步</p>
+<p>本文将RPC编排和策略执行是作为系统服务完成，而不是作为一个链接到每个应用程序的库。</p>
+<p>近年来，应用和网络运维团队需要rapid and flexible visibility and
+control over the flow of RPCs。
+包括监测和控制特定类型的RPC的性能，优先级设施和速率限制以满足特定应用的性能和可用性目标，动态插入advanced
+diagnostics以跟踪微服务网络中的用户请求，以及特定应用的负载平衡以提高缓存的有效性。</p>
+<p>现在典型的架构是在sidecar中实现不同的策略。
+尽管使用sidecar是functional并且secure的，但是它也是低效的。
+应用程序RPC库在运行时根据程序员提供的类型信息将RPC参数编入一个缓冲区。
+这个缓冲区通过操作系统的网络协议栈发送，然后转发到sidecar，sidecar通常需要解析和解包网络、虚拟化和RPC头，经常在数据包有效载荷中寻找，以正确执行所需的策略。
+然后，它对数据进行重新打包，以便进行传输。</p>
+<p>对网络硬件的直接应用级访问，如RDMA或DPDK，提供了高性能，但排除了sidecar策略控制这个可能性。
+同样，网卡也越来越复杂，但应用程序或sidecar很难利用这些新功能，因为marshalling工作是在网络协议栈的高层进行的。
+对marshalling代码的任何改变都需要重新编译和重启每个应用程序和/或sidecar，损害了端到端的可用性。</p>
+<p><strong>简而言之，现有的解决方案可以提供良好的性能，或灵活和可执行的策略控制，但不能同时提供。</strong></p>
+<h1 id="background">Background</h1>
+<h2 id="remote-procedure-call">Remote Procedure Call</h2>
+<p>大概介绍了RPC的一些基本概念。</p>
+<h2 id="the-need-for-manageability">The Need for Manageability</h2>
+<p>随着基于RPC的分布式应用扩展到大型、复杂的部署场景，越来越需要改善RPC流量的可管理性。
+我们将管理需求分为三类：</p>
 <ol type="1">
-<li>Compute the critical path of the execution</li>
-<li>Generate an ECCT for the execution</li>
-<li>Compute global execution metrics</li>
-<li>Insert the execution’s ECCT and metrics in a database</li>
+<li>可观察性：提供详细的遥测数据，使开发者能够诊断和优化应用性能。</li>
+<li>政策执行：允许运营商对RPC应用和服务应用自定义策略（例如，访问控制、速率限制、加密）。</li>
+<li>可升级性：
+支持软件升级（如错误修复和新功能），同时尽量减少应用程序的停机时间。</li>
 </ol>
-<p>这里面很多都是引用自己组里的之前的工作，介绍太简单了。</p>
-<h2 id="comparing-task-executions">Comparing Task Executions</h2>
-<p>主要是两个部分：Filters和Flame Graph。
-Filters可以选择自己感兴趣的指标，能够看到对应的其他指标的变化。 Flame
-Graph的亮点在于Diff。</p>
-
-
-	<div class="row">
-    <embed src="/paper/tpds17-Diagnosing-Performance-Variations-by-Comparing-Multi-Level-Execution-Traces.pdf" width="100%" height="1700" type="application/pdf">
-	</div>
-
-
-
+<p>一个自然的问题是：是否有可能在不改变现有RPC库的情况下增加这些属性？
+很不幸的是，在当前这种RPC库+sidecar的模式下，不太可能。</p>
+<h1 id="overview">Overview</h1>
+<p>图2给了一个high-level的overview。mRPC服务作为一个non-root、用户态的进程运行，只访问必要的网络设备和a
+shared-memory region for each application。</p>
+<p>共享内存被用来在应用和mRPC服务之间通信，包括control queues和一个data
+buffer。</p>
+<p>整体流程包括以下几个步骤</p>
+<ol type="1">
+<li>用户定义protocol schema，mRPC schema compiler基于此生成stub
+code</li>
+<li>应用部署之后，应用连接到运行在同一台机器上的mRPC服务，并specifies
+the protocols of interest</li>
+<li>mRPC服务也利用protocol
+schema来生成、编译、动态加载一个protocol-specific
+lib。这个库包括了对应这个schema的marshalling和unmarshalling code</li>
+<li>用户照常使用，只是数据结构是通过参数或者返回值传递的，并且开在shared
+data buffer上。</li>
+<li>stub和mRPC库管理control queues中的RPC calls和replies，还有data
+buffer中的allocations和deallocations。</li>
+<li>mRPC服务通过modular
+engines控制RPC，将要做的模块化。在执行过程中，read from niput
+queues，执行具体的事项，再enqueue outputs。</li>
+</ol>
+<p>本篇文章的核心是operate over RPCs rather than packets。
+主要通过以上的架构设计和dynamic binding实现。</p>
+<p>mRPC可以</p>
+<ol type="1">
+<li>支持对单个RPC进行政策修改（这里的单个应该指的是一种）</li>
+<li>支持对整台机器的统一下放</li>
+<li>支持下面不同的网络处理功能</li>
+</ol>
+<h1 id="design">Design</h1>
+<h2 id="dynamic-rpc-binding">Dynamic RPC Binding</h2>
+<p>应用程序有不同的RPC schemas，这些schemas最终决定了RPC的marshall方式。
+在传统的RPC-as-a-library方法中，protocol
+compiler会生成marshalling代码，并将其链接到应用程序中。
+在我们的设计中，mRPC服务负责marshalling，这意味着app-specific的marshalling代码需要与RPC库解耦，并在mRPC服务本身中运行。</p>
+<p>应用程序直接向mRPC服务提交RPC schema（而不是marshall代码）。
+mRPC服务生成相应的marshall代码，然后编译并动态加载库。
+对于RPC客户端和RPC服务器之间的初始握手，两个mRPC服务检查所提供的RPC
+schema是否匹配，如果不匹配，客户端的连接将被拒绝。</p>
+<p>现在还有三个问题。</p>
+<p>首先，in-application user stub和mRPC库的职责是什么？
+在mRPC中，应用程序依靠user stub来实现其RPC schema中指定的abstraction。
+这意味着我们仍然需要生成胶水代码来维护传统的应用编程接口。
+我们的解决方案是提供一个单独的protocol schema
+compiler，该编译器不受信任，由应用开发者运行，以生成不涉及marshalling和传输的user
+stub code。 应用程序的RPC
+stub（在mRPC库的帮助下）在共享内存堆上创建了一个包含RPC元数据的消息缓冲区，其中有指向RPC参数的类型化指针。
+消息被放置在一个共享内存队列中，将由mRPC服务来处理。接收方也以类似的方式工作。</p>
+<p>第二，这种方法是否会增加RPC连接/绑定的时间？
+如果简单地实现，这种设计会增加RPC连接/绑定的时间，因为当RPC客户端第一次连接到相应的服务器时（或者等同于RPC服务器绑定到服务时），mRPC服务必须编译RPC
+schema并加载产生的marshalling库。
+然而，这种延迟对我们的设计来说并不重要，我们可以通过以下方式来缓解它。
+mRPC服务在启动应用程序之前接受RPC
+schema，作为一种预取的形式。给定一个模式后，它就会编译并缓存marshalling代码。
+在RPC连接/绑定时，mRPC服务只需根据RPC模式的哈希值执行缓存查找。
+如果它存在于缓存中，mRPC服务将加载相关的库；否则，mRPC服务将调用编译器来生成（并随后缓存）该库。这就把连接/绑定的时间从几秒钟减少到几毫秒。</p>
+<p>第三，当新的应用程序到来时，现有的应用程序是否面临暂停？
+多线程的mRPC服务是一个单一的进程，为许多RPC应用提供服务；然而，不同RPC应用的marshalling引擎并不是共享的。
+它们在不同的内存地址中，可以独立地被加载。</p>
+<h2 id="efficient-rpc-policy-enforcement-and-observability">Efficient
+RPC Policy Enforcement and Observability</h2>
+<p>这边的key
+idea是：发送方应该marshal一次，并且尽可能地晚；接收方应该unmarshal一次，并且尽可能地早。
+在接收方，policy
+enforacement和observability直接在RPCs上进行操作，然后RPC才被marshal，变成packets。
+在接收方，packets掀背unmarshal变成RPCs，然后执行policy和observability操作，然后再将RPCs发送给应用。</p>
+<p>数据通过DMA-capable shared memory heaps操作。
+中间提了一下如何缓解time-of-use-to-time-of-check攻击。</p>
+<p>控制通过shared-memory queues实现。</p>
+<h2 id="live-upgrades">Live Upgrades</h2>
+<p>尽管文章的模块化引擎设计与Snap和Click相似，但是这两个工作都不能热升级。
+我们将引擎作为插件模块来实现，这些模块是可动态加载的库。我们设计了一种实时升级方法，支持升级、添加或删除数据通路的组件，而不影响其他数据通路。</p>
+<p><strong>升级一个引擎。</strong>
+为了升级一个引擎，mRPC首先将该引擎从其运行时中分离出来（防止它被调度）。
+接下来，mRPC销毁并删除旧的引擎，但在内存中保留旧引擎的状态；注意，这个时候引擎是与它的队列分离的，并没有运行。
+之后，mRPC加载新的引擎并配置其发送和接收队列。新引擎以旧引擎的状态开始。
+如果引擎的状态的数据结构有变化，升级后的引擎负责对状态进行必要的转换（引擎开发者必须实现）。
+注意，这也适用于跨数据通路引擎的任何共享状态。最后一步是让mRPC将新的引擎附加到运行时上。</p>
+<p><strong>改变data path。</strong> 当操作者改变data
+path以增加或删除一个引擎时，这个过程现在涉及到队列的创建（或破坏）和in-flight
+RPC的管理。
+增加一个引擎的变化是直接的，因为它只涉及到分离和重新配置引擎之间的队列。
+移除引擎的变化则更为复杂，因为一些in-flight的RPC可能被维护在内部缓冲区中；例如，速率限制器策略引擎维护一个内部队列，以确保输出队列符合配置的速率。
+当引擎被移除时，引擎开发者要负责将这种内部缓冲区冲到输出队列中。</p>
+<p><strong>多主机升级或data path改变。</strong>
+一些涉及到发送方和接收方主机的引擎升级或data
+path改变，需要仔细管理跨主机的in-flight RPC。</p>
+<h2 id="security-considerations">Security Considerations</h2>
+<p>进行了一些安全讨论。</p>
+<h1 id="advanced-manageability-features">Advanced Manageability
+Features</h1>
+<p>在本节中，我们将介绍我们在策略引擎框架上开发的两个这样的功能，以证明我们的RPC-as-a-managed-service架构的更广泛的效用。</p>
+<p><strong>特性1：全局RPC QoS。</strong>
+mRPC允许根据当前未完成的RPC的全局视图对跨应用工作负载进行集中的RPC调度。
+例如，mRPC可以强制执行一种政策，在各应用中优先考虑具有最早截止日期的RPC，以支持延迟SLO，或者优先考虑对延迟敏感的工作负载。
+这里的一个挑战是，一个天真的实现可能试图对分布在多个运行时间（即执行线程上下文）的数据路径应用QoS策略。
+这将需要每个数据通路上的（复制的）策略引擎共享未完成的RPC的状态，从而带来同步开销。
+因此，我们采用了Linux内核中使用的类似策略，在每个运行时间的基础上应用QoS策略，这反而可以使用运行时间的本地存储，而不需要同步。在我们的实现中，我们支持一种QoS策略，根据可配置的阈值大小优先考虑小型RPC。</p>
+<p><strong>特点2：避免RDMA性能异常。</strong>
+众所周知，如果不进行微调，RDMA工作负载可能无法充分利用特定RDMA
+NIC的能力，而特定的流量模式甚至会导致性能异常（例如，低RDMA吞吐量、暂停帧风暴）。
+以前的工作，如ScaleRPC和Flock已经提出了更有效地利用RNIC的技术。
+然而，他们的方法是基于库的，只适用于单个应用程序；
+因此，他们没有处理多个应用程序工作负载的组合导致RDMA性能不佳的情况。</p>
+<p>我们在RDMA传输引擎内实现了一个全局RDMA调度器，它将RPC请求翻译成RDMA消息，并将其发送到RDMA
+NIC。
+在我们的实现中，我们专注于解决穿插的小型和大型分散收集元素（可能是跨RPC以及应用程序）的性能下降问题。
+我们将这些元素与一个显式拷贝融合在一起，融合后的元素大小的上限为16KB。</p>
 <!-- flag of hidden posts -->
       
     </div>
@@ -507,7 +591,7 @@ Graph的亮点在于Diff。</p>
       
         <div class="post-tags">
           
-            <a href="/tags/tpds/" rel="tag"># tpds</a>
+            <a href="/tags/nsdi/" rel="tag"># nsdi</a>
           
         </div>
       
@@ -659,8 +743,9 @@ Graph的亮点在于Diff。</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#design"><span class="nav-number">1.</span> <span class="nav-text">Design</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#data-model"><span class="nav-number">1.1.</span> <span class="nav-text">Data Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tracing-task-execution"><span class="nav-number">1.2.</span> <span class="nav-text">Tracing Task Execution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#building-a-task-execution-database"><span class="nav-number">1.3.</span> <span class="nav-text">Building a Task Execution
-Database</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#comparing-task-executions"><span class="nav-number">1.4.</span> <span class="nav-text">Comparing Task Executions</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background"><span class="nav-number">1.</span> <span class="nav-text">Background</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#remote-procedure-call"><span class="nav-number">1.1.</span> <span class="nav-text">Remote Procedure Call</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-need-for-manageability"><span class="nav-number">1.2.</span> <span class="nav-text">The Need for Manageability</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#overview"><span class="nav-number">2.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#design"><span class="nav-number">3.</span> <span class="nav-text">Design</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dynamic-rpc-binding"><span class="nav-number">3.1.</span> <span class="nav-text">Dynamic RPC Binding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#efficient-rpc-policy-enforcement-and-observability"><span class="nav-number">3.2.</span> <span class="nav-text">Efficient
+RPC Policy Enforcement and Observability</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#live-upgrades"><span class="nav-number">3.3.</span> <span class="nav-text">Live Upgrades</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#security-considerations"><span class="nav-number">3.4.</span> <span class="nav-text">Security Considerations</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#advanced-manageability-features"><span class="nav-number">4.</span> <span class="nav-text">Advanced Manageability
+Features</span></a></li></ol></div>
             
 
           </div>
