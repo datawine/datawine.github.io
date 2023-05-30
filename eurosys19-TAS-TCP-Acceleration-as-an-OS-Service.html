@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="eurosys," />
 
 
 
@@ -79,12 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Datawine&#39;s Blog">
-<meta property="og:url" content="https://datawine.github.io/tags/sc/index.html">
+<meta name="description" content="本篇文章主要解决RPC场景下的TCP开销太大的问题。解决方法是从内核中提取出TCP最小功能，以用户态形式提供TCP fast-path。将原有功能（连接建立&#x2F;销毁、拥塞控制和超时重传）留在slow-path（原来的协议栈）里。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TAS: TCP Acceleration as an OS Service">
+<meta property="og:url" content="https://datawine.github.io/eurosys19-TAS-TCP-Acceleration-as-an-OS-Service.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="本篇文章主要解决RPC场景下的TCP开销太大的问题。解决方法是从内核中提取出TCP最小功能，以用户态形式提供TCP fast-path。将原有功能（连接建立&#x2F;销毁、拥塞控制和超时重传）留在slow-path（原来的协议栈）里。">
 <meta property="og:locale">
+<meta property="article:published_time" content="2023-05-30T11:19:59.000Z">
+<meta property="article:modified_time" content="2023-05-30T12:51:43.590Z">
 <meta property="article:author" content="Datawine">
+<meta property="article:tag" content="eurosys">
 <meta name="twitter:card" content="summary">
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/tags/sc/"/>
+  <link rel="canonical" href="https://datawine.github.io/eurosys19-TAS-TCP-Acceleration-as-an-OS-Service.html"/>
 
 
 
 
 
-  <title>标签: sc | Datawine's Blog</title>
+  <title>TAS: TCP Acceleration as an OS Service | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -278,54 +283,338 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>sc<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/eurosys19-TAS-TCP-Acceleration-as-an-OS-Service.html">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/sc18-A-Year-in-the-Life-of-a-Parallel-File-System.html" itemprop="url">
-              
-                <span itemprop="name">A Year in the Life of a Parallel File System</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">TAS: TCP Acceleration as an OS Service</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-11-02T20:49:13+08:00"
-              content="2022-11-02" >
-          11-02
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-05-30T19:19:59+08:00">
+                2023-05-30
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/eurosys19-TAS-TCP-Acceleration-as-an-OS-Service.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="eurosys19-TAS-TCP-Acceleration-as-an-OS-Service.html" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    </div>
+      
 
+      
+        <p>本篇文章主要解决RPC场景下的TCP开销太大的问题。解决方法是从内核中提取出TCP最小功能，以用户态形式提供TCP
+fast-path。将原有功能（连接建立/销毁、拥塞控制和超时重传）留在slow-path（原来的协议栈）里。</p>
+<span id="more"></span>
+<p>TAS的好处</p>
+<ul>
+<li>性能</li>
+<li>可扩展性：scale TAS independent of the applications using it</li>
+</ul>
+<p>TAS还是workload
+propotional的，可以根据网络负载动态调整CPU核，还能和应用程序共享同一个CPU核。</p>
+<p>和NetKernel不同：Netkernel的目标是accelerate provider-driven network
+stack evolution by enabling new network protocol enhancements to be made
+available to tenant VMs transparently and simultaneously。</p>
+<h1 id="background">Background</h1>
+<p>这节主要总结了现有的网络协议栈架构和TCP协议栈的性能开销，具体内容很厉害。</p>
+<p>网络协议栈架构</p>
+<ul>
+<li>Monolithic, in-kernel</li>
+<li>Kernel bypass</li>
+<li>Protected kernel bypass</li>
+<li>NIC offload</li>
+<li>Dedicated CPUs</li>
+<li>Dedicated fast path（TAS）</li>
+</ul>
+<p>TCP协议栈开销，主要比较三种的CPU
+cycles、Instructions、CPU、Retiring（cycles）、Frontend Bound（blocked
+fetching instructions）、Backend Bound（fetching data）、Bad
+Speculation。</p>
+<ul>
+<li>Linux</li>
+<li>IX</li>
+<li>TAS</li>
+</ul>
+<p>一些结论</p>
+<ol type="1">
+<li>通过在与应用程序相同的处理器上以特权模式运行，它们引起了系统调用的开销，并污染了应用程序共享的L1、L2和转换缓冲区。</li>
+<li>它们把每个连接的状态分散到几条cache
+line上，造成错误的共享，降低了缓存效率；</li>
+<li>它们在机器的所有处理器核心上共享状态，导致缓存一致性和locking
+overhead；</li>
+<li>它们为每个数据包执行整个TCP状态机，导致代码中有许多分支，不能有效利用批处理和预取机会。</li>
+</ol>
+<h1 id="design">Design</h1>
+<ul>
+<li>Efficiency：高性能</li>
+<li>Connection scalability：支持超大量连接</li>
+<li>Performance predictability：</li>
+<li>Policy
+compliance：TAS必须能够执行诸如带宽限制、内存隔离、防火墙和拥塞控制等政策。</li>
+<li>Workload proportionality：</li>
+</ul>
+<p>TAS由三个部分组成：</p>
+<ul>
+<li>Fast path</li>
+<li>Slow path</li>
+<li>不被信任的per-application per-application user-space stack</li>
+</ul>
+<p>所有的组件都通过一系列的共享内存队列连接，并对高速缓存有效的消息传递进行了优化。
+Fast
+path负责处理普通情况下的数据包交换。它将收到的有效数据包的有效载荷直接存入用户空间的内存中。
+在发送路径上，它根据slow
+path动态配置的每个连接速率或窗口限制，从用户内存中获取并封装有效负载。
+用户级TCP堆栈为应用程序提供标准的POSIX API。
+应用程序不需要修改，只需要（动态地）重新链接。
+对于连接的建立和拆除，每个用户级栈都与slow path进行交互。</p>
+<h2 id="fast-path">Fast path</h2>
+<p>Fast path处理协议头，发送TCP ack，执行网络拥塞策略，并执行payload
+segmentation。 此外，fast path还必须检测异常情况，如失序到达、connection
+control事件和未知或不寻常的数据包（如不寻常的IP和TCP头选项）。</p>
+<ul>
+<li>Common-case receive
+<ul>
+<li>假定数据包按照顺序到达</li>
+<li>丢弃所有的网络header，直接将有效payload插入user-level、per-flow、循环的receive
+payload
+buffer，应用程序通过轮询（epoll）接收通知，并用recv等套接字API操作</li>
+<li>在存入有序数据包的payload后，fast
+path自动生成一个ACK数据包，并将其传送给发送方以更新其TCP窗口</li>
+</ul></li>
+<li>Common-case send
+<ul>
+<li>通过appending data to a flow's per-flow circular transmit
+buffer（看后文，是bucket）来进行发送</li>
+<li>fast path根据rate limit、 send window size、receiver TCP
+window来drain these buckets</li>
+</ul></li>
+<li>Transmit payload buffer space
+reclamation：任何已经发送的有效载荷都会留在发送缓冲区中，直到被接收方确认</li>
+<li>per-flow state：表3列举了TAS需要的per-flow state</li>
+<li>Exceptions：处理两种异常情况：
+<ol type="1">
+<li>当处理传入的ACK时，快速路径计算重复数，并在三个重复数之后触发快速恢复，方法是重新设置发送者状态，就像这些段没有被发送一样。快速路径也会增加每个流量的重传计数器，以通知慢速路径降低流量的速率限制。</li>
+<li>快速路径跟踪接收缓冲区中的一个间隔的失序数据（从oo_start开始，长度为oo_len）。如果同一区间的失序段适合于接收缓冲区，快速路径就会接受它们。在这种情况下，快速路径将有效载荷写到接收缓冲区的相应位置。当一个内序段填补了现有流和间隔之间的空白时，快速路径通知用户级堆栈，就像一个大段到达一样，并重置其失序状态。其他失序的到达被丢弃，快速路径产生一个确认，指定下一个预期的序列号，以触发快速重传。</li>
+</ol></li>
+</ul>
+<h2 id="slow-path">Slow path</h2>
+<p>慢速路径实现了所有的政策决定和管理机制。</p>
+<ul>
+<li>拥塞控制：同时支持基于速率和窗口的拥塞控制。
+<ul>
+<li>fast
+path在每个控制间隔（默认每2个RTTs）为每个流运行一个控制循环迭代。</li>
+<li>slow path读取fast
+path记录的per-flow信息，通过共享内存更新速率/窗口</li>
+</ul></li>
+<li>连接控制：连接控制是复杂的。它包括端口分配、TCP选项的协商、维护ARP表和IP路由。</li>
+<li>超时重传</li>
+<li>TCP
+stack管理：为了将新的用户态TCP协议栈与TAS联系起来，必须通过一个特殊的系统调用通知slow
+path。如果请求被批准，slow
+path会创建一对初始的上下文队列，用户空间协议栈会使用这些队列来创建连接缓冲区等。</li>
+</ul>
+<h2 id="user-space-tcp-stack">User-space TCP stack</h2>
+<p>用户空间的TCP协议栈为应用程序提供了编程接口。
+默认的接口是POSIX套接字，所以应用程序可以保持不被修改，但是每个应用程序的修改和扩展是可能的，因为接口在用户态。
+例如，TAS也提供了一个类似于IX网络API的低级别的API。</p>
+<p><strong>上下文管理。</strong> 用户态协议栈负责定义和分配上下文。</p>
+<h2 id="workload-proportionality">Workload Proportionality</h2>
+<p>TAS在专用的处理器内核上执行协议处理，所需的内核数量取决于工作负载。
+因此，TAS必须动态地调整用于处理的处理器核的数量，使之与当前的系统负载相称。
+TAS通过三个独立的机制来实现这一点。</p>
+<p>在fast path上，使用hardware and software packet
+steering引导数据包到相关的CPU。 在slow
+path上，监测CPU的利用率，并根据需要调整steering table。
+最后，当一段时间内没有收到数据包时（实现中为10毫秒），fast
+path会阻塞线程。 这些CPU可以通过内核通知（eventfd）被唤醒。
+这就要求我们在扩大/缩小规模事件中仔细处理队列之间的数据包重新分配。</p>
+<p><strong>Fast path。</strong>
+初始化时，TAS为配置的最大CPU数创建线程，并为所有CPU分配网卡队列和应用队列。
+由于有通知的自适应轮询，没有收到任何数据包的核心会自动阻塞并被取消调度。</p>
+<p>我们设计了数据路径来处理到达错误的TAS核心的数据包，无论是来自网卡还是应用，都有一个每个连接的自旋锁保护连接状态。
+这就避免了在添加或删除CPU时需要昂贵的协调和耗尽队列。
+相反，我们只是异步地更新网卡和应用程序的packet
+steering，将数据包路由到或离开特定的CPU。
+我们eagerly地更新NIC的RSS重定向表以引导传入的数据包，并lazily更新应用程序传出的数据包的路由。这使我们能够在规模扩大/缩小事件中保持robust。</p>
+<p><strong>Slow path。</strong> slow
+path负责通过监测快速路径的CPU利用率来决定何时增加或删除CPU。
+如果它检测到总的来说超过1.25个CPU是空闲的，它就开始移除一个CPU。
+另一方面，如果总体上少于0.2个内核CPU，它就增加一个内核。具体的阈值是配置参数。</p>
+<!-- flag of hidden posts -->
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/eurosys/" rel="tag"># eurosys</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -333,6 +622,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -353,8 +651,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -424,6 +731,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background"><span class="nav-number">1.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#design"><span class="nav-number">2.</span> <span class="nav-text">Design</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#fast-path"><span class="nav-number">2.1.</span> <span class="nav-text">Fast path</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#slow-path"><span class="nav-number">2.2.</span> <span class="nav-text">Slow path</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#user-space-tcp-stack"><span class="nav-number">2.3.</span> <span class="nav-text">User-space TCP stack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#workload-proportionality"><span class="nav-number">2.4.</span> <span class="nav-text">Workload Proportionality</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -608,6 +931,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
