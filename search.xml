@@ -529,7 +529,8 @@ Query-Driven Streaming Network Telemetry</a>：</li>
 <ul>
 <li><a
 href="https://datawine.github.io/sigcomm20-PINT-Probabilistic-In-band-Network-Telemetry.html">PINT:
-Probabilistic In-band Network Telemetry</a>：</li>
+Probabilistic In-band Network
+Telemetry</a>：通过概率overwrite的方式，解决了传递消息随path变长而越来越多的问题，降低了开销。还基于此，提出了分布式encode和牺牲精度压缩空间的算法。</li>
 </ul>
 <h2 id="section-41">2022</h2>
 <ul>

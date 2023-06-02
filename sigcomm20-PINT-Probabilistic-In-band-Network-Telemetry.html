@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="INT allows switches to add information to each packet, such as switch ID, link utilization, or queue status, as it passes by. 这也导致了INT的一个核心缺点">
+<meta name="description" content="通过概率overwrite的方式，解决了传递消息随path变长而越来越多的问题，降低了开销。 还基于此，提出了分布式encode和牺牲精度压缩空间的算法。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PINT: Probabilistic In-band Network Telemetry">
 <meta property="og:url" content="https://datawine.github.io/sigcomm20-PINT-Probabilistic-In-band-Network-Telemetry.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="INT allows switches to add information to each packet, such as switch ID, link utilization, or queue status, as it passes by. 这也导致了INT的一个核心缺点">
+<meta property="og:description" content="通过概率overwrite的方式，解决了传递消息随path变长而越来越多的问题，降低了开销。 还基于此，提出了分布式encode和牺牲精度压缩空间的算法。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-06-02T10:10:11.000Z">
-<meta property="article:modified_time" content="2023-06-02T10:18:09.627Z">
+<meta property="article:modified_time" content="2023-06-02T11:40:25.622Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="sigcomm20">
 <meta name="twitter:card" content="summary">
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  35
+                  1.3k
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  5
                 </span>
               
             </div>
@@ -433,10 +433,111 @@
       
 
       
-        <span id="more"></span>
+        <p>通过概率overwrite的方式，解决了传递消息随path变长而越来越多的问题，降低了开销。
+还基于此，提出了分布式encode和牺牲精度压缩空间的算法。</p>
+<span id="more"></span>
 <p>INT allows switches to add information to each packet, such as switch
 ID, link utilization, or queue status, as it passes by.
-这也导致了INT的一个核心缺点</p>
+这也导致了INT的一个核心缺点：每个交换机都添加信息到包上，INT的开销随路径增长，进一步导致了性能下降。
+第二节给出的数据是，INT会导致25%的flow completion
+time的增加和20%的goodput下降。</p>
+<p>核心论点：大概测量一下就已经够了（often an approximation of the
+telemetry data suffices for the consuming application）。
+稳重用HPCC做了一个例子，调整了一下HPCC的算法，能够直接使用approximate
+telemetry。</p>
+<p>在PINT中，一个查询与一个max overhead allowed最大开销联系起来。
+Requested information被probabilistically encoded onto several different
+packets so that a collection of a flow's packets provides the relevant
+data.</p>
+<h1 id="int-and-its-packet-overhead">INT and its packet overhead</h1>
+<p>主要讲了INT的一些原理和per-packet的做法带来的各种开销。</p>
+<ul>
+<li>High packet overheads degrade application performance</li>
+<li>Switch processing time</li>
+<li>Collection overheads</li>
+</ul>
+<h1 id="the-pint-framework">The PINT framework</h1>
+<h2 id="aggregation-operations">Aggregation Operations</h2>
+<p>定义三种聚合操作</p>
+<ul>
+<li>per-packet
+aggregation。对一个特定的packet，当它traverse不同switches的时候，对一个特定的指标进行聚合（max/min/sum/product）。
+<ul>
+<li>拥塞控制算法</li>
+</ul></li>
+<li>static per-flow aggregation。summarize以(flow,
+switch)为标识符的不变量（比如交换机ID）。
+<ul>
+<li>Path Tracing</li>
+</ul></li>
+<li>Dynamic per-flow
+aggregation。聚合操作S{x,i}是对一个流{x}的第{i}跳交换机进行的。比如：聚合操作可以是：流x在经过交换机Si的时候的latency中位数。
+<ul>
+<li>Network Troubleshooting</li>
+</ul></li>
+</ul>
+<h2 id="query-language">Query Language</h2>
+<p>是一个tuple，包括以下参数</p>
+<ul>
+<li>value，具体要查询的value</li>
+<li>aggregation type，聚合类型（上面三种）</li>
+<li>query bit-budget（每个包8 bit）</li>
+<li>可选
+<ul>
+<li>space budget：per-flow storage的大小</li>
+</ul></li>
+<li>flow的定义：五元组/源IP</li>
+<li>query frequency</li>
+</ul>
+<h2 id="query-engine">Query Engine</h2>
+<p>有一个global bit-budget，规定了一个包最大的bit-budget。比如一个16
+bits的global bit-budget允许一个包上有两个8-bit-budget queries。</p>
+<p>每个query实例化一个Encoding Module，一个Recording
+Module和一个Inference Module。 Encoding
+Module在交换机上运行并修改数据包的摘要。 当数据包到达PINT
+sink（其路径上的最后一跳）时，sink提取（删除）摘要并将数据包发送到其目的地。
+提取的摘要被Recording Module截获，该模块处理和存储摘要。</p>
+<p>Query Engine会基于一个global hash function给一个Execution
+Plan，所有交换机都需要对在一个给定的数据包上运行哪些query set达成</p>
+<p>PINT并不会在包上面加入telemetry header。 PINT Query Engine compiles
+the queries to decide on the execution plan and notifies the
+switches。</p>
+<h2 id="challenges">Challenges</h2>
+<ul>
+<li>Bit constraints</li>
+<li>Switch coordination：switches必须agree on which query set to use for
+each packet。</li>
+<li>Switch constraints：交换机自己的一些限制</li>
+</ul>
+<h1 id="aggregation-techniques">Aggregation Techniques</h1>
+<h2 id="implicit-coordination-via-global-hash-functions">Implicit
+Coordination via Global Hash Functions</h2>
+<p>Coordination among
+switches：所有交换机共用一个哈希函数，这样得到的值就是确定的。通过这个确定的值决定run
+which queries。同时还不需要交换机之间通信。</p>
+<p>Coordination between switches and Inference Module。Inference
+Module需要知道哪些交换机修改了某个包的digest。解决方法也是全局哈希函数，输入是(packet
+ID, hop number)。
+实际上就是对一个特定的包，它有均匀的概率携带任一跳的信息。
+这样实际上每一跳的信息都被均匀地保存了下来，保存的就是一个子集。
+加入有z个包、k跳，那么每一跳基本就能得到z/k的信息。
+Inference再逐跳去做聚合。</p>
+<p>PINT的目标是尽量减少解码时间和每个流的存储量。 为此，Recording
+Module不需要存储所有传入的摘要。
+相反，我们可以使用适合目标聚合的sketch算法。
+也就是说，对于流量x经过的每个交换机Si，我们对Si,x的采样子流应用一种sketch算法。</p>
+<h2 id="distributed-coding-schemes">Distributed Coding Schemes</h2>
+<p>当一个给定的流量的值是静态的（即，在数据包之间不改变），我们可以使用分布式编码来改进动态聚合方法。
+直观地说，在这种情况下，我们可以将每个值v(x, si
+)分散到多个数据包中。困难在于，PINT收集的信息并不为任何单一实体所知，而是分布在交换机之间。</p>
+<p>传统的编码方案假定一个单一的编码器拥有所有需要编码的数据。然而，在PINT中不成立。</p>
+<p>具体来说，我们将我们的方案定义如下：一连串的k个编码器持有一个k块消息M1,...,Mk，对每个编码器ei，它拥有块Mi。
+每个包都经过这k个编码器，然后这k个编码器都可能把内容改成自己测量的内容。
+包到ek之后，被传给Receiver，Receiver尝试解码。
+大概就是在尾部拿到k种不同的包。</p>
+<h2 id="approximating-numeric-values">Approximating Numeric Values</h2>
+<p>因为单个值（32 bits）可能本身就太大了，超过了比如8
+bits的限制，所以这边采用压缩的方式。牺牲精度节省空间。</p>
 <!-- flag of hidden posts -->
       
     </div>
@@ -516,8 +617,17 @@ ID, link utilization, or queue status, as it passes by.
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -588,6 +698,23 @@ ID, link utilization, or queue status, as it passes by.
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#int-and-its-packet-overhead"><span class="nav-number">1.</span> <span class="nav-text">INT and its packet overhead</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#the-pint-framework"><span class="nav-number">2.</span> <span class="nav-text">The PINT framework</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#aggregation-operations"><span class="nav-number">2.1.</span> <span class="nav-text">Aggregation Operations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#query-language"><span class="nav-number">2.2.</span> <span class="nav-text">Query Language</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#query-engine"><span class="nav-number">2.3.</span> <span class="nav-text">Query Engine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#challenges"><span class="nav-number">2.4.</span> <span class="nav-text">Challenges</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#aggregation-techniques"><span class="nav-number">3.</span> <span class="nav-text">Aggregation Techniques</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#implicit-coordination-via-global-hash-functions"><span class="nav-number">3.1.</span> <span class="nav-text">Implicit
+Coordination via Global Hash Functions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#distributed-coding-schemes"><span class="nav-number">3.2.</span> <span class="nav-text">Distributed Coding Schemes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#approximating-numeric-values"><span class="nav-number">3.3.</span> <span class="nav-text">Approximating Numeric Values</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
         <div class="back-to-top">
@@ -622,7 +749,7 @@ ID, link utilization, or queue status, as it passes by.
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">29.6k</span>
+    <span title="Site words total count">29.7k</span>
   
 </div>
 
