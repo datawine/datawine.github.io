@@ -11,18 +11,9 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/null.html</loc>
-    
-    <lastmod>2023-04-14</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://datawine.github.io/mendelian-randomization.html</loc>
     
-    <lastmod>2022-08-15</lastmod>
+    <lastmod>2023-06-02</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -313,13 +304,6 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/istio/</loc>
-    <lastmod>2023-06-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://datawine.github.io/tags/dpdk/</loc>
     <lastmod>2023-06-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -341,6 +325,13 @@
   </url>
   
   <url>
+    <loc>https://datawine.github.io/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6/</loc>
+    <lastmod>2023-06-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://datawine.github.io/tags/%E5%AD%9F%E5%BE%B7%E5%B0%94%E9%9A%8F%E6%9C%BA%E5%8C%96/</loc>
     <lastmod>2023-06-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -348,7 +339,7 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6/</loc>
+    <loc>https://datawine.github.io/tags/istio/</loc>
     <lastmod>2023-06-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -397,7 +388,7 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/icse/</loc>
+    <loc>https://datawine.github.io/tags/isca/</loc>
     <lastmod>2023-06-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -411,7 +402,14 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/isca/</loc>
+    <loc>https://datawine.github.io/tags/icdcs/</loc>
+    <lastmod>2023-06-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://datawine.github.io/tags/icse/</loc>
     <lastmod>2023-06-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -425,21 +423,7 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/icdcs/</loc>
-    <lastmod>2023-06-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://datawine.github.io/tags/lua/</loc>
-    <lastmod>2023-06-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://datawine.github.io/tags/mac/</loc>
     <lastmod>2023-06-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -453,7 +437,7 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/moongen/</loc>
+    <loc>https://datawine.github.io/tags/mac/</loc>
     <lastmod>2023-06-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -467,6 +451,13 @@
   </url>
   
   <url>
+    <loc>https://datawine.github.io/tags/moongen/</loc>
+    <lastmod>2023-06-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://datawine.github.io/tags/nsdi/</loc>
     <lastmod>2023-06-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -474,14 +465,14 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/llvm/</loc>
+    <loc>https://datawine.github.io/tags/nsdi23/</loc>
     <lastmod>2023-06-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/nsdi23/</loc>
+    <loc>https://datawine.github.io/tags/llvm/</loc>
     <lastmod>2023-06-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -502,13 +493,6 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/sc/</loc>
-    <lastmod>2023-06-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://datawine.github.io/tags/p4/</loc>
     <lastmod>2023-06-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -516,7 +500,7 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/sigcomm/</loc>
+    <loc>https://datawine.github.io/tags/sc/</loc>
     <lastmod>2023-06-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -530,6 +514,13 @@
   </url>
   
   <url>
+    <loc>https://datawine.github.io/tags/sigcomm/</loc>
+    <lastmod>2023-06-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://datawine.github.io/tags/sigmetrics/</loc>
     <lastmod>2023-06-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -537,7 +528,7 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/socc/</loc>
+    <loc>https://datawine.github.io/tags/sigcomm20/</loc>
     <lastmod>2023-06-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -545,6 +536,13 @@
   
   <url>
     <loc>https://datawine.github.io/tags/smartnic/</loc>
+    <lastmod>2023-06-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://datawine.github.io/tags/socc/</loc>
     <lastmod>2023-06-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -565,7 +563,7 @@
   </url>
   
   <url>
-    <loc>https://datawine.github.io/tags/ton/</loc>
+    <loc>https://datawine.github.io/tags/ssh/</loc>
     <lastmod>2023-06-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -579,21 +577,14 @@
   </url>
   
   <url>
+    <loc>https://datawine.github.io/tags/ton/</loc>
+    <lastmod>2023-06-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://datawine.github.io/tags/www/</loc>
-    <lastmod>2023-06-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://datawine.github.io/tags/ycsb/</loc>
-    <lastmod>2023-06-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://datawine.github.io/tags/git/</loc>
     <lastmod>2023-06-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -614,6 +605,13 @@
   </url>
   
   <url>
+    <loc>https://datawine.github.io/tags/git/</loc>
+    <lastmod>2023-06-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://datawine.github.io/tags/python/</loc>
     <lastmod>2023-06-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -628,6 +626,13 @@
   </url>
   
   <url>
+    <loc>https://datawine.github.io/tags/ycsb/</loc>
+    <lastmod>2023-06-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://datawine.github.io/tags/iperf/</loc>
     <lastmod>2023-06-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -636,13 +641,6 @@
   
   <url>
     <loc>https://datawine.github.io/tags/%E8%AE%BA%E6%96%87%E6%B1%87%E6%80%BB/</loc>
-    <lastmod>2023-06-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://datawine.github.io/tags/ssh/</loc>
     <lastmod>2023-06-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

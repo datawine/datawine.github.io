@@ -527,8 +527,9 @@ Query-Driven Streaming Network Telemetry</a>：</li>
 </ul>
 <h2 id="section-40">2020</h2>
 <ul>
-<li><a href="">PINT: Probabilistic In-band Network Telemetry</a>：pint
-a?</li>
+<li><a
+href="https://datawine.github.io/sigcomm20-PINT-Probabilistic-In-band-Network-Telemetry.html">PINT:
+Probabilistic In-band Network Telemetry</a>：</li>
 </ul>
 <h2 id="section-41">2022</h2>
 <ul>
@@ -717,69 +718,6 @@ Resources</a>：使用RL对serverless资源用量进行建模，把over-provisio
       </tags>
   </entry>
   <entry>
-    <title>孟德尔随机化</title>
-    <url>/mendelian-randomization.html</url>
-    <content><![CDATA[<p>孟德尔随机化</p>
-<span id="more"></span>
-<h1 id="课件">课件</h1>
-<ul>
-<li><a
-href="https://datawine.github.io/mr-lesson-1.html">第一讲</a></li>
-</ul>
-<h1 id="资料">资料</h1>
-<ul>
-<li><a
-href="https://datawine.github.io/mr-background.html">孟德尔随机化研究背景</a></li>
-<li><a
-href="https://datawine.github.io/One-Sample-MR.html">One-Sample-MR</a></li>
-<li><a
-href="https://datawine.github.io/Two-Sample-MR.html">Two-Sample-MR</a></li>
-<li><a
-href="https://datawine.github.io/MR-statistical-issues.html">一些MR的statistical问题</a></li>
-<li><a
-href="https://datawine.github.io/MR-extensions.html">MR进阶</a></li>
-<li><a
-href="https://datawine.github.io/MR-guidance.html">如何进行MR研究</a></li>
-<li><a
-href="https://datawine.github.io/mrcieu-twosamplemr.html">MR实战例子</a></li>
-<li>统计学原理
-<ul>
-<li><a
-href="https://datawine.github.io/instrumental-variable.html">工具变量孟德尔随机化原理</a></li>
-<li>[R2]</li>
-<li>[F统计量]</li>
-</ul></li>
-<li>包的使用
-<ul>
-<li><a href="">TwoSampleMR</a></li>
-<li><a href=""></a></li>
-</ul></li>
-<li><a
-href="https://datawine.github.io/mr-others.html">孟德尔随机化及其他</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>孟德尔随机化</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>eBPF相关学习总结</title>
-    <url>/null.html</url>
-    <content><![CDATA[<p>eBPF相关学习总结</p>
-<span id="more"></span>
-<p>图书资料</p>
-<ul>
-<li><a href="">What Is eBPF?</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>论文</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Istio学习（一）</title>
     <url>/istio-learning-1.html</url>
     <content><![CDATA[<p>istio学习：参考资料、总述、数据平面、控制平面、简单实践</p>
@@ -903,6 +841,55 @@ href="https://datawine.github.io/r-learning-2.html">R语言入门运行样例</a
       </categories>
       <tags>
         <tag>R</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>孟德尔随机化</title>
+    <url>/mendelian-randomization.html</url>
+    <content><![CDATA[<p>孟德尔随机化</p>
+<span id="more"></span>
+<h1 id="课件">课件</h1>
+<ul>
+<li><a
+href="https://datawine.github.io/mr-lesson-1.html">第一讲</a></li>
+</ul>
+<h1 id="资料">资料</h1>
+<ul>
+<li><a
+href="https://datawine.github.io/mr-background.html">孟德尔随机化研究背景</a></li>
+<li><a
+href="https://datawine.github.io/One-Sample-MR.html">One-Sample-MR</a></li>
+<li><a
+href="https://datawine.github.io/Two-Sample-MR.html">Two-Sample-MR</a></li>
+<li><a
+href="https://datawine.github.io/MR-statistical-issues.html">一些MR的statistical问题</a></li>
+<li><a
+href="https://datawine.github.io/MR-extensions.html">MR进阶</a></li>
+<li><a
+href="https://datawine.github.io/MR-guidance.html">如何进行MR研究</a></li>
+<li><a
+href="https://datawine.github.io/mrcieu-twosamplemr.html">MR实战例子</a></li>
+<li>统计学原理
+<ul>
+<li><a
+href="https://datawine.github.io/instrumental-variable.html">工具变量孟德尔随机化原理</a></li>
+<li>[R2]</li>
+<li>[F统计量]</li>
+</ul></li>
+<li>包的使用
+<ul>
+<li><a href="">TwoSampleMR</a></li>
+<li><a href=""></a></li>
+</ul></li>
+<li><a
+href="https://datawine.github.io/mr-others.html">孟德尔随机化及其他</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>孟德尔随机化</tag>
       </tags>
   </entry>
   <entry>
