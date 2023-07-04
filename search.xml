@@ -244,7 +244,16 @@ href="https://datawine.github.io/nsdi13-Improving-availability-in-distributed-sy
 availability in distributed systems with failure
 informers</a>：本篇文章提出了Pigeon，用来在end-host的视角监测。系统包括分布在process、操作系统、路由器和ospf的sensor，报告问题是否是永久性的和问题是否已经发生了。</li>
 </ul>
-<h2 id="section-23">2015</h2>
+<h2 id="section-23">2014</h2>
+<ul>
+<li><a
+href="https://datawine.github.io/nsdi14-I-Know-What-Your-Packet-Did-Last-Hop-Using-Packet-Histories-to-Troubleshoot-Networks.html">I
+Know What Your Packet Did Last Hop: Using Packet Histories to
+Troubleshoot
+Networks</a>：在SDN场景下，对数据包和交换机信息进行镜像，重组packet
+history。</li>
+</ul>
+<h2 id="section-24">2015</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/nsdi15-Retro-Targeted-Resource-Management-in-Multi-tenant-Distributed-Systems.html">Retro:
@@ -254,7 +263,7 @@ for shared distributed
 systems。具体而言，就是用AspectJ去提取按workflow抽象的资源用量；提了两个指标slowdown和workload来无单位地表示resource抽象的竞争；用令牌桶实现control
 points的限速；decouple控制策略，实现了三种策略。</li>
 </ul>
-<h2 id="section-24">2022</h2>
+<h2 id="section-25">2022</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/nsdi22-Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks.html">Efficient
@@ -337,7 +346,7 @@ href="https://datawine.github.io/nsdi22-Isolation-Mechanisms-for-High-Speed-Pack
 Mechanisms for High-Speed Packet-Processing
 Pipelines</a>：本文介绍了Menshen，它是可编程交换机的可重构匹配表（RMT）管道的一个扩展，在不同的数据包处理模块之间实施隔离。</li>
 </ul>
-<h2 id="section-25">2023</h2>
+<h2 id="section-26">2023</h2>
 <ul>
 <li>SRNIC: A Scalable Architecture for RDMA
 NICs：通过实现RDMA协议和架构的co-design，最小化片上数据结构和内存需求，解决高网络可扩展性（大规模必丢包数据中心网络）与高连接可扩展性（per-server大量高性能连接）问题。</li>
@@ -394,7 +403,7 @@ binding、将marshalling放在每台机器的一个集中服务上、架构设�
 enforcement。</li>
 </ul>
 <h1 id="osdi">OSDI</h1>
-<h2 id="section-26">2014</h2>
+<h2 id="section-27">2014</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/osdi14-lprof-A-Non-intrusive-Request-Flow-Profiler-for-Distributed-Systems.html">lprof:
@@ -406,7 +415,7 @@ href="https://datawine.github.io/osdi14-The-Mystery-Machine-End-to-end-Performan
 Mystery Machine: End-to-end Performance Analysis of Large-scale Internet
 Services</a>：通过在全连接图上迭代，得到多服务间因果分析。</li>
 </ul>
-<h2 id="section-27">2016</h2>
+<h2 id="section-28">2016</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/osdi16-Non-Intrusive-Performance-Profiling-for-Entire-Software-Stacks-Based-on-the-Flow-Reconstruction-Principle.html">Non-Intrusive
@@ -415,7 +424,7 @@ Reconstruction
 Principle</a>：非侵入式根据log推断objects之间的关系，针对这个关系和时间来推断性能异常。
 亮点在于关系的定义和处理上，但是objects和type的提取比较工程。</li>
 </ul>
-<h2 id="section-28">2018</h2>
+<h2 id="section-29">2018</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/osdi18-Capturing-and-Enhancing-In-Situ-System-Observability-for-Failure-Detection.html">Capturing
@@ -423,7 +432,7 @@ and Enhancing In Situ System Observability for Failure
 Detection</a>：通过inter-process和inter-thread的error
 log来增加可观测性。一个设计点是indirection的处理。</li>
 </ul>
-<h2 id="section-29">2020</h2>
+<h2 id="section-30">2020</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/osdi20-FIRM-An-Intelligent-Fine-grained-Resource-Management-Framework-for-SLO-Oriented-Microservices.html">FIRM:
@@ -432,7 +441,7 @@ SLO-Oriented Microservices</a>：SLO
 violation的基于SVMdetection和localization，基于RL的SLO
 violation的mitigation，还包括了一个fault injection framework</li>
 </ul>
-<h2 id="section-30">2022</h2>
+<h2 id="section-31">2022</h2>
 <ul>
 <li><a
 href="https://datawine/github.io/osdi22-Hubble-Performance-Debugging-with-In-Production-Just-In-Time-Method-Tracing-on-Android.html">Hubble:
@@ -450,7 +459,7 @@ translation step、the construction and resubmission of the next NVMe
 request at the new physical offset。</li>
 </ul>
 <h1 id="others">Others</h1>
-<h2 id="section-31">2010</h2>
+<h2 id="section-32">2010</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/others10-Dapper-a-Large-Scale-Distributed-Systems-Tracing-Infrastructure.html">Dapper,
@@ -458,7 +467,7 @@ a Large-Scale Distributed Systems Tracing
 Infrastructure</a>：分布式追踪的鼻祖文章。介绍spans、traces的概念。通过对common
 facilities的手动修改插桩实现分布式追踪。</li>
 </ul>
-<h2 id="section-32">2013</h2>
+<h2 id="section-33">2013</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/others13-Performance-troubleshooting-in-data-centers-an-annotated-bibliography.html">Performance
@@ -466,7 +475,7 @@ troubleshooting in data centers: an annotated
 bibliography?</a>：这篇文章主要是对performance trouble
 shooting的一篇综述，分类方法可以参考一下</li>
 </ul>
-<h2 id="section-33">2014</h2>
+<h2 id="section-34">2014</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/others14-So-you-want-to-trace-your-distributed-system-Key-design-insights-from-years-of-practical-experience.html">So,
@@ -474,7 +483,7 @@ you want to trace your distributed system? Key design insights from
 years of practical
 experience</a>：一篇14年的关于分布式追踪的前瞻式文章，其风格很像综述。</li>
 </ul>
-<h2 id="section-34">2020</h2>
+<h2 id="section-35">2020</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/icpads20-A-protocol-independent-container-network-observability-analysis-system-based-on-eBPF.html">A
@@ -486,7 +495,7 @@ Rethinking Microservice Observability with eBPF / ViperProbe: Using eBPF
 Metrics to Improve Microservice
 Observability</a>：ViperProbe，一个基于eBPF的微服务收集框架。在副本集群上进行测试，收集metrics。通过eBPF实现动态调整（怎么动态调整没说）。</li>
 </ul>
-<h2 id="section-35">2022</h2>
+<h2 id="section-36">2022</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/tsc22-Capturing-Request-Execution-Path-for-Understanding-Service-Behavior-and-Detecting-Anomalies-without-Code-Instrumentation.html">Capturing
@@ -495,7 +504,7 @@ Anomalies without Code Instrumentation</a>：论文主要是识别execution
 path。主要通过对系统调用的拦截实现+一些时序空间关系重构。</li>
 </ul>
 <h1 id="security">Security</h1>
-<h2 id="section-36">2023</h2>
+<h2 id="section-37">2023</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/security23-An-Efficient-Design-of-Intelligent-Network-Data-Plane.html">An
@@ -503,7 +512,7 @@ Efficient Design of Intelligent Network Data
 Plane</a>：本文实际上是将决策树的inference阶段offload到可编程交换机上，因为大小比较产生的状态爆炸问题是本文最重要的贡献。</li>
 </ul>
 <h1 id="sc">SC</h1>
-<h2 id="section-37">2018</h2>
+<h2 id="section-38">2018</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/sc18-A-Year-in-the-Life-of-a-Parallel-File-System.html">A
@@ -512,27 +521,27 @@ System</a>：这篇论文主要是对两个leadership-level的high-performance
 computing centers的IO性能进行为期一年的测量。</li>
 </ul>
 <h1 id="sigcomm">SIGCOMM</h1>
-<h2 id="section-38">2016</h2>
+<h2 id="section-39">2016</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/sigcomm16-WebPerf-Evaluating-“What-If”-Scenarios-for-Cloud-hosted-Web-Applications.html">WebPerf:
 Evaluating What-If Scenarios for Cloud-hosted Web
 Applications</a>：azure的性能预测工具，主要解决改资源配置之后的性能预测。用插桩和一些定制化操作得到包含了TAP异步调用的依赖图，offline进行profile得到与应用无关的、和资源有关的、不同配置的API调用延迟分布，直接执行得到与应用有关的、和资源无关的延迟分布。what-if中变了哪些资源，就用对应的延迟替换掉资源发生变化的部分。</li>
 </ul>
-<h2 id="section-39">2018</h2>
+<h2 id="section-40">2018</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/sigcomm18-Sonata-Query-Driven-Streaming-Network-Telemetry.html">Sonata:
 Query-Driven Streaming Network Telemetry</a>：</li>
 </ul>
-<h2 id="section-40">2020</h2>
+<h2 id="section-41">2020</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/sigcomm20-PINT-Probabilistic-In-band-Network-Telemetry.html">PINT:
 Probabilistic In-band Network
 Telemetry</a>：通过概率overwrite的方式，解决了传递消息随path变长而越来越多的问题，降低了开销。还基于此，提出了分布式encode和牺牲精度压缩空间的算法。</li>
 </ul>
-<h2 id="section-41">2022</h2>
+<h2 id="section-42">2022</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/sigcomm22-SPRIGHT-Extracting-the-Server-from-Serverless-Computing-High-performance-eBPF-based-Event-driven-Shared-memory-Processing.html">SPRIGHT:
@@ -541,7 +550,7 @@ eBPF-based Event-driven, Shared-memory Processing</a>：利用eBPF和share
 memory对serverless chain的数据平面进行性能优化</li>
 </ul>
 <h1 id="sigmetrics">SIGMETRICS</h1>
-<h2 id="section-42">2014</h2>
+<h2 id="section-43">2014</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/sigmetrics14-Non-intrusive-Out-of-band-and-Out-of-the-box-Systems-Monitoring-in-the-Cloud.html">Non-intrusive,
@@ -556,14 +565,14 @@ tracer一般是由系统调用触发的，系统调用和函数调用之间有ga
 stack去反向构造延时，通过call stack来推断函数调用，基于此进行分析。</li>
 </ul>
 <h1 id="socc">SoCC</h1>
-<h2 id="section-43">2016</h2>
+<h2 id="section-44">2016</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/socc16-Automating-Failure-Testing-Research-at-Internet-Scale.html">Automating
 Failure Testing Research at Internet Scale</a>：netflix的fault
 injection框架。</li>
 </ul>
-<h2 id="section-44">2019</h2>
+<h2 id="section-45">2019</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/socc19-An-automated-cross-layer-instrumentation-framework-for-diagnosing-performance-problems-in-distributed-applications.html">An
@@ -572,7 +581,7 @@ performance problems in distributed
 applications</a>：Pythia，基于OSProfiler，通过辨别本该差不多、但是却表现出了high
 variance within the workflows of requests，来实现自动化插桩。</li>
 </ul>
-<h2 id="section-45">2020</h2>
+<h2 id="section-46">2020</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/socc20-Sequoia-enabling-quality-of-service-in-serverless-computing.html">Sequoia:
@@ -580,7 +589,7 @@ Enabling ￿ality-of-Service in Serverless
 Computing</a>：论文提出了一个针对serverless
 functions和chains的、以QoS为优化目标的调度器</li>
 </ul>
-<h2 id="section-46">2021</h2>
+<h2 id="section-47">2021</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/socc21-3MileBeach-A-Tracer-with-Teeth.html">3MileBeach:
@@ -600,7 +609,7 @@ traces</a>：本文基于分布式跟踪系统(Jaeger)实现了一种新的perfo
 profiling，把trace分成四层进行分析。</li>
 </ul>
 <h1 id="sp">S&amp;P</h1>
-<h2 id="section-47">2014</h2>
+<h2 id="section-48">2014</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/sp14-Stealing-Webpages-Rendered-on-Your-Browser-by-Exploiting-GPU-Vulnerabilities.html">Stealing
@@ -609,7 +618,7 @@ Vulnerabilities</a>：论文主要针对GPU memory可能存在的data
 exfiltration提出攻击。</li>
 </ul>
 <h1 id="sosp">SOSP</h1>
-<h2 id="section-48">2015</h2>
+<h2 id="section-49">2015</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/sosp15-Pivot-Tracing-Dynamic-Causal-Monitoring-for-Distributed-Systems.html">Pivot
@@ -617,7 +626,7 @@ Tracing: Dynamic Causal Monitoring for Distributed
 Systems</a>：distributed tracing，贡献点在于dynamic instrumentation +
 happened-before join关系。</li>
 </ul>
-<h2 id="section-49">2019</h2>
+<h2 id="section-50">2019</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/sosp19-The-Inflection-Point-Hypothesis-A-Principled-Debugging-Approach-for-Locating-the-Root-Cause-of-a-Failure.html">The
@@ -625,7 +634,7 @@ Inflection Point Hypothesis: A Principled Debugging Approach for
 Locating the Root Cause of a
 Failure</a>：基于故障/非故障执行的最长公共前缀的分布式系统根因分析。</li>
 </ul>
-<h2 id="section-50">2021</h2>
+<h2 id="section-51">2021</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/sosp21-ghOSt-Fast-Flexible-User-Space-Delegation-of-Linux-Scheduling.html">ghOSt:
@@ -640,7 +649,7 @@ work to execution
 resources。用户定义自己需要的数据包调度算法，并在应用中调用API实现部署和交互。</li>
 </ul>
 <h1 id="ton">TON</h1>
-<h2 id="section-51">2018</h2>
+<h2 id="section-52">2018</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/ton18-Root-Cause-Analysis-of-Anomalies-of-Multitier-Services-in-Public-Clouds.html">Root
@@ -651,14 +660,14 @@ contention（函数本身layer之间故障的传播）和external
 contention（资源竞争）。</li>
 </ul>
 <h1 id="tpds">TPDS</h1>
-<h2 id="section-52">2012</h2>
+<h2 id="section-53">2012</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/tpds12-Precise-Scalable-and-Online-Request-Tracing-for-Multitier-Services-of-Black-Boxes.html">Precise,
 Scalable, and Online Request Tracing for Multitier Services of Black
 Boxes</a>：本文是基于kprobe的一个tracing工作。一个新颖点在于除了普通的逻辑之外还提出了一些新的图关系和图表示。</li>
 </ul>
-<h2 id="section-53">2013</h2>
+<h2 id="section-54">2013</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/tpds13-Toward-Fine-Grained-Unsupervised-Scalable-Performance-Diagnosis-for-Production-Cloud-Computing-Systems.html">Toward
@@ -667,7 +676,7 @@ Production Cloud Computing
 Systems</a>：文章主要是用插桩去采样信息（基本还是执行时间），用call
 tree去做分类，通过CoV找到异常分类，通过RPCA在异常分类中找到异常组件。</li>
 </ul>
-<h2 id="section-54">2015</h2>
+<h2 id="section-55">2015</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/tpds16-Wait-Analysis-of-Distributed-Systems-Using-Kernel-Tracing.html">Wait
@@ -675,7 +684,7 @@ Analysis of Distributed Systems Using Kernel
 Tracing</a>：这篇文章核心是在对distributed
 system里面的等待原因进行根因分析。主要是看因为什么wait了、wait了几次。</li>
 </ul>
-<h2 id="section-55">2017</h2>
+<h2 id="section-56">2017</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/tpds17-Diagnosing-Performance-Variations-by-Comparing-Multi-Level-Execution-Traces.html">Diagnosing
@@ -687,7 +696,7 @@ Diagnosis for Distributed Systems Using Targeted Fault
 Injection</a>：针对分布式系统的特点提出了Target Fault
 Injection，通过利用分布式组件的执行流知识来控制注入位置。</li>
 </ul>
-<h2 id="section-56">2022</h2>
+<h2 id="section-57">2022</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/tpds22-An-In-Depth-Study-of-Microservice-Call-Graph-and-Runtime-Performance.html">An
@@ -696,14 +705,14 @@ Performance</a>：论文分析了阿里巴巴集群中近两万个微服务在7�
 microservice dependency and performance: Alibaba trace analysis。</li>
 </ul>
 <h1 id="www">WWW</h1>
-<h2 id="section-57">2013</h2>
+<h2 id="section-58">2013</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/www13-Understanding-latency-variations-of-black-box-services.html">Understanding
 latency variations of black box
 services</a>：框架采集对一个给定服务的请求流，以及它们的监测属性，还有为每个请求提供服务的延迟。最终目的是给定延迟间隔，找到解释它的监测属性的子集。</li>
 </ul>
-<h2 id="section-58">2022</h2>
+<h2 id="section-59">2022</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/www22-Accelerating-Serverless-Computing-by-Harvesting-Idle-Resources.html">Accelerating
