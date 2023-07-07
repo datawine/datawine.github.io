@@ -87,7 +87,7 @@
 <meta property="og:description" content="核心贡献  BufScope，一个高覆盖率的请求事件监测系统，其目的是在请求的端到端数据路径中以一致的请求级语义捕获大多数与请求延迟异常（RLA）相关的事件。 缓冲区建模：BufScope将请求的数据路径建模为一个缓冲区链。并根据缓冲区的不同属性来定义RLA相关的事件，实现端到端（跨缓冲区）。 为了实现捕获事件的一致语义，BufScope设计了一个简洁的请求级语义注入机制，使网络中捕获的事件具有受">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-05-09T13:23:11.000Z">
-<meta property="article:modified_time" content="2022-05-17T10:13:29.738Z">
+<meta property="article:modified_time" content="2023-07-05T07:25:09.592Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="nsdi">
 <meta name="twitter:card" content="summary">
@@ -494,15 +494,6 @@ feature是不同的，一个丢掉了后续包，另一个会暂停上游交换�
 incast或拥堵的可能性。</li>
 <li>暂停和拥堵。这些事件的发生是由于当前缓冲区或下游缓冲区的数据包调度缓慢。在这种情况下，BufScope可以识别对拥堵贡献最大的请求，即重度请求，因为重度请求会经历更多的拥堵事件。然后，云提供商需要评估网络结构和应用混合模型。</li>
 </ul>
-<h1 id="文章正文">文章正文</h1>
-
-
-	<div class="row">
-    <embed src="/paper/nsdi22-Buffer-based-End-to-end-Request-Event-Monitoring-in-the-Cloud.pdf" width="100%" height="1700" type="application/pdf">
-	</div>
-
-
-
 <!-- flag of hidden posts -->
       
     </div>
@@ -672,7 +663,7 @@ incast或拥堵的可能性。</li>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E8%B4%A1%E7%8C%AE"><span class="nav-number">1.</span> <span class="nav-text">核心贡献</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">2.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#buffer-chain%E5%BB%BA%E6%A8%A1"><span class="nav-number">3.</span> <span class="nav-text">buffer chain建模</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%AE%9A%E4%B9%89%E5%92%8C%E7%94%9F%E6%88%90"><span class="nav-number">4.</span> <span class="nav-text">事件定义和生成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#request-level%E7%9A%84%E8%AF%AD%E4%B9%89%E6%B3%A8%E5%85%A5"><span class="nav-number">5.</span> <span class="nav-text">request-level的语义注入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%8A%E6%96%AD"><span class="nav-number">6.</span> <span class="nav-text">诊断</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E6%AD%A3%E6%96%87"><span class="nav-number">7.</span> <span class="nav-text">文章正文</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E8%B4%A1%E7%8C%AE"><span class="nav-number">1.</span> <span class="nav-text">核心贡献</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">2.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#buffer-chain%E5%BB%BA%E6%A8%A1"><span class="nav-number">3.</span> <span class="nav-text">buffer chain建模</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%AE%9A%E4%B9%89%E5%92%8C%E7%94%9F%E6%88%90"><span class="nav-number">4.</span> <span class="nav-text">事件定义和生成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#request-level%E7%9A%84%E8%AF%AD%E4%B9%89%E6%B3%A8%E5%85%A5"><span class="nav-number">5.</span> <span class="nav-text">request-level的语义注入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%8A%E6%96%AD"><span class="nav-number">6.</span> <span class="nav-text">诊断</span></a></li></ol></div>
             
 
           </div>
@@ -713,7 +704,7 @@ incast或拥堵的可能性。</li>
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">29.7k</span>
+    <span title="Site words total count">29.8k</span>
   
 </div>
 

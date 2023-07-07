@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="nsdi," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Programmable switches收集丰富的telemetry data，并将它们embed在packet headers里面。 为了收集这些packet header并使用它们监控和诊断，我们需要能支持以下三个需求的en-host stacks。  monitoring of rich telemetry data low-overhead diagnosis highly-concu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Confluo: Distributed Monitoring and Diagnosis Stack for High-speed Networks">
+<meta property="og:url" content="https://datawine.github.io/nsdi19-Confluo-Distributed-Monitoring-and-Diagnosis-Stack-for-High-speed-Networks.html">
+<meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="Programmable switches收集丰富的telemetry data，并将它们embed在packet headers里面。 为了收集这些packet header并使用它们监控和诊断，我们需要能支持以下三个需求的en-host stacks。  monitoring of rich telemetry data low-overhead diagnosis highly-concu">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-07-06T01:36:05.000Z">
+<meta property="article:modified_time" content="2023-07-06T05:11:36.885Z">
+<meta property="article:author" content="Datawine">
+<meta property="article:tag" content="nsdi">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://datawine.github.io/nsdi19-Confluo-Distributed-Monitoring-and-Diagnosis-Stack-for-High-speed-Networks.html"/>
+
+
+
+
+
+  <title>Confluo: Distributed Monitoring and Diagnosis Stack for High-speed Networks | Datawine's Blog</title><meta name="robots" content="noindex">
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Datawine's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/nsdi19-Confluo-Distributed-Monitoring-and-Diagnosis-Stack-for-High-speed-Networks.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Confluo: Distributed Monitoring and Diagnosis Stack for High-speed Networks</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-07-06T09:36:05+08:00">
+                2023-07-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/nsdi19-Confluo-Distributed-Monitoring-and-Diagnosis-Stack-for-High-speed-Networks.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="nsdi19-Confluo-Distributed-Monitoring-and-Diagnosis-Stack-for-High-speed-Networks.html" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <span id="more"></span>
+<p>Programmable switches收集丰富的telemetry data，并将它们embed在packet
+headers里面。 为了收集这些packet
+header并使用它们监控和诊断，我们需要能支持以下三个需求的en-host
+stacks。</p>
+<ul>
+<li>monitoring of rich telemetry data</li>
+<li>low-overhead diagnosis</li>
+<li>highly-concurrent low-overhead read-write operations</li>
+</ul>
+<h1 id="confluo-overview">Confluo Overview</h1>
+<h2 id="motivation">Motivation</h2>
+<p>现有的end-host
+stack并不能够同时满足上面提出的三个功能。但是实现这三个目标面临着两个挑战</p>
+<ul>
+<li>Challenges with larger network bandwidth: 现有的end-host
+stack不足以支持10Gbps的数据包处理速度</li>
+<li>Challenges with monitoring rich telemetry data:
+上述streaming和时间序列数据处理系统的局限性促使定制设计的end-host
+monitoring
+stack。这些系统要么通过放弃在线监测（如FloSIS），要么通过仅对流量中的第一个数据包应用过滤器（如Trumpet）来实现如此高的性能。这些系统不再支持rich
+telemetry data。</li>
+</ul>
+<h2 id="confluo-interface">Confluo Interface</h2>
+<p>Confluo对数据包头进行操作，每个头都与一些属性相关联，这些属性可能是协议特定的（例如，TCP头中的属性，如srcIP、dstIP、rwnd、ttl、seq、dup）或自定义定义的（例如，数据包轨迹，或队列长度、时间戳等）。
+Confluo不要求数据包头是固定的；每个头可以包含任意数量的字段，而且每个数据包的字段数量可以不同。</p>
+<p>Confluo使用类似于[8,
+23]的匹配动作语言，有三个要素：过滤器、聚合和触发器。
+过滤器是一个由关系和布尔运算符组成的表达式fExpression，覆盖任意的header属性子集，并识别与fExpression匹配的标题。
+聚合是在一个属性上评估一个可计算的函数（表2），用于所有符合某个过滤器表达式的header。
+最后，一个触发器是一个布尔条件（例如，&lt;，&gt;，=，等等），在一个聚合上进行评估。</p>
+<h2 id="confluo-design-overview">Confluo Design Overview</h2>
+<p>Confluo包括一个central coordinator
+interface和每个end-host上都有的end-host module。</p>
+<p><strong>Coordinator Interface</strong></p>
+<p>Confluo的协调器接口通过将监测责任划分给Confluo的各个终端主机模块，并将各个模块的诊断信息提供给网络运营商，来降低对全网事件的监测和诊断。
+操作员将由Confluo
+API调用组成的控制程序提交给协调器，协调器反过来联系相关的终端主机模块，并通过RPC协调Confluo
+API调用的执行。
+协调器API还允许获得分布在终端主机上的遥测数据的分布式原子快照（§4）。</p>
+<p><strong>End-host Module</strong></p>
+<p>Confluo在hypervisor里面捕捉并且监测数据包。 并使用software
+switch在NICs和VMs之间传递数据包。 一个mirroring
+module负责把数据包头镜像到spray module里面。 spray
+module负责把这些headers写入多个ring buffers中的一个ring buffer里面。
+Confluo currently uses DPDK to bypass the kernel stack, and Open vSwitch
+to implement the mirror and spray modules.</p>
+<p>Confluo目前有两个重要的架构设计选择：</p>
+<ol type="1">
+<li>使用多个ring buffers来方便可能的multiple cores processing different
+packet streams。同时支持多个高速并行的Confluo Wirter对同一个Confluo Data
+Structures的写入</li>
+<li>将从Atomic MultiLogs "读 "和 "写
+"的线程分开。具体来说，Confluo中的读线程实现了监控功能和即时诊断功能。另一方面，写线程就是上述的Confluo
+writer。这一架构决定是由两个目标驱动的。
+<ol type="1">
+<li>虽然分离读和写线程一般会导致更多的并发问题，但Atomic
+MultiLog提供了低开销的机制来实现高度一致的读和写。</li>
+<li>分离读写线程也需要稍高的CPU开销（在我们的评估中，即使每个数据包有1000个触发器，也不到4%）；然而，这是实现即时诊断的一个很好的权衡，因为当需要执行复杂的临时过滤器时，在一个线程中交错的读写可能导致数据包丢失（§3）。</li>
+</ol></li>
+</ol>
+<p>Confluo可以保证所有与单个头相对应的读/写操作对应用程序来说都是原子化的。
+然而，由于一些原因（例如，在数据包捕获期间，网卡上的队列长度不同，随机的CPU调度延迟等），在Atomic
+MultiLogs上可见的数据包的排序可能不一定与网卡上收到的数据包的排序相同。
+克服这个问题的一个简单方法是使用入口/出口网卡的时间戳来排列Atomic
+MultiLog中的更新，以反映网卡上收到的数据包的顺序；
+几乎所有当前的10Gbps及以上的网卡都支持线速的入口和出口数据包时间戳。</p>
+<p><strong>Distributed Diagnosis</strong></p>
+<p>使用分布在多个终端主机上的遥测数据进行诊断会导致分布式系统的经典一致性问题--除非所有记录（在我们的例子中是数据包）都经过一个中央排序器，否则不可能实现对系统状态的绝对完美观察。
+Confluo并不试图解决这个经典问题，而是表明通过利用遥测数据的特性，有可能将经典的分布式原子快照算法简化为一个非常低开销的算法（§4）。</p>
+<h1 id="confluo-design">Confluo Design</h1>
+<h2 id="background">Background</h2>
+<p>介绍了两个概念</p>
+<ul>
+<li>Atomic Hardware Primitives：现代大部分CPU都支持一些类似的指令</li>
+<li>Concurrent Logs：很多高效、无锁的并发日志都利用append-only
+nature来实现高吞吐写。这些日志系统都维护一个writeTail。每个新增加的操作都增加writeTail，然后再写入日志。使用上述的原子硬件操作能够很方便地对writeTail进行修改，</li>
+</ul>
+<h2 id="atomic-multilog">Atomic MultiLog</h2>
+<p>基于这两个基本的properties</p>
+<ul>
+<li>Property 1: Packet headers, once processed by the stack, are not
+updated and only aggregated over long time scales.</li>
+<li>Property 2: Each packet header attribute has a fixed size (number of
+bits used to represent the attribute)</li>
+</ul>
+<p><strong>HeaderLog</strong></p>
+<p>这个并发的append-only的日志存储了Confluo中所有捕获的数据包头的原始数据。
+HeaderLog中的每个数据包头都有一个偏移量，它被用作Atomic
+MultiLog中所有数据结构中对数据包的唯一引用。</p>
+<p><strong>IndexLog</strong></p>
+<p>Atomic MultiLog为每个indexed packet
+attribute（如srcIP、dstPort）存储一个IndexLog，它将每个独特的属性值（如srcIP=10.0.0.1或dstPort=80）映射到Header-Log中的相应数据包头。
+IndexLogs利用两个main ideas有效地支持并发的、无锁的输入和查找。</p>
+<p>数据包头中协议定义的固定属性宽度允许IndexLogs使用完美的k-ary树在新数据到达时进行高吞吐量的插入。
+使用完美的k-ary树大大简化了写入路径。
+一个k-ary树节点中的所有子指针最初都指向NULL。</p>
+<p>当一个新的数据包属性值（例如，srcIP=10.0.0.1）被索引时，沿着属性值对应的路径的所有未分配的节点都被分配。
+这就是IndexLog使用第二个想法的地方--
+因为工作负载是append-only的，所以属性值到数据包头映射的HeaderLog偏移量也是append-only的；
+因此，传统的无锁并发日志可以用来在k-ary树的叶子上存储这种映射关系。</p>
+<p>并发属性索引节点和日志分配之间的冲突使用CompareAndSwap指令来解决，从而减轻了对锁的需求。具有相同属性值的后续数据包头的索引是通过穿越树到相关的叶子，并将数据包头的偏移量附加到日志上。为了评估对索引的范围查询，Confluo确定了与属性范围相对应的子树（例如10.0.0.0/24）；然后，最终结果是子树叶中的日志的头偏移量的联合。</p>
+<p><strong>FilterLog</strong></p>
+<p>FilterLog是一个简单的过滤表达式（例如，srcIP==10.0.0.1 &amp;&amp;
+dstPort==80），以及一个以时间为索引的日志集合，存储对符合表达式的头的引用（按照用户指定的时间间隔分桶）。
+对应于不同时间间隔的日志使用完美的k-ary树进行索引，类似于IndexLogs。</p>
+<p><strong>AggregateLog</strong></p>
+<p>与FilterLogs类似，AggregateLog采用完美的k-ary树来索引在用户指定的时间段内与过滤器表达式相匹配的总量（例如SUM(pktSize)）。
+然而，对聚集值的原子更新稍有挑战性--它需要读取最新的版本，对其进行修改，并将其写回。为聚合体维护一个并发的日志需要处理复杂的竞赛条件以保证原子性。
+Confluo则维护了一个线程本地日志的集合，每个写作者线程都在自己的聚合日志上执行读取-修改-写入操作。集合的最新版本是通过合并各个日志的最新线程-本地集合值获得的。
+我们注意到，线程本地日志的使用限制了聚合的关联性和交换性操作，这足以实现网络工作的监控和诊断功能。</p>
+<h3 id="atomic-operations-on-collection-of-logs">Atomic Operations on
+Collection of Logs</h3>
+<p>End-to-end Atomic MultiLog operations可能需要updating multiple logs
+across HeaderLog, IndexLogs and FilterLogs。
+即使单个日志支持原子操作，端到端的原子多日志操作在默认情况下也不能保证是原子的。幸运的是，可以扩展并发日志的读尾/写尾机制，以保证原子多日志操作的原子性；然而，这需要解决两个难题。</p>
+<p>首先，为了保证Atomic
+MultiLog操作的总顺序，其组件日志必须同意一个排序方案。
+第二个挑战是保持Confluo聚合操作的原子性，因为它们与位于globalReadTail之内或之外的任何单个数据包头没有关联。</p>
+<p>具体操作比较复杂，具体看文章。</p>
+<p>虽然上述操作使原子多日志操作实现了端到端的原子性，但我们注意到，原子多日志中每个单独的日志的readTail的更新可能会增加一个非显著的开销（图6）。</p>
+<h2 id="monitro-diagnoser-modules">Monitro &amp; Diagnoser Modules</h2>
+<p><strong>Monitor Module</strong></p>
+<p>这个模块负责通过一个专门的监控线程对Confluo触发器进行在线评估。</p>
+<p><strong>Diagnoser Module</strong></p>
+<p>Confluo的诊断器模块对Atomic MultiLog捕获的数据包头进行特别查询。
+从表1可以看出，Confluo允许诊断查询提供一个过滤器表达式fExpression和一个时间范围。</p>
+<h2 id="archival-module">Archival Module</h2>
+<h2 id="distributed-diagnosis">Distributed Diagnosis</h2>
+<!-- flag of hidden posts -->
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nsdi/" rel="tag"># nsdi</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/datawine" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#confluo-overview"><span class="nav-number">1.</span> <span class="nav-text">Confluo Overview</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#motivation"><span class="nav-number">1.1.</span> <span class="nav-text">Motivation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#confluo-interface"><span class="nav-number">1.2.</span> <span class="nav-text">Confluo Interface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#confluo-design-overview"><span class="nav-number">1.3.</span> <span class="nav-text">Confluo Design Overview</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#confluo-design"><span class="nav-number">2.</span> <span class="nav-text">Confluo Design</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#background"><span class="nav-number">2.1.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#atomic-multilog"><span class="nav-number">2.2.</span> <span class="nav-text">Atomic MultiLog</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#atomic-operations-on-collection-of-logs"><span class="nav-number">2.2.1.</span> <span class="nav-text">Atomic Operations on
+Collection of Logs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#monitro-diagnoser-modules"><span class="nav-number">2.3.</span> <span class="nav-text">Monitro &amp; Diagnoser Modules</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#archival-module"><span class="nav-number">2.4.</span> <span class="nav-text">Archival Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#distributed-diagnosis"><span class="nav-number">2.5.</span> <span class="nav-text">Distributed Diagnosis</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Datawine</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">29.8k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user">本站访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye">本站总访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cyw3QwzdC';
+      var conf = 'cbf53c79ec118123e02b0e1a5676be66';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
