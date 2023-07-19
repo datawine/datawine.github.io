@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="osdi," />
 
 
 
@@ -79,12 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Datawine&#39;s Blog">
-<meta property="og:url" content="https://datawine.github.io/archives/page/11/index.html">
+<meta name="description" content="针对On-Line Data Intensive模型中的mid-tier进行线程分析，提出了八个模型。 并根据模型选择最优的模型，以实现对微服务性能的优化。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="μTune: Auto-Tuned Threading for OLDI Microservices">
+<meta property="og:url" content="https://datawine.github.io/osdi18-%CE%BCTune-Auto-Tuned-Threading-for-OLDI-Microservices.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="针对On-Line Data Intensive模型中的mid-tier进行线程分析，提出了八个模型。 并根据模型选择最优的模型，以实现对微服务性能的优化。">
 <meta property="og:locale">
+<meta property="article:published_time" content="2023-07-19T03:10:40.000Z">
+<meta property="article:modified_time" content="2023-07-19T08:16:46.668Z">
 <meta property="article:author" content="Datawine">
+<meta property="article:tag" content="osdi">
 <meta name="twitter:card" content="summary">
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/archives/page/11/"/>
+  <link rel="canonical" href="https://datawine.github.io/osdi18-μTune-Auto-Tuned-Threading-for-OLDI-Microservices.html"/>
 
 
 
 
 
-  <title>归档 | Datawine's Blog</title>
+  <title>μTune: Auto-Tuned Threading for OLDI Microservices | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -278,411 +283,462 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/osdi18-%CE%BCTune-Auto-Tuned-Threading-for-OLDI-Microservices.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">μTune: Auto-Tuned Threading for OLDI Microservices</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-07-19T11:10:40+08:00">
+                2023-07-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 29 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2022">2022</h1>
-          </div>
-        
-        
 
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi22-Packet-Order-Matters-Improving-Application-Performance-by-Deliberately-Delaying-Packets.html" itemprop="url">
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
               
-                <span itemprop="name">Packet Order Matters! Improving Application Performance by Deliberately Delaying Packets</span>
+                <a href="/osdi18-%CE%BCTune-Auto-Tuned-Threading-for-OLDI-Microservices.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="osdi18-μTune-Auto-Tuned-Threading-for-OLDI-Microservices.html" itemprop="commentsCount"></span>
+                </a>
               
-            </a>
-        
-      </h2>
+            
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-06-06T21:27:19+08:00"
-              content="2022-06-06" >
-          06-06
-        </time>
-      </div>
+          
+          
 
-    </header>
-  </article>
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.8k
+                </span>
+              
 
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  16
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi22-HeteroSketch-Coordinating-Network-wide-Monitoring-in-Heterogeneous-and-Dynamic-Networks.html" itemprop="url">
-              
-                <span itemprop="name">HeteroSketch-Coordinating Network-wide Monitoring in Heterogeneous and Dynamic Networks</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-06-06T14:50:27+08:00"
-              content="2022-06-06" >
-          06-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi22-SketchLib-Enabling-Efficient-Sketch-based-Monitoring-on-Programmable-Switches.html" itemprop="url">
-              
-                <span itemprop="name">SketchLib-Enabling Efficient Sketch-based Monitoring on Programmable Switches</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-06-06T13:59:30+08:00"
-              content="2022-06-06" >
-          06-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/mr-lesson-1.html" itemprop="url">
-              
-                <span itemprop="name">MR第一讲</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-06-05T14:49:58+08:00"
-              content="2022-06-05" >
-          06-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
+        <p>针对On-Line Data
+Intensive模型中的mid-tier进行线程分析，提出了八个模型。
+并根据模型选择最优的模型，以实现对微服务性能的优化。</p>
+<span id="more"></span>
+<p>文章主要是针对On-Line Data
+Intensive应用的，比如网络搜索、广告和在线零售。
+过去，OLDI应用程序大多采用单体软件架构，而现代OLDI应用程序则包含大量分布式微服务。
+亚马逊、Netflix、Gilt、LinkedIn和SoundCloud等多家公司都采用了微服务架构，以改进
+OLDI 开发和可扩展性。</p>
+<p>单体应用面临着≥100毫秒的尾部（99th+%）延迟
+SLO（例如，网络搜索的尾部延迟为300毫秒），而微服务通常必须实现亚毫秒级（例如，协议路由的尾部延迟为100微秒）的尾部延迟，因为必须连续调用许多微服务才能满足用户的查询。
+我们预计，随着 OLDI
+数据集和应用的持续增长，需要组成更多的微服务，并进行日益复杂的交互。因此，改善微服务延迟
+SLO 的压力不断增大。</p>
+<p>线程和并发设计已被证明会严重影响 OLDI
+响应延迟。但是，之前的工作主要集中在单体服务上，而单体服务的tail
+SLO通常≥100毫秒。因此，亚毫秒级的操作系统和网络开销（例如5-20μs的上下文切换成本）对于单体服务来说往往微不足道。但是考虑到sub-ms-scale的需求，之前的工作就不再适用。例如，即使是一次
+20μs 的虚假上下文切换，也会对 100μs SLO 协议路由微服务的请求造成 20%
+的延迟惩罚。因此，必须针对微服务机制重新审视先前的结论。</p>
+<p>我们的研究重点是中层微服务器：如图1所示，广泛使用的微服务器接受特定于服务的
+RPC
+查询，将查询分发给在各自数据分片上执行相关计算的叶子微服务器，然后返回结果，由中层微服务器进行整合。中层微服务器是一个特别有趣的研究对象，因为：(1)
+它既是 RPC 客户端，又是 RPC 服务器；(2)
+它必须管理将单个传入查询扇出到多个叶子微服务器的过程；(3)
+它的计算通常需要几十微秒，与操作系统、网络和 RPC 的开销时间相当。</p>
+<p>我们的研究结果表明，最佳线程模型主要取决于所提供的负载。
+例如，在低负载情况下，轮询网络流量的模型性能最佳，因为它们避免了昂贵的操作系统线程唤醒。
+相反，在高负载情况下，将网络轮询与 RPC
+执行分离开来的模型可实现更高的服务能力，而阻塞模式则优于对传入网络流量进行轮询的模式，因为它可避免将宝贵的
+CPU 浪费在无结果的轮询循环上。</p>
+<p>我们发现，最佳线程模型与服务负载之间的关系非常复杂--不能指望开发人员先验地选择最佳线程模型。因此，我们建立了一个智能系统，利用离线剖析来自动适应随时间变化的服务负载。
+μTune
+的第二个功能是自适应系统，它通过基于事件的负载监控来确定负载，并根据负载变化调整线程模型（轮询与阻塞网络接收；内联与分派
+RPC
+执行）和线程池大小。与静态峰值负载维持线程模型和最先进的自适应技术相比，μTune
+将尾部延迟提高了 1.9 倍，平均延迟和指令开销小于 5%。因此，μTune
+可用于动态控制现代微服务中占主导地位的亚毫秒级操作系统/网络开销。</p>
+<ul>
+<li>线程模型分类法： 对微服务线程模型及其对性能影响的结构化理解。</li>
+<li>用于开发微服务的μTune框架，支持多种线程模型。</li>
+<li>μTune 的负载适应系统，用于在不同负载下调整线程模型和线程池。</li>
+<li>使用 μTune 构建的 OLDI 服务关键层：中层微服务器的详细性能研究。</li>
+</ul>
+<h1 id="motivation">Motivation</h1>
+<p>专家开发人员通过试错或基于经验的直觉对关键的 OLDI
+服务进行广泛调整。μTune旨在帮助小型团队开发性能良好的中层微服务，以满足延迟目标，而无需付出巨大的调整努力。</p>
+<p><strong>对线程模型分类法的需求。</strong>
+我们以线程模型分类法的形式，对架构微服务的操作系统/网络交互的合理设计方案进行了结构化理解。我们研究了这些模型在不同负载下的延迟效应，为某些模型何时表现最佳提供指导。
+先前的研究将单线程服务大致分为：线程按请求同步服务或事件驱动异步服务。我们注意到线程设计空间的维度超出了这些粗粒度设计。我们借鉴了之前的研究成果，例如通过改变并行性来减少尾部延迟，以考虑更多样化的分类并发现次性能问题。</p>
+<p><strong>对自适应负载的需求。</strong>
+微服务与操作系统交互中的细微变化（如接受传入 RPC
+的方式）可能会导致巨大的尾部延迟差异。 例如，图2描述了中层微服务处理的
+RPC 样本的 99% 尾端延迟与负载的函数关系。
+在低负载情况下，基于轮询的模型由于避免了操作系统线程的唤醒，性能提高了
+1.35 倍。 相反，在高负载情况下，无结果的轮询循环浪费了本可用于处理 RPC
+的宝贵
+CPU。基于轮询的模型会趋于饱和，到达次数会超过服务容量，延迟会无限制地增长。基于阻塞的模型可以节省
+CPU，而且更具可扩展性。
+我们认为，这种设计上的权衡并不明显：没有一种线程模型在所有负载下都是最佳的，即使是专业开发人员也很难做出正确的选择。此外，大多数软件都是在设计时采用一种线程模型，并不提供在运行时更改该模型的功能。</p>
+<p><strong>A microservice framework。</strong> 我们在 μTune
+中提出了一种新颖的微服务框架，它将线程设计从 RPC
+处理程序中抽象出来。μTune
+系统通过动态选择最佳线程模型和线程池大小来适应负载，从而减少尾端延迟。许多
+OLDI 服务都会经历剧烈的昼夜负载变化。其他服务可能会面临
+"闪电人群"，导致负载突然激增（如重大新闻事件后的高流量）。新的 OLDI
+服务可能会遇到超出容量规划的爆炸性客户增长（如 Pokemon Go
+的飞速推出）。在单一框架中支持多个数量级的负载可扩展性，有助于快速扩展流行的新服务。</p>
+<h1 id="a-taxonomy-of-threading-models">A Taxonomy of Threading
+Models</h1>
+<h2 id="key-dimensions">Key dimensions</h2>
+<p>我们确定了三个线程模型维度，并讨论了它们对可编程性和性能的影响。</p>
+<p><strong>同步通信与异步通信。</strong>
+同步模型将请求映射到整个生命周期中的单个线程。请求状态通过线程的 PC
+和堆栈隐式跟踪，程序员只需在自动变量中维护请求状态即可。线程使用阻塞 I/O
+等待来自存储或叶节点的响应。</p>
+<p>相反，异步模型是基于事件的--程序员明确定义了请求进程的状态机。任何准备就绪的线程都可以在事件被重新识别后继续处理请求；线程和请求之间没有关联。</p>
+<ul>
+<li>Synchronous apps: Azure SQL, Google Cloud SQL’s Redmine, MongoDB
+replication</li>
+<li>Asynchronous apps: Apache, Azure blob storage, Redis replication,
+Server-Side Mashup, CORBA Model, Aerospike</li>
+</ul>
+<p><strong>In-line和dispatch-based RPC processing。</strong>
+In-line模型主要指单个线程管理整个 RPC 生命周期，从 RPC 库接受 RPC
+开始，直到返回响应为止。
+基于调度的模型则将网络线程和工作线程的责任分开，前者负责从底层 RPC
+接口接受新请求，后者负责执行 RPC 处理程序。</p>
+<ul>
+<li>In-line apps: Redis, MapReduce workers</li>
+<li>Apps that dispatch: IBM’s WebSphere for z/OS, Oracle’s EDT image
+search, Mule ESB, Malwarebytes, Celery for RabbitMQ and Redis, Resque
+and RQ Redis queues, NetCDF</li>
+</ul>
+<p><strong>基于阻塞与基于轮询的RPC接收。</strong>
+上面两种维度处理的是传出的RPC，而block vs. poll维度处理的是传入的RPC。
+在基于blocking的模型中，线程通过阻塞系统调用等待新工作，如果没有工作可用，则让出
+CPU。线程阻塞在 I/O 接口（如 read() 或 epoll() 系统调用）上等待工作。
+在基于轮询的模型中，线程在循环中旋转，不断寻找新的工作。</p>
+<ul>
+<li>Apps that block: Redis BLPOP</li>
+<li>Apps that poll: Intel’s DPDK Poll Driver, Redis replication, Redis
+LPOP, DoS attacks and defenses, GCP Health Checker</li>
+</ul>
+<h2 id="synchronous-models">Synchronous models</h2>
+<p>在同步模型中，我们会在启动时创建最大规模的线程池，然后将无关线程"park"在条件变量上，以便根据需要快速提供线程，而不会产生
+pthread_create()调用开销。为了简化数据，我们省略了停放的线程。</p>
+<p>处理每个 RPC 的主线程使用 fork-join
+并行性将并发请求分发到多个leaves。
+（这边讲的比较模糊，没看的很明白）主线程对每个向外的RPC，会唤醒一个parked线程以发送，并阻塞以等待其回复。当回复到达时，这些线程会递减一个共享原子计数器，然后停在一个条件变量上以跟踪最后一个回复。最后一个回复向主线程发出信号，主线程执行继续程序，合并叶子结果并回复客户端。</p>
+<p>与单次RPC执行有关的每个同步模型共有四种：</p>
+<ul>
+<li>Synchronous In-line Block
+(SIB)：这种模式最简单，只有一个线程池。内联线程阻塞在网络套接字上等待工作，然后执行接收到的
+RPC 直至完成，并根据需要向停在那里的线程发出发出 RPC
+的信号。线程池必须随着负载的增加而增长。</li>
+<li>Synchronous In-line Poll (SIP)：SIP 与 SIB 不同，线程使用非阻塞 API
+轮询新工作。SIP
+可避免在工作到达时阻塞线程唤醒，但每个在线程会充分利用一个 CPU。</li>
+<li>Synchronous Dispatch Block (SDB)：SDB
+包括两个线程池。网络线程阻塞在套接字应用程序接口上，等待新的工作。但是，网络线程并不直接执行
+RPC，而是通过生产者-消费者任务队列和条件变量将 RPC
+分派给工作线程池。工作线程从任务队列中提取请求，然后像之前的内联线程一样处理这些请求（即分叉扇出和发出同步叶请求）。worker将
+RPC 回复发送到前端，然后阻塞在条件变量上等待新的工作。网络和 Worker
+池的大小都是可变的。并发量受工作者池大小的限制。通常，一个网络线程就足够了。</li>
+<li>Synchronous Dispatch Poll (SDP)：在 SDP
+中，网络线程在前端套接字上轮询新工作。</li>
+</ul>
+<h2 id="asynchronous-models">Asynchronous models</h2>
+<p>异步模型与同步模型的不同之处在于，它们不会将执行线程与特定的 RPC
+绑定，所有 RPC
+状态都是显式的。此类模型基于事件--事件（如叶子请求完成）到达任何线程，并使用共享数据结构与其父
+RPC 匹配。因此，任何线程都可以让任何 RPC 进入下一个执行阶段。
+这种方法大大减少了 RPC
+生命周期中的线程切换次数。例如，叶子请求扇出只需要一个简单的 for
+循环，而不是复杂的 fork-and-wait 循环。
+为了帮助对叶子和前端服务器进行非阻塞调用，我们添加了另一个专门处理叶子服务器响应的线程池--响应线程池。</p>
+<p>与单次RPC执行有关的每个异步模型也有四种：</p>
+<ul>
+<li>Asynchronous In-line Block
+(AIB)：AIB使用内联线程处理传入的前端请求，并使用响应线程执行叶子响应。两个线程池都阻塞在各自的套接字上，等待新的工作。内联线程为
+RPC
+初始化一个数据结构，记录它所期望的叶子响应数，记录当最后一个响应返回时继续执行的函数，然后在一个简单的
+for
+循环中将叶子请求扇出。响应在响应线程上到达（可能是并发的），这些线程将其结果记录在
+RPC
+数据结构中，并进行倒计时，直到最后一个响应到达。最后一个响应会调用续程来合并响应并完成
+RPC。</li>
+<li>Asynchronous In-line Poll (AIP)：在 AIP
+中，内联线程和响应线程轮询各自的套接字</li>
+<li>Asynchronous Dispatch Block (ADB)：在 ADB
+中，dispatch能使网络线程集中，改善本地性和套接字争用。与 SDB
+类似，网络线程和工作线程也会接受和执行
+RPC。我们没有显式调度响应，因为除最后一个响应线程外，其他线程的工作都微不足道（存储响应数据包和递减计数器）。三个线程池的规模各不相同。通常情况下，一个网络线程就足够了，而其他线程池必须根据负载情况进行扩展。</li>
+<li>Asynchronous Dispatch Poll
+(ADP)：网络线程和响应线程轮询新工作。</li>
+</ul>
+<h1 id="μtune-system-design">μTune: System Design</h1>
+<p>μTune 有两个特点：</p>
+<ul>
+<li><ol type="a">
+<li>实现所有 8 个线程模型，在框架内抽象 RPC（操作系统/网络交互）；</li>
+</ol></li>
+<li><ol start="2" type="a">
+<li>自适应系统，在负载变化时明智地调整线程模型。</li>
+</ol></li>
+</ul>
+<p>μTune 的系统设计挑战包括：</p>
+<ul>
+<li><ol type="1">
+<li>提供从服务代码中抽象出线程的简单界面；</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>快速检测负载变化以实现高效的动态适应；</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>熟练切换线程模式；</li>
+</ol></li>
+<li><ol start="4" type="1">
+<li>在不创建、删除线程或管理线程的情况下确定线程池的大小。</li>
+</ol></li>
+</ul>
+<p><strong>Framework。</strong> 从特定服务的 RPC
+实现细节中抽象出了线程模型模板代码，并封装了底层 RPC API。 此外，μTune
+提供了一个简单的抽象，服务特定代码必须实现 RPC 执行接口。</p>
+<p>对于同步模式，服务必须为每个 RPC 提供一个 ProcessRequest()
+方法。ProcessRequest()
+由内联线程或工作线程调用。该方法会准备一个并发的传出叶子 RPC
+batch，并将其传递给
+InvokeLeaf()，由其将其扇出到叶子节点。InvokeLeaf()在收到所有叶子回复后返回
+ProcessRequest()。ProcessRequest()
+继续合并回复并形成对客户端的响应。</p>
+<p>对于异步模式，μTune 的接口稍微复杂一些。同样，服务必须提供
+ProcessRequest()，但它必须在共享数据结构中明确表示 RPC
+状态。ProcessRequest() 可以调用一次或多次 InvokeLeafAsync()。These calls
+are passed an outgoing RPC batch, a tag identifying the parent RPC, and
+a FinalizeResponse() callback.
+标签可实现请求-响应匹配。最后到达的响应线程调用
+FinalizeReponse()，它可以访问 RPC
+数据结构和各叶的响应协议缓冲区。开发人员必须确保线程安全。可以在
+InvokeLeafAsync() 之后的任何时间调用 FinalizeResponse()，也可以与
+ProcessRequest() 同时调用。对races进行推理是异步 RPC
+实现的主要挑战。</p>
+<p><strong>Automatic load adaptation。</strong></p>
+<p>μTune的一个主要特点是能根据负载情况自动选择不同的线程模式，从而减轻了开发人员事先选择线程模式的负担。</p>
+<p>同步与异步微服务在可编程性方面存在很大差距。虽然 μTune
+的框架工作隐藏了一些复杂性，但它不可能在同步和异步模式之间自动动态切换，因为它们的应用程序接口和应用程序代码要求必然不同。如果有异步实施方案，其性能将优于同步实施方案。因此，我们为同步和异步模式分别建立了
+μTune 自适应。</p>
+<p>μTune
+会在四个选项（in-line与dipatch、block与poll）中选择延迟最优的模型，并根据负载动态调整线程池的大小。它监控服务负载，并（a）选择延迟最优的线程模型，然后（b）通过停放/取消停放线程来扩展线程池。这两种调整都使用离线训练阶段生成的配置文件。我们将对图
+5(b) 所示的训练和适应步骤进行描述。</p>
+<p>训练阶段。</p>
+<ul>
+<li><ol type="1">
+<li>在离线特征描述期间，我们使用合成负载生成器在持续的时间间隔内驱动特定的负载水平。在这些时间间隔内，我们改变线程模型和线程池大小，并观察
+99%
+的尾部延迟。然后，负载发生器会逐步增加负载，我们会在每个负载步骤重新进行特性分析。</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>然后，μTune
+建立一个piece-wise线性模型，将提供的负载与在每个负载级别观察到的尾部延迟联系起来。</li>
+</ol></li>
+</ul>
+<p>运行时适应。</p>
+<ul>
+<li><ol type="1">
+<li>μTune 在运行时使用基于事件的windowing来监控提供给中层的负载。</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>μTune 将每个请求的到达时间戳记录在一个循环缓冲区中。</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>然后，它利用循环缓冲区的大小、记录的最年轻和最年长时间戳来估算到达间隔率。可以通过调整循环缓冲区的大小来调整适应系统的响应速度。仔细调整缓冲区大小可避免异常值引发的振荡，从而确保快速、高效的适应。基于事件的监控可以快速检测到负载的急剧增加。</li>
+</ol></li>
+<li><ol start="4" type="1">
+<li>然后将到达间隔率估计值输入切换逻辑，该逻辑在piece-wise线性模型内进行插值，以估计每种模型和线程池大小下每种配置的尾部延迟。</li>
+</ol></li>
+<li><ol start="5" type="1">
+<li>μTune 通过 "停放"当前的线程模型和
+"取消停放"新选择的模型，利用其框架抽象和条件变量信号，实现以下过渡：</li>
+</ol>
+<ul>
+<li><ol type="a">
+<li>轮询/阻塞套接字接收之间的交替；</li>
+</ol></li>
+<li><ol start="2" type="a">
+<li>在线处理请求或通过预设任务队列将请求分派给工作者；或</li>
+</ol></li>
+<li><ol start="3" type="a">
+<li>停放/取消停放各种线程池的线程以处理新请求。</li>
+</ol></li>
+</ul></li>
+<li>根据新的线程模型，连续的异步请求会调用以下的pipeline
+<ul>
+<li>(6)ProcessRequest()</li>
+<li><ol start="7" type="1">
+<li>InvokeLeafAsync() 和</li>
+</ol></li>
+<li><ol start="10" type="1">
+<li>FinalizeResponse() 。</li>
+</ol></li>
+</ul></li>
+</ul>
+<p>过渡期间的飞行中请求由先前的模型处理。</p>
+<!-- flag of hidden posts -->
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi22-Evolvable-Network-Telemetry-at-Facebook.html" itemprop="url">
-              
-                <span itemprop="name">Evolvable Network Telemetry at Facebook</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-30T18:35:20+08:00"
-              content="2022-05-30" >
-          05-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi22-Cocktail-A-Multidimensional-Optimization-for-Model-Serving-in-Cloud.html" itemprop="url">
-              
-                <span itemprop="name">Cocktail-A Multidimensional Optimization for Model Serving in Cloud</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-30T15:52:43+08:00"
-              content="2022-05-30" >
-          05-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi22-Zeta-A-Scalable-and-Robust-East-West-Communication-Framework-in-Large-Scale-Clouds.html" itemprop="url">
-              
-                <span itemprop="name">Zeta-A Scalable and Robust East-West Communication Framework in Large-Scale Clouds</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-30T14:41:44+08:00"
-              content="2022-05-30" >
-          05-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi22-Justitia-Software-Multi-Tenancy-in-Hardware-Kernel-Bypass-Networks.html" itemprop="url">
-              
-                <span itemprop="name">Justitia-Software Multi-Tenancy in Hardware Kernel-Bypass Networks</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-30T14:15:56+08:00"
-              content="2022-05-30" >
-          05-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/Two-Sample-MR.html" itemprop="url">
-              
-                <span itemprop="name">Two Sample MR</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-25T14:35:54+08:00"
-              content="2022-05-25" >
-          05-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/r2.html" itemprop="url">
-              
-                <span itemprop="name">统计学相关-R2</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-24T20:31:44+08:00"
-              content="2022-05-24" >
-          05-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/osdi/" rel="tag"># osdi</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/page/10/">&lt;</a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/archives/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/16/">16</a><a class="extend next" rel="next" href="/archives/page/12/">&gt;</a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -690,6 +746,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -710,8 +775,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -781,6 +855,23 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#motivation"><span class="nav-number">1.</span> <span class="nav-text">Motivation</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#a-taxonomy-of-threading-models"><span class="nav-number">2.</span> <span class="nav-text">A Taxonomy of Threading
+Models</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#key-dimensions"><span class="nav-number">2.1.</span> <span class="nav-text">Key dimensions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#synchronous-models"><span class="nav-number">2.2.</span> <span class="nav-text">Synchronous models</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#asynchronous-models"><span class="nav-number">2.3.</span> <span class="nav-text">Asynchronous models</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%CE%BCtune-system-design"><span class="nav-number">3.</span> <span class="nav-text">μTune: System Design</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -965,6 +1056,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

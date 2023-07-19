@@ -274,7 +274,8 @@ A Low-Latency Online Prediction Serving System</a>：</li>
 <li><a
 href="https://datawine.github.io/nsdi19-Confluo-Distributed-Monitoring-and-Diagnosis-Stack-for-High-speed-Networks.html">Confluo:
 Distributed Monitoring and Diagnosis Stack for High-speed
-Networks</a>：</li>
+Networks</a>：主要是在end-host对10Gbps以上的telemetry
+data的收集增加支持。</li>
 </ul>
 <h2 id="section-27">2022</h2>
 <ul>
@@ -444,6 +445,11 @@ href="https://datawine.github.io/osdi18-Capturing-and-Enhancing-In-Situ-System-O
 and Enhancing In Situ System Observability for Failure
 Detection</a>：通过inter-process和inter-thread的error
 log来增加可观测性。一个设计点是indirection的处理。</li>
+<li><a
+href="https://datawine.github.io/osdi18-μTune-Auto-Tuned-Threading-for-OLDI-Microservices.html">μTune:
+Auto-Tuned Threading for OLDI Microservices</a>：针对On-Line Data
+Intensive模型中的mid-tier进行线程分析，提出了八个模型。
+并根据模型选择最优的模型，以实现对微服务性能的优化。</li>
 </ul>
 <h2 id="section-32">2020</h2>
 <ul>
