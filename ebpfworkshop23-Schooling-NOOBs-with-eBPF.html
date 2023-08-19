@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ebpf-workshop," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="主要是针对WAN场景，利用eBPF实现了in-band主动被动测量。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Schooling NOOBs with eBPF">
+<meta property="og:url" content="https://datawine.github.io/ebpfworkshop23-Schooling-NOOBs-with-eBPF.html">
+<meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="主要是针对WAN场景，利用eBPF实现了in-band主动被动测量。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-08-17T07:18:36.000Z">
+<meta property="article:modified_time" content="2023-08-19T06:09:41.526Z">
+<meta property="article:author" content="Datawine">
+<meta property="article:tag" content="ebpf-workshop">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://datawine.github.io/ebpfworkshop23-Schooling-NOOBs-with-eBPF.html"/>
+
+
+
+
+
+  <title>Schooling NOOBs with eBPF | Datawine's Blog</title><meta name="robots" content="noindex">
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Datawine's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/ebpfworkshop23-Schooling-NOOBs-with-eBPF.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Schooling NOOBs with eBPF</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-08-17T15:18:36+08:00">
+                2023-08-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/ebpfworkshop23-Schooling-NOOBs-with-eBPF.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="ebpfworkshop23-Schooling-NOOBs-with-eBPF.html" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>主要是针对WAN场景，利用eBPF实现了in-band主动被动测量。</p>
+<span id="more"></span>
+<p>performance = end hosts/data center servers + WAN性能</p>
+<p>其中WAN性能一般需要主动测量。</p>
+<p>现有的WAN性能异常用户态工具存在semantic gap</p>
+<ol type="1">
+<li>suboptimal precision和high measurement overhead</li>
+<li>integration需要efforts</li>
+<li>发送的流量会收到WAN的影响，但是测不出来</li>
+</ol>
+<p>第一个工具：noobprobe。一个high-performance in-kernel and in-band
+active measurement tool。 有以下几个设计点</p>
+<ol type="1">
+<li>in-band
+<ol type="1">
+<li>和以前的libpcap对比</li>
+<li>resilient to the operational policies</li>
+</ol></li>
+<li>eBPF safe</li>
+<li>依赖tc/cls-bpf和XDP，开销小</li>
+</ol>
+<p>第二个工具：XDP-based passive flow collector</p>
+<h1 id="motivation-and-scope">Motivation and Scope</h1>
+<p>一些点：</p>
+<ul>
+<li>现有的工具completely oblivious to WAN path dynamics。但是routing
+changes，routing-induced delays，load balancing，link outages，queuing
+delays都会影响到应用的吞吐</li>
+<li>semantic gap：
+<ul>
+<li>traceroute identified的路由路径不一定是同一条应用经过的路径</li>
+<li>由ping等得到的latency measurements不一定是应用的掩饰</li>
+</ul></li>
+<li>像可编程交换机这种，does not apply to WAN paths</li>
+</ul>
+<p>总而言之，state-of-the-art measurement tools</p>
+<ul>
+<li>provide coarse-grained information such as latency and bandwidth,
+making applications unaware of transient network congestion at certain
+hops, load balancing issues, etc.;</li>
+<li>warrant changes to internal mecha- nisms of applications;</li>
+<li>are prone to operational policies (e.g., occasionally blocked,
+traffic shaping) of WAN providers.</li>
+</ul>
+<h1 id="active-monitoring-with-noobprobe">ACTIVE MONITORING WITH
+NOOBPROBE</h1>
+<h2 id="design-approach-in-band-measurement">Design Approach: In-band
+Measurement</h2>
+<p>为了解决最先进的测量工具（在第 2
+节中介绍）存在的缺陷，我们采用带内测量方法来设计 noobprobe。
+这种方法的主要思路是向现有流量中注入数据包（探测器），使探测器具有相同的
+5
+元组（源/目的地址、协议和源/目的端口号），确保它们将遵循与应用流相同的路由器级路径，并绕过广域网运营商的操作和管理策略。</p>
+<p>需要注意的是，之前的工作侧重于测量应用流的特定路由器级路径，方法是在outgoing探针中设置
+TTL，与跟踪路由方法和收集 ICMP 超时消息的方法类似。
+虽然使用这些工具也能收集延迟测量值，但它们使用的是 libpcap
+或类似方法，如 [36]
+所示，由于内核和用户空间之间的上下文切换以及其他开销，可能会在探针发射过程中引入不希望出现的变化
+[28]。
+同样，文献[11]中的方法需要用户/内核空间混合方法，这会给测量过程带来变异性和不必要的上下文切换开销。</p>
+<p>我们的方法采用了 ELF [36] 的新方法：noobprobe 采用 eBPF
+实现，因此其核心功能位于操作系统内核中，从而使探测和应用程序数据包在时间上间隔很近。因此，应用流量所体验到的性能（如延迟和损耗）很可能也会被探测器体验到--这是
+noobprobe
+的关键见解和特点，也是我们认为它非常适合解决应用网络惰性问题的原因。</p>
+<h2 id="noobprobe-implementation-details">noobprobe Implementation
+Details</h2>
+<p>noobprobe是基于bcc实现的。
+给定要使用的网络接口、感兴趣的目标主机名和要运行的可选程序/应用程序，Python
+控制程序就会使用 bcc 编译并安装 eBPF
+程序，用于出口和入口数据包处理。出口处理和发送探测由 tc
+子系统完成，入口处理由 XDP 完成。
+此外还可以指定每跳/全局的最大探测速率。</p>
+<p>有几个 BPF
+映射用于跟踪互联网间的目的地、管理目的地信息并为测量提供临时存储。</p>
+<ul>
+<li>其中一个映射将每个感兴趣的目标 IP 地址（v4 或
+v6）与一个唯一的整数标识符关联起来；
+<ul>
+<li>该整数标识符被用作 BPF
+结构数组的索引，每个结构数组都包含最近发送到给定目标的探针的纳秒时间戳、到目标的估计跳数（根据从目标接收到的数据包中的
+TTL/ 跳数推断）、要使用的下一个探针序列以及到目标的下一跳探针。</li>
+</ul></li>
+<li>此外，还存储了已收到 ICMP 超时信息的目的地跳数bit
+map。该位图用于检测无响应的跳数，避免重复探测这些跳数。</li>
+<li>另一个 BPF 嘛篇存储已发送但尚未收到响应的探测信息。</li>
+<li>另一个map存储已收到的探测信息，包括时间戳、响应主机的 IP
+地址、收到的 TTL/跳数等。</li>
+<li>最后一个map是per CPU map，在收到探测响应时无需加锁来更新映射。</li>
+</ul>
+<p>一共是这几个BPF program</p>
+<ul>
+<li>初始程序检查数据包是否为 IP，然后跳转到处理 IPv4 或 IPv6
+的单独程序。</li>
+<li>在出口处，这些程序会在目的地 IP 地址 BPF
+map中执行查找，并检查是否应向目的地发射探针，以满足配置的探针速率。
+<ul>
+<li>如果应该发出探测，与目的地相关的整数 BPF array index就会存储在 skb
+元数据中，控制权就会移交给第三个程序。</li>
+</ul></li>
+<li>第三个程序负责处理特定协议（ICMP、TCP、UDP）数据包操作。
+<ul>
+<li>在这第三个程序中，会查询 skb
+元数据，以避免再次查找目标地址，并克隆和发送数据包。因此，原始应用数据包在确定应创建探针后很快就会被发送出去。克隆数据包的大小会被截断到最小长度（如
+IPv4 TCP 的 40 字节），IP TTL/
+跳数也会被修改，以便在源点和目的地之间的每一跳之间循环。此外，还会重新计算校验和，记录序列号和纳秒级时间戳，并将其存储在另一张map上。</li>
+</ul></li>
+</ul>
+<p>需要注意的是，在 tc 处理程序中调用的第一个程序会检查 skb
+元数据是否已设置了目的地（整数）标识符；如果已设置，该数据包将被忽略，以避免重新克隆已被克隆的数据包。在
+XDP 中，程序映射也以类似方式用于数据包入口，提供了一些代码模块化。</p>
+<p>在网络中，ICMP 时间超限信息通常会在 TTL
+过期的路由器接口上生成，这些信息会在入口（XDP）组件中接收
+。此外，还要匹配序列和原始目的地，记录时间戳，并将数据添加到包含测量结果的每
+CPU BPF map中。</p>
+<p>对于与传出探针匹配的 ICMP 超时报文，默认情况下会在 XDP
+处理路径中丢弃该报文，以免给主机带来额外的处理负荷。
+这种行为（丢弃传入的 ICMP
+超时报文）是可配置的；作为调试辅助工具，从其他程序中观察这些数据包可能会有所帮助。</p>
+<p>此外，值得注意的是，与使用 libpcap
+和类似方法相比，这种在测量流量进入操作系统网络协议栈之前就将其消除的能力是基于
+eBPF 的测量的一个显著优势。 只要交给 Python
+控制程序的应用程序继续运行，或直到中断，通往相关目的地的路径就会继续受到监控。Python
+控制程序会定期从 BPF map中读取结果数据，并将这些数据添加到 CSV
+文件中。</p>
+<p>我们考虑过的另一种设计是直接在内核中实现，这在之前的工作中已有应用（如
+[35]）。
+虽然这种方法由于避免了用户/内核边界交叉而降低了开销，但其实现将与特定的内核版本紧密耦合，从根本上说是不可移植的。
+使用 libpcap 或类似软件的用户空间实现（参见 [11, 30]）将是可移植的，但如
+[36] 所示，即使数据包速率不大，性能成本也太高。 我们选择并倡导的 eBPF
+方法在高性能与使用稳定且理论上可移植的 API2 实现之间取得了平衡。</p>
+<h1 id="evaluation">EVALUATION</h1>
+<h2 id="internet-experiments">Internet Experiments</h2>
+<p>这边其实就是结合一些WAN场景，看看这个东西有什么用。</p>
+<h3 id="data-collection">Data collection</h3>
+<p>we found no statistical differences between the NDT output with or
+without in-band monitoring</p>
+<h3 id="evaluation-of-hop-by-hop-latencies">Evaluation of Hop-by-Hop
+Latencies</h3>
+<p>我们首先评论一下如何通过 noobprobe 揭示队列动态。 与 NDT
+不同的是，fast.com 在吞吐量测试中使用了标准的多 TCP
+流量最佳实践，使客户端与一组动态选择的 Netflix
+边缘服务器之间的链路达到饱和。 在这次测试中，共创建了 5
+个并行流；图中显示的是其中一个流的结果。 我们可以看到，在第 4
+跳出现了大量的排队振荡（为了便于阅读，图中省略了一些跳），这表明网络路径上的这一点出现了拥塞。
+有趣的是，第 3-5
+跳都在同一提供商内，这表明这些流量的拥塞并不发生在提供商之间的边界，而先前的研究表明边界是网络拥塞的常见地点[17,
+26]。 我们还观察到，在 13.5-14 秒时，跳 2 处出现了类似于 [36] 中图 2
+中图的效果。</p>
+<h3 id="load-balancing-effects">Load Balancing Effects</h3>
+<p>图 2 描述了大学客户端与加拿大温哥华 M-Lab
+服务器之间的流量逐跳延迟，并捕捉了流量进行过程中域间路由变化的影响。我们观察到，在大约
+12 秒时，第 7-9 跳的延迟发生了重大变化，第 6
+跳的响应停止。我们还发现，在 12-13
+秒之间生成的探测很少。由于探测是从应用程序生成的数据包中克隆出来的，因此我们推断，在路由发生变化时，应用程序流的发送速率出现了大幅下降（可能是
+TCP 超时）。在我们收集的所有数据中，我们观察到大学客户端与加拿大温哥华
+M-Lab 站点之间发生了 9
+次域间路由变更。目前，遇到路由变更的应用程序可能只会观察到吞吐量、延迟或数据包丢失方面的一些变化，而对观察到的变化发生的原因一无所知。然而，有了像
+noobprobe
+这样的系统提供的信息，应用程序就有可能做出调整，避免或适当地应对障碍。</p>
+<h3 id="observation-of-route-changes">Observation of Route Changes</h3>
+<p>最后，由于带内流量测量能够识别单个流量所遵循的接口级路径，因此我们可以直接比较通往相同目的地的不均衡负载平衡路径可能导致的性能差异。图
+3 显示了通过 NDT 测量的克莱姆森 CloudLab 客户端与德克萨斯州达拉斯沃斯堡
+M-Lab 站点之间四条负载平衡路径的出站流量经验
+CDF。图例中显示了确定遵循特定路径的测试实例数量，我们注意到每条路径的长度（以跳为单位）相同（8）。
+从图中我们可以看到，两对路由的下载吞吐量相似（1/2 和 3/4），但路由 1 和
+2 的性能经常比路由 3 和 4 低得多。我们还注意到，Kolmogorov-Smirnov 2
+样本测试表明，必须拒绝 "1/2 和 3/4 路由的测量值来自同一分布
+"的零假设。在研究其他负载平衡路径时（因篇幅限制未显示），我们发现，虽然不同负载平衡路径上的流量性能相似，但也有更多类似图
+3 所示的性能差异巨大的实例。
+在我们的数据中，我们观察到的许多负载平衡实例都是流量级负载平衡：同一流量的所有数据包都遵循相同的接口级路径。对于大多数客户和一个特定的目的地（荷兰阿姆斯特丹），我们观察到的接口级路径与每个数据包的负载平衡一致。但有趣的是，由于特定自治系统内跳数的变化，路由似乎也发生了根本性的变化。</p>
+<h1 id="passive-monitoring-with-noobflow">PASSIVE MONITORING WITH
+NOOBFLOW</h1>
+<h2 id="noobflow-implementation-overview">noobflow Implementation
+Overview</h2>
+<p>noobflow 包括两个部分：一个用户空间程序和一个基于 XDP
+的内核/网络组件。用户空间部分使用 BPF 编译器库（bcc）[7]
+实现，并充当内核组件的管理器。在我们的原型中，该组件由 Python
+编写，可用于动态加载、配置和重新配置内核组件。在全系统的边缘云设置中，该组件将通过逻辑上集中的控制器进行配置。</p>
+<p>用户空间组件创建per-CPU map，用于存储被动收集的网络流记录。
+使用per-CPU map，noobflow
+可以根据部署在边缘/云上的虚拟机的可用计算资源进行良好扩展。
+可以动态重新配置捕获信息的流量，并存储标准流量信息，如源/目的 IP
+和端口、接收的字节数和数据包数、时间戳等。 采用双缓冲方案，每个 CPU
+有两个map；当一个map积累新到达的数据包时，另一个map中的数据可以被检索和清除。
+用户空间程序会定期原子交换map角色，从而实现连续、无锁的流量收集。</p>
+<h2 id="evaluation-1">Evaluation</h2>
+<p>没什么好看的了</p>
+<!-- flag of hidden posts -->
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ebpf-workshop/" rel="tag"># ebpf-workshop</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/datawine" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#motivation-and-scope"><span class="nav-number">1.</span> <span class="nav-text">Motivation and Scope</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#active-monitoring-with-noobprobe"><span class="nav-number">2.</span> <span class="nav-text">ACTIVE MONITORING WITH
+NOOBPROBE</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#design-approach-in-band-measurement"><span class="nav-number">2.1.</span> <span class="nav-text">Design Approach: In-band
+Measurement</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#noobprobe-implementation-details"><span class="nav-number">2.2.</span> <span class="nav-text">noobprobe Implementation
+Details</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#evaluation"><span class="nav-number">3.</span> <span class="nav-text">EVALUATION</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#internet-experiments"><span class="nav-number">3.1.</span> <span class="nav-text">Internet Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#data-collection"><span class="nav-number">3.1.1.</span> <span class="nav-text">Data collection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#evaluation-of-hop-by-hop-latencies"><span class="nav-number">3.1.2.</span> <span class="nav-text">Evaluation of Hop-by-Hop
+Latencies</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#load-balancing-effects"><span class="nav-number">3.1.3.</span> <span class="nav-text">Load Balancing Effects</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#observation-of-route-changes"><span class="nav-number">3.1.4.</span> <span class="nav-text">Observation of Route Changes</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#passive-monitoring-with-noobflow"><span class="nav-number">4.</span> <span class="nav-text">PASSIVE MONITORING WITH
+NOOBFLOW</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#noobflow-implementation-overview"><span class="nav-number">4.1.</span> <span class="nav-text">noobflow Implementation
+Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#evaluation-1"><span class="nav-number">4.2.</span> <span class="nav-text">Evaluation</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Datawine</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">29.9k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user">本站访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye">本站总访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cyw3QwzdC';
+      var conf = 'cbf53c79ec118123e02b0e1a5676be66';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
