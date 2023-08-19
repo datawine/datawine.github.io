@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="ebpf-workshop," />
 
 
 
@@ -79,12 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Datawine&#39;s Blog">
-<meta property="og:url" content="https://datawine.github.io/archives/page/13/index.html">
+<meta name="description" content="以helper函数为中心，对eBPF程序的运行进行static-dynamic混合的最坏情况估计。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Enabling BPF Runtime policies for better BPF management">
+<meta property="og:url" content="https://datawine.github.io/ebpfworkshop23-Enabling-BPF-Runtime-policies-for-better-BPF-management.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="以helper函数为中心，对eBPF程序的运行进行static-dynamic混合的最坏情况估计。">
 <meta property="og:locale">
+<meta property="article:published_time" content="2023-08-19T06:22:25.000Z">
+<meta property="article:modified_time" content="2023-08-19T07:05:54.255Z">
 <meta property="article:author" content="Datawine">
+<meta property="article:tag" content="ebpf-workshop">
 <meta name="twitter:card" content="summary">
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/archives/page/13/"/>
+  <link rel="canonical" href="https://datawine.github.io/ebpfworkshop23-Enabling-BPF-Runtime-policies-for-better-BPF-management.html"/>
 
 
 
 
 
-  <title>归档 | Datawine's Blog</title>
+  <title>Enabling BPF Runtime policies for better BPF management | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -278,411 +283,335 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/ebpfworkshop23-Enabling-BPF-Runtime-policies-for-better-BPF-management.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">Enabling BPF Runtime policies for better BPF management</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-08-19T14:22:25+08:00">
+                2023-08-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 29 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2022">2022</h1>
-          </div>
-        
-        
 
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi22-Closed-loop-Network-Performance-Monitoring-and-Diagnosis-with-SpiderMon.html" itemprop="url">
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
               
-                <span itemprop="name">Closed-loop Network Performance Monitoring and Diagnosis with SpiderMon</span>
+                <a href="/ebpfworkshop23-Enabling-BPF-Runtime-policies-for-better-BPF-management.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="ebpfworkshop23-Enabling-BPF-Runtime-policies-for-better-BPF-management.html" itemprop="commentsCount"></span>
+                </a>
               
-            </a>
-        
-      </h2>
+            
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-17T15:23:12+08:00"
-              content="2022-05-17" >
-          05-17
-        </time>
-      </div>
+          
+          
 
-    </header>
-  </article>
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.2k
+                </span>
+              
 
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  11
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi22-Starlight-Fast-Container-Provisioning-on-the-Edge-and-over-the-WAN.html" itemprop="url">
-              
-                <span itemprop="name">nsdi22-Starlight-Fast Container Provisioning on the Edge and over the WAN</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-16T20:33:27+08:00"
-              content="2022-05-16" >
-          05-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi22-A-Case-for-Task-Sampling-based-Learning-for-Cluster-Job-Scheduling.html" itemprop="url">
-              
-                <span itemprop="name">nsdi22-A-Case-for-Task-Sampling-based-Learning-for-Cluster-Job-Scheduling</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-16T18:17:01+08:00"
-              content="2022-05-16" >
-          05-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/r-learning-2.html" itemprop="url">
-              
-                <span itemprop="name">R语言入门运行样例</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-14T18:21:04+08:00"
-              content="2022-05-14" >
-          05-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
+        <p>以helper函数为中心，对eBPF程序的运行进行static-dynamic混合的最坏情况估计。</p>
+<span id="more"></span>
+<p>现阶段，还没有reliable mechanism to determine how costly these BPF
+programs can be to the system in the worst case。
+因此，文章希望提供一个generic performance prediction of eBPF
+programs。</p>
+<p>现有的工作显示，通过symbolic execution，similar to what is done by
+the BPF verifier，能够在NF场景下得到一个相当不错的性能预测。
+基于这个insight，文章提供了一个Runtime Estimator which is a hybrid of
+static and dynamic analysis。</p>
+<h1 id="runtime-is-important">Runtime is important</h1>
+<h2 id="background">Background</h2>
+<p>总之，BPF-orchestrator 通过执行策略，从多个方面对系统进行保护： -
+加载策略可防止权限较低的用户加载 BPF
+程序，以免影响性能和安全性方面的功能。 - 访问策略可确保安全，避免对 BPF
+映射对象进行不必要的读/写操作，以免影响执行或泄露系统信息。</p>
+<h2 id="runtime-policies">Runtime Policies</h2>
+<p>虽然负载和访问策略提供了对 BPF
+程序及其交互的细粒度控制，但operators几乎无法深入了解这些程序的运行时效果，这就带来了挑战。
+跟踪运行时间是操作员在生产环境中满足 SLA 要求的必要条件。
+例如，用户无意中在网络堆栈等关键路径上挂钩会降低系统抵御拒绝服务攻击的能力。
+随着 eBPF
+使用的增加，一个关键路径上来自多个供应商的多个程序使操作员几乎无法推理。
+尽管现有策略可以防止权限较低的用户破坏关键功能，但却无法控制高权限操作员附加的
+BPF 程序的延迟。</p>
+<p>目前，eBPF
+校验器提供的最佳保证是最终终止，但这种保证本身并不能说明程序终止的速度有多快。
+我们使用 bpf_loop 辅助程序编写了一个简单的 eBPF
+程序，尽管经过了验证器的验证，该程序仍可无限期运行。 清单 1
+显示了代码的简化版本。 嵌套层级的唯一限制就是 BPF 程序的堆栈大小有限。
+在允许的最大值上增加更多的嵌套循环调用，运行时间将达到数小时的数量级！
+因此，要更好地管理依赖 BPF 的系统，运行时间估算是一项关键要求。
+这种估算不仅能标记出性能低下的程序，还有助于制定政策，限制不可预测或运行时间极长的程序安装到系统中。</p>
+<p>基于使用fuzzers或 bpftool
+测试运行功能进行动态基准测试的简单方法面临着不完整的问题。
+不完整的分析可能会遗漏罕见但代价高昂的分支，最终导致意想不到的更差运行时间。
+另一方面，使用静态分析来估算运行时间历来都面临着合理性问题，因为程序的某些方面（如函数指针和函数参数）只有在运行时才能知道。
+然而，静态分析尚未在 eBPF 运行时间的背景下进行研究。</p>
+<p>读到这里，基本可以确定本文就是要测量性能下界。</p>
+<h2 id="challenges">Challenges</h2>
+<p>虽然 eBPF[11]的有限复杂性使 BPF 程序的静态分析变得可行，但估计 BPF
+程序的运行时间仍面临着 BPF 所特有的挑战：</p>
+<ol type="1">
+<li>Multiple program paths：BPF
+程序可能有分布在多个对象文件中的复杂分支，这些分支在动态profiling过程中可能会被遗漏。</li>
+<li>BPF programs do not convey the complete
+picture：BPF程序依赖于辅助函数，而这些辅助函数在验证过程中对验证者是不透明的，也就是说，验证者无法进入这些辅助函数进行给定参数的分析。由于
+BPF
+程序经常使用这些辅助函数，而这些辅助函数内部可能正在执行复杂的操作，因此它们对程序延迟的影响不容忽视。</li>
+<li>Control flow changes due to helpers：bpf_loop
+等辅助函数可根据迭代次数决定程序的运行时间。随着 BPF
+内联迭代器等更多辅助函数的引入
+[13]，建议的解决方案需要考虑这些辅助函数对运行时间估计的影响。</li>
+</ol>
+<h1 id="estimating-bpf-runtime">ESTIMATING BPF RUNTIME</h1>
+<p>我们的key insight是，eBPF 校验器已经遍历了 BPF
+字节码的所有可能分支，对使用的寄存器进行范围分析，以确保所有可能分支都不会违反安全属性
+。我们提出的解决方案利用了 eBPF
+校验器的现有基础架构，并使用该验证器的控制流图（CFG）分析遍历所有可能的分支。由于验证器无法对helper调用进行迭代，我们建议使用一种混合方法，将辅助程序的运行时测量与验证器生成的
+CFG 结合使用。</p>
+<h2 id="the-runtime-estimator">The Runtime Estimator</h2>
+<p>图 2
+显示了修改后的架构，验证器现在包括一个运行时估算器。运行时间估算器内部有三个子组件：辅助定时器、分支定时器和特殊情况处理程序。</p>
+<p><strong>辅助计时器</strong>：该组件负责在启动时使用离线测量所有可用辅助函数及其各自的最佳和最差运行时间之间，并创建映射。
+我们假定辅助函数的运行时间是确定且定义明确的。为获得估计值，我们使用
+Linux 内核资源库中带有所需辅助函数的 BPF 样本，并将其附加到预定钩子上。
+我们对样本进行了修改，使每个辅助函数被调用 1000
+次，以报告最佳、平均和最差执行时间。 对修改后的 BPF 示例程序进行了 10
+次不同的触发，以捕捉不同系统负载下的性能。
+对于基于映射的助手，我们使用了 LRU hashmap
+(BPF_MAP_TYPE_LRU_HASH)。在测量执行时间时，我们使用了 bpf_ktime_get_ns
+辅助程序，并假定其差异可以忽略不计。 图 3 显示了 31
+个辅助函数的运行时间估计值。 条形图的长度描述了一些辅助函数（如
+bpf_tcp_sock）的运行时间是如何被严格限制的，而像 bpf_map_update_elem 和
+bpf_probe_read_user_str
+这样的辅助函数则由于对参数的依赖性或锁保留（我们将在第 5
+节中进一步讨论）而显示出较高的差异。
+平均运行时间（折线图表示）通常接近最佳运行时间，即使最佳运行时间与最差运行时间之间的差距很大。
+在评估过程中，我们偶尔会观察到非常高的较差情况运行时间，达到其他情况下较差运行时间的
+100-400 倍。
+根据这些数据点的罕见程度及其与辅助程序执行时间的关系，我们推测网络数据包或定时器等事件造成的突发中断是原因所在。由于这些因素并非
+BPF 所特有，因此我们在辅助程序计时和图 3 中忽略了这些异常值。</p>
+<p><strong>分支定时器</strong>：该组件利用验证器对 BPF
+字节码的迭代来检测所有可能的分支。
+对于给定分支，所有辅助程序调用都会参考辅助程序定时器生成的映射，以更新包含最佳和最差运行时间估计值的状态变量。
+如果观察到辅助程序与其参数之间存在定义明确的关系变化，分支定时器就可以按照第
+5 节中的讨论调整估计值。</p>
+<p><strong>特殊情况处理程序</strong>：
+该组件负责调整理论运行时间估计值，以匹配 bpf_loop
+等辅助程序带来的控制流变化。 bpf_loop
+辅助程序将迭代次数和要迭代的静态函数作为参数，对于 bpf_loop
+辅助程序，特例处理程序将确定寄存器 r1
+中存储的迭代次数，并使用它和静态函数的估计运行时间来适当增加整个程序的估计值。
+这种特殊情况处理方法可以适当扩展到其他基于循环的迭代器，如 bpf_for_each
+和 bpf_iter，它们会对 BPF 程序的控制流产生非同一般的影响。
+在验证结束时，运行时间估算器会报告不同分支的所有最小和最大运行时间值，作为全局运行时间估算值。BPF-orchestrator
+会被告知所获得的运行时间估计值，现在可以在附加 eBPF
+字节码之前，根据额外的运行时间策略对其进行检查。</p>
+<h1 id="evaluation">Evaluation</h1>
+<p>没什么好说的。</p>
+<h1 id="discussion-and-future-work">Discussion and future work</h1>
+<h2 id="dealing-with-helper-runtime-variability">Dealing with helper
+runtime variability</h2>
+<p>经过进一步调查，我们找到了差异的来源，并根据差异来源确定了两种不同的辅助函数类别：依赖参数和依赖资源。</p>
+<p>依赖参数的辅助函数（如 bpf_get_stackid 和 bpf_perf_event_output
+辅助函数）的运行时间随参数的变化而变化。
+如果参数可在静态或加载时确定（例如，程序加载时的特定钩点可能决定了辅助程序的固定上下文参数），我们认为运行时间估算器应该能够利用这种关系来改进我们的估算。</p>
+<p>另一方面，像 bpf_map_update_elem 这样的辅助程序会在更新 BPF
+映射中的值之前加锁，因为 BPF 映射可以在多个 eBPF 程序之间共享。
+在线程数量和地图访问频率（通常无法静态确定）的影响下，我们预计锁争用会导致开销增加。
+在测试中，我们观察到 bpf_map_update_elem 的平均运行时间增加了 2.5
+倍，而在最坏情况下，在 2 个 CPU 中并发运行时的运行时间增加了 4 倍。
+由于锁竞争和高速缓存一致性造成的延迟通常是一个很难解决的问题，我们正在积极研究，并计划研究在多核架构中如何近似最坏情况下的运行时间
+。虽然不是所有锁或有竞争的内核资源都会出现这种情况，但对于某些资源，我们或许可以确定锁的竞争程度，并提供更好的估计。
+例如，地图可能只被 eBPF 程序引用，而 BPF
+协调器在加载时可能知道这些程序的数量和并发性。
+最后，我们还对锁定辅助函数能否为更确定的运行时进行重组/简化感兴趣。</p>
+<h2 id="dynamic-runtime-mechanisms">Dynamic runtime mechanisms</h2>
+<p>由于上述因素，我们基于静态分析的解决方案显示出很大的差异，因此我们考虑了这样一种情况，即操作员可能希望使用激进策略或平均情况策略，但这些策略偶尔会被证明是不正确的。
+在这种情况下，动态运行时策略（如运行时终止）可以对 BPF
+程序的最大允许运行时间执行严格的计时器。 例如，如果系统发现 BPF
+程序违反了允许的运行时间限制，那么系统就可以通过使用控制机制采取适当措施。</p>
+<p>Runtime termination of eBPF programs并不trivial。
+eBPF在内核中运行，但是突然终止内核代码并不安全，因为内核代码可能持有必须首先释放的锁或对内核对象的引用。
+事实上，eBPF
+验证器的某些检查会确保在每条代码路径上释放锁和内核引用，并假定程序将终止（验证器也保证了这一点）。
+如第 2.2 节所述，终止可能并不及时。
+我们正在积极研究动态终止机制，以解除提前终止的 eBPF
+程序，从而释放所有锁和内核资源。 我们相信，运行时机制将大大提高操作员对
+BPF 程序所引起的延迟的控制能力。</p>
+<h2 id="verifier-vulnerabilities">Verifier vulnerabilities</h2>
+<p>最后，我们提出的解决方案在很大程度上依赖于验证器遍历 eBPF
+程序的所有可能分支。
+如果校验器错误地跳过某个分支[14]，那么运行时间估算器将无法计算该分支的运行时间。
+不过，由于 eBPF
+校验器正在接受积极审查，我们预计随着时间的推移，此类错误会越来越少。</p>
+<!-- flag of hidden posts -->
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/istio-learning-1.html" itemprop="url">
-              
-                <span itemprop="name">Istio学习（一）</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-10T18:50:19+08:00"
-              content="2022-05-10" >
-          05-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/r-learning-1.html" itemprop="url">
-              
-                <span itemprop="name">R语言介绍</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-10T18:44:58+08:00"
-              content="2022-05-10" >
-          05-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/r-learning.html" itemprop="url">
-              
-                <span itemprop="name">R语言学习</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-10T18:44:40+08:00"
-              content="2022-05-10" >
-          05-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/instrumental-variable.html" itemprop="url">
-              
-                <span itemprop="name">工具变量和孟德尔随机化原理</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-09T21:38:07+08:00"
-              content="2022-05-09" >
-          05-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi22-Buffer-based-End-to-end-Request-Event-Monitoring-in-the-Cloud.html" itemprop="url">
-              
-                <span itemprop="name">nsdi22-Buffer-based End-to-end Request Event Monitoring in the Cloud</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-09T21:23:11+08:00"
-              content="2022-05-09" >
-          05-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi22-Efficient-Scheduling-Policies-for-Microsecond-Scale-Tasks.html" itemprop="url">
-              
-                <span itemprop="name">nsdi22-Efficient Scheduling Policies for Microsecond-Scale Tasks</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-09T20:23:57+08:00"
-              content="2022-05-09" >
-          05-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ebpf-workshop/" rel="tag"># ebpf-workshop</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/page/12/">&lt;</a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/archives/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/17/">17</a><a class="extend next" rel="next" href="/archives/page/14/">&gt;</a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -690,6 +619,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -710,8 +648,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -781,6 +728,23 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#runtime-is-important"><span class="nav-number">1.</span> <span class="nav-text">Runtime is important</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#background"><span class="nav-number">1.1.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#runtime-policies"><span class="nav-number">1.2.</span> <span class="nav-text">Runtime Policies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#challenges"><span class="nav-number">1.3.</span> <span class="nav-text">Challenges</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#estimating-bpf-runtime"><span class="nav-number">2.</span> <span class="nav-text">ESTIMATING BPF RUNTIME</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-runtime-estimator"><span class="nav-number">2.1.</span> <span class="nav-text">The Runtime Estimator</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#evaluation"><span class="nav-number">3.</span> <span class="nav-text">Evaluation</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#discussion-and-future-work"><span class="nav-number">4.</span> <span class="nav-text">Discussion and future work</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dealing-with-helper-runtime-variability"><span class="nav-number">4.1.</span> <span class="nav-text">Dealing with helper
+runtime variability</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dynamic-runtime-mechanisms"><span class="nav-number">4.2.</span> <span class="nav-text">Dynamic runtime mechanisms</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#verifier-vulnerabilities"><span class="nav-number">4.3.</span> <span class="nav-text">Verifier vulnerabilities</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -965,6 +929,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

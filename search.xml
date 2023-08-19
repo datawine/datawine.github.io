@@ -159,6 +159,10 @@ Flexible and Non-intrusive Approach for Computing Complex Structural
 Coverage Metrics</a>：论文提出基于static partial evaluation of the
 decisions in the source
 code和源码到字节码的映射程序，实现软件覆盖率分析。</li>
+<li><a
+href="https://datawine.github.io/icse21-MicroHECL-High-Efficient-Root-Cause-Localization-in-Large-Scale-Microservice-Systems.html">MicroHECL:
+High-Efficient Root Cause Localization in Large-Scale Microservice
+Systems</a>：</li>
 </ul>
 <h1 id="icdcs">ICDCS</h1>
 <h2 id="section-14">2013</h2>
@@ -527,6 +531,10 @@ path。主要通过对系统调用的拦截实现+一些时序空间关系重构
 href="https://datawine.github.io/ebpfworkshop23-Schooling-NOOBs-with-eBPF.html">Schooling
 NOOBs with
 eBPF</a>：主要是针对WAN场景，利用eBPF实现了in-band主动被动测量。</li>
+<li><a
+href="https://datawine.github.io/ebpfworkshop23-Enabling-BPF-Runtime-policies-for-better-BPF-management.html">Enabling
+BPF Runtime policies for better BPF
+management</a>：以helper函数为中心，对eBPF程序的运行进行static-dynamic混合的最坏情况估计。</li>
 </ul>
 <h1 id="security">Security</h1>
 <h2 id="section-40">2023</h2>
