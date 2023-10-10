@@ -87,7 +87,7 @@
 <meta property="og:description" content="分布式追踪的鼻祖文章。介绍spans、traces的概念。通过对common facilities的手动修改插桩实现分布式追踪。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-01-22T07:23:37.000Z">
-<meta property="article:modified_time" content="2023-05-09T10:34:56.319Z">
+<meta property="article:modified_time" content="2023-10-10T12:57:55.359Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="others">
 <meta name="twitter:card" content="summary">
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  836
+                  936
                 </span>
               
 
@@ -436,6 +436,12 @@
         <p>分布式追踪的鼻祖文章。介绍spans、traces的概念。通过对common
 facilities的手动修改插桩实现分布式追踪。</p>
 <span id="more"></span>
+<p>Applications are constructed from collections of software modules
+that may be developed by different teams, perhaps in different
+programming languages, and could span many thousands of machines across
+multiple physical facilities.
+Dapper就是为了解决针对这些applications的understanding system behavior
+and reasoning about performance issues。</p>
 <p>两个最重要的goal：ubiquitous deployment和continuous monitoring。
 这两个goal导致了三个要求：Low overhead、Application-level
 transparency（用户感觉不到）、Scalability。</p>
@@ -460,7 +466,11 @@ context，并和调用callback的线程联系起来，解决异步问题</li>
 <li>Google的开发者都用gRPC，因此在gRPC插桩</li>
 </ol>
 <h2 id="annotations">Annotations</h2>
-<p>可以在代码里增加annotations来增加自定义桩点。</p>
+<p>可以在代码里增加annotations来增加自定义桩点。有两种</p>
+<ul>
+<li>timestamped, textual annotations</li>
+<li>a map of key-value annotations</li>
+</ul>
 <h2 id="sampling">Sampling</h2>
 <p>支持sampling</p>
 <h2 id="trace-collection">Trace collection</h2>
@@ -483,7 +493,9 @@ considerations</h2>
 <p>并没有准确数字，而是估计基本上每台机器、每个进程都用了。</p>
 <p>然后讲了一些其他的事情，比如dapper不能够覆盖一些特殊情况，dapper可以被关闭等等。</p>
 <h2 id="use-of-trace-annotations">Use of trace annotations</h2>
-<p>annotations被程序员用来做分布式log或者分类trace用；java程序员用annotation多一些。</p>
+<p>70% of all Dapper spans and 90% of all Dapper traces have at least
+one application-specified annotation.
+annotations被程序员用来做分布式log或者分类trace用；java程序员用annotation多一些。</p>
 <h1 id="managing-tracing-overhead">Managing Tracing Overhead</h1>
 <p>evaluation，包括trace生成开销、trace收集开销、对生产环境workload的影响、采样。</p>
 <h1 id="general-purpose-dapper-tools">General-Purpose Dapper Tools</h1>
@@ -516,7 +528,13 @@ Systems</h2>
 <h2 id="firefighting-with-dapper">Firefighting with Dapper</h2>
 <p>在一些紧急情况下，可以直接在Dapper daemon上查看数据。</p>
 <h1 id="other-lessons-learned">Other Lessons Learned</h1>
-<p>其实是讲不足之处：没法处理buffer、batching、找到的是直接原因不是根本原因（比如排队）</p>
+<p>其实是讲不足之处：</p>
+<ul>
+<li>没法处理buffer</li>
+<li>batching而不是一个一个的request（因为dapper是每个request给一个id）</li>
+<li>找到的是直接原因不是根本原因（比如排队）</li>
+<li>kernel信息</li>
+</ul>
 <!-- flag of hidden posts -->
       
     </div>
@@ -733,7 +751,7 @@ Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">29.9k</span>
+    <span title="Site words total count">30k</span>
   
 </div>
 

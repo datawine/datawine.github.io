@@ -79,13 +79,15 @@
 
 
 
+<meta name="description" content="阿里的工作。基于service call graph按照anomaly propagation方向对performance anomaly、reliability anomaly和traffic anomaly进行根因localization，还有一些机遇指标的异常判断方法和剪枝之类的。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MicroHECL: High-Efficient Root Cause Localization in Large-Scale Microservice Systems">
 <meta property="og:url" content="https://datawine.github.io/icse21-MicroHECL-High-Efficient-Root-Cause-Localization-in-Large-Scale-Microservice-Systems.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="阿里的工作。基于service call graph按照anomaly propagation方向对performance anomaly、reliability anomaly和traffic anomaly进行根因localization，还有一些机遇指标的异常判断方法和剪枝之类的。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-08-19T07:07:14.000Z">
-<meta property="article:modified_time" content="2023-08-19T07:08:18.705Z">
+<meta property="article:modified_time" content="2023-08-19T10:28:03.434Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="icse">
 <meta name="twitter:card" content="summary">
@@ -394,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  2.7k
                 </span>
               
 
@@ -410,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  9
                 </span>
               
             </div>
@@ -431,7 +433,145 @@
       
 
       
-        <span id="more"></span>
+        <p>阿里的工作。基于service call graph按照anomaly
+propagation方向对performance anomaly、reliability anomaly和traffic
+anomaly进行根因localization，还有一些机遇指标的异常判断方法和剪枝之类的。</p>
+<span id="more"></span>
+<p>主要解决三个方面的异常</p>
+<ul>
+<li>performance anomaly：由response time
+indicate。一般是由于实现或者环境配置问题引起。</li>
+<li>reliability anomaly：error counts。通常为由于code
+defects或者环境错误导致的exceptions。</li>
+<li>traffic anomaly：QPS的异常增加或者下降。通常由于不正确的traffic
+configurations、DoS攻击或者unanticipated压力测试导致的</li>
+</ul>
+<h1 id="overview">Overview</h1>
+<p>MicroHECL主要解决以上提到的三个问题。
+对于一种特定的anomaly，MicroHECL考虑一种对应的metric和一个对应的anomaly
+propagation direction。</p>
+<p>系统主要包括三个部分</p>
+<ol type="1">
+<li>Service Call Graph Construction</li>
+</ol>
+<ul>
+<li>就是按照service
+nodes进行一段时间窗口内的聚合，主要考虑三个指标：response time、error
+count、queries per second</li>
+<li>数据存储在一个time series database里面</li>
+<li>使用Flink，一个分布式streaming data-flow engine进行聚合</li>
+</ul>
+<ol start="2" type="1">
+<li>Anomaly Propagation Chain Analysis</li>
+</ol>
+<ul>
+<li>MicroHECL
+会根据服务调用图分析从可用性问题的初始异常服务开始的可能异常传播链。分析方法是沿着异常服务调用边遍历服务调用图，从初始异常服务开始，沿着可能的异常传播方向的相反方向进行。每个异常传播链都会考虑从初始异常服务的邻近服务传播的特定异常类型。</li>
+<li>为了提高效率，MicroHECL
+采用了剪枝策略，以消除与当前异常传播链无关的异常服务调用边。这种异常传播链分析以一组服务作为候选根源而告终，每个服务都与特定的异常类型相关联。分析流程、服务异常检测方法和剪枝策略详见第
+IV 节。</li>
+</ul>
+<ol start="3" type="1">
+<li>Candidate Root Cause Ranking</li>
+</ol>
+<ul>
+<li>按照皮尔逊相关系数的绝对值对候选根本原因进行排序。</li>
+</ul>
+<h1 id="anomaly-propagation-chain-analysis">Anomaly Propagation Chain
+Analysis</h1>
+<h2 id="analysis-process">Analysis Process</h2>
+<p>性能异常、可靠性异常和流量异常的质量指标分别是响应时间（RT）、错误计数（EC）和每秒查询次数（QPS）。
+性能异常和可靠性异常的传播方向都是从下游到上游，而流量异常的传播方向是从上游到下游。</p>
+<p>整个流程分成三步</p>
+<ol type="1">
+<li>entry node
+analysis：将服务调用图中的初始异常服务视为入口节点。根据不同的异常类型和相应的质量指标，对其每个相邻节点（即直接调用初始异常服务或被初始异常服务直接调用的服务）进行服务异常检测。对于每个检测到的相邻异常节点，如果其与入口节点的上下游关系与检测到的异常类型的异常传播方向一致，则从该节点开始进行异常传播链分析，并将检测到的异常类型作为异常传播链的异常类型。</li>
+<li>anomaly propagation chain
+extension：对于每个异常传播链，从起点（即检测到的初始异常服务的邻近异常节点）沿异常传播方向进行反向跟踪，迭代扩展异常传播链。在每次迭代中，根据当前异常传播链的异常类型，对当前节点的所有上下游节点进行服务异常检测；对于检测到的每个上下游异常节点，将其添加到当前异常传播链中。当异常传播链中无法再添加更多节点时，异常传播链的扩展就会结束。</li>
+<li>candidate root causes
+output：当初始异常服务的所有异常传播链分析结束时，将异常传播链扩展结束的所有服务作为候选根源报告。</li>
+</ol>
+<h2 id="service-anomaly-detection">Service Anomaly Detection</h2>
+<p>在异常传播链分析过程中，我们需要持续检测某项服务在某些质量指标上是否属于异常服务。</p>
+<p><strong>性能异常</strong>：
+性能异常是根据响应时间（RT）的异常增长来检测的。这里的挑战在于如何区分异常波动和正常波动。
+根据 RT 的特点，我们选择使用 OC-SVM（一类支持向量机）来训练 RT
+异常波动的预测模型。OC-SVM [20] 仅使用目标类（正常 RT
+波动）的信息来学习分类器，该分类器可识别属于目标类的样本，并将其他样本识别为异常值（异常
+RT 波动）。众所周知，与聚类方法相比，OC-SVM
+具有建模简单、可解释性强、生成能力强等优点。我们为模型定义并使用了以下四种特征。</p>
+<ul>
+<li>超过最大值的数量：当前检测窗口中超过给定比较周期内最大 RT 值的 RT
+值的数量。</li>
+<li>最大值的三角洲：当前检测窗口中的最大 RT 值与给定比较时段的最大 RT
+值之间的三角洲。</li>
+<li>超平均值个数：当前检测窗口中超过给定比较周期 RT 值最大移动平均值的
+RT 值个数。</li>
+<li>平均值之比：当前检测窗口中 RT 值的平均值与给定比较时段 RT
+值的最大移动平均值之比。</li>
+</ul>
+<p>我们将最后 10 分钟视为当前检测窗口，即考虑最后 10 分钟的 10 个 RT
+值。对于比较时段，我们考虑了以下三种设置：当前检测窗口前的最后一小时、前一天的同一小时、前一周同一天的同一小时。因此，我们的
+OC-SVM 模型共有 12 个特征。 我们使用基于 Python 的机器学习框架
+scikit-learn [21]
+来实现该模型。为了训练模型，我们从阿里巴巴的监控基础设施中收集了 100,000
+个不同服务的案例。每个案例都包括当前检测窗口的一系列 RT
+值和不同的比较期。我们还收集了 600
+个案例来验证训练好的模型。这些案例与训练案例不同，正负案例的比例为
+1:1。</p>
+<p><strong>可靠性异常</strong>：
+可靠性异常是根据错误计数（EC）的异常增加来检测的。
+在某些情况下，即使出现一些错误，也不会对业务造成影响，服务可能会在短时间内恢复正常。
+例如，当断路打开时，服务调用会失败并出现错误，但在负载降低和断路关闭后，服务很快就会恢复正常。
+因此，我们不能使用性能异常检测模型来检测可靠性异常。
+可以使用逻辑回归（LR）或随机森林（RF）等二元分类模型。然而，由于只有少数
+EC 变化属于可靠性异常，LR 模型很可能会导致过拟合。</p>
+<p>根据 EC 的特点，我们选择使用随机森林（RF）来训练 EC
+异常增加的预测模型。 RF
+使用多个决策树进行分类。它能有效结合多种特征，避免过拟合。
+我们为模型定义并使用了以下五个特征。 请注意，其中一些特征将其他指标（如
+RT、QPS）与 EC 结合在一起，因为异常 EC 增加通常与 RT 和 QPS 相关。
+与性能异常检测类似，我们将最后 10 分钟视为当前检测窗口。</p>
+<ul>
+<li>前一天德尔塔离群值：计算最近一小时的 EC 值与前一天同一小时的 EC
+值的德尔塔；使用 3Σ
+规则识别当前检测窗口中德尔塔的可能离群值；如果存在，则返回离群值的平均值作为特征值，否则返回
+0。</li>
+<li>上一分钟三角洲离群值：计算 EC
+值与过去一小时内上一分钟值的三角洲；使用 3Σ
+规则识别当前检测窗口中可能存在的三角洲离群值；如果存在，则返回离群值的平均值作为特征值，否则返回
+0。</li>
+<li>响应时间超过阈值：当前检测窗口中的平均 RT 是否超过预定义的阈值（如
+50 毫秒）。</li>
+<li>最大错误率：当前检测窗口中的最大错误率（即 EC 除以请求数）。</li>
+<li>与响应时间的相关性：当前检测窗口中 EC 与 RT
+之间的皮尔逊相关系数（见公式 1）。</li>
+</ul>
+<p>我们使用基于 Python 的机器学习框架 scikit-learn [21]
+来实现模型。为了训练模型，我们从阿里巴巴的监控基础设施中收集了 1,000
+个不同服务的标签案例，正负样本的比例为 1:3。我们还收集了 400
+个案例来验证训练好的模型，正负样本的比例为 5:3。</p>
+<p><strong>流量异常</strong>：
+根据每秒查询次数（QPS）的异常波动检测流量异常。 如图 3(c) 和图 3(f)
+所示，QPS 在短期和长期都符合正态分布。 因此，我们选择使用 3Σ 规则来检测
+QPS 的异常波动。</p>
+<p>与性能和可靠性异常检测类似，我们将最后 10 分钟作为当前检测窗口。
+根据过去一小时的 QPS 值，我们使用 3Σ 规则检测当前检测窗口中的异常值。
+为了进一步消除误报，我们还检查了 QPS
+值与初始异常服务的业务指标值之间的皮尔逊相关系数（见公式 1）。
+只有当相关系数高于预定义阈值（如 0.9），且在当前检测窗口中识别出 3Σ
+离群值时，才会报告当前服务的流量异常。</p>
+<h2 id="pruning-strategy">Pruning Strategy</h2>
+<p>异常传播链可能有多个分支，在异常传播链扩展过程中，分支的数量可能会继续增加。
+因此，异常传播链分析的主要挑战在于可能的异常传播分支数量的指数增长。
+在这些分支中，一些异常服务和服务调用可能与报告的可用性问题无关。
+为了应对这一挑战并提高分析效率，我们采用了一种剪枝策略来剔除无关的异常服务调用。</p>
+<p>剪枝策略基于以下假设：异常传播链中的两个连续边（服务呼叫）具有相似的相应质量指标变化趋势。
+例如，在图 2 中，边缘 S1 → S4 的 QPS 应与边缘 S4 → S5 的 QPS
+具有相似的变化趋势，否则可以剪除边缘 S1 → S4。 同样，边 S7 →S9 和边 S7
+→S10 的 RT 也应与边 S5 → S7 的 RT 有相似的变化趋势。</p>
+<p>与候选根本原因排序中的相关性估计类似（见第三节），我们使用皮尔逊相关系数[19]来衡量两个连续service
+calls的相应指标变化趋势的相似性。</p>
 <!-- flag of hidden posts -->
       
     </div>
@@ -511,8 +651,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -583,6 +732,23 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#overview"><span class="nav-number">1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#anomaly-propagation-chain-analysis"><span class="nav-number">2.</span> <span class="nav-text">Anomaly Propagation Chain
+Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#analysis-process"><span class="nav-number">2.1.</span> <span class="nav-text">Analysis Process</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#service-anomaly-detection"><span class="nav-number">2.2.</span> <span class="nav-text">Service Anomaly Detection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pruning-strategy"><span class="nav-number">2.3.</span> <span class="nav-text">Pruning Strategy</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
         <div class="back-to-top">
@@ -617,7 +783,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">29.9k</span>
+    <span title="Site words total count">30k</span>
   
 </div>
 
