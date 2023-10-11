@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="dynamic instrumentation + happened-before join关系。 key是the ability to correlate events that occur elsewhere across the system Challenge  Challenge 1: One size does not fit all，桩点的通用性问题 Challenge 2: Cro">
+<meta name="description" content="第一个同时实现了dynamic instrumentation + cross-boundary propagation的工作。 提了一个happens-before关系，可以理解为属于一个request的path上（可以不相邻）的两个具有先后关系的事件。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pivot Tracing: Dynamic Causal Monitoring for Distributed Systems">
 <meta property="og:url" content="https://datawine.github.io/sosp15-Pivot-Tracing-Dynamic-Causal-Monitoring-for-Distributed-Systems.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="dynamic instrumentation + happened-before join关系。 key是the ability to correlate events that occur elsewhere across the system Challenge  Challenge 1: One size does not fit all，桩点的通用性问题 Challenge 2: Cro">
+<meta property="og:description" content="第一个同时实现了dynamic instrumentation + cross-boundary propagation的工作。 提了一个happens-before关系，可以理解为属于一个request的path上（可以不相邻）的两个具有先后关系的事件。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-09-25T02:43:59.000Z">
-<meta property="article:modified_time" content="2022-09-26T06:22:00.638Z">
+<meta property="article:modified_time" content="2023-10-11T11:09:45.178Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="sosp">
 <meta name="twitter:card" content="summary">
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  97
+                  715
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  3
                 </span>
               
             </div>
@@ -433,32 +433,93 @@
       
 
       
-        <p>dynamic instrumentation + happened-before join关系。</p>
-<p>key是the ability to correlate events that occur elsewhere across the
-system</p>
-<h1 id="challenge">Challenge</h1>
+        <p>第一个同时实现了dynamic instrumentation + cross-boundary
+propagation的工作。
+提了一个happens-before关系，可以理解为属于一个request的path上（可以不相邻）的两个具有先后关系的事件。</p>
+<span id="more"></span>
+<p>主要解决两个问题</p>
 <ul>
-<li>Challenge 1: One size does not fit all，桩点的通用性问题</li>
-<li>Challenge 2: Crossing
-boundaries，信息被局限在process/thread层面，没有办法实时cross
+<li>what gets recorded is defined a priori, at development or deployment
+time</li>
+<li>the information is captured in a component- or machine-centric way,
+making it extremely difficult to correlate events that cross these
 boundaries</li>
 </ul>
-<h1 id="dynamic-tracing-pt-agent">Dynamic tracing: PT Agent</h1>
-<p>这边感觉没什么好说的</p>
-<h1 id="causal-tracing-baggage">Causal tracing: Baggage</h1>
-<p>Baggage is a Key:Value container propagated alongside a request</p>
+<p>在Java基础上实现的。</p>
+<h1 id="motivation">Motivation</h1>
+<h2 id="pivot-tracing-in-action">Pivot Tracing in Action</h2>
+<p>主要给了一个例子，HBase、Hadoop MapReduce和direct HDFS clients。
+默认的HDFS只有dirct clients的信息，因此会将本来属于HBase和MapReduce
+clients的流量也都合并到一起去。</p>
+<p>Pivot Tracing主要是在第一次被client protocol
+method处理的时候就记录下来到底是来自哪个客户端的。
+然后将这个信息一起propagate。</p>
+<p>利用Pivot Tracing能够将数据以不同的维度聚合起来。</p>
+<h2 id="pivot-tracing-overview">Pivot Tracing Overview</h2>
+<p>图2给了Pivot Tracing的整体架构图。 Pivot
+Tracing主要提出了以下几个新的概念</p>
 <ul>
-<li>generalization of metadata in end-to-end tracing</li>
-<li>one instance per request</li>
+<li>tracepoints。instructions on where and how to change the system to
+obtain the exported identifiers。</li>
+<li>queries。variables exposed by one or more tracepoints。</li>
+<li>advices。intermediate representation。</li>
 </ul>
-
-
-	<div class="row">
-    <embed src="/paper/sosp15-Pivot-Tracing-Dynamic-Causal-Monitoring-for-Distributed-Systems.pdf" width="100%" height="1700" type="application/pdf">
-	</div>
-
-
-
+<h2 id="monitoring-and-troubleshooting-challenges">Monitoring and
+Troubleshooting Challenges</h2>
+<ul>
+<li>Challenge 1: One size does not fit
+all，桩点的通用性问题。需要动态插桩来解决。</li>
+<li>Challenge 2: Crossing
+boundaries，信息被局限在process/thread层面，没有办法实时cross
+boundaries。</li>
+</ul>
+<p>实际上这边的单独拿出动态插桩来看、又或者是分布式追踪，其实都已经有相关的工作了。
+但是在写这篇文章的时候，还没有同时有工作能够同时完成两个事情，这也是本篇文章的贡献。</p>
+<h1 id="design">Design</h1>
+<p>主要目标</p>
+<ol type="1">
+<li>Dynamically configure and install monitoring at runtime</li>
+<li>Low system overhead to enable "always on" monitoring</li>
+<li>Capture causality between events from multiple processes and
+applications</li>
+</ol>
+<p>一些主要设计（其实是提出的概念）</p>
+<ul>
+<li>tracepoints</li>
+<li>query language</li>
+<li>happened before joins
+<ul>
+<li>这个主要说一下，a-&gt;b表示a与b在处理同一个请求的时候（不一定相继）发生，且a的发生之后是b的发生。</li>
+</ul></li>
+</ul>
+<h1 id="pivot-tracing-optimization">Pivot Tracing Optimization</h1>
+<p>主要有以下优化</p>
+<ul>
+<li>Baggage：evaluate
+happens-before关系需要全局视野，为了避免集中性能瓶颈，Pivot
+tracing利用baggage里面传递的一些信息，在原地进行了一些inline
+evaluation。</li>
+<li>tuple aggregation：减少the number of tuples emitted for global
+aggregation。有Aggregation操作的queries就进行原地、周期性的聚合。</li>
+<li>query optimization：减少the number of tuples packed。做法是pushes
+projection、selection和aggregation terms as close as possible to source
+tracepoints。</li>
+<li>propagation overhead：为了避免baggage里面太多信息，可以revert to
+constant baggage size。所欲呕的tyuples是被emitted而不是packed。</li>
+</ul>
+<h1 id="implementation">Implementation</h1>
+<ul>
+<li>Agent：A Pivot Tracing agent thread runs in every Pivot
+Tracing-enabled process</li>
+<li>Dynamic Instrumentation：Java的字节码增强，没什么好说的。</li>
+<li>Baggage：thread-local variables。lazily serialized and deserialized
+using protocol buffers。</li>
+<li>propagation：需要用户自己实现。</li>
+<li>branches and versioning：a versioning scheme for baggage using
+interval tree clocks。</li>
+<li>Materializing
+Advice：没什么好说的，一些实现。比如OBSERVE对应这个、UNPACK/PACK对应那个之类的。</li>
+</ul>
 <!-- flag of hidden posts -->
       
     </div>
@@ -628,7 +689,8 @@ boundaries</li>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#challenge"><span class="nav-number">1.</span> <span class="nav-text">Challenge</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dynamic-tracing-pt-agent"><span class="nav-number">2.</span> <span class="nav-text">Dynamic tracing: PT Agent</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#causal-tracing-baggage"><span class="nav-number">3.</span> <span class="nav-text">Causal tracing: Baggage</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#motivation"><span class="nav-number">1.</span> <span class="nav-text">Motivation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pivot-tracing-in-action"><span class="nav-number">1.1.</span> <span class="nav-text">Pivot Tracing in Action</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pivot-tracing-overview"><span class="nav-number">1.2.</span> <span class="nav-text">Pivot Tracing Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#monitoring-and-troubleshooting-challenges"><span class="nav-number">1.3.</span> <span class="nav-text">Monitoring and
+Troubleshooting Challenges</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#design"><span class="nav-number">2.</span> <span class="nav-text">Design</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pivot-tracing-optimization"><span class="nav-number">3.</span> <span class="nav-text">Pivot Tracing Optimization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#implementation"><span class="nav-number">4.</span> <span class="nav-text">Implementation</span></a></li></ol></div>
             
 
           </div>
