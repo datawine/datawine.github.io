@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="socc," />
 
 
 
@@ -79,12 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Datawine&#39;s Blog">
-<meta property="og:url" content="https://datawine.github.io/archives/page/2/index.html">
+<meta name="description" content="本篇文章用prediction error来表示一条trace是否“有趣”。 prediction error大，意味着模型没法很好地预测这条trace，因此这条trace是有趣的。 然后基于此做tail-based sampling。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sifter: Scalable Sampling for Distributed Traces, without Feature Engineering">
+<meta property="og:url" content="https://datawine.github.io/socc19-Sifter-Scalable-Sampling-for-Distributed-Traces-without-Feature-Engineering.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="本篇文章用prediction error来表示一条trace是否“有趣”。 prediction error大，意味着模型没法很好地预测这条trace，因此这条trace是有趣的。 然后基于此做tail-based sampling。">
 <meta property="og:locale">
+<meta property="article:published_time" content="2023-10-12T08:32:45.000Z">
+<meta property="article:modified_time" content="2023-10-14T07:03:37.580Z">
 <meta property="article:author" content="Datawine">
+<meta property="article:tag" content="socc">
 <meta name="twitter:card" content="summary">
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/archives/page/2/"/>
+  <link rel="canonical" href="https://datawine.github.io/socc19-Sifter-Scalable-Sampling-for-Distributed-Traces-without-Feature-Engineering.html"/>
 
 
 
 
 
-  <title>归档 | Datawine's Blog</title>
+  <title>Sifter: Scalable Sampling for Distributed Traces, without Feature Engineering | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -278,411 +283,339 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/socc19-Sifter-Scalable-Sampling-for-Distributed-Traces-without-Feature-Engineering.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">Sifter: Scalable Sampling for Distributed Traces, without Feature Engineering</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-10-12T16:32:45+08:00">
+                2023-10-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 29 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2023">2023</h1>
-          </div>
-        
-        
 
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/paper-reading.html" itemprop="url">
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
               
-                <span itemprop="name">论文阅读</span>
+                <a href="/socc19-Sifter-Scalable-Sampling-for-Distributed-Traces-without-Feature-Engineering.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="socc19-Sifter-Scalable-Sampling-for-Distributed-Traces-without-Feature-Engineering.html" itemprop="commentsCount"></span>
+                </a>
               
-            </a>
-        
-      </h2>
+            
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-06-02T20:34:45+08:00"
-              content="2023-06-02" >
-          06-02
-        </time>
-      </div>
+          
+          
 
-    </header>
-  </article>
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.4k
+                </span>
+              
 
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/sigcomm20-PINT-Probabilistic-In-band-Network-Telemetry.html" itemprop="url">
-              
-                <span itemprop="name">PINT: Probabilistic In-band Network Telemetry</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-06-02T18:10:11+08:00"
-              content="2023-06-02" >
-          06-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/eurosys19-TAS-TCP-Acceleration-as-an-OS-Service.html" itemprop="url">
-              
-                <span itemprop="name">TAS: TCP Acceleration as an OS Service</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-05-30T19:19:59+08:00"
-              content="2023-05-30" >
-          05-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi23-Remote-Procedure-Call-as-a-Managed-System-Service.html" itemprop="url">
-              
-                <span itemprop="name">Remote Procedure Call as a Managed System Service</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-05-15T19:41:46+08:00"
-              content="2023-05-15" >
-          05-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
+        <p>本篇文章用prediction error来表示一条trace是否“有趣”。 prediction
+error大，意味着模型没法很好地预测这条trace，因此这条trace是有趣的。
+然后基于此做tail-based sampling。</p>
+<span id="more"></span>
+<p>To reduce computational and storage overheads, most tracing
+frameworks do not keep all traces, but sample them uniformly at random.
+但是，uniform random sampling inevitably captures redundant, common-case
+execution traces。</p>
+<p>本篇文章主要希望稀释biased trace sampling。
+为此，作者主要解决了以下几个high-level challenges。</p>
+<ul>
+<li>we cannot rely on manually engineered features</li>
+<li>ampling decisions must be robust to noise and heterogeneity in the
+trace data</li>
+<li>sampling techniques face strict operational requirements to be
+useful in practice，比如
+<ul>
+<li>sampling decision must be fast</li>
+<li>techniques must scale to a large volume of traces</li>
+<li>they must operate online over a continuous stream of traces</li>
+</ul></li>
+</ul>
+<p>整体来说，Sifter maintains a low-dimensional probabilistic model of
+execution paths in the distributed system。
+之所以是low-dimensional，是因为需要强迫模型find approximate
+representation。</p>
+<h1 id="motivation">Motivation</h1>
+<h2 id="distributed-tracing-background">Distributed Tracing
+Background</h2>
+<p>这里比较有用的是给了一点定义：</p>
+<p>A key design goal for distributed tracing tools is to trace
+production workloads – that is, to produce, collect, and store traces at
+large request volume, with reasonable overheads. In the extreme, tracing
+tools can capture an end-to-end execution trace for every request in the
+entire production workload.</p>
+<h2 id="tracing-pipeline-and-overheads">Tracing Pipeline and
+Overheads</h2>
+<p>主要描述了overhead的三个来源</p>
+<ol type="1">
+<li>runtime overhead to generate trace data, and for propagating trace
+contexts alongside requests</li>
+<li>route trace data to tracing back- ends, incurring network
+overheads</li>
+<li>Processing a trace incurs computational costs for constructing its
+abstract representation and applying feature-extraction functions</li>
+</ol>
+<h2 id="reducing-overheads-by-sampling">Reducing Overheads by
+Sampling</h2>
+<p>图还行。</p>
+<ul>
+<li>Head-Based Sampling。Dapper和Canopy都采用的。但是the set of sampled
+traces contains mostly common-case execution paths, with a lot of
+overlap and redundant information</li>
+<li>Tail-Based Sampling。里面有一个文章的核心论点：Although the runtime
+overheads of distributed tracing are non-zero, they are not dominant
+compared to the subsequent trace processing, querying, and storage
+costs</li>
+</ul>
+<p>本篇文章就是基于Tail-Based Sampling的核心思想做的。</p>
+<h1 id="limitations-of-existing-approaches">Limitations of Existing
+Approaches</h1>
+<h2 id="feature-engineering">Feature Engineering</h2>
+<p>现有的方法，manual feature engineering，is naturally limited to only
+those features that developers can predict will be interesting a priori,
+and those features that can be easily written as a feature extraction
+functions。 文章主张，Ideally, a tail-based sampler should not require
+developers to explicitly specify features on which to bias the sampling
+decision。 the sampling decision should be made directly on the
+underlying trace data, and features should be learned, rather than
+engineered。</p>
+<h2 id="operational-requirements">Operational Requirements</h2>
+<p>trace sampling的结果必须要onlnie。 但是现有的general-purpose machine
+learning和graph mining
+algorithms都是offline的：运行速度很慢、有很大的computational costs。</p>
+<p>此外还要考虑scalability。</p>
+<h2 id="goals">Goals</h2>
+<p>主要是一个表达式。希望输出一个采样函数。
+同时，希望算法的复杂度是O1的、状态存储的大小是常量。</p>
+<h1 id="challenges">Challenges</h1>
+<h2 id="a-primer-on-traces">A Primer on Traces</h2>
+<p>一些定义吧。</p>
+<ul>
+<li>Events：Events are the core building block of a trace</li>
+<li>Relationships：Events alone tell some of the story, but the most
+important information in a trace is the causal ordering between
+events</li>
+<li>Traces：A trace combines events and their causal ordering into a
+DAG</li>
+</ul>
+<h2 id="heterogeneous-event-annotations">Heterogeneous Event
+Annotations</h2>
+<p>对于trace sampling来讲，整合event
+annotations并不是一件容易的事情，这涉及到了自然语音处理。
+文章想了一个绕过去的方法。 用（比如）【source file和line
+number作为label标记event】。这种label被称为origin。</p>
+<h2 id="incorporating-structure">Incorporating Structure</h2>
+<p>不仅需要考虑label，还需要考虑structure。
+但是structure可能会带来状态过多的问题，为此，sifter基于两个直觉解决这个问题。</p>
+<p>首先，虽然轨迹中的路径总数庞大得难以捉摸，但 "高信号
+"路径的数量很可能是可控的。
+例如，我们经常会看到相同的事件子序列以完全相同的顺序出现，这是因为连续事件之间没有分支点。
+虽然我们无法预测哪些路径可能有用，但我们可以利用高效的降维技术来进行降维。</p>
+<p>其次，我们认为基于路径的有用特征更有可能是短的而不是长的。</p>
+<h2 id="approximate-matching">Approximate Matching</h2>
+<p>准确的matching不行，因为过拟合的整个模型无法适应噪音的存在。</p>
+<h2 id="cross-component-tracing">Cross-Component Tracing</h2>
+<ul>
+<li>Different system components may incorporate tracing with varying
+levels of detail.</li>
+<li>因为微服务具有复杂的依赖、同时同一个服务可能在不同的位置被调用，因此两条trace可能在high-level的角度看起来不一样，但是它们实际是一样的</li>
+<li>Change over time。顾名思义</li>
+</ul>
+<h1 id="design">Design</h1>
+<h2 id="dimensionality-reduction">Dimensionality Reduction</h2>
+<p>用户首先指定一个固定的N，然后框架从traces中提取出来所有长度为N的happens-before
+path。 图3介绍了整个过程。</p>
+<p>输入是去掉了N/2（其实是上取整）位置的其他的N-1个label。
+比如N是3。那么就留下1和3位置的label作为输入。 这个输入是一个one-hot
+encoding。就是哪个位置有、哪个位置就是1。</p>
+<p>网络的第一层把这个one-hot
+encoding转换成一个P维（也是实现强行定义好的，比如10）的向量。
+这一步的目的就是降维。</p>
+<p>网络的第二层把它们concatenates起来，然后使用softmax预测output label。
+output label就是刚才留下来的N/2位置的label。也是以one-hot
+encoding的形式。</p>
+<h2 id="sampling-using-prediction-error">Sampling Using Prediction
+Error</h2>
+<p>sifter利用上述的prediction error作为sampling的最核心指标。 一个high
+prediction error代表这条trace并不能够被很好的预测、因此是一个edge
+case。</p>
+<h2 id="calculating-sampling-probability">Calculating Sampling
+Probability</h2>
+<p>维护了一个长为k（没错，k也是预先定义好的）的窗口/
+这个窗口保存了k个最近的traces的prediction losses。
+然后基于当前的loss和过去的loss，计算一个概率。</p>
+<h2 id="sifter-workflow">Sifter Workflow</h2>
+<p>这个就是一个workflow。 比较有用的是引用了一下，typical tracing
+backends会aggregate events in memory for a short period of time。</p>
+<h2 id="scalability">Scalability</h2>
+<p>主要是说模型保存的状态很少。 这是肯定的，因为就两层+一个softmax。</p>
+<!-- flag of hidden posts -->
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi23-Formal-Methods-for-Network-Performance-Analysis.html" itemprop="url">
-              
-                <span itemprop="name">Formal Methods for Network Performance Analysis</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-05-15T18:28:55+08:00"
-              content="2023-05-15" >
-          05-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi23-Unlocking-unallocated-cloud-capacity-for-long-uninterruptible-workloads.html" itemprop="url">
-              
-                <span itemprop="name">Unlocking unallocated cloud capacity for long, uninterruptible workloads</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-05-11T18:48:02+08:00"
-              content="2023-05-11" >
-          05-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi23-Following-the-Data-Not-the-Function-Rethinking-Function-Orchestration-in-Serverless-Computing.html" itemprop="url">
-              
-                <span itemprop="name">Following the Data, Not the Function: Rethinking Function Orchestration in Serverless Computing</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-05-08T19:09:26+08:00"
-              content="2023-05-08" >
-          05-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi23-Understanding-RDMA-Microarchitecture-Resources-for-Performance-Isolation.html" itemprop="url">
-              
-                <span itemprop="name">Understanding RDMA Microarchitecture Resources for Performance Isolation</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-05-05T16:56:23+08:00"
-              content="2023-05-05" >
-          05-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi23-Doing-More-with-Less-Orchestrating-Serverless-Applications-without-an-Orchestrator.html" itemprop="url">
-              
-                <span itemprop="name">Doing More with Less: Orchestrating Serverless Applications without an Orchestrator</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-05-05T14:54:24+08:00"
-              content="2023-05-05" >
-          05-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/nsdi23-Poseidon-Efficient-Robust-and-Practical-Datacenter-CC-via-Deployable-INT.html" itemprop="url">
-              
-                <span itemprop="name">Poseidon: Efficient, Robust, and Practical Datacenter CC via Deployable INT</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-05-03T20:50:59+08:00"
-              content="2023-05-03" >
-          05-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/socc/" rel="tag"># socc</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/">&lt;</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/17/">17</a><a class="extend next" rel="next" href="/archives/page/3/">&gt;</a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -690,6 +623,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -710,8 +652,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -781,6 +732,29 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#motivation"><span class="nav-number">1.</span> <span class="nav-text">Motivation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#distributed-tracing-background"><span class="nav-number">1.1.</span> <span class="nav-text">Distributed Tracing
+Background</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tracing-pipeline-and-overheads"><span class="nav-number">1.2.</span> <span class="nav-text">Tracing Pipeline and
+Overheads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reducing-overheads-by-sampling"><span class="nav-number">1.3.</span> <span class="nav-text">Reducing Overheads by
+Sampling</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#limitations-of-existing-approaches"><span class="nav-number">2.</span> <span class="nav-text">Limitations of Existing
+Approaches</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#feature-engineering"><span class="nav-number">2.1.</span> <span class="nav-text">Feature Engineering</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#operational-requirements"><span class="nav-number">2.2.</span> <span class="nav-text">Operational Requirements</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#goals"><span class="nav-number">2.3.</span> <span class="nav-text">Goals</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#challenges"><span class="nav-number">3.</span> <span class="nav-text">Challenges</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#a-primer-on-traces"><span class="nav-number">3.1.</span> <span class="nav-text">A Primer on Traces</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#heterogeneous-event-annotations"><span class="nav-number">3.2.</span> <span class="nav-text">Heterogeneous Event
+Annotations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#incorporating-structure"><span class="nav-number">3.3.</span> <span class="nav-text">Incorporating Structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#approximate-matching"><span class="nav-number">3.4.</span> <span class="nav-text">Approximate Matching</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cross-component-tracing"><span class="nav-number">3.5.</span> <span class="nav-text">Cross-Component Tracing</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#design"><span class="nav-number">4.</span> <span class="nav-text">Design</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dimensionality-reduction"><span class="nav-number">4.1.</span> <span class="nav-text">Dimensionality Reduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sampling-using-prediction-error"><span class="nav-number">4.2.</span> <span class="nav-text">Sampling Using Prediction
+Error</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#calculating-sampling-probability"><span class="nav-number">4.3.</span> <span class="nav-text">Calculating Sampling
+Probability</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sifter-workflow"><span class="nav-number">4.4.</span> <span class="nav-text">Sifter Workflow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scalability"><span class="nav-number">4.5.</span> <span class="nav-text">Scalability</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -965,6 +939,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
