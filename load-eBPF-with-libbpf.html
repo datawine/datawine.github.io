@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="nsdi," />
+  <meta name="keywords" content="eBPF," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="Introduction 这篇文章实际上在处理网关的几个挑战。  可扩展性。云网络中实例规模的扩大导致了转发规则消耗的快速增加。因此，安装大量的规则将限制单个VPC和整个网络的规模。 稳健性。尽管特定设备的故障概率通常很低，但大规模云中的网络异常事件是频繁和不可避免的，包括设备故障[18, 59]和流量突发[68, 81]。它们会造成严重的网络拥堵&#x2F;中断，降低了用户的体验。 延迟。配置转发规则和建">
+<meta name="description" content="eBPF总结 加载  具体工作：从elf文件中解析构建eBPF程序块，并加载入内核 解析  libbpf接口：bpf_object__open 过程  解析编译后的elf文件，分解出Section 构造bpf_object结构体，将prog和map对应的Section放入结构体成员中   加载  libbpf接口：bpf_object__load 过程  将map段构造对应数据结构，加载到共享内">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Zeta-A Scalable and Robust East-West Communication Framework in Large-Scale Clouds">
-<meta property="og:url" content="https://datawine.github.io/nsdi22-Zeta-A-Scalable-and-Robust-East-West-Communication-Framework-in-Large-Scale-Clouds.html">
+<meta property="og:title" content="eBPF加载机制解析">
+<meta property="og:url" content="https://datawine.github.io/load-eBPF-with-libbpf.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
-<meta property="og:description" content="Introduction 这篇文章实际上在处理网关的几个挑战。  可扩展性。云网络中实例规模的扩大导致了转发规则消耗的快速增加。因此，安装大量的规则将限制单个VPC和整个网络的规模。 稳健性。尽管特定设备的故障概率通常很低，但大规模云中的网络异常事件是频繁和不可避免的，包括设备故障[18, 59]和流量突发[68, 81]。它们会造成严重的网络拥堵&#x2F;中断，降低了用户的体验。 延迟。配置转发规则和建">
+<meta property="og:description" content="eBPF总结 加载  具体工作：从elf文件中解析构建eBPF程序块，并加载入内核 解析  libbpf接口：bpf_object__open 过程  解析编译后的elf文件，分解出Section 构造bpf_object结构体，将prog和map对应的Section放入结构体成员中   加载  libbpf接口：bpf_object__load 过程  将map段构造对应数据结构，加载到共享内">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-05-30T06:41:44.000Z">
-<meta property="article:modified_time" content="2022-05-30T06:43:34.207Z">
+<meta property="article:published_time" content="2023-10-16T05:07:57.000Z">
+<meta property="article:modified_time" content="2023-10-16T05:30:20.975Z">
 <meta property="article:author" content="Datawine">
-<meta property="article:tag" content="nsdi">
+<meta property="article:tag" content="eBPF">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/nsdi22-Zeta-A-Scalable-and-Robust-East-West-Communication-Framework-in-Large-Scale-Clouds.html"/>
+  <link rel="canonical" href="https://datawine.github.io/load-eBPF-with-libbpf.html"/>
 
 
 
 
 
-  <title>Zeta-A Scalable and Robust East-West Communication Framework in Large-Scale Clouds | Datawine's Blog</title><meta name="robots" content="noindex">
+  <title>eBPF加载机制解析 | Datawine's Blog</title><meta name="robots" content="noindex">
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/nsdi22-Zeta-A-Scalable-and-Robust-East-West-Communication-Framework-in-Large-Scale-Clouds.html">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/load-eBPF-with-libbpf.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Zeta-A Scalable and Robust East-West Communication Framework in Large-Scale Clouds</h1>
+          <h1 class="post-title" itemprop="name headline">eBPF加载机制解析</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-30T14:41:44+08:00">
-                2022-05-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-10-16T13:07:57+08:00">
+                2023-10-16
               </time>
             
 
@@ -368,8 +368,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/nsdi22-Zeta-A-Scalable-and-Robust-East-West-Communication-Framework-in-Large-Scale-Clouds.html#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="nsdi22-Zeta-A-Scalable-and-Robust-East-West-Communication-Framework-in-Large-Scale-Clouds.html" itemprop="commentsCount"></span>
+                <a href="/load-eBPF-with-libbpf.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="load-eBPF-with-libbpf.html" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.1k
+                  427
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  1
                 </span>
               
             </div>
@@ -433,50 +433,87 @@
       
 
       
-        <h1 id="introduction">Introduction</h1>
-<p>这篇文章实际上在处理网关的几个挑战。</p>
-<ol type="1">
-<li>可扩展性。云网络中实例规模的扩大导致了转发规则消耗的快速增加。因此，安装大量的规则将限制单个VPC和整个网络的规模。</li>
-<li>稳健性。尽管特定设备的故障概率通常很低，但大规模云中的网络异常事件是频繁和不可避免的，包括设备故障[18,
-59]和流量突发[68,
-81]。它们会造成严重的网络拥堵/中断，降低了用户的体验。</li>
-<li>延迟。配置转发规则和建立/恢复通信的延迟是一个关键指标。当实例启动/迁移时，一些先前的解决方案要求控制平面通知所有相关的主机，并安装/更新规则，这尤其影响到短期任务。例如，一个函数任务（如MilliSort和MilliQuery[47]）通常在几毫秒内完成，而启动一个函数实例并为其建立连接可能需要几秒钟。</li>
-</ol>
-<p>云网络中现有的东西向通信解决方案通常分为两大类。一类是硬件解决方案，如AWS
-Nitro系统[6, 67]、Azure基于FPGA的SmartNIC[28, 46,
-61]和阿里云基于P4的网关[57]。另一种是软件解决方案，包括预编程模型（如VMware
-NSX [39, 56]）和网关模型（如Google Cloud Hoverboard [22]）。</p>
-<p>考虑到硬件的高成本和长开发周期，软件解决方案已成为许多中型云供应商的首选。然而，现有的软件解决方案也面临着几个关键的缺点（详见§2.1）。首先，预编程模型为虚拟机预先安装了许多规则，并与控制平面相耦合。传统的网关模型依赖于为主机区分配的固定网关，并与计算节点的位置相耦合。因此，它们缺乏适应大规模网络的可扩展性或稳健性。其次，现有的控制回路很复杂，这加剧了网络异常事件的恢复延迟，包括设备故障/过载和虚拟机迁移。</p>
-<h1 id="background-and-motivation">Background and Motivation</h1>
-<p>包括之前工作的缺点。</p>
-<p>本篇工作的优点。</p>
-<h1 id="design">Design</h1>
-<h2 id="design-goals">Design Goals</h2>
-<p>设计点有以下四个</p>
+        <span id="more"></span>
+<h1 id="ebpf总结">eBPF总结</h1>
+<h2 id="加载">加载</h2>
 <ul>
-<li>Robustness</li>
-<li>Low Latency</li>
-<li>Scalability</li>
-<li>Compatibility</li>
-</ul>
-<h2 id="system-overview">System Overview</h2>
-<p>如图2所示，为了实现上述设计目标，我们提出了一个高效的东西向通信框架，称为Zeta，它由三个核心模块组成。网关集群、主机上转发和框架管理。</p>
+<li>具体工作：从elf文件中解析构建eBPF程序块，并加载入内核</li>
+<li>解析
 <ul>
-<li>网关集群层建立了一个基于VXLAN隧道的转发网络[48]。它利用XDP为租户实例提供高性能的流量转发和按需的规则卸载（§4.2）。网关集群的应用确保了更好的可扩展性和稳健性。网关检测大象流并向源主机发送OAM（Opera-
-tions, Administration and
-Maintenance）数据包，其中包含直接路径规则（§4.3）。此外，Zeta采用多IPs迁移来实现门路故障/过载/扩展的快速恢复，这使得故障恢复对主机/租户透明（§4.4）。</li>
-<li>主机上的转发层根据OVS上的规则来传输流量。在部署一个新的VPC之前，将在主机上预装一个默认规则，它包括一个流量条目和一个组条目，以实现集群内网关的负载平衡（§5.1）。当两个虚拟机第一次通信时，头包将根据默认规则被发送到一个特定的网关。每个主机都部署了一个Zeta代理，它负责解析OAM数据包，并在主机上的OVS上安装直接路径规则。此外，基于Zeta
-Agent的轻量级控制回路可以对网络调整做出快速反应，如被动实例迁移（§5.2）。</li>
-<li>框架管理层管理整个网络，并进一步增强了网关克隆的稳健性。当Zeta被初始化时，管理层将确定VPC-集群的映射，用于集群间的负载平衡（§6.1）。为了处理异常事件和流量动态，多IPs调度器将动态调整配置（如多IPs分配和集群部分），从而避免部分集群的过载，以提高鲁棒性（§6.2）。</li>
+<li>libbpf接口：bpf_object__open</li>
+<li>过程
+<ul>
+<li>解析编译后的elf文件，分解出Section</li>
+<li>构造bpf_object结构体，将prog和map对应的Section放入结构体成员中</li>
+</ul></li>
+</ul></li>
+<li>加载
+<ul>
+<li>libbpf接口：bpf_object__load</li>
+<li>过程
+<ul>
+<li>将map段构造对应数据结构，加载到共享内存中</li>
+<li>将.rodata段等数据段变为map，同样加载到共享内存中</li>
+<li>将重链接到段链接到真实位置</li>
+<li>将函数代码加载到内核预留位置</li>
+</ul></li>
+</ul></li>
 </ul>
-
-
-	<div class="row">
-    <embed src="/paper/nsdi22-Zeta-A-Scalable-and-Robust-East-West-Communication-Framework-in-Large-Scale-Clouds.pdf" width="100%" height="1700" type="application/pdf">
-	</div>
-
-
-
+<h2 id="挂载">挂载</h2>
+<ul>
+<li>具体工作：在内核hook点注册中断，将函数挂载到hook点</li>
+<li>libbpf接口：bpf_program__attach</li>
+<li>注册
+<ul>
+<li>内核接口：sys_perf_event_open</li>
+<li>准备工作：建立perf_event_attr结构体，传入syscall</li>
+<li>过程
+<ul>
+<li>找到对应的hook点</li>
+<li>插入异常中断指令并启用</li>
+<li>创建event_file，将fd与perf_event关联，返回fd</li>
+</ul></li>
+</ul></li>
+<li>挂载
+<ul>
+<li>内核接口：sys_bpf</li>
+<li>准备工作：根据bpf_prog的fd和perf_event_fd创建link结构体，建立传入参数结构体attr</li>
+<li>过程
+<ul>
+<li>找到对应的perf_event</li>
+<li>将bpf函数链接到对应的异常处理函数中</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="卸载">卸载</h2>
+<ul>
+<li>具体工作：将函数从hook点移除，将hook从hook点解注册</li>
+<li>libbpf接口：bpf_link__detach</li>
+<li>卸载
+<ul>
+<li>内核接口：sys_bpf</li>
+<li>准备工作：根据link_fd构造attr</li>
+<li>过程
+<ul>
+<li>根据传入的link_fd找到对应的链接</li>
+<li>将函数链接从perf_event上解除</li>
+</ul></li>
+</ul></li>
+<li>解注册
+<ul>
+<li>内核接口：close</li>
+<li>过程：
+<ul>
+<li>根据fd找到perf_event，从hook点移除中断</li>
+<li>关闭perf_event文件</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="备注">备注</h2>
+<ul>
+<li>发现了一个今年9月1日的博客，很完整的介绍了eBPF的加载、挂载、运行流程（不过感觉层次划分不太合理），并且有代码分析<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/feelabclihu/article/details/132632839">https://blog.csdn.net/feelabclihu/article/details/132632839</a></li>
+</ul>
 <!-- flag of hidden posts -->
       
     </div>
@@ -494,7 +531,7 @@ Agent的轻量级控制回路可以对网络调整做出快速反应，如被动
       
         <div class="post-tags">
           
-            <a href="/tags/nsdi/" rel="tag"># nsdi</a>
+            <a href="/tags/eBPF/" rel="tag"># eBPF</a>
           
         </div>
       
@@ -646,7 +683,7 @@ Agent的轻量级控制回路可以对网络调整做出快速反应，如被动
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#background-and-motivation"><span class="nav-number">2.</span> <span class="nav-text">Background and Motivation</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#design"><span class="nav-number">3.</span> <span class="nav-text">Design</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#design-goals"><span class="nav-number">3.1.</span> <span class="nav-text">Design Goals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#system-overview"><span class="nav-number">3.2.</span> <span class="nav-text">System Overview</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ebpf%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">eBPF总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD"><span class="nav-number">1.1.</span> <span class="nav-text">加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%82%E8%BD%BD"><span class="nav-number">1.2.</span> <span class="nav-text">挂载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BD"><span class="nav-number">1.3.</span> <span class="nav-text">卸载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%87%E6%B3%A8"><span class="nav-number">1.4.</span> <span class="nav-text">备注</span></a></li></ol></li></ol></div>
             
 
           </div>

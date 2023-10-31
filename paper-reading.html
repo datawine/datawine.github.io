@@ -87,7 +87,7 @@
 <meta property="og:description" content="论文阅读列表">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-06-02T12:34:45.000Z">
-<meta property="article:modified_time" content="2023-10-12T08:35:09.070Z">
+<meta property="article:modified_time" content="2023-10-31T08:10:56.477Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="论文汇总">
 <meta name="twitter:card" content="summary">
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  5.7k
+                  7.4k
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  23
+                  30
                 </span>
               
             </div>
@@ -801,62 +801,153 @@ Pipelines</a>：本文介绍了Menshen，它是可编程交换机的可重构匹
 </ul>
 <h2 id="section-29">2023</h2>
 <ul>
-<li>SRNIC: A Scalable Architecture for RDMA
-NICs：通过实现RDMA协议和架构的co-design，最小化片上数据结构和内存需求，解决高网络可扩展性（大规模必丢包数据中心网络）与高连接可扩展性（per-server大量高性能连接）问题。</li>
-<li>Transparent GPU Sharing in Container Clouds for Deep Learning
-Workloads：相比于之前的应用层方案，本文提出了OS-level的GPU共享方案。TGS利用自适应速率控制和透明的统一内存，同时实现高GPU利用率和性能隔离。</li>
-<li><a
+<li><p>SRNIC: A Scalable Architecture for RDMA
+NICs：通过实现RDMA协议和架构的co-design，最小化片上数据结构和内存需求，解决高网络可扩展性（大规模必丢包数据中心网络）与高连接可扩展性（per-server大量高性能连接）问题。</p></li>
+<li><p><a
 href="https://datawine.github.io/nsdi23-Hostping-Diagnosing-Intra-host-Network-Bottlenecks-in-RDMA-Servers.html">Hostping:
 Diagnosing Intra-host Network Bottlenecks in RDMA
-Servers</a>：利用拨测，采集intra-host的带宽、延迟与各种总线利用率，判断RDMA服务器中intra-host瓶颈的位置。</li>
-<li><a
+Servers</a>：利用拨测，采集intra-host的带宽、延迟与各种总线利用率，判断RDMA服务器中intra-host瓶颈的位置。</p></li>
+<li><p><a
+href="https://datawine.github.io/nsdi23-Understanding-RDMA-Microarchitecture-Resources-for-Performance-Isolation.html">Understanding
+RDMA Microarchitecture Resources for Performance
+Isolation</a>：通过耗尽RDMA的共享微架构，一个租户能对另一个租户施加大幅性能影响。文章分析了RDMA的各种操作对性能的不同影响，并开发了一个测试套件来复现不同种类的影响（其实是攻击）。</p></li>
+<li><p><a
 href="https://datawine.github.io/nsdi23-Empowering-Azure-Storage-with-RDMA.html">Empowering
-Azure Storage with RDMA</a>：</li>
-<li><a
+Azure Storage with RDMA</a>：</p></li>
+<li><p>Transparent GPU Sharing in Container Clouds for Deep Learning
+Workloads：现有的GPU任务常常会在容器环境中由不同的用户部署，因此底层的GPU资源通常会被多租户共享。在现有的GPU资源共享方法下，GPU的利用率很低。现有的应用层方案缺乏transparency，use
+cases非常有限，同时operation的开销也非常大。NVIDIA
+MPS提供的OS-level的解决方案仍不能实现高GPU利用率、并不支持GPU memory
+oversubscription、需要应用知识、并不提供很强的fault isolation。NVIDIA
+MIG的limitation则主要在于性能隔离和compatibility上。相比于之前的应用层方案，本文提出了OS-level的GPU共享方案TGS。TGS的核心是一个中间层
+。利用自适应速率控制和透明的统一内存，同时实现transparency、高GPU利用率、性能隔离和故障隔离。</p></li>
+<li><p>ARK: GPU-driven Code Execution for Distributed Deep
+Learning：跨GPU的集体通信开销往往是限制分布式DL性能的关键因素。它通过频繁地传输小数据块而未充分利用网络带宽，这也在GPU上产生了大量的I/O开销，干扰了GPU的计算（两个缺点：event
+handling和io interference
+overhead）。其根本原因在于基于CPU的通信事件处理效率低下，以及无法用GPU线程控制GPU的内部DMA引擎。本文提出了一个GPU驱动的代码执行系统，利用GPU控制的硬件DMA引擎进行I/O卸载。两个核心design是：GPU-controlled
+DMA（提供fast event handling和minimal IO overhead）和autonomous GPU
+Execution Control（提供fast event handling和efficient
+computation）。</p></li>
+<li><p>BGL: GPU-Efficient GNN Training by Optimizing Graph Data I/O and
+Preprocessing：GNN的Sampling-based
+training主要包括存储图结构和特征的graph
+store、生成subgraph的sampler和具体运行任务的worker。一个sampling-based
+training的主要步骤包括三个：subgraph sampling、feature retrieving和model
+computation。现在的GNN系统倍受前两个阶段的影响：真正的model
+computation可能只占一小部分的时间。减少这部分的bottleneck包括三个挑战：ineffective
+caching for node feature retrieving（hit
+ratios和overhead的trade-off，也是static和dynamic
+caching的trade-off）；existing partition algorithm is not scalable and
+friendly for
+GNN（具体有三个小的requirements，现有的工作没法同时满足三个）；training
+pipeline of GNN is much more complex than
+DNN（主要解决不同stages之间（？）的资源竞争问题）。针对以上三个问题，BGL分别提出了feature
+cache engine with algorithm-system
+co-design（比了一下FIFO、LRU、LFU，最后用了proximity-aware
+ordering（PO）+FIFO）【这里大概讲一下，PO主要是利用nearby
+batches会共享一些东西的原理，来进行避免cache新的东西的。论文中的图很形象】、一个新的graph
+partition算法（包括multi-level coarsening、block
+collection和assignment、uncoarsening三个步骤）和资源隔离（和profiling-based
+resource allocation）。</p></li>
+<li><p>Zeus: Understanding and Optimizing GPU Energy Consumption of DNN
+Training：文章发现，提高DNN训练性能的常见做法往往会导致能源使用效率低下(已经有一些energy-efficient的DNN架构、硬件架构和基于profiling的工作，但是它们难以被企业马上采纳)。更重要的是，文章证明了能耗和性能优化之间存在权衡。文章提出了Energy
+to Accuracy（ETA）的概念，用来代表energy needed to reach the
+user-specified target 任意DNN model、GPU
+type的开销，而不需要任何的offline
+profiling、硬件修改或者精度下降。zeus使用多臂老虎机优化batch
+size，并基于batch size，不断调整、profile、并优化power limit。</p></li>
+<li><p><a
+href="https://datawine.github.io/nsdi23-Remote-Procedure-Call-as-a-Managed-System-Service.html">Remote
+Procedure Call as a Managed System Service</a>：通过dynamic
+binding、将marshalling放在每台机器的一个集中服务上、架构设计，改变了原有的RPC库+sidecar的实现，实现热更新、RPC-as-a-Service、模块化policy
+enforcement。</p></li>
+<li><p>Canvas: Isolated and Adaptive Swapping for Multi-Applications on
+Remote Memory：文章主要解决多应用在remote memory
+system中的multi-tenancy的interference问题。这个interference的主要原因是shared
+remote memory data path（比如swap cache和remote memory的swap
+partition里面alloc和free时候的lock contention、混合的access
+patterns给swap
+prefetcher带来的影响、应用之间/应用和prefetcher之间的RDMA的竞争，这些都是linux
+cgroup管不到的）。canvas将prefetcher、swap cache、RDMA bandwidth和swap
+partition都隔离了。同时，canvas在这个基础上还进行了adaptive
+optimization（提供two-tier prefetcher、two-dimentional RDMA
+scheduler、adaptive entry allocator）。</p></li>
+<li><p>Hermit: Low-Latency, High-Throughput, and Transparent Remote
+Memory via Feedback-Directed Asynchrony：主要是提出adaptive,
+feedback-directed asynchrony的技术，针对remote memory重新设计了swap
+system。它将非紧急但耗时的操作（如swap-out、cgroup charge、I/O
+deduplication等）从故障处理路径中移除，并以异步方式执行。与Fastswap等之前的工作不同，Hermit会收集运行时反馈，并利用这些反馈来指导异步操作的执行方式，即是否应启用异步操作、异步操作的级别以及异步操作的调度方式（ppt中是回答两个问题：When
+to start reclamation？How many cores for reclamation？）。关于remote
+memory的延迟分解值得借鉴。</p></li>
+<li><p>NetRPC: Enabling In-Network Computation in Remote Procedure
+Calls：现有的网内计算（INC）编程对普通应用程序开发人员来说并不友好，它要求繁琐的网络工程细节，如流量控制、数据包组织、芯片专用编程语言和ASIC架构等，并有许多限制。我们提出了一种支持INC的通用RPC系统NetRPC。NetRPC为软件开发人员提供了一套熟悉的轻量级接口，以便使用传统的RPC编程模型来描述INC应用程序。NetRPC还提出了一种通用INC实现方法和一套优化技术，以保证在共享INC数据平面上运行的各类INC应用程序的效率。（文章的主要论点是，RPC
+adapts INC functions better than other models，比如MPI）。</p></li>
+<li><p>Bolt: Sub-RTT Congestion Control for Ultra-Low
+Latency：为了适应200Gbpf以上的CC，文章主要解决两部分的问题：the use of
+precise congestion signals and minimization of the control loop
+delay。文章提出的Bolt 基于三个核心理念：(i) Sub-RTT
+控制（SRC）对拥塞的反应速度比 RTT
+控制环路延迟更快（如果我没理解错，是在ingress而不是传统的egress采集信号）；(ii)
+Proactive
+Ramp-Up（PRU）预测未来流量完成情况，及时占用释放的带宽（某个sender快结束的时候在自己的包里面mark一下）；(iii)
+Supply
+matching（SM）明确匹配带宽需求和供应，最大限度地提高利用率。这篇文章是斯坦福和google的工作。</p></li>
+<li><p><a
 href="https://datawine.github.io/nsdi23-Understanding-the-impact-of-host-networking-elements-on-traffic-bursts.html">Understanding
 the impact of host networking elements on traffic
-bursts</a>：基于eBPF和可编程交换机采集in-host和in-network的per-packet时间戳。在此基础上进行了一些针对burst的分析工作。</li>
-<li>ARK: GPU-driven Code Execution for Distributed Deep
-Learning：跨GPU的集体通信开销往往是限制分布式DL性能的关键因素。它通过频繁地传输小数据块而未充分利用网络带宽，这也在GPU上产生了大量的I/O开销，干扰了GPU的计算。其根本原因在于基于CPU的通信事件处理效率低下，以及无法用GPU线程控制GPU的内部DMA引擎。本文提出了一个GPU驱动的代码执行系统，利用GPU控制的硬件DMA引擎进行I/O卸载。</li>
-<li><a
+bursts</a>：基于eBPF和可编程交换机采集in-host和in-network的per-packet时间戳。在此基础上进行了一些针对burst的分析工作。</p></li>
+<li><p>Poseidon: Efficient, Robust, and Practical Datacenter CC via
+Deployable INT：主要希望解决几个问题：现有的CC react to every
+congestion，在多条流经过不同的多跳的场景下这会破坏max-min fairness；
+没达到fair-share的也会减少自己的流量，这会导致收敛速度慢；convergence和stable
+rate之间有一个trade-off。作者认为，这是因为两个基本原因：一方面，现在的CC
+react to every
+congestion；另一方面，CC算法假设信号是binary的（拥塞/非拥塞），这导致AIMD
+demands same reaction from all
+flows。为此，文章提出了以下几个设计：提供maximum per-hop
+delay作为low-overhead quantitative signal；rate-adaptive target enables
+different reactions，每条流都计算自己的max per-hop delay
+target（MPT）；adaptive MIMD rate update，每个流计算自己的update
+ratio。</p></li>
+<li><p>Rearchitecting the TCP Stack for I/O-Offloaded Content
+Delivery：作者观察到，CPU是IO-bound
+workload的瓶颈，这是因为所有的内容都需要经过memory。作者提出使用P2PDMA，让网卡从disk上面直接抓数据。这带来了一个核心问题：TCP
+stack怎么办？TCP不能够放在CPU上了，因为disk
+content根本不走CPU；也不能放在smartNIC上，因为性能太低。论文提出一个混合的方案，separate
+IO-intensive data plane from TCP stack。CPU上的TCP
+stack负责控制平面逻辑（reliable data delivery、congestion control、flow
+control和header generation）；smartNIC上的TCP
+stack负责从disk中读数据、发包。</p></li>
+<li><p><a
 href="https://datawine.github.io/nsdi23-The-Benefit-of-Hindsight-Tracing-Edge-Cases-in-Distributed-Systems.html">The
 Benefit of Hindsight: Tracing Edge-Cases in Distributed
 Systems</a>：针对利用tracing检测symptomatic edge
 cases存在的specificity和overhead的trade-off问题，本篇论文提出了retroactive
 sampling。所有trace
-data都被记录在本地，只有检测到symptoms的时候才ingest/report。</li>
-<li><a
+data都被记录在本地，只有检测到symptoms的时候才ingest/report。</p></li>
+<li><p><a
 href="https://datawine.github.io/nsdi23-Poseidon-Efficient-Robust-and-Practical-Datacenter-CC-via-Deployable-INT.html">Poseidon:
 Efficient, Robust, and Practical Datacenter CC via Deployable
-INT</a>：</li>
-<li><a
+INT</a>：</p></li>
+<li><p><a
 target="_blank" rel="noopener" href="https://datawine.github.com/nsdi23-Doing-More-with-Less-Orchestrating-Serverless-Applications-without-an-Orchestrator.html">Doing
 More with Less: Orchestrating Serverless Applications without an
-Orchestrator</a>：以库的形式，给每个function部署ingress和egress控制，实现分布式的串链调度。</li>
-<li><a
-href="https://datawine.github.io/nsdi23-Understanding-RDMA-Microarchitecture-Resources-for-Performance-Isolation.html">Understanding
-RDMA Microarchitecture Resources for Performance
-Isolation</a>：通过耗尽RDMA的共享微架构，一个租户能对另一个租户施加大幅性能影响。文章分析了RDMA的各种操作对性能的不同影响，并开发了一个测试套件来复现不同种类的影响（其实是攻击）。</li>
-<li><a
+Orchestrator</a>：以库的形式，给每个function部署ingress和egress控制，实现分布式的串链调度。</p></li>
+<li><p><a
 href="https://datawine.github.io/nsdi23-Following-the-Data-Not-the-Function-Rethinking-Function-Orchestration-in-Serverless-Computing.html">Following
 the Data, Not the Function: Rethinking Function Orchestration in
 Serverless
-Computing</a>：创建了数据桶来存储中间数据（比如函数返回的结果），并将orchestration的功能变成由桶触发。</li>
-<li><a
+Computing</a>：创建了数据桶来存储中间数据（比如函数返回的结果），并将orchestration的功能变成由桶触发。</p></li>
+<li><p><a
 target="_blank" rel="noopener" href="https://datawine.github.com/nsdi23-Unlocking-unallocated-cloud-capacity-for-long-uninterruptible-workloads.html">Unlocking
 unallocated cloud capacity for long, uninterruptible
 workloads</a>：文章初步解决了long-running任务在HVM上的运行问题。通过对Harvest
-VM的特征分析发现，虽然HVM的资源空间和时间多样性很大，但是资源inter-change时间分布在一段时间内是相对稳定的。因此，即使不知道资源变化的确切时间，但变化之间的时间分布是已知的。主要包括以下几个核心设计点：预测资源变少的概率；将长任务与更稳定的HVM相匹配、将短任务与不稳定的HVM相匹配；维护一个相对稳定的HVM池。</li>
-<li><a
+VM的特征分析发现，虽然HVM的资源空间和时间多样性很大，但是资源inter-change时间分布在一段时间内是相对稳定的。因此，即使不知道资源变化的确切时间，但变化之间的时间分布是已知的。主要包括以下几个核心设计点：预测资源变少的概率；将长任务与更稳定的HVM相匹配、将短任务与不稳定的HVM相匹配；维护一个相对稳定的HVM池。</p></li>
+<li><p><a
 href="https://datawine.github.io/nsdi23-Formal-Methods-for-Network-Performance-Analysis.html">Formal
 Methods for Network Performance Analysis</a>：使用形式化方法搜索traffic
 pattern空间，以queuing
-modules的形式对网络组件建模，并获得满足查询条件的工作负载描述。</li>
-<li><a
-href="https://datawine.github.io/nsdi23-Remote-Procedure-Call-as-a-Managed-System-Service.html">Remote
-Procedure Call as a Managed System Service</a>：通过dynamic
-binding、将marshalling放在每台机器的一个集中服务上、架构设计，改变了原有的RPC库+sidecar的实现，实现热更新、RPC-as-a-Service、模块化policy
-enforcement。</li>
+modules的形式对网络组件建模，并获得满足查询条件的工作负载描述。</p></li>
 </ul>
 <h1 id="osdi">OSDI</h1>
 <h2 id="section-30">2014</h2>
@@ -1342,7 +1433,7 @@ graph”，以实现剪枝的一部分。</p></li>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-count">53</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1426,7 +1517,7 @@ graph”，以实现剪枝的一部分。</p></li>
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">30k</span>
+    <span title="Site words total count">31.7k</span>
   
 </div>
 
