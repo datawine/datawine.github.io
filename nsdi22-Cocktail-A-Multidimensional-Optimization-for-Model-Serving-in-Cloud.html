@@ -87,7 +87,7 @@
 <meta property="og:description" content="Introduction ensemble learning通过使用多个模型并行地执行，然后将结果结合起来给出最终的预测，大大提高了准确性。然而，这种训练方法资源占用非常大，加剧了部署成本、同时还导致高延迟。我们提出了Cocktail，一个经济有效的基于集合的模型服务框架。Cock-tail由两个关键部分组成。(i) 一个动态的模型选择框架，在满足精度和延迟要求的前提下，减少集合中的模型数量；(i">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-05-30T07:52:43.000Z">
-<meta property="article:modified_time" content="2022-05-30T07:54:44.722Z">
+<meta property="article:modified_time" content="2023-11-06T02:34:56.826Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="nsdi">
 <meta name="twitter:card" content="summary">
@@ -488,14 +488,6 @@ Policy</h2>
 <p>权重是由一个特定的模型在请求中被选择的频率（get_popularity）相对于集合中的其他模型决定的。
 权重与每个模型池的预测负荷相乘，以扩大实例（
 launch_workers）。我们将其命名为重要性抽样技术，因为模型池的规模与它们的受欢迎程度成正比。</p>
-
-
-	<div class="row">
-    <embed src="/paper/nsdi22-Cocktail-A-Multidimensional-Optimization-for-Model-Serving-in-Cloud.pdf" width="100%" height="1700" type="application/pdf">
-	</div>
-
-
-
 <!-- flag of hidden posts -->
       
     </div>
@@ -622,7 +614,7 @@ launch_workers）。我们将其命名为重要性抽样技术，因为模型池
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -707,7 +699,7 @@ Policy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href=
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.7k</span>
+    <span title="Site words total count">31.9k</span>
   
 </div>
 

@@ -87,7 +87,7 @@
 <meta property="og:description" content="本文主要对warm instance进行优化。 实际上，warm instance对CPU来说是cold的。 因为warm instance是来了包才真正执行，对一台机器上的很多个warm instance来说，它们是交替执行的。 同时执行的时间一般是几毫秒。 文章指出，warm instance性能损失的最大来源（平均56%）是在CPU front-end，特别是指令的on-chip misse">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-09-09T03:15:07.000Z">
-<meta property="article:modified_time" content="2022-09-09T03:48:41.366Z">
+<meta property="article:modified_time" content="2023-11-06T02:34:56.692Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="isca">
 <meta name="twitter:card" content="summary">
@@ -471,14 +471,6 @@ rates可被解释为单次调用的large instruction footprints，一般在300KB
 这有两个目的：首先，它确保Jukebox不依赖于物理地址，这些地址可能会因为正常的操作系统活动（如分页或内存压缩）而改变。
 其次，它有效地预先填充了TLB的代码页的翻译。
 一旦知道了代码区域的物理基址，利用条目访问向量的信息，预取引擎就会重建代码区域内每个被访问的缓存行的完整地址，并将它们排入L2预取队列。</p>
-
-
-	<div class="row">
-    <embed src="/paper/isca22-Lukewarm-Serverless-Functions-Characterization-and-Optimization.pdf" width="100%" height="1700" type="application/pdf">
-	</div>
-
-
-
 <!-- flag of hidden posts -->
       
     </div>
@@ -605,7 +597,7 @@ rates可被解释为单次调用的large instruction footprints，一般在300KB
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -689,7 +681,7 @@ rates可被解释为单次调用的large instruction footprints，一般在300KB
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.7k</span>
+    <span title="Site words total count">31.9k</span>
   
 </div>
 

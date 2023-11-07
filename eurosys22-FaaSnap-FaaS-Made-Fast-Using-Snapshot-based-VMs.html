@@ -87,7 +87,7 @@
 <meta property="og:description" content="这篇论文对snapshot进行了大量的优化。包括  使用守护进程提前拿page（concurrent paging） 优化working set的locality，不是机械的按照上一次的顺序 考虑linux的readahead，记录readahead拿到的page 解决guest memory的anonymous跑到host memory上变成文件的问题 把一些page中间的东西merge起来减少">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-08-16T13:05:13.000Z">
-<meta property="article:modified_time" content="2022-08-16T13:10:39.318Z">
+<meta property="article:modified_time" content="2023-11-06T02:34:56.873Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="eurosys">
 <meta name="twitter:card" content="summary">
@@ -511,14 +511,6 @@ FaaSnap将被释放的页面从非零页面的集合中排除，而未来对被�
 <h2 id="summary">Summary</h2>
 <p>使用了一种神奇的overlapping
 memory机制来减少mmap的次数。这部分可能要看看代码了。</p>
-
-
-	<div class="row">
-    <embed src="/paper/eurosys22-FaaSnap-FaaS-Made-Fast-Using-Snapshot-based-VMs.pdf" width="100%" height="1700" type="application/pdf">
-	</div>
-
-
-
 <!-- flag of hidden posts -->
       
     </div>
@@ -645,7 +637,7 @@ memory机制来减少mmap的次数。这部分可能要看看代码了。</p>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -729,7 +721,7 @@ memory机制来减少mmap的次数。这部分可能要看看代码了。</p>
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.7k</span>
+    <span title="Site words total count">31.9k</span>
   
 </div>
 

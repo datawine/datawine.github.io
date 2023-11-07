@@ -87,7 +87,7 @@
 <meta property="og:description" content="文章想要实现非侵入式的性能异常检测。非侵入式是通过读log实现的。 性能异常检测（我理解应该是没有根因分析或者ranking）则是通过log内的信息去reconstruct workflow。 非侵入式根据log推断objects之间的关系，针对这个关系和时间来推断性能异常。亮点在于关系的定义和处理上，但是objects和type的提取比较工程。 该算法输出一个系统堆栈结构（S3）图--一个有向无">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-11-02T05:46:06.000Z">
-<meta property="article:modified_time" content="2022-11-29T12:30:16.272Z">
+<meta property="article:modified_time" content="2023-11-06T02:34:56.689Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="osdi">
 <meta name="twitter:card" content="summary">
@@ -483,14 +483,6 @@ non-objects：有一些节点仅仅只是别的node的并集，且这些子集no
 Principle：分析日志与objects之间的关系，发现几乎所有的日志都包括至少一个object</li>
 <li>创建的关系精确度：得到图之后手动分析，精确度96%</li>
 </ul>
-
-
-	<div class="row">
-    <embed src="/paper/osdi16-Non-Intrusive-Performance-Profiling-for-Entire-Software-Stacks-Based-on-the-Flow-Reconstruction-Principle.pdf" width="100%" height="1700" type="application/pdf">
-	</div>
-
-
-
 <!-- flag of hidden posts -->
       
     </div>
@@ -617,7 +609,7 @@ Principle：分析日志与objects之间的关系，发现几乎所有的日志�
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -701,7 +693,7 @@ Principle：分析日志与objects之间的关系，发现几乎所有的日志�
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.7k</span>
+    <span title="Site words total count">31.9k</span>
   
 </div>
 

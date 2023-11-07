@@ -87,7 +87,7 @@
 <meta property="og:description" content="contribution 个人总结的话就是用一些形式化的程序代替了函数的执行，给函数的输入，然后输出性能。至于怎么提取好像也不是全自动的，同时还依赖符号执行。 我们建议将性能接口作为描述系统性能的一种方式，类似于语义接口描述其功能的方式。我们在网络功能（NF）领域具体化了这一想法，并提出了一个工具（PIX），它可以从NF的实现中自动提取性能界面。 performance interface des">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-05-17T13:23:28.000Z">
-<meta property="article:modified_time" content="2022-05-17T13:26:23.874Z">
+<meta property="article:modified_time" content="2023-11-06T02:34:56.690Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="nsdi">
 <meta name="twitter:card" content="summary">
@@ -519,14 +519,6 @@ binary，推断出特定deployment下的PCV分布。主要有以下的PCV分布<
 latency的分布，理想情况下需要复杂的NF特定测试[64]，以说明NF的特定指令和内存级的并行性。PIX避免了这一点，因为它的目标是将其所有状态保存在相对较小的一组预先分析的数据结构中的NF。PIX通过在部署的硬件上运行相应的micro-benchmark，估计出了特定部署中每个数据结构调用的LLC-miss-latency分布。在第4.1节中，我们通过实验表明，我们的近似方法在实践中表现良好（平均误差&lt;10%）。</li>
 </ol>
 <h1 id="文章正文">文章正文</h1>
-
-
-	<div class="row">
-    <embed src="/paper/nsdi22-Performance-Interfaces-for-Network-Functions.pdf" width="100%" height="1700" type="application/pdf">
-	</div>
-
-
-
 <!-- flag of hidden posts -->
       
     </div>
@@ -653,7 +645,7 @@ latency的分布，理想情况下需要复杂的NF特定测试[64]，以说明N
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -742,7 +734,7 @@ deployment-specific interfaces</span></a></li></ol></li><li class="nav-item nav-
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.7k</span>
+    <span title="Site words total count">31.9k</span>
   
 </div>
 

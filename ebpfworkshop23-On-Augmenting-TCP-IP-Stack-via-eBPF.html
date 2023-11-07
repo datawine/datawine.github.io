@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ebpf," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="论文认为，现在的TCP&#x2F;IP协议栈存在无法在动态的网络设置中准确评估网络状态、不能够灵活扩展两个问题。 文章提出了Augmenter，利用eBPF收集ongoing flows的信息，并且使用这个信息去manage other flows that are currently active or arriving in the future。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="On Augmenting TCP&#x2F;IP Stack via eBPF">
+<meta property="og:url" content="https://datawine.github.io/ebpfworkshop23-On-Augmenting-TCP-IP-Stack-via-eBPF.html">
+<meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="论文认为，现在的TCP&#x2F;IP协议栈存在无法在动态的网络设置中准确评估网络状态、不能够灵活扩展两个问题。 文章提出了Augmenter，利用eBPF收集ongoing flows的信息，并且使用这个信息去manage other flows that are currently active or arriving in the future。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-11-06T07:22:53.000Z">
+<meta property="article:modified_time" content="2023-11-07T06:28:40.865Z">
+<meta property="article:author" content="Datawine">
+<meta property="article:tag" content="ebpf">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://datawine.github.io/ebpfworkshop23-On-Augmenting-TCP-IP-Stack-via-eBPF.html"/>
+
+
+
+
+
+  <title>On Augmenting TCP/IP Stack via eBPF | Datawine's Blog</title><meta name="robots" content="noindex">
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Datawine's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/ebpfworkshop23-On-Augmenting-TCP-IP-Stack-via-eBPF.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">On Augmenting TCP/IP Stack via eBPF</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-11-06T15:22:53+08:00">
+                2023-11-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/ebpfworkshop23-On-Augmenting-TCP-IP-Stack-via-eBPF.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="ebpfworkshop23-On-Augmenting-TCP-IP-Stack-via-eBPF.html" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>论文认为，现在的TCP/IP协议栈存在无法在动态的网络设置中准确评估网络状态、不能够灵活扩展两个问题。
+文章提出了Augmenter，利用eBPF收集ongoing
+flows的信息，并且使用这个信息去manage other flows that are currently
+active or arriving in the future。</p>
+<span id="more"></span>
+<p>现在的TCP/IP协议栈主要存在两个问题。</p>
+<p>首先，在动态的网络负载和网络设置的情况下，现在的协议栈不具有accurately和timely估计网络状态的能力。
+论文中举的例子是CC现在基本都是基于自己流的信息。
+但是大部分流结束地很快，因此根本来不及调整。 也就是说缺少完整的network
+visibility at TCP/IP layer。</p>
+<p>第二，现有的协议栈is not flexible enough to be extended easily。
+以修改initial congestion
+window为例，现在要么是system-wide的，要么是per-socket的。
+system-wide的粒度太粗，per-socket的需要touch用户代码。</p>
+<h1 id="motivation-and-background">Motivation and Background</h1>
+<h2 id="why-augmenter">Why Augmenter</h2>
+<p>随着网络的Bandwidth-Dealy-Product(BDP)不断增加，应用正在转向流量越来越小的nano
+services，网络中的流量管理变得越来越具有挑战性。
+为了在网络中高效传输数据，有必要超越传统的基于流量的机制。
+虽然每个数据包的CC或LB效率很高，但由于硬件限制，很难处理如此大量的事件。
+此外，基于流的解决方案也不够充分，因为大多数流的存活时间不够长，无法准确感知和适应网络条件。
+这种趋势在 Aequitas和 PLB等许多最新研究中都有所体现。
+为了应对这一挑战，这些作品汇总了活跃流量的网络信息，如拥塞信号或往返时间，并利用这些信息控制未来到达的其他流量。</p>
+<p>这项工作提出的Augmenter建立在这些工作背后的直觉基础之上，通过引入额外信息来扩展现有TCP/IP协议的功能。
+这些额外信息可以通过聚合现有流量的信息或通过明确的信令获得。
+Augmenter旨在推广这一设想。
+作为概念验证，论文通过处理IW设置用例来证明其实用性。
+建议的技术还可用于聚合ECN状态或管理每个数据包的优先级。</p>
+<h2 id="augmenter-for-setting-iw">Augmenter for setting IW</h2>
+<p>Augmenter的一个非常简单的用例是自适应设置新流量的初始拥塞窗口（IW）。
+IW会对应用性能产生重大影响。
+例如，过大的IW会导致高负载或高传输时的高数据包丢失。
+另一方面，如果将IW设置为很小的值，即使在低负载情况下，也会导致利用率不足和流量完成时间（FCT）过长。
+现有的解决方案（如Linux中的TCP缓存）使用流量的最后一个已知拥塞窗口。
+这可能会解决低负载情况下的问题，但在突发情况下可能无法解决。</p>
+<p>Augmenter作为eBPF 程序在主机上运行。
+它在流量结束时收集流量的拥塞窗口（cwnd）值，并根据每个目的地进行聚合。
+为了证明状态聚合的有效性，论文评估了一种非常简单的策略。
+当一个新流量到达时，它会根据Augmenter提供的平均cwnd估计值启动。</p>
+<p>评估：
+论文使用NS3测试了一个非常简单的incast场景，并改变了incast大小，以观察初始拥塞窗口对流量完成时间
+(FCT) 的影响。
+论文使用DCTCP作为底层拥塞控制，网络BDP设置为100个数据包。</p>
+<h2 id="leveraging-ebpf-for-augmenter">Leveraging eBPF for
+Augmenter</h2>
+<p>在网络应用程序中，eBPF的编程能力可在数据包处理管道的不同阶段加以利用。
+图 2 展示了 Linux 数据通路的简化视图。</p>
+<p>数据路径的最底层是 XDP 层，即 eXpress
+数据路径，它与网卡及其驱动程序紧密相连。 如果网卡支持，XDP
+应用程序可以直接卸载到网卡硬件上。 否则，支持 XDP
+的网卡驱动程序可能会在数据包处理路径的起点实施本地处理程序。
+由于内核内部尚未分配用于接收数据包的数据结构（即
+skbs），这一层主要适用于安全功能或时间紧迫的轻型应用，这些应用可从绕过
+TCP/IP 协议栈中获益。 在所有 eBPF 层中，只有这一层不支持出口端口。</p>
+<p>通过这一层后，可编程 TC 层有助于对数据包进行非线性分类、过滤或处理。
+在进入 TCP/IP 协议栈之前，有一个连接跟踪子系统，可以为特殊目的使用 TC
+绕过该子系统。 TCP/UDP
+协议栈本身就是许多拥塞控制和传输相关钩子所在的地方。
+最后，在此基础上，我们还有连接内核和用户级应用的套接字层。</p>
+<p>eBPF 应用程序不需要无状态，事实上，它们的主要优势之一就是可以通过 BPF
+虚拟文件系统共享状态。
+用户和内核级应用程序都可以访问该文件系统。各种预定义的数据结构已经可以使用，一般来说，它们被称为映射。
+用户空间应用程序可通过 bpf()
+系统调用访问这些映射，这为在更复杂的控制循环中实时管理底层逻辑提供了绝佳机会。
+从这个角度看，<em>eBPF
+应用程序可以被视为以极低的成本绑定(之所以成本低，是因为每个程序只在正常执行路径上引入了少量额外指令。)和重新编程内核的外露部分</em>。
+<em>这使得 eBPF 成为增强 TCP/IP
+协议栈并为其带来新的可编程特性的有力工具。</em></p>
+<h1 id="augmenter-design">AUGMENTER DESIGN</h1>
+<p>论文提出的框架的主要原理是将不同网络层/实体的状态管理绑定在一个统一的逻辑下。
+有了这样一个统一的状态视图，我们就能开发一系列新的应用。 而如果不使用
+eBPF，这些应用根本无法实现。
+这种全局视图增强了控制平面功能，使其能够在共享传输路径上做出更明智的决策。</p>
+<p>Augmenter 有两个主要组件，可利用 eBPF 和 BPF maps提供的跨层钩子。
+首先，<em>kernel-level state bindings</em>允许 Augmenter
+通过钩点收集信息并与内核堆栈共享。 其次，<em>user-level state
+analyzer</em>允许 Augmenter 从收集到的信息中提取有意义的信息，并通过
+eBPF maps与内核共享。</p>
+<h2 id="kernel-level-state-binding">Kernel-Level State Binding</h2>
+<p>eBPF machine的主要功能之一是其 BPF
+文件系统以及在该系统下提供的用于状态管理的映射。
+虽然每个应用程序都可以拥有自己的本地内存部分，但这些映射也可以在不同的应用程序之间共享。
+此外，用户级应用程序也可以修改这些映射。
+因此，我们有机会在数据路径的不同阶段观察数据包，并在这些阶段和其他数据流之间共享自定义信息。
+我们将此称为特征状态绑定，并将展示不同层次的绑定可以提供一系列新特征。</p>
+<p>在这项工作中，论文展示了两种一般的状态绑定模式。</p>
+<h3 id="binding-per-path">Binding per path</h3>
+<p>当系统中的多个 TCP 流量共享一个瓶颈时，它们的整体性能就会相互关联。
+我们认为，在这种情况下，聚合套接字的拥塞元数据将提高它们的效率和性能。</p>
+<p>让我们考虑服务器受上行链路限制的情况。在这种情况下，所有流出的流量都可视为单一的路径绑定集。
+这样做的目的是为了说明，估算所有流量的平均拥塞窗口是设置新连接初始拥塞窗口的宝贵信息。
+（这大概就是说如果受到上行链路限制，那么所有egress流量都会互相影响）</p>
+<h3 id="binding-per-layer">Binding per layer</h3>
+<p>数据包会经过内核堆栈中的不同层，每一层都有一些用于 eBPF 的钩子。
+Augmenter 可以利用这一点，使用 eBPF 映射在不同网络层之间共享信息。
+例如，根据传输层信息，它可以利用可编程 TC
+在数据包级别设置套接字出站数据包的 TOS 字段。</p>
+<h2 id="user-level-state-analyzer">User-Level State Analyzer</h2>
+<p>作为 Augmenter
+的一部分，需要开发的另一个主要组件是能够分析和处理通过状态绑定收集到的信息的应用程序。
+具体的分析方法可能因使用情况而异。
+在用户空间实施这种机制，可以进行计算（浮点运算）或运行程序（ML
+分析），而这些在内核空间是无法轻松运行的
+。例如，通过在用户级进行这些计算，我们可以自由地使用更复杂的控制循环，而这些循环所需的时间可能会超过内核级应用程序的允许寿命。
+这为将学习代理作为我们的决策者创造了绝佳的机会，正如
+TPC所探索的那样。</p>
+<h1 id="implementation-and-testing">IMPLEMENTATION AND TESTING</h1>
+<p>框架基于5.15的内核版本实现。</p>
+<h2 id="overview">Overview</h2>
+<p>一旦 TCP 握手结束，连接状态就会转入
+ESTABLISHED（已建立）状态，而这正是 sockops（套接字操作）类型的 eBPF
+应用程序的有效入口之一。 如果 sockops
+程序被加载到连接的被动端（即通常是服务器），一个名为
+BPF_SOCK_OPS_PASSIVE_ESTABLISHED_CB 的 eBPF
+事件就会被触发，程序可以选择是否响应该事件。 在代码段 1 的第 15
+行捕获了这一事件。
+这个钩子也是为特定连接设置一系列拥塞控制相关参数的理想位置，例如拥塞控制方案本身、其默认发送/接收缓冲区大小或拥塞窗口clamp。</p>
+<p>第 17 行至第 19
+行分别订阅了另一组事件，这些事件会在拥塞控制的每次往返时间（RTT）操作、此连接的
+TCP 状态机的每次状态变化以及每次重传发生时通知我们。</p>
+<p>当数据包在堆栈中向前移动时，会碰到其他一些钩子，使我们能够设置其他参数，即初始接收拥塞窗口，或与定时器相关的变量（如
+minRTO），或为该连接假定的基本 RTT。</p>
+<h2 id="use-case">Use Case</h2>
+<p>论文重点介绍一个简单用例的实现，即根据共享同一目的地的其他流量的平均拥塞窗口设置流量的
+IW。 然后进行了一些evaluation（也不多）。</p>
+<h1 id="discussion-conclusion">DISCUSSION &amp; CONCLUSION</h1>
+<p>这边主要是一些讨论，感觉还是有一些insight的。</p>
+<h2 id="other-use-cases-of-binding-per-path">Other Use Cases of Binding
+per Path</h2>
+<p>用于按路径分配 IW 的元数据聚合方法也可用于其他拥塞解决目的。</p>
+<p>基于 ECN 的拥塞控制方法（如
+DCTCP）可利用交换机上的拥塞信息来相应设置其发送速率。
+不过，这种信息是按per flow提供的，并基于每个 RTT 中标记有 ECN
+信号的数据包的比例。
+这样做的缺点是，突发的开关模式流量不一定能获得准确的信息。
+一种能提高传输鲁棒性的方法是按路径而不是按连接重复使用拥塞信号。</p>
+<p>一方面，按路径收集这些信息会降低拥塞信号的粗糙度，因为拥塞信号在一个
+RTT 内会分布在更多数据包上
+。根据这种统一的细粒度信号做出反应，将提高共享该路径的流量之间的稳健性和公平性
+。此外，多路径可能还需要复杂的状态保持，以确保信息采集的准确性。
+另一方面，在多个数据流之间聚合这种数据包级信息会引发一些内存访问模式方面的问题。</p>
+<p>现有的许多工作都建议在传输层进行信息聚合。这些工作建议根据聚合信息明确控制流的行为。
+而且，这些工作仅限于 TCP。 与这些机制不同的是，Augmenter
+的目标是以适用于任何类型传输（TCP、RDMA 等）的方式提供有用的建议。</p>
+<h2 id="binding-between-network-layers">Binding Between Network
+Layers</h2>
+<p>跨不同层的 eBPF 钩子也可用于进一步增强功能。有了可编程的 TC
+层，我们就可以将网络层和传输层的某些功能合并起来。</p>
+<p>举例来说，我们可以考虑设置套接字输出数据包的 TOS 字段。 按照默认的
+Linux
+interface，我们只能通过一些预定义的系统调用来设置优先级，而这些系统调用无法跟上数据包级的设置。
+不过，有了可编程的 eBPF
+TC，我们就可以在数据包级别即时决定优先级。这种方法有以下主要优点：</p>
+<p>首先，我们可以在不接触内核代码的情况下，实施与 IP
+层优先级密切相关的新 TCP
+拥塞控制方案。这为采用更复杂的方案（尤其是针对数据中心环境）打开了一扇新窗口。有一种方法可以进一步铺平这条道路，那就是使用暴露的
+eBPF 接口来实施拥塞控制算法。
+其次，从应用程序的角度来看，用户仍然可以使用普通的套接字接口，他们的应用逻辑无需改变。
+第三，应用程序可以直接通过 eBPF
+映射与内核共享信息，这有助于实现网络应用集成解决方案，而无需更改套接字接口。</p>
+<h1 id="binding-limitations">Binding Limitations</h1>
+<p>虽然maps是状态绑定的主要推动因素，但如果不仔细设计maps的访问模式，就会降低增强的性能，甚至成为数据包处理管道的瓶颈。</p>
+<p>现代网卡通常有多个 rxqs，有助于在可用的 CPU
+内核之间引导流量，从而提高并行性和性能。 从 eBPF
+的角度来看，当一个write-heavy
+map绑定在高性能流水线的关键路径上时（例如，每个数据包计数器更新），其原子更新的映射锁定机制就会成为性能瓶颈。
+为了解决这个问题，内核开发人员引入了按 CPU 版本的映射，为每个 CPU
+内核维护一个映射。</p>
+<p>不过，<em>使用per
+CPU的映射会自动在内核间创建状态partition，而这种分区不一定是预期增强任务的最佳分区</em>。
+例如，DCTCP 在所描述的 ECN 信号每路径绑定用例中的行为，就是根据 ECN
+标记数据包的比例定义的。 为了与内核的扩展性措施保持一致，基于 eBPF
+的argumenter不可避免地要使用per CPU的映射来存储这些计数器。</p>
+<p>由于路径信息现在分布在多个maps中，因此基于路径过滤的聚合可能并非易事，这取决于路径的定义。
+除非路径定义是根据终端主机的 CPU
+steering机制设计的，否则聚合路径需要对所有内核的映射进行循环，这就把这部分逻辑推到了内核级
+eBPF 程序之外。</p>
+<p>不过，在用户级 eBPF
+应用程序中设置部分控制逻辑并不一定是破坏性的设计，事实上，对于一些时间敏感性较低的用例（如讨论过的
+IW 设置用例）来说，这甚至是有益的。 然而，对于快速控制回路环境（如为 RTT
+超过
+10𝑢𝑠的内部数据中心通信设置路径速率），不那么谨慎的设计可能会变得无效，甚至成为瓶颈。
+要突破极限，可靠地支持高效的小 RTT
+规模路径增强，目前需要针对特定应用进行巧妙的设计和实施调整，而更系统化的模式可能会有所帮助。</p>
+<!-- flag of hidden posts -->
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ebpf/" rel="tag"># ebpf</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/datawine" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#motivation-and-background"><span class="nav-number">1.</span> <span class="nav-text">Motivation and Background</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#why-augmenter"><span class="nav-number">1.1.</span> <span class="nav-text">Why Augmenter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#augmenter-for-setting-iw"><span class="nav-number">1.2.</span> <span class="nav-text">Augmenter for setting IW</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#leveraging-ebpf-for-augmenter"><span class="nav-number">1.3.</span> <span class="nav-text">Leveraging eBPF for
+Augmenter</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#augmenter-design"><span class="nav-number">2.</span> <span class="nav-text">AUGMENTER DESIGN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#kernel-level-state-binding"><span class="nav-number">2.1.</span> <span class="nav-text">Kernel-Level State Binding</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#binding-per-path"><span class="nav-number">2.1.1.</span> <span class="nav-text">Binding per path</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#binding-per-layer"><span class="nav-number">2.1.2.</span> <span class="nav-text">Binding per layer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#user-level-state-analyzer"><span class="nav-number">2.2.</span> <span class="nav-text">User-Level State Analyzer</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#implementation-and-testing"><span class="nav-number">3.</span> <span class="nav-text">IMPLEMENTATION AND TESTING</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#overview"><span class="nav-number">3.1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#use-case"><span class="nav-number">3.2.</span> <span class="nav-text">Use Case</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#discussion-conclusion"><span class="nav-number">4.</span> <span class="nav-text">DISCUSSION &amp; CONCLUSION</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#other-use-cases-of-binding-per-path"><span class="nav-number">4.1.</span> <span class="nav-text">Other Use Cases of Binding
+per Path</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#binding-between-network-layers"><span class="nav-number">4.2.</span> <span class="nav-text">Binding Between Network
+Layers</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#binding-limitations"><span class="nav-number">5.</span> <span class="nav-text">Binding Limitations</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Datawine</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">31.9k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user">本站访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye">本站总访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cyw3QwzdC';
+      var conf = 'cbf53c79ec118123e02b0e1a5676be66';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

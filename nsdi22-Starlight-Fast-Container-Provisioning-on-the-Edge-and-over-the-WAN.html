@@ -87,7 +87,7 @@
 <meta property="og:description" content="background 解决的核心问题： container provisioning outside the cloud，比如在mobile and edge computing上，会受到network traffic的影响而变得很慢。渐进式的方法并不能解决这个问题。 starlight是一个用于container provisioning的加速器。通过重新设计容器部署协议、文件系统和image存">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-05-16T12:33:27.000Z">
-<meta property="article:modified_time" content="2022-05-17T10:16:42.525Z">
+<meta property="article:modified_time" content="2023-11-06T02:34:56.690Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="nsdi">
 <meta name="twitter:card" content="summary">
@@ -519,14 +519,6 @@ snapshotter守护进程管理着容器文件系统的生命周期：从下载图
 <li>一个seekable的压缩层格式允许代理将单个压缩文件发送给worker，而不必先解压存储的层。这种格式的开销很低（平均为4.2%），并与现有的worker和registry向后兼容，因此没有必要以两种格式存储容器image。</li>
 </ul>
 <h1 id="文章正文">文章正文</h1>
-
-
-	<div class="row">
-    <embed src="/paper/nsdi22-Starlight-Fast-Container-Provisioning-on-the-Edge-and-over-the-WAN.pdf" width="100%" height="1700" type="application/pdf">
-	</div>
-
-
-
 <!-- flag of hidden posts -->
       
     </div>
@@ -653,7 +645,7 @@ snapshotter守护进程管理着容器文件系统的生命周期：从下载图
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -738,7 +730,7 @@ protocol（其实是registry的并发连接个数限制导致排队延时）</sp
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.7k</span>
+    <span title="Site words total count">31.9k</span>
   
 </div>
 

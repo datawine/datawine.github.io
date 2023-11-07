@@ -87,7 +87,7 @@
 <meta property="og:description" content="azure的性能预测工具，主要解决改资源配置之后的性能预测。 用插桩和一些定制化操作得到包含了TAP异步调用的依赖图，offline进行profile得到与应用无关的、和资源有关的、不同配置的API调用延迟分布，直接执行得到与应用有关的、和资源无关的延迟分布。 what-if中变了哪些资源，就用对应的延迟替换掉资源发生变化的部分。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-01-01T10:14:33.000Z">
-<meta property="article:modified_time" content="2023-01-01T11:50:57.054Z">
+<meta property="article:modified_time" content="2023-11-06T02:34:56.692Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="sigcomm">
 <meta name="twitter:card" content="summary">
@@ -555,14 +555,6 @@ profile作为估计的延迟。</p>
 该算法是自下而上的，并通过依赖图的末端节点来调用。
 给定一个节点，它根据基线延迟（如果该节点不受what-if场景的影响，或者该节点依赖应用程序）或离线profile（其他情况下）估计其延迟。
 然后，它递归地计算每个路径的延迟分布，并根据同步点的语义将其合并。</p>
-
-
-	<div class="row">
-    <embed src="/paper/sigcomm16-WebPerf-Evaluating-“What-If”-Scenarios-for-Cloud-hosted-Web-Applications.pdf" width="100%" height="1700" type="application/pdf">
-	</div>
-
-
-
 <!-- flag of hidden posts -->
       
     </div>
@@ -689,7 +681,7 @@ profile作为估计的延迟。</p>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -776,7 +768,7 @@ Profiling</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="na
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.7k</span>
+    <span title="Site words total count">31.9k</span>
   
 </div>
 

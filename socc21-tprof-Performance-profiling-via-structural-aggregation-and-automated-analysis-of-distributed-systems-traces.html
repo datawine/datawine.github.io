@@ -87,7 +87,7 @@
 <meta property="og:description" content="本文基于分布式跟踪系统(Jaeger)实现了一种新的performance profiling，把trace分成四层进行分析。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-11-29T02:11:01.000Z">
-<meta property="article:modified_time" content="2022-11-29T12:10:49.290Z">
+<meta property="article:modified_time" content="2023-11-06T02:34:56.691Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="socc">
 <meta name="twitter:card" content="summary">
@@ -490,14 +490,6 @@ diagnosis</h2>
 <p>由于一个操作可能在一个trace中的多个span中被使用（例如对数据库的多次调用），tprof使用第3层的数据来缩小具体的问题span以及span中的缓慢区域。</p>
 <p>最后，tprof分析了第4层的数据，以确定哪个第4层组最能表现出有问题的subspan。
 通过计算和排序，找出<strong>经常出现且占其span很大一部分的缓慢subspan</strong>。</p>
-
-
-	<div class="row">
-    <embed src="/paper/socc21-tprof-Performance-profiling-via-structural-aggregation-and-automated-analysis-of-distributed-systems-traces.pdf" width="100%" height="1700" type="application/pdf">
-	</div>
-
-
-
 <!-- flag of hidden posts -->
       
     </div>
@@ -624,7 +616,7 @@ diagnosis</h2>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -712,7 +704,7 @@ diagnosis</span></a></li></ol></li></ol></div>
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.7k</span>
+    <span title="Site words total count">31.9k</span>
   
 </div>
 

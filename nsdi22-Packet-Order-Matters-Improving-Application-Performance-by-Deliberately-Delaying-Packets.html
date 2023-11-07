@@ -87,7 +87,7 @@
 <meta property="og:description" content="我们系统地研究了时间和空间流量局部性对commodity servers equipped with high-speed network interfaces。我们的研究结果表明 （1）各种广泛部署的应用程序的性能，即使是最轻微的缺乏流量局部性，也会大大降低 （2）来自我们组织的流量trace显示了糟糕的流量局部性，因为网络协议、驱动程序和底层交换&#x2F;路由结构在时间上分散了数据包（降低了定位）。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-06-06T13:27:19.000Z">
-<meta property="article:modified_time" content="2022-06-06T13:30:34.809Z">
+<meta property="article:modified_time" content="2023-11-06T02:34:56.737Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="nsdi">
 <meta name="twitter:card" content="summary">
@@ -462,14 +462,6 @@ Traffic</h1>
 <p>即使是传统的TCP拥塞控制机制[29]的内置自锁功能，其本质上也是将数据包分散在不同的时间段，以避免链路拥挤，这对缓存优化的高速网络通信是有害的</p>
 <h1 id="the-reframer-design">The Reframer Design</h1>
 <p>很简单，其实就是先buffer一段时间，然后buffer时间够长/buffer数量够多，触发batch的sending。</p>
-
-
-	<div class="row">
-    <embed src="/paper/nsdi22-Packet-Order-Matters-Improving-Application-Performance-by-Deliberately-Delaying-Packets.pdf" width="100%" height="1700" type="application/pdf">
-	</div>
-
-
-
 <!-- flag of hidden posts -->
       
     </div>
@@ -596,7 +588,7 @@ Traffic</h1>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -681,7 +673,7 @@ Traffic</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.7k</span>
+    <span title="Site words total count">31.9k</span>
   
 </div>
 

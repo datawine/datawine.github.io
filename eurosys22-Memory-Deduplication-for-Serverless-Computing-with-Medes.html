@@ -87,7 +87,7 @@
 <meta property="og:description" content="引入一个新的沙盒状态来改善目前的权衡空间，其内存占用和启动性能介于冷态和暖态之间。可惜没开源好像 主要依赖于两点观察  同一个function的sandbox可能有高达85%的重复 即使在不同function的sandbox之间，我们也可以发现高达80-90%的重复  从本质上讲，可重用沙盒块(RSC)概念的作用是去除沙盒中的这些多余的内存块 Medes Overview architecture">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-08-16T11:37:26.000Z">
-<meta property="article:modified_time" content="2022-08-16T11:45:56.568Z">
+<meta property="article:modified_time" content="2023-11-06T02:34:56.690Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="eurosys">
 <meta name="twitter:card" content="summary">
@@ -501,14 +501,6 @@ sandbox</p>
 <h1 id="sandbox-management-policy">Sandbox Management Policy</h1>
 <p>我们开发了一个政策，决定沙盒是否应该保持在温暖状态或dedup</p>
 <p>策略这边其实比较好理解，就是一些速率的限制，然后加一些可调的限制（优先资源还是优先性能）</p>
-
-
-	<div class="row">
-    <embed src="/paper/eurosys22-Memory-Deduplication-for-Serverless-Computing-with-Medes.pdf" width="100%" height="1700" type="application/pdf">
-	</div>
-
-
-
 <!-- flag of hidden posts -->
       
     </div>
@@ -635,7 +627,7 @@ sandbox</p>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -720,7 +712,7 @@ Operations</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a c
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.7k</span>
+    <span title="Site words total count">31.9k</span>
   
 </div>
 

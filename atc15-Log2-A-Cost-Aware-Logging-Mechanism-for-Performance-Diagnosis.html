@@ -87,7 +87,7 @@
 <meta property="og:description" content="文章解决一个核心问题：whether to log。这个log和传统的log不一样，这个log的意思是Monitored Code Region的执行时间。 论文用了两层filter，本地过滤器负责丢弃琐碎的日志请求，全局过滤器负责将排名靠前的日志请求flush到磁盘上。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-10-29T13:00:47.000Z">
-<meta property="article:modified_time" content="2022-10-29T13:39:53.281Z">
+<meta property="article:modified_time" content="2023-11-06T02:34:56.691Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="atc">
 <meta name="twitter:card" content="summary">
@@ -506,14 +506,6 @@ Log2包括一个叫做交换缓冲区的数据结构，它有两个缓冲区：�
 为了避免这种情况，我们对调整间隔设置了一个下限。在我们的实现中，我们将下限设置为0。这种机制通常用于控制工程领域。</p>
 <p><strong>Nested instrumentation</strong>：为了支持nested
 instrumentation，每个本地过滤器实际上都维护着一个时间戳堆栈，以匹配记录的开始-结束对。</p>
-
-
-	<div class="row">
-    <embed src="/paper/atc15-Log2-A-Cost-Aware-Logging-Mechanism-for-Performance-Diagnosis.pdf" width="100%" height="1700" type="application/pdf">
-	</div>
-
-
-
 <!-- flag of hidden posts -->
       
     </div>
@@ -640,7 +632,7 @@ instrumentation，每个本地过滤器实际上都维护着一个时间戳堆�
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -725,7 +717,7 @@ Practice in Microsoft</span></a></li><li class="nav-item nav-level-1"><a class="
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.7k</span>
+    <span title="Site words total count">31.9k</span>
   
 </div>
 

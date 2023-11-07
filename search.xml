@@ -243,8 +243,8 @@ flows</a>：论文主要提出的是request-flow
 comparison，也就是比较两个不同时期的流特征。
 论文主要提出两种异常：执行时间异常和执行路径异常。
 值得注意的是，request-flow comparison和anomaly detection不一样。
-前者主要比较<strong>两个不同period</strong>的distribution
-changes，后者主要比较<strong>一个period</strong>内表现明显不同的flow。</li>
+前者主要比较两个不同period的distribution
+changes，后者主要比较一个period内表现明显不同的flow。</li>
 </ul>
 <h2 id="section-23">2013</h2>
 <ul>
@@ -488,6 +488,8 @@ IO-intensive data plane from TCP stack。CPU上的TCP
 stack负责控制平面逻辑（reliable data delivery、congestion control、flow
 control和header generation）；smartNIC上的TCP
 stack负责从disk中读数据、发包。</p></li>
+<li><p>Hydra: Serialization-Free Network Ordering for Strongly
+Consistent Distributed Applications：</p></li>
 <li><p><a
 href="https://datawine.github.io/nsdi23-The-Benefit-of-Hindsight-Tracing-Edge-Cases-in-Distributed-Systems.html">The
 Benefit of Hindsight: Tracing Edge-Cases in Distributed
@@ -626,6 +628,18 @@ path。主要通过对系统调用的拦截实现+一些时序空间关系重构
 </ul>
 <h2 id="section-40">2023</h2>
 <ul>
+<li><a
+href="https://datawine.github.io/ebpfworkshop23-TCP’s-Third-Eye-Leveraging-eBPF-for-Telemetry-Powered-Congestion-Control.html">TCP’s
+Third Eye: Leveraging eBPF for Telemetry-Powered Congestion
+Control</a>：现有的CC算法受限于操作系统内核的粗粒度信号，需要network
+fabric的一些visibility。但是，现有的telemetry-based solution需要changes
+to the end-host。利用eBPF，可以运行telemetry-based CC在内核里面。</li>
+<li><a
+href="https://datawine.github.io/ebpfworkshop23-On-Augmenting-TCP-IP-Stack-via-eBPF.html">On
+Augmenting TCP/IP Stack via
+eBPF</a>：论文认为，现在的TCP/IP协议栈存在无法在动态的网络设置中准确评估网络状态、不能够灵活扩展两个问题。文章提出了Augmenter，利用eBPF收集ongoing
+flows的信息，并且使用这个信息去manage other flows that are currently
+active or arriving in the future。</li>
 <li><a
 href="https://datawine.github.io/ebpfworkshop23-Schooling-NOOBs-with-eBPF.html">Schooling
 NOOBs with
