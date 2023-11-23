@@ -87,7 +87,7 @@
 <meta property="og:description" content="主要是针对WAN场景，利用eBPF实现了in-band主动被动测量。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-08-17T07:18:36.000Z">
-<meta property="article:modified_time" content="2023-08-19T06:09:41.526Z">
+<meta property="article:modified_time" content="2023-11-14T05:13:20.635Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="ebpf-workshop">
 <meta name="twitter:card" content="summary">
@@ -464,7 +464,7 @@ delays都会影响到应用的吞吐</li>
 <li>semantic gap：
 <ul>
 <li>traceroute identified的路由路径不一定是同一条应用经过的路径</li>
-<li>由ping等得到的latency measurements不一定是应用的掩饰</li>
+<li>由ping等得到的latency measurements不一定是应用的延时</li>
 </ul></li>
 <li>像可编程交换机这种，does not apply to WAN paths</li>
 </ul>
@@ -473,7 +473,7 @@ delays都会影响到应用的吞吐</li>
 <li>provide coarse-grained information such as latency and bandwidth,
 making applications unaware of transient network congestion at certain
 hops, load balancing issues, etc.;</li>
-<li>warrant changes to internal mecha- nisms of applications;</li>
+<li>warrant changes to internal mechanisms of applications;</li>
 <li>are prone to operational policies (e.g., occasionally blocked,
 traffic shaping) of WAN providers.</li>
 </ul>
@@ -486,12 +486,13 @@ Measurement</h2>
 这种方法的主要思路是向现有流量中注入数据包（探测器），使探测器具有相同的
 5
 元组（源/目的地址、协议和源/目的端口号），确保它们将遵循与应用流相同的路由器级路径，并绕过广域网运营商的操作和管理策略。</p>
-<p>需要注意的是，之前的工作侧重于测量应用流的特定路由器级路径，方法是在outgoing探针中设置
+<p>（<em>核心想法：在用户态测延迟因为上下文切换及其他开销，测量结果不准确</em>）。
+需要注意的是，之前的工作侧重于测量应用流的特定路由器级路径，方法是在outgoing探针中设置
 TTL，与跟踪路由方法和收集 ICMP 超时消息的方法类似。
 虽然使用这些工具也能收集延迟测量值，但它们使用的是 libpcap
 或类似方法，如 [36]
 所示，由于内核和用户空间之间的上下文切换以及其他开销，可能会在探针发射过程中引入不希望出现的变化
-[28]。
+[28]。（真的会有吗，我有一些怀疑）
 同样，文献[11]中的方法需要用户/内核空间混合方法，这会给测量过程带来变异性和不必要的上下文切换开销。</p>
 <p>我们的方法采用了 ELF [36] 的新方法：noobprobe 采用 eBPF
 实现，因此其核心功能位于操作系统内核中，从而使探测和应用程序数据包在时间上间隔很近。因此，应用流量所体验到的性能（如延迟和损耗）很可能也会被探测器体验到--这是
@@ -517,7 +518,7 @@ TTL/ 跳数推断）、要使用的下一个探针序列以及到目标的下一
 </ul></li>
 <li>此外，还存储了已收到 ICMP 超时信息的目的地跳数bit
 map。该位图用于检测无响应的跳数，避免重复探测这些跳数。</li>
-<li>另一个 BPF 嘛篇存储已发送但尚未收到响应的探测信息。</li>
+<li>另一个 BPF map存储已发送但尚未收到响应的探测信息。</li>
 <li>另一个map存储已收到的探测信息，包括时间戳、响应主机的 IP
 地址、收到的 TTL/跳数等。</li>
 <li>最后一个map是per CPU map，在收到探测响应时无需加锁来更新映射。</li>
@@ -746,7 +747,7 @@ Overview</h2>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">55</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

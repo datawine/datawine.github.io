@@ -81,7 +81,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Datawine&#39;s Blog">
-<meta property="og:url" content="https://datawine.github.io/tags/eBPF/index.html">
+<meta property="og:url" content="https://datawine.github.io/tags/ebpf/index.html">
 <meta property="og:site_name" content="Datawine&#39;s Blog">
 <meta property="og:locale">
 <meta property="article:author" content="Datawine">
@@ -115,13 +115,13 @@
 
 
 
-  <link rel="canonical" href="https://datawine.github.io/tags/eBPF/"/>
+  <link rel="canonical" href="https://datawine.github.io/tags/ebpf/"/>
 
 
 
 
 
-  <title>标签: eBPF | Datawine's Blog</title>
+  <title>标签: ebpf | Datawine's Blog</title>
   
 
 
@@ -285,7 +285,7 @@
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h1>eBPF<small>标签</small>
+        <h1>ebpf<small>标签</small>
         </h1>
       </div>
 
@@ -297,9 +297,9 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/load-eBPF-with-libbpf.html" itemprop="url">
+            <a class="post-title-link" href="/ebpfworkshop23-Supercharge-WebRTC-Accelerate-TURN-Services-with-eBPF-XDP.html" itemprop="url">
               
-                <span itemprop="name">eBPF加载机制解析</span>
+                <span itemprop="name">Supercharge WebRTC: Accelerate TURN Services with eBPF/XDP</span>
               
             </a>
         
@@ -307,9 +307,93 @@
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2023-10-16T13:07:57+08:00"
-              content="2023-10-16" >
-          10-16
+              datetime="2023-11-14T13:16:08+08:00"
+              content="2023-11-14" >
+          11-14
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+      
+        
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/ebpfworkshop23-On-Augmenting-TCP-IP-Stack-via-eBPF.html" itemprop="url">
+              
+                <span itemprop="name">On Augmenting TCP/IP Stack via eBPF</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2023-11-06T15:22:53+08:00"
+              content="2023-11-06" >
+          11-06
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+      
+        
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/ebpf-paper-list.html" itemprop="url">
+              
+                <span itemprop="name">eBPF paper list</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2023-11-06T14:31:41+08:00"
+              content="2023-11-06" >
+          11-06
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+      
+        
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/ebpfworkshop23-TCP%E2%80%99s-Third-Eye-Leveraging-eBPF-for-Telemetry-Powered-Congestion-Control.html" itemprop="url">
+              
+                <span itemprop="name">TCP’s Third Eye: Leveraging eBPF for Telemetry-Powered Congestion Control</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2023-11-06T09:42:40+08:00"
+              content="2023-11-06" >
+          11-06
         </time>
       </div>
 
@@ -391,7 +475,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">55</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -972,76 +1056,6 @@
 
     $('.popup-btn-close').click(onPopupClose);
     $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-<script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
-
-
-  
-  
-
-  
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
-
-
-  
-
-  
-
-</body>
-</html>
-click(function(e){
       e.stopPropagation();
     });
     $(document).on('keyup', function (event) {

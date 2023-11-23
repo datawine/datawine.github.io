@@ -87,7 +87,7 @@
 <meta property="og:description" content="整理eBPF相关论文。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-11-06T06:31:41.000Z">
-<meta property="article:modified_time" content="2023-11-07T06:38:30.068Z">
+<meta property="article:modified_time" content="2023-11-23T05:17:52.492Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="ebpf">
 <meta name="twitter:card" content="summary">
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  185
+                  286
                 </span>
               
 
@@ -436,19 +436,32 @@
         <p>整理eBPF相关论文。</p>
 <span id="more"></span>
 <ul>
-<li><a
+<li><p><a
 href="https://datawine.github.io/ebpfworkshop23-TCP’s-Third-Eye-Leveraging-eBPF-for-Telemetry-Powered-Congestion-Control.html">TCP’s
 Third Eye: Leveraging eBPF for Telemetry-Powered Congestion
 Control</a>：现有的CC算法受限于操作系统内核的粗粒度信号，需要network
 fabric的一些visibility。但是，现有的telemetry-based solution需要changes
-to the end-host。利用eBPF，可以运行telemetry-based CC在内核里面。</li>
-<li><a
+to the end-host。利用eBPF，可以运行telemetry-based
+CC在内核里面。</p></li>
+<li><p><a
 href="https://datawine.github.io/ebpfworkshop23-On-Augmenting-TCP-IP-Stack-via-eBPF.html">On
 Augmenting TCP/IP Stack via
 eBPF</a>：论文认为，现在的TCP/IP协议栈存在无法在动态的网络设置中准确评估网络状态、不能够灵活扩展两个问题。文章提出了Augmenter，利用eBPF收集ongoing
 flows的信息，并且使用这个信息去manage other flows that are currently
 active or arriving in the
-future。感觉就是eBPF辅助观测+eBPF实现一些与协议栈有关的设置。</li>
+future。感觉就是eBPF辅助观测+eBPF实现一些与协议栈有关的设置。</p></li>
+<li><p><a
+href="https://datawine.github.io/ebpfworkshop23-Schooling-NOOBs-with-eBPF.html">Schooling
+NOOBs with
+eBPF</a>：主要是针对WAN场景，利用eBPF实现了in-band主动被动测量。</p></li>
+<li><p><a
+href="https://datawine.github.io/ebpfworkshop23-Supercharge-WebRTC-Accelerate-TURN-Services-with-eBPF-XDP.html">Supercharge
+WebRTC: Accelerate TURN Services with eBPF/XDP</a>：</p></li>
+<li><p><a
+href="http://datawine.github.io/arxiv23-Nahida-In-Band-Distributed-Tracing-with-eBPF.html">Nahida:
+In-Band Distributed Tracing with
+eBPF</a>：文章主要是在HTTP的header里面插入context。同时，在线程创建时记录父子关系，并利用这个父子关系处理多线程的context
+propagation。不同命名空间的线程ID追踪是一个技术点。</p></li>
 </ul>
 <!-- flag of hidden posts -->
       
@@ -567,7 +580,7 @@ future。感觉就是eBPF辅助观测+eBPF实现一些与协议栈有关的设�
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">55</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
