@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="sosp," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="主要介绍了Meta在FaaS上、站在provider角度的优化。 具体包括，消除函数的冷启动时间、在不过度配置资源的情况下处理负载峰值、防止函数对下游服务造成过载。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XFaaS: Hyperscale and Low Cost Serverless Functions at Meta">
+<meta property="og:url" content="https://datawine.github.io/sosp23-XFaaS-Hyperscale-and-Low-Cost-Serverless-Functions-at-Meta.html">
+<meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="主要介绍了Meta在FaaS上、站在provider角度的优化。 具体包括，消除函数的冷启动时间、在不过度配置资源的情况下处理负载峰值、防止函数对下游服务造成过载。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-11-27T04:53:20.000Z">
+<meta property="article:modified_time" content="2023-11-29T05:24:36.278Z">
+<meta property="article:author" content="Datawine">
+<meta property="article:tag" content="sosp">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://datawine.github.io/sosp23-XFaaS-Hyperscale-and-Low-Cost-Serverless-Functions-at-Meta.html"/>
+
+
+
+
+
+  <title>XFaaS: Hyperscale and Low Cost Serverless Functions at Meta | Datawine's Blog</title><meta name="robots" content="noindex">
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Datawine's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/sosp23-XFaaS-Hyperscale-and-Low-Cost-Serverless-Functions-at-Meta.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">XFaaS: Hyperscale and Low Cost Serverless Functions at Meta</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-11-27T12:53:20+08:00">
+                2023-11-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/sosp23-XFaaS-Hyperscale-and-Low-Cost-Serverless-Functions-at-Meta.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="sosp23-XFaaS-Hyperscale-and-Low-Cost-Serverless-Functions-at-Meta.html" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  8.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  29
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>主要介绍了Meta在FaaS上、站在provider角度的优化。
+具体包括，消除函数的冷启动时间、在不过度配置资源的情况下处理负载峰值、防止函数对下游服务造成过载。</p>
+<span id="more"></span>
+<p>（读系统文章的时候发现还是适合机翻，因为细节太多了）</p>
+<p>FaaS 对用户的易用性可能是以云提供商额外的硬件成本为代价的。 在使用
+FaaS
+之前，用户需要承担为处理间歇性函数调用而超额配置的低效虚拟机的成本。
+有了
+FaaS，随着资源调配的责任从用户转移到云提供商，过度调配资源的成本将由云提供商承担。
+据报道，在 Azure Functions 中，"81%
+的应用程序平均每分钟调用一次或更少。这表明，这些应用程序的保温成本与其总执行（计费）时间相关，可能高得令人望而却步"。
+尽管 FaaS
+是一个热门研究课题，但研究界对这一问题缺乏定量了解，主要原因是缺乏有关大规模
+FaaS 平台实际硬件利用率的报告，更不用说解决这一问题的方案了。</p>
+<p>Meta运营着一个超大规模的私有云，其中包含一个名为 XFaaS 的 FaaS 平台。
+<strong>XFaaS 每天在分布于数十个数据中心区域的 10
+多万台服务器上处理数万亿次函数调用。</strong> 由于 XFaaS
+的超大规模，降低硬件成本是我们的首要任务。
+因此，论文首先描述了额外硬件成本的风险，然后介绍了Meta如何在 XFaaS
+中解决这些问题。</p>
+<p>关于额外的硬件成本，具体包括</p>
+<ul>
+<li>冷启动时间长。一个function的生命周期，中大部分步骤的成本都由云提供商承担。此外，还有一些因为warm
+up等待造成的开销。</li>
+<li>负载变化大。负载变化大可能会导致硬件成本过高，或者当负载激增时系统过载。如果为处理峰值负载而调配资源，XFaaS
+将面临严重浪费的风险。</li>
+<li>下游服务超载。即使 FaaS
+平台能够完美地管理自身负载，其功能仍会对所调用的下游服务造成资源争用。过去，我们曾经历过由于非面向用户的函数调用激增导致数据库超载，从而造成面向用户的在线服务出错率过高而造成的中断。AWS
+Lambda
+等现有系统为每个函数设置了静态的流量限制，但这是不够的。如果限制设置过低，FaaS
+平台和数据库都会浪费未使用的资源（根本打不满）。相反，限制设置过高可能会导致在线服务出错率过高。</li>
+</ul>
+<p>解决方案主要包括</p>
+<ul>
+<li>Cold start time
+<ul>
+<li>proactively pushes the latest code of all functions to all
+servers</li>
+<li>runs multiple functions concurrently in one Linux process</li>
+<li>cooperative JIT compilation</li>
+<li>function – locality function groups – locality worker groups</li>
+</ul></li>
+<li>High variance of load
+<ul>
+<li>time-shift computing</li>
+<li>dispatches function calls across datacenter regions</li>
+<li>function quotas</li>
+<li>future execution start time</li>
+</ul></li>
+<li>Downstream overloading
+<ul>
+<li>resource isolation and management system</li>
+<li>back-pressure signals</li>
+</ul></li>
+</ul>
+<h1 id="background">Background</h1>
+<h2 id="rapid-growth-of-faas-in-our-private-cloud">Rapid Growth of FaaS
+in Our Private Cloud</h2>
+<p>随着 FaaS 在公共云中的迅速普及，人们不禁要问，私有云是否有足够的 FaaS
+工作负载来支持类似的增长。 图 3 显示，<strong>XFaaS
+中的每日函数调用次数在过去 5 年中增长了 50
+倍</strong>，目前每天的函数调用总数达到万亿次。 2022
+年底的快速增长是由于推出了一项新功能，允许使用类似于 Kafka
+的数据流来触发函数调用。 总之，XFaaS 的快速应用表明，FaaS
+是一种成功的编程范例，同样适用于公共云和私有云环境。</p>
+<h2 id="spiky-load">Spiky Load</h2>
+<p>XFaaS 客户端以高度尖峰的方式提交函数调用。 峰值需求是非峰值需求的 4.3
+倍。 午夜高峰是由类似 Hive
+的大数据管道触发的函数调用造成的，这些管道会在午夜前后创建数据表。
+处理函数的触发一般就是绑定在数据的可用性上的。</p>
+<p>图 4 举例说明了一个函数在 15 分钟时间窗口内提交近 2000
+万次函数调用的尖峰负载。
+如果不加区分地分配容量以满足峰值需求，就会在非峰值时间造成大量硬件浪费。</p>
+<p>我们的一个重要见解是，某些 XFaaS 函数可能不需要立即执行。 大多数
+XFaaS 函数都是由队列、定时器、存储、协调和事件桥工作流触发的。 与通过
+HTTP 等直接 RPC 触发的函数相比，这些函数的延迟容忍度更高。
+延迟预期宽松的函数提供了平滑负载的机会。 XFaaS
+采用一整套技术来处理尖峰负载。必要时，它会推迟执行延迟容忍函数和低关键性函数。
+此外，它还会跨数据中心区域全局调度函数调用，以平衡负载。
+此外，它还强制执行每个函数的配额，以确保公平性。
+最后，它允许调用者指定函数的未来执行时间，从而以可预测的方式分散负载。</p>
+<h2 id="datacenters-and-uneven-hardware-distribution">Datacenters and
+Uneven Hardware Distribution</h2>
+<p>Meta的私有云由数十个数据中心区域和数百万台机器组成。
+每个区域由多个数据中心组成，这些数据中心在物理上相互靠近。
+由于连接同一区域内数据中心的网络具有低延迟和高带宽的特点，我们可以在很大程度上认为区域内的硬件是可互换的。</p>
+<p>但是，跨区域网络带宽比区域内数据中心之间的带宽低约 10
+倍，跨区域网络延迟比区域内延迟长约 100-1000 倍。
+因此，Meta的服务通常会区别对待区域内和跨区域通信。因此，XFaaS
+需要在区域本地性和跨区域负载平衡之间取得平衡。</p>
+<p>图 5 显示了 XFaaS worker池在部分数据中心区域的容量。
+由于容量的增量获取和容量的可用性，XFaaS 的容量在各区域分布不均。
+这就要求 XFaaS
+针对区域位置进行优化，同时平衡各区域的负载，以提高硬件利用率。</p>
+<h1 id="diverse-workloads">Diverse Workloads</h1>
+<h2 id="workload-categories">Workload Categories</h2>
+<p>根据triggers可以将函数分为三类： (1) 队列触发函数，通过队列服务提交；
+(2) 事件触发函数，由数据仓库和数据流系统中的数据变化事件激活； (3)
+定时器触发函数，根据预先设定的时间自动触发。</p>
+<p>在一个月内，XFaaS 执行了 18,377 次独特的函数。 表 1
+总结了这些函数的函数数、调用次数和计算使用情况。
+就函数数而言，队列触发函数因其最长的使用历史而占据主导地位。 然而，一旦
+XFaaS
+开始支持事件触发式函数，许多数据处理服务就开始使用这些函数，从而导致其迅速增长。
+这些函数往往运行频繁，但执行时间较短。 因此，事件触发函数占调用次数的
+85%，但只占计算使用量的 14%。 对定时器触发函数的支持是 XFaaS
+最新添加的功能，其发展势头依然强劲。</p>
+<h2 id="workload-examples">Workload Examples</h2>
+<p>一般来说，<strong>XFaaS
+工作负载很少处理需要亚秒级响应时间的面向用户的交互式请求</strong>，例如新闻推送显示、搜索结果排名或视频播放。
+传统上，在
+Meta，这些交互式用户请求由长期运行的服务处理，因为无服务器函数在这些场景中并不具有显著优势。</p>
+<p>无服务器功能通常有两个主要优点：
+(1)<strong>即用即付，无需预先规划容量</strong>；(2)<strong>简化部署</strong>，开发人员只需编写代码，无服务器平台会自动处理部署。
+但是，对于需要亚秒级响应时间的面向用户的请求来说，第一个优点就失去了意义，因为需要进行细致的容量规划，以提供有保障的容量，确保
+Meta 产品的数十亿用户获得愉悦的体验。
+这与用户群有限的小型产品的情况截然不同，在这种情况下，偶尔的用户体验下降是可以接受的，而且云提供商预计会有备用容量来应对小型产品的负载高峰。</p>
+<p>此外，在
+Meta，无需使用无服务器函数即可通过完全自动化部署实现第二个优势。
+值得注意的是，Meta的持续部署工具
+Conveyor，已经在没有任何人工干预的情况下部署了 97%
+的服务，甚至无服务器函数也是通过 Conveyor 部署的。 由于这些原因，在
+Meta，无服务器函数很少用于处理需要亚秒级响应时间的面向用户的请求。</p>
+<p>接下来是Meta中使用的几个典型的 XFaaS 工作负载示例：</p>
+<ul>
+<li>推荐系统</li>
+<li>Falco，一个记录所有类型事件的logging 平台</li>
+<li>Productivity Bot
+是一个基于规则自动执行各种任务的平台。例如，可以创建一个规则，在代码变更部署到生产中时发送消息。</li>
+<li>Morphing Framework
+是一个以编程方式生成短暂函数的平台，用于执行跨数据存储（如
+MySQL、键值存储）的自定义数据转换。这些函数可运行数分钟，消耗的 CPU
+周期比普通函数多出数个数量级。</li>
+</ul>
+<h2 id="workload-resource-usage">Workload Resource Usage</h2>
+<p>主要讲functions的资源使用率变化很大。</p>
+<h1 id="xfaas-design">XFaaS Design</h1>
+<h2 id="overview">Overview</h2>
+<p>为启动函数调用，客户端向submitter发送请求。
+submitter执行速率限制，并将请求转发给队列负载平衡器（QueueLB），然后队列负载平衡器会选择一个持久队列（DurableQ）来持续处理函数调用，直到调用完成。
+调度程序会定期从 DurableQ
+中提取函数调用，并将其存储到<strong>内存中</strong>的
+FuncBuffer（函数缓冲区）中，每个函数都有一个单独的缓冲区。
+调度器根据函数调用的关键性、完成截止日期和配额来决定函数调用的执行顺序，并将准备好执行的函数调用转移到
+RunQ（运行队列）中。 最后，RunQ 中的函数调用会被分派到
+WorkerLB（worker负载平衡器），后者会将它们路由到适当的worker处执行。</p>
+<p>在图 6 中，DurableQ
+是唯一一个sharded的、有状态的组件，而其他组件都是无状态和unsharded的。
+DurableQ 使用高度可用的分片数据库来永久存储函数调用。
+子监控器、队列库、调度器和 WorkerLB
+都是无状态、无分片和复制的，没有指定的领导者，因此它们的副本扮演着同等的角色。
+这种架构将状态管理集中在一个组件中，简化了整体设计。无状态组件的扩展可以通过添加更多副本轻松实现，如果无状态组件出现故障，任何对等节点都可以接管其工作。</p>
+<p>在 XFaaS 的超大规模中，图 6
+中的每个组件通常都运行在数百台或更多台服务器上，但 Worker 和 DurableQs
+除外。
+这些组件充当函数调用的计算和存储引擎，它们的容量需求与函数调用量成正比。
+目前，Worker 和 DurableQs 分别消耗了超过 10 万台和 1 万台服务器。</p>
+<p>XFaaS 在多个地理分布的数据中心区域运行，能够向任何区域调度函数调用。
+不过，它的目标是在负载平衡和区域本地性之间取得平衡，在提交函数调用的同一区域执行大部分函数调用。
+如图 5 所示，XFaaS
+的硬件容量在各区域之间存在显著差异，因此负载平衡至关重要。
+为实现这一目标，三个组件协同工作。 首先，QueueLBs 在不同区域的 DurableQs
+之间平衡负载。
+其次，调度器根据每个区域的worker池容量按比例分配函数调用。
+最后，WorkerLB 在平衡单个 Worker 的负载的同时，还确保每个 Worker
+处理一个稳定的函数子集，以提高locality，而不是处理所有函数。</p>
+<p>为确保容错，图 6 顶部的中央控制器与函数执行的关键路径保持分离。
+控制器通过定期更新关键配置参数来不断优化系统，这些参数由工作器和调度器等关键路径组件消耗。
+由于关键路径组件缓存了这些配置，因此即使中央控制器发生故障，它们也能继续使用当前配置执行函数。
+但是，当中央控制器宕机时，XFaaS 不会根据工作负载变化重新配置。
+例如，即使实际流量发生了变化，用于跨区域函数调度的流量矩阵也不会更新。
+通常情况下，这不会立即导致严重的不平衡，而且可以承受中央控制器停机数十分钟。</p>
+<p>为简单起见，图 6 仅显示了一个命名空间中每个区域的一个工作池。
+实际上，一个区域可以承载多个命名空间，图 6
+中描述的每个组件都可以同时支持多个命名空间，只是每个命名空间都有自己的专用工作池。
+下面，我们将详细介绍每个 XFaaS 组件。</p>
+<h2 id="submitter">Submitter</h2>
+<p>函数可以根据各种事件执行。</p>
+<p>第一类事件涉及客户端向提交者提交函数调用，如图 6 所示。
+第二类事件涉及数据仓库中的数据变化，而第三类事件则由数据流系统中的新数据到达时触发。为简单起见，
+图 6 中未显示后两类事件。</p>
+<p>最初，XFaaS 允许客户直接向 DurableQs 写入要调用的函数的 ID 和参数。
+随着函数调用率的提高，我们引入了提交器，通过批量调用并将其作为一个操作写入
+DurableQ 来提高效率。
+如果函数的参数过大，提交器会将参数分别存储在分布式键值存储中。
+此外，提交器还会执行速率限制等策略，以避免提交器和下游组件负载过重。
+为此，每个提交器都会独立查询图 6
+所示的中央速率限制器，以跟踪全局资源使用情况。</p>
+<p>最后，如图 2 和图 4
+所示，由于某些客户的函数调用提交率非常sharp，因此每个区域都有两组提交器，一组用于正常客户，另一组用于非常sharp的客户（如图
+4 中的客户），以防止sharp客户对正常客户造成过大影响。 XFaaS
+会监控尖峰客户，并提醒操作员与客户协商，将其转移到尖峰提交器；否则，XFaaS
+将默认对其进行节流。请注意，这需要人工参与，因为这对客户来说是明确的 SLO
+更改。</p>
+<h2 id="durableq-and-queuelb">DurableQ and QueueLB</h2>
+<p>（这边其实没有完全搞懂，感觉有些模模糊糊的）</p>
+<p>在收到函数调用后，提交者会将其转发到 QueueLB。 图 6
+顶部所示的配置管理系统称为
+Configerator。它存储路由策略并将其传递给每个队列栈，该策略规定了每个
+"源区域-目的地区域 "对的提交者到队列栈流量的分配。 这有助于平衡不同地区
+DurableQ 的负载，因为不同地区 DurableQ 的硬盘容量也有很大差异，如图 5
+所示。 函数调用到 DurableQs 的映射是通过随机 UUID 分割的，以便在
+DurableQs 之间平均分配负载。这意味着函数调用可以在任何 DurableQ
+上排队。</p>
+<p>每个 DurableQ
+都为每个函数维护一个单独的队列，队列按函数调用的执行开始时间排序，执行开始时间由调用者指定，可以是未来的某个时间，比如从现在开始的
+8 个小时。 调度程序会定期查询
+DurableQ，以检索开始时间已过当前时间的函数调用。 一旦一个 DurableQ
+向一个调度程序提供了函数调用，它就不会再向另一个调度程序提供，除非该调度程序执行失败。
+在 Worker 执行函数调用后，调度程序会向 DurableQ 发送 ACK
+消息，表示函数已成功执行；或发送 NACK 消息，表示函数未成功执行。 收到
+ACK 后，DurableQ 会从队列中永久删除函数调用。 如果收到 NACK
+或超时后既未收到 ACK 也未收到
+NACK，它就会将函数调用提供给其他调度程序检索和重试。 这意味着 DurableQ
+提供了 "至少一次"（at-least-once）语义。</p>
+<h2 id="scheduler">Scheduler</h2>
+<p>调度程序的主要职责是根据函数调用的关键性、执行期限和容量配额确定函数调用的顺序。
+如图 6 所示，调度程序的输入是多个
+FuncBuffers（函数缓冲区），每个函数一个，输出是一个有序的
+RunQ（运行队列），其中包含将被分派执行的函数调用。FuncBuffers 和 RunQ
+都是内存数据结构。</p>
+<p>每个调度程序都会定期轮询不同的 DurableQ，以检索待执行的函数调用。
+由于函数调用到 DurableQs 的映射是通过随机 UUID
+分割的，<strong>调度程序可能会从不同的 DurableQs
+获取不同调用者对同一函数的调用。</strong> 这些调用被合并到函数的单个
+FuncBuffer 中，该 FuncBuffer
+首先按函数调用的重要程度排序，然后按其执行期限排序。 由于 XFaaS
+经常在容量不受限制的情况下运行，因此先按关键性排序可确保重要的函数调用更有可能在容量紧张或站点中断时被执行。</p>
+<p>调度程序会从所有 FuncBuffer
+的前几项中选择最合适的函数调用，并将其移动到 RunQ 中执行。
+选择标准涉及配额管理，将在第 4.6 节中详细介绍。</p>
+<p>RunQ 还具有流量控制功能。 如果函数执行缓慢导致 RunQ
+增大，调度程序就会减慢将项目从 FuncBuffers 移至 RunQ 的速度，以及从
+DurableQs 中检索函数调用的速度。</p>
+<p>当某个区域的工作者利用率不足时，为了平衡负载，该区域的调度程序可能会从其他区域的
+DurableQs 中检索函数调用，因为其他区域的工作者负载过重。 图 6 中的
+"全球流量指挥器"（Global Traffic
+Conductor，GTC）对所有区域的需求（待处理的函数调用）和供应（工人池的容量）保持近乎实时的全局视图。
+它定期计算流量矩阵，其中的元素 𝑇𝑖 𝑗 指定了区域 𝑖 的调度程序应从区域 𝑗
+提取的函数调用的比例。 为了计算流量矩阵，GTC 首先设置∀𝑖,𝑇𝑖𝑖 = 1，∀𝑖≠
+𝑗,𝑇𝑖𝑗 = 0，这意味着所有调度器只从其本地区域的 DurableQ 调用。
+然而，这可能会导致某些区域的工人超负荷工作。GTC
+会计算将这些超载区域的流量转移到附近区域，直到没有区域超载或所有区域的流量相同。
+GTC 通过图 6
+中的配置管理系统定期向所有区域的所有调度员分发新的流量矩阵。
+然后，调度员根据流量矩阵从不同区域的 DurableQs 获取函数调用。</p>
+<h2 id="workers-and-workerlb">Workers and WorkerLB</h2>
+<p>每个命名空间支持<strong>一个</strong>（不清楚是不是有且仅有一个）运行时，并有自己专用的工作池。
+使用相同编程语言但需要较强隔离性的函数会被分隔到不同的命名空间。
+为简洁起见，下面的讨论假设只有一个命名空间，即只有一个运行时和一个工作池。</p>
+<p>为了最大限度地提高硬件效率，我们希望接近通用 Worker 的效果，即每个
+Worker 都能立即执行每个函数，而无需任何启动开销。 XFaaS
+通过多种技术实现了这一目标。</p>
+<ul>
+<li>首先，它允许多个函数在一个运行时实例（即一个 Linux
+进程）中并发执行。</li>
+<li>其次，它使用高效的点对点系统，主动将命名空间中所有函数的最新代码推送到该命名空间中<strong>每个</strong>工作者的固态硬盘上。Worker
+可保持runtime始终正常运行。在首次收到函数调用时，运行时会从本地固态硬盘加载<strong>预填充</strong>的函数代码并立即执行。运行时的一个实例可以在不同的线程中并发执行不同的函数。</li>
+<li>第三，XFaaS 在工作者之间使用合作 JIT 编译，以消除每个工作者为 JIT
+编译而重新进行剖析的开销和延迟。</li>
+<li>最后，为了提高 Worker 内存中函数代码和 JIT 代码的缓存命中率，XFaaS
+使用了locality群组，以确保<em>only calls for a stable and small subset
+of functions are dispatched to a given worker</em>。</li>
+</ul>
+<h3 id="cooperative-jit-compilation">Cooperative JIT Compilation</h3>
+<p>我们在讨论中主要以 PHP 为例。 我们的 PHP 运行时称为 HHVM
+[23]，它使用基于插桩的profiling来实现基于区域的 JIT 编译 [36]。
+然而，让数以万计的工作者各自独立执行剖析是低效的，因为之前的工作[37]表明，HHVM
+需要长达 25 分钟才能完成剖析并生成高质量的 JIT 代码（代码大小约为
+500MB）。 这对 XFaaS
+来说是个问题，因为它经常向所有工作站推送新的函数代码。</p>
+<p>为了解决这个问题，XFaaS 采用了合作式 JIT 编译。 每隔三小时，XFaaS
+会将所有新的和已更改的函数代码捆绑到一个文件中，并通过点对点数据分发将其推送给所有工作者[15]。
+工人分三个阶段开始使用新的函数代码。
+在第一阶段，一小部分工人运行新代码，以捕捉潜在的错误。 在第二阶段，2%
+的工人运行新代码，以捕捉更难发现的错误，一些播种者工人执行剖析，以收集
+JIT 编译所需的数据。
+在第三阶段，播种者的剖析数据会分发给与播种者处于同一定位组的所有工人，这样他们就能在收到新代码的函数调用之前，立即对热门函数执行
+JIT 编译。 之后，当它们收到这些调用时，就能立即执行优化后的 JIT
+代码，而不会有任何启动或剖析延迟。</p>
+<h3 id="locality-groups">Locality Groups</h3>
+<p>我们的目标是接近通用 Worker 的效果，即每个 Worker
+都能持续执行每个函数，而无需任何启动开销。
+然而，由于内存容量有限，在每个 Worker 的内存中保留每个函数的 JIT
+代码是不可行的。 此外，函数本身也需要内存来缓存数据和执行计算。 如果一个
+Worker 同时执行多个对内存要求较高的函数，它的内存可能会耗尽。 例如，第
+3.2 节中描述的 Morphing Framework
+的函数运行时间很长，在完成之前会消耗越来越多的内存。</p>
+<p>为了解决这个问题，图 6 所示的 "本地优化器 "将函数和 Worker
+分成本地组，以确保只有函数子集的调用才会被分派到给定的 Worker。
+根据函数的剖析数据，定位优化器将函数划分为不重叠的定位组，确保占用内存的函数被分散到不同的定位组中。
+具体到 Morphing
+Framework，由于它以编程方式生成了许多短暂函数，而且这些函数具有相似的特性，因此定位优化器只需以循环方式将它们分配到不同的定位组。</p>
+<p>除了将函数映射到局部性群组外，每个函数局部性群组还映射到相应的 Worker
+局部性群组， 如图 6 中的局部性群组 1 和 2。 图 6 中的 WorkerLB
+在路由函数调用时，会从函数对应的工人本地化组中随机选择两个工人，并将函数调用分派给负载较轻的工人。
+这种方法将局部性引入了传统的随机二选一方法。
+当函数的资源消耗情况发生变化时，局部性优化器可以在局部性组之间动态地重新分配函数。此外，如果函数调用的组合发生变化，例如某个局部组的函数调用激增，局部性优化器可以将工人从一个局部组转移到另一个局部组，以平衡负载。</p>
+<h2 id="handling-load-spikes">Handling Load Spikes</h2>
+<h3 id="quota-for-functions">Quota for Functions</h3>
+<p>每个函数都与其所有者设定的配额相关联，该配额定义了<strong>该函数每秒在全局范围内可使用的
+CPU 周期总数</strong>。
+将配额除以函数每次调用的平均成本，即可将配额转换为每秒请求数（RPS）速率限制。
+一个函数的 RPS 会在全局范围内汇总，每个调度器都会参考图 6
+中的中央速率限制器，根据函数是否在全局范围内超过其 RPS
+限制，来决定是否对函数的调用进行节流。</p>
+<h3 id="time-shifting-computing">Time-Shifting Computing</h3>
+<p>XFaaS 提供两种配额：保留配额和机会配额。</p>
+<p>如果函数使用了预留配额，且当前配额在其分配的限额内，XFaaS
+会努力在收到调用后几秒内在 Worker 上启动函数调用的执行。 这是 XFaaS SLO
+的一部分。</p>
+<p>如果函数使用机会配额，XFaaS 对该函数的执行 SLO 设置为 24 小时。
+这样，XFaaS
+就能将这些容错函数的执行时间安排在有可用容量的非高峰时段。</p>
+<p>当工人利用率不足或超负荷时，XFaaS
+会动态调整使用机会配额的函数的调用率，使其运行速度高于或低于根据其配额得出的
+RPS 限制。 让 𝑟0 表示机会主义函数的预设 RPS 限制。它的实际 RPS
+限制会动态调整为 𝑟 = 𝑟0 × 𝑆，其中 𝑆
+反映了当前工人的利用率。（<strong>这个S是利用率越小，S越大</strong>）
+如果工人利用率不足，𝑆 就会增加。反之，如果工人超负荷工作，𝑆
+就会一直下降到零，导致机会函数调度停止。 图 6 中的 "利用率控制器
+"会监控工人的利用率，动态调整𝑆 以达到目标工人利用率水平，并将𝑆
+保存在数据库中。
+调度器定期从数据库中检索𝑆，并利用它计算机会主义函数的调整后 RPS
+限制。Meta
+的硬件预算分配流程激励团队尽可能利用机会配额，类似于公共云对使用收获虚拟机的定价激励。</p>
+<h3 id="protecting-downstream-services">Protecting Downstream
+Services</h3>
+<p>即使 XFaaS
+能够完美地管理自身负载，其函数仍会对所调用的下游服务造成资源争用。</p>
+<p>接下来的生产中断最初促使我们开发解决方案来解决这个问题。 名为 TAO
+的社交图数据库一度在高峰时段出现高负载，这在意料之中。 然而，在 XFaaS
+上运行的一个大容量函数带来的额外负载意外地加剧了这种情况，使 TAO
+超载，并导致过多的故障和重试。
+这些故障和重试扩大了对几个下游服务的查询，导致 TAO
+可用性下降，并进一步导致索引服务超载，随后引发了多米诺骨牌效应。为确定多米诺骨牌效应的根本原因而进行的调查以及随后的手动缓解措施耗时一整天，最终导致
+XFaaS 上的大部分函数执行被手动暂停，以暂时缓解这种情况。</p>
+<p>为避免下游服务超载，XFaaS 采用类似于 TCP 的
+"加-增-乘-减"（AIMD）方法来动态调整函数的 RPS 限制。
+下游服务可抛出背压异常，以表明其已超负荷。
+当某个函数的背压超过阈值时，其 RPS 限制 𝑟 会被调整为当前 RPS
+限制的一部分 𝑀，即 𝑟𝑘+1 = 𝑟𝑘 × 𝑀。 当不存在背压时，RPS
+限值会以加法形式增加，即 𝑟𝑘+1 = 𝑟𝑘 +𝐼。
+𝑀和𝐼都是可调参数。背压阈值按下游服务定义，由服务所有者根据其领域知识设定。
+例如，对于我们最大的两个下游服务，阈值设定为每分钟 5,000
+个异常，在过去两年中，该阈值一直保持稳定，没有发生过任何变化。</p>
+<p>XFaaS 还提供其他流量整形功能来帮助下游服务。 让 𝑟 表示函数的 RPS
+限制，𝑝 表示函数的执行时间。 在任何给定时间内，函数最多可以有 𝑅 = 𝑟 × 𝑝
+运行实例。 如果𝑝很大，𝑅
+也会很大，这可能会导致下游服务的并发调用过多，从而可能造成服务过载。
+XFaaS
+允许为每个函数配置并发限制，以指示函数在任何给定时间内可运行的最大实例数。
+并发限制的功能不如上述 AIMD
+方法强大，但可作为一个适当的安全网，因为并非每个下游服务都能很好地在过载情况下抛出反压异常。</p>
+<p>虽然某些下游服务可以在稳定状态下处理稳定状态下的高
+RPS，但突然的变化可能无法很好地处理。
+这些服务可能需要时间来预热缓存，或使用自动扩展来增加实例以应对负载的增加。
+为了帮助这些服务，XFaaS 使用慢启动来逐步提高函数的 RPS，同时对 RPS
+的变化率施加限制。 具体来说，如果每个时间窗口的函数调用次数 𝑇
+已超过阈值，则每个时间窗口的流量最多会增加 𝛼。
+通过经验评估，我们将这些参数设置为 ︰1 分钟，𝑇 = 100 次函数调用，𝛼 =
+20%。慢速启动会缓慢但稳定地提高 RPS，直到达到 RPS
+限制或并发限制，或者函数的完成率跟不上计划函数调用的速度。</p>
+<h2 id="data-isolation">Data Isolation</h2>
+<p>为了安全或性能而需要强隔离的函数被分配到不同的命名空间，每个命名空间使用不同的工作池来实现物理隔离。
+在同一个命名空间中，多个函数可以在同一个 Linux
+进程中运行，这得益于私有云内部的高度信任、对所有代码更改的强制同行审查以及已经到位的默认安全机制。
+此外，我们还在各函数间强制执行数据隔离，以防止意外的数据滥用。
+为此，我们采用了一种多层次安全信息流方法，其中包含贝尔-拉-帕杜拉（Bell-La-Padula）式访问控制[7]。</p>
+<p>XFaaS
+提供了一种编程模型，在这种模型中，函数所有者可以用语义注释其函数的参数。
+系统会自动推断数据类型语义，并对缺失或可能不准确的注释发出警告。
+为确保跨函数的数据隔离，XFaaS 执行 Bell-La-Padula 安全原则。
+较高分类级别的负责人不得向较低分类级别写入数据，较低分类级别的负责人不得从较高分类级别读取数据。
+换句话说，数据只能从较低的分类级别流向较高的分类级别。</p>
+<p>XFaaS 在系统之间的边界执行策略，这些系统被分成不同分类级别的隔离区。
+每个函数调用都标有一个隔离区，可以在函数编码时静态标注，也可以在 RPC
+调用时动态标注。 XFaaS
+调度器会检查来自源隔离区的函数参数是否能流向函数的执行隔离区，同时尊重
+Bell-La Padula 属性。
+同样，工作者也会确保在区域中运行的函数遵循这些属性。 总之，XFaaS
+对隔离模型组合的新颖使用使其能够安全高效地运行。 一方面，它使用独立的
+Worker 池来执行需要强隔离的函数。
+另一方面，同一命名空间内的函数依靠语言运行时在函数粒度上保持数据隔离。
+这样，XFaaS 就能在单个 Linux
+进程中同时运行多个函数，从而最大限度地提高效率。</p>
+<h1 id="xfaas-and-public-cloud">XFaaS and Public Cloud</h1>
+<p>Insights:</p>
+<ul>
+<li>Insight 1: 优先保证local region的execution，但是全局都能调度</li>
+<li>Insight 2: 优化resource utilization和throughput of function
+calls很重要</li>
+<li>Insight 3: 很多任务都是能够delay-tolerant的</li>
+</ul>
+<p>Advices:</p>
+<ul>
+<li>Advice 1: Specify future execution start time有助于spread out
+execution</li>
+<li>Advice 2: 以DDL方式选择SLO有助于postpone
+delay-tolerant函数的执行</li>
+<li>Advice 3: Criticality level的指定有助于保证关键函数的执行</li>
+</ul>
+<!-- flag of hidden posts -->
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/sosp/" rel="tag"># sosp</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/datawine" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background"><span class="nav-number">1.</span> <span class="nav-text">Background</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#rapid-growth-of-faas-in-our-private-cloud"><span class="nav-number">1.1.</span> <span class="nav-text">Rapid Growth of FaaS
+in Our Private Cloud</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spiky-load"><span class="nav-number">1.2.</span> <span class="nav-text">Spiky Load</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#datacenters-and-uneven-hardware-distribution"><span class="nav-number">1.3.</span> <span class="nav-text">Datacenters and
+Uneven Hardware Distribution</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#diverse-workloads"><span class="nav-number">2.</span> <span class="nav-text">Diverse Workloads</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#workload-categories"><span class="nav-number">2.1.</span> <span class="nav-text">Workload Categories</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#workload-examples"><span class="nav-number">2.2.</span> <span class="nav-text">Workload Examples</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#workload-resource-usage"><span class="nav-number">2.3.</span> <span class="nav-text">Workload Resource Usage</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xfaas-design"><span class="nav-number">3.</span> <span class="nav-text">XFaaS Design</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#overview"><span class="nav-number">3.1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#submitter"><span class="nav-number">3.2.</span> <span class="nav-text">Submitter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#durableq-and-queuelb"><span class="nav-number">3.3.</span> <span class="nav-text">DurableQ and QueueLB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scheduler"><span class="nav-number">3.4.</span> <span class="nav-text">Scheduler</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#workers-and-workerlb"><span class="nav-number">3.5.</span> <span class="nav-text">Workers and WorkerLB</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cooperative-jit-compilation"><span class="nav-number">3.5.1.</span> <span class="nav-text">Cooperative JIT Compilation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#locality-groups"><span class="nav-number">3.5.2.</span> <span class="nav-text">Locality Groups</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#handling-load-spikes"><span class="nav-number">3.6.</span> <span class="nav-text">Handling Load Spikes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#quota-for-functions"><span class="nav-number">3.6.1.</span> <span class="nav-text">Quota for Functions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#time-shifting-computing"><span class="nav-number">3.6.2.</span> <span class="nav-text">Time-Shifting Computing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#protecting-downstream-services"><span class="nav-number">3.6.3.</span> <span class="nav-text">Protecting Downstream
+Services</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#data-isolation"><span class="nav-number">3.7.</span> <span class="nav-text">Data Isolation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xfaas-and-public-cloud"><span class="nav-number">4.</span> <span class="nav-text">XFaaS and Public Cloud</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Datawine</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">32k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user">本站访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye">本站总访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cyw3QwzdC';
+      var conf = 'cbf53c79ec118123e02b0e1a5676be66';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
