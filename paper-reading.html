@@ -87,7 +87,7 @@
 <meta property="og:description" content="论文阅读列表">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-06-02T12:34:45.000Z">
-<meta property="article:modified_time" content="2023-11-29T05:24:42.608Z">
+<meta property="article:modified_time" content="2023-12-07T08:24:09.219Z">
 <meta property="article:author" content="Datawine">
 <meta property="article:tag" content="论文汇总">
 <meta name="twitter:card" content="summary">
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  7.7k
+                  7.8k
                 </span>
               
 
@@ -928,7 +928,12 @@ stack负责控制平面逻辑（reliable data delivery、congestion control、fl
 control和header generation）；smartNIC上的TCP
 stack负责从disk中读数据、发包。</p></li>
 <li><p>Hydra: Serialization-Free Network Ordering for Strongly
-Consistent Distributed Applications：</p></li>
+Consistent Distributed Applications：分布式应用通过sharding（Transaction
+Protocol如2PC）提供scalability、通过replication（Replication
+Protocol如Paxos）提供fault
+tolerance。在这过程中，人们提出使用dedicated的sequencer（通常是可编程交换机）来实现consistent
+ordering，来降低分布式系统中coordination的开销。但是现在的sequencer只有一台机器，很容易导致很多问题（延迟、可扩展性、failover）。文章的主要idea是结合每个sequencer自己上面的sequencer编号和physical
+timestamp来解决使用多个sequencer时需要serialization的问题。</p></li>
 <li><p><a
 href="https://datawine.github.io/nsdi23-The-Benefit-of-Hindsight-Tracing-Edge-Cases-in-Distributed-Systems.html">The
 Benefit of Hindsight: Tracing Edge-Cases in Distributed
@@ -1547,7 +1552,7 @@ graph”，以实现剪枝的一部分。</p></li>
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">32k</span>
+    <span title="Site words total count">32.1k</span>
   
 </div>
 
