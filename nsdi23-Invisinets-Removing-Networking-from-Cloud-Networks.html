@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="nsdi," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本篇文章基本上是一篇API的工作。 云租户网络的供应、配置和管理非常复杂。 租户必须弄清楚如何组装、配置、测试等大量低级building blocks，以实现其高级目标。 由于这些网络越来越多地跨越多个云和企业内部基础设施，其复杂性很难扩展。 作者认为，当前的云抽象给租户带来了不必要的负担，使其无法成为经验丰富的网络运营商。 因此，论文为云提供商的网络资源提供了一个替代接口，租户的连接需求被简化为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Invisinets: Removing Networking from Cloud Networks">
+<meta property="og:url" content="https://datawine.github.io/nsdi23-Invisinets-Removing-Networking-from-Cloud-Networks.html">
+<meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="本篇文章基本上是一篇API的工作。 云租户网络的供应、配置和管理非常复杂。 租户必须弄清楚如何组装、配置、测试等大量低级building blocks，以实现其高级目标。 由于这些网络越来越多地跨越多个云和企业内部基础设施，其复杂性很难扩展。 作者认为，当前的云抽象给租户带来了不必要的负担，使其无法成为经验丰富的网络运营商。 因此，论文为云提供商的网络资源提供了一个替代接口，租户的连接需求被简化为">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-01-03T05:56:46.000Z">
+<meta property="article:modified_time" content="2024-01-03T10:51:28.723Z">
+<meta property="article:author" content="Datawine">
+<meta property="article:tag" content="nsdi">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://datawine.github.io/nsdi23-Invisinets-Removing-Networking-from-Cloud-Networks.html"/>
+
+
+
+
+
+  <title>Invisinets: Removing Networking from Cloud Networks | Datawine's Blog</title><meta name="robots" content="noindex">
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Datawine's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/nsdi23-Invisinets-Removing-Networking-from-Cloud-Networks.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Invisinets: Removing Networking from Cloud Networks</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-01-03T13:56:46+08:00">
+                2024-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/nsdi23-Invisinets-Removing-Networking-from-Cloud-Networks.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="nsdi23-Invisinets-Removing-Networking-from-Cloud-Networks.html" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  20
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本篇文章基本上是一篇API的工作。
+云租户网络的供应、配置和管理非常复杂。
+租户必须弄清楚如何组装、配置、测试等大量低级building
+blocks，以实现其高级目标。
+由于这些网络越来越多地跨越多个云和企业内部基础设施，其复杂性很难扩展。
+作者认为，当前的云抽象给租户带来了不必要的负担，使其无法成为经验丰富的网络运营商。
+因此，论文为云提供商的网络资源提供了一个替代接口，租户的连接需求被简化为一组与计算端点相关的参数。
+（这篇文章的说理和叙述部分非常流畅！设计其实没有很复杂）</p>
+<span id="more"></span>
+<p>几乎所有大型云客户都使用多个云提供商，以提高可靠性并避免被提供商锁定。
+遗憾的是，在大型云提供商之间拆分工作负载并不像应有的那样无缝。
+一个主要问题是，当今的租户网络抽象本质上是用于构建物理网络的底层构建模块的虚拟化版本，因此客户需要使用子网、虚拟链路、网关、大量虚拟设备等构建复杂的拓扑结构。
+虽然单个虚拟网络或简单的部署可能不会过于复杂，但对于大型租户来说，要推理其虚拟网络的可扩展性、可用性、安全性等，就需要详细了解和配置一系列网络技术，而在考虑云之间的传输时，这一问题尤为突出。</p>
+<p>为了应对这种潜在的复杂性，我们的目标是使虚拟网络间的传输变得微不足道，从而简化多云架构。
+我们主要通过为所有端点利用现有的
+<strong>"可公开路由但默认关闭"（Publicly-routable but
+default-off）</strong> 地址来实现这一目标。
+这些地址可公开路由，但云提供商将拒绝租户未明确允许的所有流量。有了这种选择，只需对基础设施稍作改动，连接就会变得非常简单。</p>
+<p>有了这种连接性假设，我们为云租户开发了一种新的应用程序接口（API），用于根据高级抽象预留网络资源。
+最终，这种声明式方法允许租户将 SLO
+与端点关联起来，而无需考虑如何实现网络工作目标。换句话说，<strong>我们认为租户考虑联网的最佳方式是根本不考虑联网</strong>。</p>
+<p><strong>如今的租户网络抽象在很大程度上是早期云时代的产物，数据中心物理网络设备与云网络抽象之间的映射比例为1:1</strong>。
+这吸引了早期的云客户，他们希望在将基础设施从私有数据中心转移到云的过程中获得相同的管理体验。
+但这些抽象从根本上讲并不是必要的，也不是特别准确地反映了云提供商网络中发生的情况。
+我们这篇论文的一个重要贡献是表明，即使对现有功能进行适度调整和对底层网络虚拟化平台进行修改，也能产生一个简单得多的更高级API。
+这样的应用程序接口对云提供商也是有益的，因为它可以让云提供商为客户提供无缝的多云体验，同时保留差异化能力（如通过性能、选项等）。
+此外，也许更重要的是，API 的复杂性远远低于目前提供的低级 API。
+更简单的应用程序接口意味着更少的错误，从而减少用于客户支持的资源。
+我们认识到，我们提出的云接口可能无法立即适用于所有云租户。
+幸运的是，我们提出的抽象可以与目前可用的抽象共存，因此租户可以根据自己的需要进行选择。</p>
+<p>开源：<a
+target="_blank" rel="noopener" href="https://github.com/smcclure20/invisinets">https://github.com/smcclure20/invisinets</a></p>
+<h1 id="motivation">Motivation</h1>
+<h2 id="deployment-walkthrough">Deployment Walkthrough</h2>
+<p>作者介绍了一个构建一个跨越一个云、多个云和内部部署的多个区域虚拟网络的例子，工程师需要干的事情包括以下几步：</p>
+<ol type="1">
+<li>创建虚拟网络。包括根据预期的实例数量为每个 vnet 分配 IP 前缀、是
+IPv4 还是
+IPv6、是公共还是私有等；随着租户部署规模的扩大，需要专门的地址规划工具管理众多子网；此外，还需要配置一系列附加参数，如安全组、ACL、路由表和单个虚拟机接口。</li>
+<li>虚拟网络的进出连接。选项包括设置 "NAT 网关"（用于地址转换）、"VPN
+网关"（用于专用 VPN 连接）或 "虚拟网络网关"（可配置为 VPN
+或终止直接链接）。每个网关都必须配置适当的路由和访问策略。</li>
+<li>将多个虚拟网络联网。通常需要虚拟网络对等互联并安装必要的路由。要跨云连接虚拟网络，则需要
+VPN
+网关或互联网接入（通过必要的网关或安全规则）。这些连接都有各自特定的配置参数。</li>
+<li>专线。提供和管理专线需要低级网络知识，如 BGP
+配置以及企业、云提供商和主机代管点之间的协调。</li>
+<li>设备。租户还部署了一系列虚拟设备，如负载平衡器和防火墙。每种云都可提供第一方和第三方设备，用于上述多种用途。即使在第一方选择中，单个设备通常也有多种选择。租户必须选择设备，将其放置在虚拟拓扑中，配置路由以引导流量通过正确的设备，最后配置每个设备（如
+DPI 规则、负载平衡规则等）。</li>
+</ol>
+<p>租户完成所有这些步骤后，工作还没有结束。租户必须继续应对不断变化的需求、应用程序和网络迁移、不可避免的配置错误以及任何其他故障造成的中断。
+在确定应对这些问题的程序时，租户网络操作员必须牢记上述步骤中的所有细节，发挥经验丰富的网络专家的作用。</p>
+<h2 id="problems">Problems</h2>
+<p>问题可以大致分为：</p>
+<ol type="1">
+<li>抽象过于低级。虚拟网络的配置和管理涉及许多与物理数据中心相同的步骤。租户基本上获得了物理网络中低级抽象（如链路、网关、子网）的虚拟版本，他们必须将这些抽象组合起来（这涉及拓扑规划、路由策略等），以实现他们对整体部署的高级意图。其中许多抽象概念需要寻址配置，特别是实现租户应用程序/端点之间的基本连接。</li>
+<li>复杂的规划。例如，Azure
+提供了四种负载平衡选项，指导决策的流程图有五层之多，而且还没有考虑其他第三方（即非微软）选项。云设备市场也有功能和价位各异的第三方选项（如
+Palo Alto Networks 的防火墙）。</li>
+<li>云之间的割裂。由于每个云都有自己相似但又不同的抽象和设备，多云部署的租户最终会在每个云上使用各自为政的堆栈。这通常会导致每个云都有专门的团队，他们拥有各自的专业知识、脚本和方法。</li>
+<li>维护和发展复杂。随着应用需求的变化，租户将不断发展自己的部署。同样，租户也必须随着云提供商产品的发展而调整。这就增加了复杂性和管理开销，使租户在保持应用程序现代化和高性能方面面临更大挑战。配置错误是造成网络故障和中断的常见原因。在
+1:1
+故障情况下，虚拟网络也会遇到许多同样的问题。云提供商也深受其害，因为他们有义务为具有独特部署的大量客户提供支持。此外，随着部署规模的扩大，管理的复杂性也会增加，因此大型企业租户会承受巨大的管理负担。</li>
+</ol>
+<h2 id="current-solutions">Current Solutions</h2>
+<p>许多企业自己使用一系列按供应商划分的控制器和 DIY
+脚本来承担这种复杂性。</p>
+<p>其他租户正在转向新一代第三方多云管理解决方案。</p>
+<p>其中一些解决方案本质上是各种云网络抽象之上的shim。 它们提供统一的
+"玻璃窗"，租户可通过它管理跨云的单个设备，但不会从根本上改变抽象层次。</p>
+<p>此外，还有一些第三方解决方案基本上是将虚拟网络作为一种服务为租户运行，允许租户将问题完全外包。
+这虽然转移了负担，但并没有从根本上解决问题。</p>
+<p>Anthos将 k8s
+和服务网格整合在一起，使应用程序开发人员不必按应用程序重新实现与网络相关的任务。
+在 Anthos 中，每个服务容器都集成了一个 "sidecar
+"容器，用于实现常见的网络相关任务，如 TLS 终止、HTTP 负载均衡、跟踪等。
+应用程序与网络之间的这种明确分离，为应用程序开发人员提供了一种与云无关的（因此也是多云友好的）方法来实现网络相关功能。
+不过，需要注意的是，Anthos 并没有解决我们在这里要解决的网络虚拟化问题：
+在 Anthos 中，sidecars 是 L7 代理（与所有 k8s
+服务一样），<strong>它们假定 L3 寻址和连接已经建立</strong>。 实现 L3
+连接仍然需要网络工程师建立虚拟网络、链路、VPN
+网关等，我们一直在讨论这些问题。 因此，我们认为 Anthos 和 Invisinets
+的目标是互补的： Anthos 简化了应用程序开发人员的多云部署构建，而
+Invisinets 则为基础设施运营商提供了同样的服务。</p>
+<h1 id="approach">Approach</h1>
+<p>我们设计简化网络 API
+的指导思想是，租户考虑网络的正确方式是完全不考虑网络。
+也就是说，在理想情况下，网络应该是不可见的。
+在诊断当今复杂性的根本原因时，我们发现问题始于租户端点生活在私有 IP
+地址空间这一事实。
+有了私有地址，租户就必须在它们之间建立（虚拟）连接，这必然意味着要管理子网，用链路、路由器和设备构建虚拟拓扑，运行必须配置的路由协议，等等。</p>
+<p>为了避免这种情况，我们提出了另一个建议：能否给每个端点一个公共 IP
+地址？这将使连接变得微不足道，甚至可以跨云连接。
+从本质上讲，这允许虚拟网络重新使用底层（物理）网络的连接，而不是重新创建。重要的是，我们必须假定使用
+IPv6，这样就不会出现地址稀缺的问题。</p>
+<p>乍一看，我们的建议可能会引起安全方面的担忧：如果互联网上的任何主机都能连接到任何租户端点，那么租户的端点肯定会受到攻击，包括
+DDoS。
+然而，我们的直觉是，对于托管在云中的公共端点来说，安全性不应该是一个问题。这
+是因为云提供商（简称 CP）已经通过自己的地址管理架构解决了这个问题。
+正如我们在下一节中阐述的那样，在 CP 的基础设施中，当端点被分配一个公共
+IP 地址 P1 时，该地址在 CP 的区域数据中心内实际上是不可路由的。
+相反，端点运行的服务器有一个内部/私有地址 D，CP 使用解决方案将 P 转换为
+D，并在转换点进行适当的安全和访问控制检查。</p>
+<p>因此，P
+代表了一种新的地址形式，即可公开路由但默认关闭（PRDO），其重要特性是，发送到
+PRDO 地址的数据包会被传送到 CP 的域，但在 CP 采取明确措施将 P
+与物理端点的 D 关联之前，不会被传送到端点。
+有鉴于此，我们的下一步工作是验证我们的直觉，并了解 CP
+地址管理基础架构是否确实可以利用和扩展，以服务于所有租户端点。
+为了回答这些问题，我们与两家主要的 CP（Azure 和
+GCP）进行了接触，结果发现，也许令人吃惊的是，我们的建议只需对其现有基础架构进行少量修改即可支持，并且不会带来新的扩展或安全挑战。
+我们将在第 4 节中详细阐述现有的 CP 地址管理基础设施和 PRDO
+调整的影响。因此，我们的贡献不在于设计出新颖的技术或激进的清板设计，而在于提出了一个经过彻底简化的租户抽象，并展示了如何重新利用现有基础设施来实现这一抽象。</p>
+<p>以 PRDO 寻址为起点，我们能为租户提供什么样的 API 呢？
+我们注意到，对于绝大多数云租户来说，网络只是达到目的的一种手段：也就是说，租户关心的是他们的应用端点（即虚拟机或容器）能否以高可用性、一定水平的性能（如延迟、吞吐量）、防止意外访问的安全性和可扩展的管理机制相互通信。
+这些都是租户在建立和管理带有防火墙、链路和路由器的虚拟网络拓扑结构时要实现的目标。
+因此，我们设计的应用程序接口<strong>允许租户表达他们希望网络完成什么，而不是如何完成</strong>。
+此外，我们注意到，指定租户目标的参数与端点（虚拟机/容器）体验网络的方式有关。
+因此，我们的一般方法是为所有租户端点分配 PRDO 地址，然后为租户提供高级
+API，将
+SLO（可用性、安全性和性能意图）与这些端点（或端点组）关联起来，从而完全消除目前的低级
+"链接和盒子 "抽象。</p>
+<p>我们并不要求 CP 合作实施 API，甚至也不要求所有 CP 都采用 API。
+同样，CP 也不必实施相同版本的 API。 在所有 CP 中统一使用一个 API
+当然是最理想的，但即使每个 CP 都采用了我们建议的 API，租户也将从配置 CP
+的简化中获益，而且 API 的高级特性也将使跨云移植部署变得更加容易。</p>
+<h1 id="prdo-addressing">PRDO Addressing</h1>
+<h2 id="addressing-in-todays-clouds">Addressing in Today’s Clouds</h2>
+<p>（这一节主要是介绍三个概念：PIP、DIP、VIP。）</p>
+<p>云提供商的基础设施涉及几个不同的地址空间。 公共 IP 地址 (PIP)
+来自公共前缀，由云提供商向整个互联网广播。CP
+在细节上各有不同，但一般来说，指向 PIP 的数据包将被传送到 CP
+全球基础设施中的特定数据中心或区域。</p>
+<p>此外，每个云数据中心都有一个由 "直接 "IP
+地址（DIP）组成的私有地址空间--DIP 是物理服务器的实际 IP
+地址，也是数据中心结构内路由选择的基础。 它在 CP
+内部使用，不会暴露给租户，提供了一个间接层，允许 CP
+根据需要放置/移动虚拟机。</p>
+<p>最后，在虚拟化层，租户可以看到其虚拟机或端点的虚拟 IP（VIP）。 VIP
+可以是公有的，也可以是私有的（虚拟机可能两者都有），但<strong>关键是它实际上并没有分配给服务器，因此在数据中心结构中无法路由</strong>。
+相反，它在租户层用于虚拟网络级路由等。</p>
+<p>对于在同一虚拟子网（Ai 地址）中具有私有 VIP
+的两个虚拟机之间发送的数据包，源和目标字段将在虚拟机的 vswitch/NIC
+中进行转换； vswitch/NIC 将私有 VIP 地址空间转换为相应的 DIP（Ai ↔︎
+Di），如图 1 中蓝色系列数据包所示。 结构只知道如何用 DIP
+转发流量，而不知道租户地址空间（让虚拟化层在分配地址时具有充分的灵活性）。</p>
+<p>具有公共 VIP 的端点会从 CP 的公共地址空间（Pi）中分配一个 IP 地址。
+但是，该地址不会直接分配给虚拟机。 相反，任何以 Pi
+为目标的入站流量都会首先通过数据中心的软件负载平衡器（SLB）进行路由（见图
+1 黑色系列数据包），该软件负载平衡器负责维护 Pi 与 Di 之间的绑定。
+因此，SLB 会对其控制下的所有公共 VIP
+进行广告宣传，并将传入流量转换到端点 DIP，以便路由到端点。
+对于从虚拟机流出的流量，无需翻译，因为源是公共
+VIP，并且使用默认路由从数据中心流出。 因此，按照前面介绍的术语，所有 PIP
+地址（包括分配给公共 VIP 的地址）都是 PRDO 地址，需要明确的 SLB 和
+vswitch/NIC 配置，才能将数据包传送到实际端点。</p>
+<h2 id="applied-to-invisinets">Applied to Invisinets</h2>
+<p>Invisinets 的核心建议是，<strong>我们将不再使用私有
+VIP，而是为所有端点提供公共 VIP</strong>（图 1）。</p>
+<p>为了充分利用现有的 CP
+解决方案，我们提出了一种分工方法，租户可指定许可列表：对于每个端点
+Pi，这是允许与 Pi
+通信的其他端点的列表（可通过扩展参数获得更具体的信息）。 CP
+负责执行该许可列表：确保只有明确允许访问该端点的流量才能访问。任何未被许可列表清除的数据包都应被丢弃。</p>
+<p>要确保租户获得这些语义，只需对 CP 的基础架构进行极小的改动。 CP
+只需根据租户的许可列表，在必要时为外部连接设置 SLB 绑定。 我们使用 "外部
+"来指满足 CP 寻址限制所需的任何边界之外； 例如，DIP
+只能在一个区域内是唯一的，因此 "外部 "连接就是那些跨越区域之外的连接。
+我们将 DIP 唯一性的边界称为 DIP 范围。DIP 范围决定了何时必须将地址添加到
+SLB 绑定中，因为与 DIP
+范围之外的端点的任何连接都可能处于重叠的地址空间中，如果不进行地址转换将无法到达。</p>
+<p>为了在数据中心结构中支持这一点，我们首先修改了通常使用私有 VIP
+的流量的地址转换（图 1 中的蓝色进程）。 现在，数据包从公共 VIP
+空间转换到 vswitch/NIC 中的相应 DIP。
+其次，必须对从外部端点传入的数据包的 SLB 转换流程稍作修改。 公共 VIP 与
+SLB 中 DIP 之间的转换保持不变，但<strong>安装 SLB
+绑定的时间有所改变</strong>。 <strong>绑定不是在 IP
+与虚拟机关联时安装，而是在虚拟机的许可列表允许数据中心外部流量时才实例化</strong>。
+当传入数据包不存在映射时，SLB 会简单地丢弃流量（就像现在一样）。这为
+PRDO 端点提供了最初的粗略保护层。
+重要的是，每个端点的许可列表也会在主机上执行，因此在 SLB
+上丢弃流量并非绝对必要，但却能为端点提供一定的深度防御。</p>
+<h2 id="security-implications">Security Implications</h2>
+<p>主要分析了一些安全问题。 首先考虑租户端点的公开暴露并不会改变。
+其次，从 CP 的角度来看，一个潜在的担忧是分配的公共 IP
+地址数量越多，其基础设施遭受 DDoS 攻击的风险或影响就越大。我们发现，CP
+并不担心这个问题，因为它们目前公布的是整个 IP
+前缀，与实际分配的地址子集无关。
+最后一个令人担忧的问题可能是将流量分散到多个端点上的攻击。
+（这部分我没看懂）</p>
+<p>结论为，Invisinets 不会从根本上改变租户或 CP 的安全态势。</p>
+<h1 id="api-design">API Design</h1>
+<h2 id="connectivity">Connectivity</h2>
+<p>request_eip：请求一个EIP。</p>
+<p>只需对数据中心结构中的 SLB 稍作改动即可，否则现有的 vswitch/NIC
+功能就足够了。当外部端点被添加到许可列表时，才会在 SLB 中安装本地端点的
+EIP。</p>
+<h2 id="availability">Availability</h2>
+<p>request_sip：请求一个service IP。</p>
+<p>bind：把service
+IP和EIP绑定。因为租户通常使用多个后端实例构建高可用服务。 服务与服务 IP
+地址 (SIP) 相关联，网内负载平衡器会将 SIP
+的流量映射到可用的后端实例。</p>
+<p>绑定调用只需更改租户使用的请求负载平衡服务的接口。</p>
+<h2 id="security">Security</h2>
+<p>我们假设租户主要关注服务级攻击和目标资源耗尽。为了解决潜在的攻击问题，我们的架构将通过两个主要部分来实现租户级安全：端点上的中间件注释和网络级许可列表。</p>
+<p>set_permit_list：租户只需使用 set_permit_list
+函数更新给定端点允许访问的主机。</p>
+<p>annotate：租户可使用该 API
+将所需的中间件应用于端点流量。云提供商负责中间件的实例化和放置以及引导相关流量所需的路由。</p>
+<h2 id="performance">Performance</h2>
+<p>为了避免直接链接的协调和底层配置，我们的建议是近似于专用链接的效果，保证按预定粒度（本文假设为区域粒度）向租户购买一定数量的专用出口带宽。
+我们假定的服务模式是带宽预订，而不是现在的具有指定带宽的点对点链接。</p>
+<p>set_qos：对租户而言，预留区域网关出口带宽只需调用 set_qos</p>
+<p>set_qos_class：通过 set_qos_class 设置流量优先级。</p>
+<h2 id="grouping">Grouping</h2>
+<p>与纯粹以端点为中心的观点相比，当今抽象的一个显著优势是虚拟网络可以作为一种有用的简化分组机制（例如，将相同的策略或配置应用于运行
+Spark 作业的所有虚拟机）。
+如果没有对主机进行分组的方法，在端点级进行重新分组可能会很困难，尤其是租户不会从连续的地址空间中获得
+EIP。</p>
+<p>tag：我们支持通过可与 EIP
+关联的标签进行分组，这样租户就可以在许可列表中使用标签来代替 EIP 列表。
+也就是有一些用户自定义的语义了。 标签可用于其他 API，如
+set_permit_list，以代替地址。</p>
+<!-- flag of hidden posts -->
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nsdi/" rel="tag"># nsdi</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/datawine" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#motivation"><span class="nav-number">1.</span> <span class="nav-text">Motivation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#deployment-walkthrough"><span class="nav-number">1.1.</span> <span class="nav-text">Deployment Walkthrough</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#problems"><span class="nav-number">1.2.</span> <span class="nav-text">Problems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#current-solutions"><span class="nav-number">1.3.</span> <span class="nav-text">Current Solutions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#approach"><span class="nav-number">2.</span> <span class="nav-text">Approach</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#prdo-addressing"><span class="nav-number">3.</span> <span class="nav-text">PRDO Addressing</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#addressing-in-todays-clouds"><span class="nav-number">3.1.</span> <span class="nav-text">Addressing in Today’s Clouds</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#applied-to-invisinets"><span class="nav-number">3.2.</span> <span class="nav-text">Applied to Invisinets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#security-implications"><span class="nav-number">3.3.</span> <span class="nav-text">Security Implications</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#api-design"><span class="nav-number">4.</span> <span class="nav-text">API Design</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#connectivity"><span class="nav-number">4.1.</span> <span class="nav-text">Connectivity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#availability"><span class="nav-number">4.2.</span> <span class="nav-text">Availability</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#security"><span class="nav-number">4.3.</span> <span class="nav-text">Security</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#performance"><span class="nav-number">4.4.</span> <span class="nav-text">Performance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#grouping"><span class="nav-number">4.5.</span> <span class="nav-text">Grouping</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Datawine</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">32.4k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user">本站访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye">本站总访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cyw3QwzdC';
+      var conf = 'cbf53c79ec118123e02b0e1a5676be66';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
