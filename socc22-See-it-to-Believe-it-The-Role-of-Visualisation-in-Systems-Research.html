@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="socc," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="计算机系统研究中的一个常见设施是Visualisation-in-the-loop工具：这些工具产生复杂的输出数据，并需要人类用户视觉解读数据。 然而，系统研究经常忽略或将必要的可视化组件的细节放在次要位置。 通过调查1274篇近期的系统论文，论文发现至少有7.7%（98篇）的论文介绍了Visualisation-in-the-loop工具。 我们还发现，这些出版物中的大多数没有关注并且很少解释实">
+<meta property="og:type" content="article">
+<meta property="og:title" content="See it to Believe it? The Role of Visualisation in Systems Research">
+<meta property="og:url" content="https://datawine.github.io/socc22-See-it-to-Believe-it-The-Role-of-Visualisation-in-Systems-Research.html">
+<meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="计算机系统研究中的一个常见设施是Visualisation-in-the-loop工具：这些工具产生复杂的输出数据，并需要人类用户视觉解读数据。 然而，系统研究经常忽略或将必要的可视化组件的细节放在次要位置。 通过调查1274篇近期的系统论文，论文发现至少有7.7%（98篇）的论文介绍了Visualisation-in-the-loop工具。 我们还发现，这些出版物中的大多数没有关注并且很少解释实">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-03-24T02:07:29.000Z">
+<meta property="article:modified_time" content="2024-03-24T03:07:11.138Z">
+<meta property="article:author" content="Datawine">
+<meta property="article:tag" content="socc">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://datawine.github.io/socc22-See-it-to-Believe-it-The-Role-of-Visualisation-in-Systems-Research.html"/>
+
+
+
+
+
+  <title>See it to Believe it? The Role of Visualisation in Systems Research | Datawine's Blog</title><meta name="robots" content="noindex">
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Datawine's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/socc22-See-it-to-Believe-it-The-Role-of-Visualisation-in-Systems-Research.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">See it to Believe it? The Role of Visualisation in Systems Research</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-03-24T10:07:29+08:00">
+                2024-03-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/socc22-See-it-to-Believe-it-The-Role-of-Visualisation-in-Systems-Research.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="socc22-See-it-to-Believe-it-The-Role-of-Visualisation-in-Systems-Research.html" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>计算机系统研究中的一个常见设施是Visualisation-in-the-loop工具：这些工具产生复杂的输出数据，并需要人类用户视觉解读数据。
+然而，系统研究经常忽略或将必要的可视化组件的细节放在次要位置。
+通过调查1274篇近期的系统论文，论文发现至少有7.7%（98篇）的论文介绍了Visualisation-in-the-loop工具。
+我们还发现，这些出版物中的大多数没有关注并且很少解释实施的可视化。
+论文提出，当对可视化进行阐述时，循环可视化系统研究的影响力和覆盖范围可以大大增强，并提出了一套具体的步骤清单，供作者实现这一机会。</p>
+<span id="more"></span>
+<p>人类是构建、测试、部署、运营和排除计算机系统故障的不可或缺的部分。
+现代系统庞大、复杂且始终在线，催生了像站点可靠性工程这样的学科，并模糊了开发与运营之间的界限，devops角色和值班任务在行业中已经很常见。</p>
+<p>因此，Visualisation-in-the-loop工具在实践中非常重要，并且在系统研究文献中也很常见，因为它们<strong>本质上依赖于人类用户与系统输出的数据互动并解释这些数据</strong>。
+Visualisation-in-the-loop工具是帮助计算机系统的开发者和运营者的软件工具。
+Visualisation-in-the-loop工具通常分析系统的代码、配置、部署或运行时执行，以提供人类用户对系统行为和属性的见解。
+它们通过生成必须由人类解释的复杂数据来实现这一点，并且这些数据通常在工具的自定义可视化组件中呈现，以帮助分析。
+尽管存在视觉化之外的其他交互方式，但视觉化是常见的，因此我们重点关注循环可视化工具。</p>
+<p>以分布式追踪为一个持续的例子；我们将在整篇文章中重新访问这个例子，但强调它突出的关键方面在所有形式的循环可视化工具中都很普遍。
+分布式追踪的一个关键用例是在分布式系统中调试异常请求。
+虽然分布式追踪研究主要关注如何在运行时跨机器捕获追踪数据，但单独考虑技术部分会忽略一个关键步骤：记录的追踪数据是复杂的（一个带注释的有向无环图）；
+数据通过图或时间线可视化呈现给用户；最终用户负责探索和解释可视化，以直觉地找出异常的根本原因。</p>
+<p>因此，用户界面和可视化影响Visualisation-in-the-loop工具的有效性。
+当任务无法完全自动化时，需要人类用户，许多任务是时间紧迫且复杂的。
+在这种情况下，可视化非常有用，因为直接解释原始数据可能会缓慢、非直观且容易出错。
+在分布式追踪中，由于这个原因，可视化在研究文献中反复出现，从Magpie的事件时间线到Dapper的跨度瀑布图，再到Canopy的聚合（参见图1）。</p>
+<p>然而，分布式追踪的例子并不典型。
+许多系统研究论文介绍了具有复杂输出的工具，但留下了未解释、未呈现或只是暗示的可视化组件和要求。
+在第3节中，我们调查了过去5年在顶级系统会议上发表的1274篇研究论文。
+我们发现，几乎8%的论文描述了依赖于人类用户解释复杂输出的工具，非常适合于可视化。
+然而，这些论文中不到30%展示了一个例子，或解释了他们如何或是否可视化了输出。
+此外，只有17%的这些论文激发了展示输出的设计决策的动机。
+这些结果并没有通过系统出版物在可视化研究社区中得到平衡：
+在我们调查覆盖的5年里，大约有950篇论文在IEEE
+VIS（顶级可视化会议）上发表，但只有8篇与系统可视化问题相关。
+这表明系统研究错过了一个机会：实践者需要一个关于UI和可视化组件的解决方案，没有这些组件，解释复杂的数据输出既繁琐又容易出错。
+然而，如果研究文献中没有明确考虑这些问题，设计和实施可视化组件的挑战就会被推给实践者，这提高了采用的障碍并阻碍了潜在的影响力。</p>
+<p>在我们的分布式追踪示例中，之前关于追踪比较的研究影响了开源工具中的后续功能；
+然而，如为非专家用户提供的accessible可视化这样的长期问题收到的关注很少，并且仍然是实践者的一个主要痛点。</p>
+<p>问题的本质是缺乏阐述。
+系统研究经常省略可视化的细节，即使这些组件存在。
+通过这样做，它放弃了向更广泛的可视化研究人员和实践者传播新问题和领域见解的机会。
+一个概念证明，无论多么未经雕琢，仍然可以有出人意料的影响：在我们的运行示例中，我们所知的所有分布式追踪工具都基于Dapper首次提出的跨度泳道可视化。</p>
+<p>在这篇文章中，我们展示了系统研究历史上对面向用户的可视化描述不足。
+<strong>读者所需的细节通常很简单，如原型截图</strong>；
+但它们使可视化要求具体化，提供了问题定义，并突出了可能出现的微妙和意外挑战。</p>
+<p>我们在第4节概述了我们的解决方案：
+一个从“什么、为什么、怎么做”原则衍生出来的5个问题的清单，用于设计和呈现可视化。
+按照清单，系统研究者有条不紊且简洁地产生了面向用户的可视化的描述、这些组件的问题定义、已遇到的挑战，以及对可能的未来可视化方法的见解。
+我们希望通过聚焦于可视化，我们可以增加系统研究的影响力，将其延伸到更广泛的实践者、可视化研究者和系统研究者的受众中。</p>
+<p>结果放在了<a
+target="_blank" rel="noopener" href="https://gitlab.mpi-sws.org/cld/sysviz">https://gitlab.mpi-sws.org/cld/sysviz</a></p>
+<h1 id="motivation">Motivation</h1>
+<h2 id="vl-tools-visualisation-in-the-loop-tools">VL-Tools:
+Visualisation-in-the-Loop Tools</h2>
+<p>文中关于VL Tools的定义：</p>
+<ul>
+<li>produce data that is well-suited to visualisation;</li>
+<li>require humans to visually interpret the output data and make
+decisions based on it;</li>
+<li>cannot be automated fully, or automation cannot be fully
+trusted;</li>
+<li>and benefit when human users perform their task faster and more
+effectively.</li>
+</ul>
+<p>主要包括以下example areas和tools</p>
+<ul>
+<li>分布式追踪</li>
+<li>network profiling</li>
+<li>system modeling</li>
+<li>network configuration</li>
+</ul>
+<h2 id="opportunities">Opportunities</h2>
+<p>现在的工作主要是围绕着技术问题而不是可视化展开的。
+作者认为，对于那些成功实现了VL工具的research，还需要注意以下可视化的要求。
+这样他们能够将研究的覆盖范围扩展到实践者、人机交互（HCI）和可视化研究人员，最终回到系统研究人员。</p>
+<p><strong>实践者。</strong>
+实践者通常是VL工具的预期受众和动机，因此，一个重要的成功度量是<em>研究理念是否传播到实践中</em>。
+将VL工具的“闭环”回到人类用户的研究对实践者来说更容易接近，并有实际影响的潜力。
+抓住这个机会的关键是减少将工具从研究原型转变为实际可用的不确定性。
+消除不确定性增加了实践者可能想要实施想法的吸引力。即使面临未解决的挑战，情况也是如此。</p>
+<p><strong>Visualisation research。</strong> VL-Tools
+是系统问题的"human-in-the-loop"解决方案，可为用户提供可视化，因此与可视化研究有着天然的契合。
+可视化研究可以解决不同类型的数据和 VL-Tools 所面临的共同挑战。
+向系统操作员报告指标的仪表盘就是一个例子。</p>
+<p>一般来说，VL-工具需要处理多维、多面和结构化数据--这是一项艰巨的研究挑战，在广泛的应用领域都受到了关注。
+尤其值得注意的是医学科学和生物信息学，对用户交互和可视化的关注促进了通用可视化方法的开发和采用，研究兴趣如此之大，以至于该领域现在有了专门的可视化会议。
+同样，由于性能优化和相对同构系统的重要性，高性能计算也受到了关注。</p>
+<p>与这些其他应用领域相比，VL工具在可视化文献中受到的直接关注相对较少。
+在过去 5 年的 IEEE VIS 约 950 篇论文中，我们只发现了 1 篇 VL-Tool
+论文（CloudDet，以云性能异常为中心）和另外 7 篇具有广泛相似性的论文（4
+篇软件工程和 3 篇高性能计算）。 一般来说，我们注意到，在可视化文献中介绍
+VL 工具时，往往是由负责开发原始 VL 工具的同一小组进行的。
+例如，Spectroscope、Pajé和
+ShiViz各自在系统和可视化方面做出了串联贡献。</p>
+<p>我们认为，这一观察结果表明系统研究错失了良机。 VL-Tools
+中存在有趣的可视化挑战，但默认情况下，只有系统再搜索人员才能看到这些挑战。
+在上述例子中，研究人员之所以能够从事可视化研究，是因为他们已经熟悉了 VL
+工具和应用领域。
+对于专家核心之外的研究人员来说，缺乏领域专业知识和清晰的问题陈述是需要避免的领域和抽象威胁。
+因此，当系统研究人员选择不追求可视化研究问题时，其他研究人员也很少有机会追求这些问题。
+总体而言，这种情况导致了针对特定可视化工具的点解决方案，而针对众多工具共性的技术驱动型研究却寥寥无几。</p>
+<p><em>要想从可视化研究的关注中获益，VL工具必须让人们看到它们所面临的挑战</em>。
+对于系统研究人员来说，<em>这就需要介绍面向用户的组件的详细信息，特别是它们如何向用户展示复杂的输出</em>。
+与直觉相反的是，当系统研究承认其尚未解决的可视化和交互挑战时，就会产生巨大的价值，因为这仍然会
+"闭环 "回到人类用户，并暴露细节、困难和细微差别。
+它强调了进一步研究的现有需求，使读者有可能提取出超越个别工具的共同挑战。
+最后，它为人机交互和可视化研究人员提供了一个起点，使他们无需先验的应用领域知识就能解决问题。</p>
+<p><strong>系统社区。</strong>
+人类用户的需求也可以推动虚拟语言工具的系统研究。
+一般来说，VL-工具研究在选择要捕获的数据方面具有灵活性，不断变化的使用案例会促使研究人员重新审视这些工具。
+除了直接推动新的研究方向之外，通过重新搜索与用户建立联系，也为后续工作提供了继承和提升的基础。
+图 1 举例说明了这一点，其中每一项工作都是建立在前一项工作的基础之上的。
+在仪表盘等领域，系统研究人员可以假设常见的基本功能，并以此为起点。
+而在许多其他领域，则缺乏这些初始参考点。</p>
+<h1 id="survey-of-vl-tools">SURVEY OF VL-TOOLS</h1>
+<p>在本节中，我们对 2017-2021
+年间在六大系统会议（ASPLOS、NSDI、OSDI、SIGCOMM、SoCC、SOSP）上发表的
+1274 篇研究论文进行了调查。
+综合来看，这些会议广泛代表了系统研究，涵盖了各种主题。</p>
+<p>调查设计的灵感来自可视化研究的 "是什么、为什么、怎么做 "原则。
+该原则通过询问 "向用户展示了什么"、"为什么要展示 "和
+"如何展示"，帮助设计者和研究人员有效地展示和解释他们的工作。
+这些问题是描述可视化研究三个重要方面的提示：数据抽象（是什么）、任务抽象（为什么）以及视觉和交互惯用语（如何）。
+我们对这些方面很感兴趣：给定一个工具，我们能否确定与该工具相关的数据抽象（是什么）；期望用户完成的任务（为什么）；最后，向用户展示数据的想法或理由（如何）。总的来说，我们将这些方面归纳为五个调查问题。</p>
+<ol type="1">
+<li><strong>论文是否介绍了 VL 工具？</strong>在对 1,274
+篇论文的调查中，我们发现 7.7%（98
+篇）的论文要么明确利用了可视化技术，要么以潜在的可视化形式向用户提供了复杂的输出。</li>
+<li><strong>论文是否展示了截图或模型？</strong>在 98 篇 VL-Tool
+论文中，28.6%（28 篇）包含了截图或模型。</li>
+<li><strong>论文是否解释了可视化？</strong>在 98 篇 VL-Tool
+论文中，37.8%（37 篇）解释了面向用户的输出</li>
+<li><strong>论文是否激发了可视化的动机？</strong>在 98 篇 VL-Tool
+论文中，17.4%（17
+篇）的论文提出了可视化的动机，解释为什么特定的输出结果适合手头的任务</li>
+<li><strong>论文是否设计了面向用户的组件？</strong>在 98 篇 VL-Tool
+论文中，12.2%（12 篇）提供了解释了如何实施有效的可视化</li>
+</ol>
+<h2 id="takeaways">Takeaways</h2>
+<ul>
+<li>Most VL-Tool research omits visualisation details.</li>
+<li>Most VL-Tool descriptions focus on “what” and not “why”</li>
+<li>Work that provides implementation details provides even more
+exposition</li>
+<li>Industry papers are more user-centric</li>
+<li>VL-Tools are Datacentre-centric</li>
+<li>VL-Tools are on the rise</li>
+<li>Multi-modal Data is Commonplace</li>
+</ul>
+<h1 id="closing-the-loop">Closing the loop</h1>
+<p>在本节中，我们将为研究人员提出一份具体的清单，以引导研究人员更多地考虑面向人类的数据输出和虚拟语言工具的可视化组件。</p>
+<ol type="1">
+<li>解释用户的角色。</li>
+<li>包含一个截图</li>
+<li>描述数据输出和可视化</li>
+<li>从用户角度激发可视化的动机。举例说明为什么工具的可视化表示对用户来说是
+"正确 "的。</li>
+<li>解释你是如何构建它的。如果是实施了可视化，请描述其中的任何想法或直觉。</li>
+</ol>
+<h2 id="above-and-beyond">Above and Beyond</h2>
+<p>再进一步就是对可视化的各个方面进行科学评估，这可以遵循既定的可视化和用户界面评估原则。
+一些范例作品展示了可视化组件的有效展示方式。
+SelfStarter是一个用于检测错误配置网络的VL工具；该论文提供了清晰的解释和输出示例，激发了可视化的需求，并解释了所采用的可视化技术--同时又不影响论文的技术贡献。
+SecureCode是一款检测高风险基础架构脚本的可视化工具；该论文主要以文字形式呈现可视化效果，但却将人类用户放在前沿和中心位置，并清晰地展示了问题对目标用户的影响。
+可视化展示的黄金标准自然可以在可视化研究社区找到； CloudDet等典范作品在
+IEEE VIS 等会议的应用轨道上大放异彩。</p>
+<h2 id="可视化之外">可视化之外</h2>
+<p>在本文中，我们将重点放在可视化工具（VL-Tools）上。
+可视化工具的定义是：能够产生复杂输出并拥有从数据可视化中受益的人类用户的工具。
+然而，大量的系统研究工作都涉及其他方面的人类用户。
+比如旨在简化用户编程的高级编程应用程序接口、利用非视觉模式进行交互的商业产品。
+未来，"人在回路中"工具的研究也可能扩展并开始利用非视觉模式。
+此外，已经存在一些系统研究，如
+Net2Text，它可以产生纯文本的复杂输出，并依赖于人机交互。</p>
+<!-- flag of hidden posts -->
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/socc/" rel="tag"># socc</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/datawine" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#motivation"><span class="nav-number">1.</span> <span class="nav-text">Motivation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vl-tools-visualisation-in-the-loop-tools"><span class="nav-number">1.1.</span> <span class="nav-text">VL-Tools:
+Visualisation-in-the-Loop Tools</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#opportunities"><span class="nav-number">1.2.</span> <span class="nav-text">Opportunities</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#survey-of-vl-tools"><span class="nav-number">2.</span> <span class="nav-text">SURVEY OF VL-TOOLS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#takeaways"><span class="nav-number">2.1.</span> <span class="nav-text">Takeaways</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#closing-the-loop"><span class="nav-number">3.</span> <span class="nav-text">Closing the loop</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#above-and-beyond"><span class="nav-number">3.1.</span> <span class="nav-text">Above and Beyond</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E8%A7%86%E5%8C%96%E4%B9%8B%E5%A4%96"><span class="nav-number">3.2.</span> <span class="nav-text">可视化之外</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Datawine</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">32.8k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user">本站访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye">本站总访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cyw3QwzdC';
+      var conf = 'cbf53c79ec118123e02b0e1a5676be66';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

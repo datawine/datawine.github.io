@@ -2338,6 +2338,13 @@ href="https://datawine.github.io/tsc22-Capturing-Request-Execution-Path-for-Unde
 Request Execution Path for Understanding Service Behavior and Detecting
 Anomalies without Code Instrumentation</a>：论文主要是识别execution
 path。主要通过对系统调用的拦截实现+一些时序空间关系重构。</li>
+<li><a
+href="https://datawine.github.io/others22-A-Qualitative-Interview-Study-of-Distributed-Tracing-Visualisation-A-Characterisation-of-Challenges-and-Opportunities.html">A
+Qualitative Interview Study of Distributed Tracing Visualisation: A
+Characterisation of Challenges and
+Opportunities</a>：本文认为，阻碍现有解决方案adoption的关键缺失一环在于：在分布式追踪中使用可视化解决方案的这一相对较新的过程中，仍然没有一些基础性工作，以了解所面临的挑战和潜在益处。在本文中，作者对两家大型互联网公司的六名分布式追踪从业人员进行了定性访谈研究。通过这些访谈，论文定性分析确定了
+DT 工具的关键用例和挑战。最后，文章归纳出了设计 DT
+的八项准则。这些成果首次系统地描述了可视化研究的这一丰富问题领域。</li>
 </ul>
 <h2 id="section-41">2023</h2>
 <ul>
@@ -2472,8 +2479,15 @@ of distributed systems
 traces</a>：本文基于分布式跟踪系统(Jaeger)实现了一种新的performance
 profiling，把trace分成四层进行分析。</li>
 </ul>
+<h2 id="section-53">2022</h2>
+<ul>
+<li><a
+href="https://datawine.github.io/socc22-See-it-to-Believe-it-The-Role-of-Visualisation-in-Systems-Research.html">See
+it to Believe it? The Role of Visualisation in Systems
+Research</a>：计算机系统研究中的一个常见设施是Visualisation-in-the-loop工具：这些工具产生复杂的输出数据，并需要人类用户视觉解读数据。然而，系统研究经常忽略或将必要的可视化组件的细节放在次要位置。通过调查1274篇近期的系统论文，论文发现至少有7.7%（98篇）的论文介绍了Visualisation-in-the-loop工具。我们还发现，这些出版物中的大多数没有关注并且很少解释实施的可视化。论文提出，当对可视化进行阐述时，循环可视化系统研究的影响力和覆盖范围可以大大增强，并提出了一套具体的步骤清单，供作者实现这一机会。</li>
+</ul>
 <h1 id="sp">S&amp;P</h1>
-<h2 id="section-53">2014</h2>
+<h2 id="section-54">2014</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/sp14-Stealing-Webpages-Rendered-on-Your-Browser-by-Exploiting-GPU-Vulnerabilities.html">Stealing
@@ -2482,7 +2496,7 @@ Vulnerabilities</a>：论文主要针对GPU memory可能存在的data
 exfiltration提出攻击。</li>
 </ul>
 <h1 id="sosp">SOSP</h1>
-<h2 id="section-54">2015</h2>
+<h2 id="section-55">2015</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/sosp15-Pivot-Tracing-Dynamic-Causal-Monitoring-for-Distributed-Systems.html">Pivot
@@ -2490,7 +2504,7 @@ Tracing: Dynamic Causal Monitoring for Distributed
 Systems</a>：distributed tracing，贡献点在于dynamic instrumentation +
 happened-before join关系。</li>
 </ul>
-<h2 id="section-55">2019</h2>
+<h2 id="section-56">2019</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/sosp19-The-Inflection-Point-Hypothesis-A-Principled-Debugging-Approach-for-Locating-the-Root-Cause-of-a-Failure.html">The
@@ -2498,7 +2512,7 @@ Inflection Point Hypothesis: A Principled Debugging Approach for
 Locating the Root Cause of a
 Failure</a>：基于故障/非故障执行的最长公共前缀的分布式系统根因分析。</li>
 </ul>
-<h2 id="section-56">2021</h2>
+<h2 id="section-57">2021</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/sosp21-ghOSt-Fast-Flexible-User-Space-Delegation-of-Linux-Scheduling.html">ghOSt:
@@ -2512,7 +2526,7 @@ Stack</a>：基于eBPF和ghOSt，在用户态实现用户自定义的数据包�
 work to execution
 resources。用户定义自己需要的数据包调度算法，并在应用中调用API实现部署和交互。</li>
 </ul>
-<h2 id="section-57">2023</h2>
+<h2 id="section-58">2023</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/sosp23-XFaaS-Hyperscale-and-Low-Cost-Serverless-Functions-at-Meta.html">XFaaS:
@@ -2520,7 +2534,7 @@ Hyperscale and Low Cost Serverless Functions at
 Meta</a>：主要介绍了Meta在FaaS上、站在provider角度的优化。具体包括，消除函数的冷启动时间、在不过度配置资源的情况下处理负载峰值、防止函数对下游服务造成过载。</li>
 </ul>
 <h1 id="ton">TON</h1>
-<h2 id="section-58">2018</h2>
+<h2 id="section-59">2018</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/ton18-Root-Cause-Analysis-of-Anomalies-of-Multitier-Services-in-Public-Clouds.html">Root
@@ -2531,14 +2545,14 @@ contention（函数本身layer之间故障的传播）和external
 contention（资源竞争）。</li>
 </ul>
 <h1 id="tpds">TPDS</h1>
-<h2 id="section-59">2012</h2>
+<h2 id="section-60">2012</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/tpds12-Precise-Scalable-and-Online-Request-Tracing-for-Multitier-Services-of-Black-Boxes.html">Precise,
 Scalable, and Online Request Tracing for Multitier Services of Black
 Boxes</a>：本文是基于kprobe的一个tracing工作。一个新颖点在于除了普通的逻辑之外还提出了一些新的图关系和图表示。</li>
 </ul>
-<h2 id="section-60">2013</h2>
+<h2 id="section-61">2013</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/tpds13-Toward-Fine-Grained-Unsupervised-Scalable-Performance-Diagnosis-for-Production-Cloud-Computing-Systems.html">Toward
@@ -2547,7 +2561,7 @@ Production Cloud Computing
 Systems</a>：文章主要是用插桩去采样信息（基本还是执行时间），用call
 tree去做分类，通过CoV找到异常分类，通过RPCA在异常分类中找到异常组件。</li>
 </ul>
-<h2 id="section-61">2015</h2>
+<h2 id="section-62">2015</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/tpds16-Wait-Analysis-of-Distributed-Systems-Using-Kernel-Tracing.html">Wait
@@ -2555,7 +2569,7 @@ Analysis of Distributed Systems Using Kernel
 Tracing</a>：这篇文章核心是在对distributed
 system里面的等待原因进行根因分析。主要是看因为什么wait了、wait了几次。</li>
 </ul>
-<h2 id="section-62">2017</h2>
+<h2 id="section-63">2017</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/tpds17-Diagnosing-Performance-Variations-by-Comparing-Multi-Level-Execution-Traces.html">Diagnosing
@@ -2567,7 +2581,7 @@ Diagnosis for Distributed Systems Using Targeted Fault
 Injection</a>：针对分布式系统的特点提出了Target Fault
 Injection，通过利用分布式组件的执行流知识来控制注入位置。</li>
 </ul>
-<h2 id="section-63">2022</h2>
+<h2 id="section-64">2022</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/tpds22-An-In-Depth-Study-of-Microservice-Call-Graph-and-Runtime-Performance.html">An
@@ -2576,14 +2590,14 @@ Performance</a>：论文分析了阿里巴巴集群中近两万个微服务在7�
 microservice dependency and performance: Alibaba trace analysis。</li>
 </ul>
 <h1 id="www">WWW</h1>
-<h2 id="section-64">2013</h2>
+<h2 id="section-65">2013</h2>
 <ul>
 <li><a
 href="https://datawine.github.io/www13-Understanding-latency-variations-of-black-box-services.html">Understanding
 latency variations of black box
 services</a>：框架采集对一个给定服务的请求流，以及它们的监测属性，还有为每个请求提供服务的延迟。最终目的是给定延迟间隔，找到解释它的监测属性的子集。</li>
 </ul>
-<h2 id="section-65">2022</h2>
+<h2 id="section-66">2022</h2>
 <ul>
 <li><p><a
 href="https://datawine.github.io/www22-Accelerating-Serverless-Computing-by-Harvesting-Idle-Resources.html">Accelerating

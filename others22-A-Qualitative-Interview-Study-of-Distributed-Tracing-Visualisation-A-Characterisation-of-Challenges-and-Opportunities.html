@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="others," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文认为，阻碍现有解决方案adoption的关键缺失一环在于：在分布式追踪中使用可视化解决方案的这一相对较新的过程中，仍然没有一些基础性工作，以了解所面临的挑战和潜在益处。 在本文中，作者对两家大型互联网公司的六名分布式追踪从业人员进行了定性访谈研究。 通过这些访谈，论文定性分析确定了 DT 工具的关键用例和挑战。 最后，文章归纳出了设计 DT 的八项准则。 这些成果首次系统地描述了可视化研究的这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Qualitative Interview Study of Distributed Tracing Visualisation: A Characterisation of Challenges and Opportunities">
+<meta property="og:url" content="https://datawine.github.io/others22-A-Qualitative-Interview-Study-of-Distributed-Tracing-Visualisation-A-Characterisation-of-Challenges-and-Opportunities.html">
+<meta property="og:site_name" content="Datawine&#39;s Blog">
+<meta property="og:description" content="本文认为，阻碍现有解决方案adoption的关键缺失一环在于：在分布式追踪中使用可视化解决方案的这一相对较新的过程中，仍然没有一些基础性工作，以了解所面临的挑战和潜在益处。 在本文中，作者对两家大型互联网公司的六名分布式追踪从业人员进行了定性访谈研究。 通过这些访谈，论文定性分析确定了 DT 工具的关键用例和挑战。 最后，文章归纳出了设计 DT 的八项准则。 这些成果首次系统地描述了可视化研究的这">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-03-23T12:32:43.000Z">
+<meta property="article:modified_time" content="2024-03-23T13:53:43.947Z">
+<meta property="article:author" content="Datawine">
+<meta property="article:tag" content="others">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://datawine.github.io/others22-A-Qualitative-Interview-Study-of-Distributed-Tracing-Visualisation-A-Characterisation-of-Challenges-and-Opportunities.html"/>
+
+
+
+
+
+  <title>A Qualitative Interview Study of Distributed Tracing Visualisation: A Characterisation of Challenges and Opportunities | Datawine's Blog</title><meta name="robots" content="noindex">
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Datawine's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://datawine.github.io/others22-A-Qualitative-Interview-Study-of-Distributed-Tracing-Visualisation-A-Characterisation-of-Challenges-and-Opportunities.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Datawine's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">A Qualitative Interview Study of Distributed Tracing Visualisation: A Characterisation of Challenges and Opportunities</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-03-23T20:32:43+08:00">
+                2024-03-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/others22-A-Qualitative-Interview-Study-of-Distributed-Tracing-Visualisation-A-Characterisation-of-Challenges-and-Opportunities.html#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="others22-A-Qualitative-Interview-Study-of-Distributed-Tracing-Visualisation-A-Characterisation-of-Challenges-and-Opportunities.html" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  9.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  33
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文认为，阻碍现有解决方案adoption的关键缺失一环在于：在分布式追踪中使用可视化解决方案的这一相对较新的过程中，仍然没有一些基础性工作，以了解所面临的挑战和潜在益处。
+在本文中，作者对两家大型互联网公司的六名分布式追踪从业人员进行了定性访谈研究。
+通过这些访谈，论文定性分析确定了 DT 工具的关键用例和挑战。
+最后，文章归纳出了设计 DT 的八项准则。
+这些成果首次系统地描述了可视化研究的这一丰富问题领域。</p>
+<span id="more"></span>
+<h1 id="background">Background</h1>
+<h2 id="motivation">Motivation</h2>
+<p>由于 DT 尚处于起步阶段，因此研究重点并不在用户驱动的开发和设计上。
+先前研究工作必须首先解决从分散和交错在许多机器上的数据中记录和构建轨迹的技术难题。</p>
+<p>可视化在最近的工作中开始受到关注，尽管其重点仍然是追踪机制，而缺乏用户知情的设计方面。
+在学术界之外，最近有几家 DT 初创公司扩展了开源解决方案，如 OpenTelemetry
+和 Jaeger，但我们没有发现已发表的设计研究工作或新颖的可视化方法。
+迄今为止，在 DT 领域还没有用户需求或偏好的参考点。
+因此，我们在这项工作中的目标是提供一个脚手架，通过对用户、任务和 DT
+所涉及的挑战以及可视化创新的机会进行严格的说明，为未来的可视化解决方案提供参考。</p>
+<h2 id="distributed-tracing-overview">Distributed Tracing Overview</h2>
+<p>主要介绍了一些常见概念，包括instrumentation、trace、spans、relationships等。</p>
+<h2 id="visualisation">Visualisation</h2>
+<p>这一节写的比较有意思。</p>
+<p>现有的可视化方案包括</p>
+<ul>
+<li>访问轨迹。用户（即开发人员和运维人员）可通过搜索高级通用属性（如特定服务、API
+调用类型或时间窗口）来直接查找trace的原始数据。</li>
+<li>泳道视图（swimlane）。泳道（也称为瀑布（waterfall），其实就是trace
+trees）。点击span（通过对话框或侧边面板），通常可获得附加信息。单个轨迹可能很大（数千个跨度；几
+MB
+大小），因此通常会有某种形式的平移缩放导航。虽然泳道可视化在实践中非常普遍，但其设计并没有已知的严格理由，用户经常会遇到困难，例如关键特征缺失、呈现方式不一致、手动步骤耗时且令人困惑等。</li>
+<li>替代可视化方案。一些 DT 工具确实提供了泳道视图的替代方法，如 Jaeger
+的服务依赖视图，许多工具还提供了多种微妙不同的方法来查看相同的跟踪，如
+SkyWalking 的列表、树和表视图。不过，我们考察过的所有工具（其功能见表
+1）都使用传统的泳道视图。从我们的访谈和功能分析来看，泳道视图似乎最为普遍，因此我们将重点放在这一点上。</li>
+<li>汇总可视化。DT 可以捕获大量痕迹： Facebook 每天报告的痕迹数量超过 10
+亿条。总体而言
+请求跟踪集合代表了系统的整体行为。最近的一些系统提供了可视化的总体分析。例如，Canopy
+将每个跟踪指标提取为表格形式，然后操作员可使用标准时间序列数据库接口进行查询（例如，"url-shorten-service
+服务的延迟分布情况如何"）。Jaeger
+提供了实验跟踪比较功能，可将跟踪结构与一组其他跟踪进行比较。与泳道视图一样，这些先前的作品也没有讨论设计选择和替代方案。</li>
+</ul>
+<h1 id="interview-study">INTERVIEW STUDY</h1>
+<p>在本节中，我们将介绍对两家大型互联网公司的六名 DT
+从业人员进行的定性访谈研究。
+我们的目标是通过以下方式描述该问题领域的特征：</p>
+<ul>
+<li><ol type="a">
+<li>确定 DT 可视化的常见用户角色（参见第 4 节）；</li>
+</ol></li>
+<li><ol start="2" type="a">
+<li>确定典型用例和工作流程（参见第 5 节）；</li>
+</ol></li>
+<li><ol start="3" type="a">
+<li>确定现有工具面临的挑战以及无法满足用户需求的地方（参见第 6
+节）；</li>
+</ol></li>
+<li><ol start="4" type="a">
+<li>总结未来分布式追踪可视化解决方案的开发指南（参见第 7 节）。</li>
+</ol></li>
+</ul>
+<h2 id="participants-and-setting">Participants and Setting</h2>
+<p>DT技术刚刚起步，因此对DT技术分析的广泛采用和了解仍处于起步阶段。
+然而，为了让我们了解现有的问题，与经验丰富的参与者合作至关重要。
+我们寻找的用户都具有使用流行开源工具的经验。
+此外，了解公司如何将这些开源解决方案应用到定制可视化中，也有助于我们学习他们的方法。
+因此，在考虑到其他纳入标准的情况下，潜在参与者的人数较少。</p>
+<p>我们利用网络和声誉案例选择法联系了两家大型互联网公司。
+其中一家公司只使用开源解决方案，另一家公司则在数年内开发了内部定制的 DT
+解决方案。 最初，我们试图招募 DT 解决方案的用户，他们也参与了 DT
+解决方案的维护工作：两家公司的追踪系统后台和前台开发人员。
+我们从设计研究框架的筛选和甄选阶段（确定合作者和角色）中汲取灵感，将其扩展到包括每家公司的一名用户，该用户只消费可视化产品，不参与维护工作。
+这样，共有六名参与者（每家公司各一名维护者、开发者和用户），他们都有 5
+年以上的 DT 工作经验。参与者包括</p>
+<ul>
+<li>P1 在 A 公司负责 DT
+项目的技术主管，包括后端和前端开发。积极维护一个领先的开源跟踪解决方案。</li>
+<li>P2 A 公司性能和可观察性可视化技术负责人，主要负责前端开发。</li>
+<li>P3 数据科学家，在 A 公司从事产品发布前的工作，日常工作流程主要涉及
+DT。</li>
+<li>P4 B 公司性能团队的可视化设计师，主要负责前端开发。</li>
+<li>P5 B 公司负责 DT
+基础设施（包括后端和前端开发）的高级工程师，以及领先开源跟踪解决方案的维护者。</li>
+<li>P6 B 公司主要产品的高级软件可靠性工程师，日常工作流程主要包括
+DT。</li>
+</ul>
+<p>所有访谈均通过视频会议系统进行。在适当的情况下，我们要求参与者共享他们的屏幕。所有参与者都在典型的工作地点与我们交谈。</p>
+<h2 id="method">Method</h2>
+<p>我们遵循计划和执行定性访谈研究的既定指南，并采用了类似领域访谈研究的方法。
+我们设计了一份访谈指南，以确保每位参与者都能回答一组核心问题；
+此外，访谈还采用了半结构化的方式，以允许参与者强调他们认为重要的问题，并广泛覆盖问题领域。</p>
+<p>第一轮访谈旨在了解 DT 工具、用户和使用案例的特点。
+在第二轮访谈中，我们观察了每位参与者使用其现有工具的情况，并要求他们解释其工作流程，突出问题所在。
+每次访谈持续 1 到 2 个小时，由第一作者进行视频和音频记录和转录。</p>
+<p>我们采用基础理论方法，从每次访谈中提取突出的代码。
+然后，主要作者对访谈记录采用开放式编码法。
+第二作者和第三作者对编码进行反复审阅和集体讨论，直到达成共识并汇编出最终编码。
+然后，主要作者运用亲和图法形成更广泛的编码类别，收集所有参与者的编码并将其调整为连贯的子集。</p>
+<p>为了寻求代码的饱和度并缓解用户库规模较小的问题，我们在随后与其他受访者的访谈中重新讨论了特定参与者提出的几个主题。
+我们根据先前研究中描述的编码校准技术，反复讨论并完善了我们的分类和分级。
+经过四次反复，我们在第一轮访谈后为用户和用例确定了一套稳定的代码。</p>
+<p>在第一轮访谈中，出现了一些与特定工具评论相关的代码。
+由于这不是重点，因此这些代码的饱和度并不明确。
+因此，在第二次访谈中，我们探讨了用户如何与他们现有的工具互动，以及出现的问题。
+在这一轮访谈之后，我们采用了与第一轮访谈相同的编码方法，为现有的挑战确定了一套稳定的编码。
+从这三组代码（用户、用例和挑战）中，我们着手确定了可以解决挑战的潜在改进领域。
+主要作者起草了广泛的改进领域，经过与共同作者的多次反复讨论，我们得出了一系列改进领域，这些领域构成了我们设计指南的基础。
+为确保全面反映我们的研究结果，我们使用了一个框架，将每个改进领域与一项挑战相对应。
+我们对改进领域进行了调整，提取了八项设计指南，最终全面覆盖了我们提取的用户经常面临的挑战。</p>
+<h1 id="user-roles">USER ROLES</h1>
+<p>在第一轮访谈中，我们请参与者对与DT有关的用户群体进行分类。
+参与者一致认为有两个主要群体：开发者和消费者。 我们的参与者 P1、P2、P4
+和 P5 代表了第一类，参与者 P3 和 P6 代表了第二类。 所有 6
+位参与者都指出了这一划分。</p>
+<p>开发人员自己维护工具，也经常与前端进行交互。
+开发人员可细分为三类：后端工程师、软件开发包（SDK）工程师和可视化/前端工程师。
+后端工程师侧重于 DT 插桩的实施。 SDK
+工程师主要负责以后台为重点的工作，如采样策略。
+可视化和前端工程师负责开发公司使用的现有前端工具，或调整开源实施。
+开发人员对 DT
+的功能和可用数据有深入的了解，因为他们自己也参与了工具的实施。</p>
+<p>消费者利用跟踪数据进行故障排除和分析工作。 消费者主要与 DT
+前端交互，不需要 DT 内部知识。
+消费者包括应用程序中单个服务的开发人员、负责底层基础设施的开发人员以及负责端到端应用程序可靠性的站点可靠性工程师。
+有关消费者的最显著发现是，他们彼此孤立。 整个组织可能有许多 DT
+消费者，但在任何特定的开发人员团队中，通常只有一名工程师是 DT
+专家并广泛使用 DT； 团队中的其他工程师偶尔使用或根本不使用 DT。
+我们发现，这些专业的 DT
+消费者在团队间的交流极少，因此对其他消费者如何使用现有工具的情况了解甚少。</p>
+<h1 id="use-cases">USE CASES</h1>
+<p>我们将用例归纳为五大类，另外还有一些无法明确归类的不常见用例。</p>
+<p><strong>故障排除。</strong>
+故障排除是所有访谈中最普遍的用例。参与者经常描述必须对事件进行定位，并使用
+DT 来缩小实际问题发生的范围。
+这种定位的目的是确定包含根本原因的服务，进而确定要联系的正确工程团队 -
+DT 并未大量用于随后确定代码中错误的位置。</p>
+<p><strong>总体应用行为。</strong>
+每位与会者都描述了一个工作流程，该流程从总体指标开始，然后再缩小范围，检查特定的跟踪。
+此外，许多调查并不涉及以任何形式与单个跟踪可视化进行交互；
+在这种情况下，用户仅使用记录的指标和跟踪集的汇总数据。
+了解轨迹和跨度的延迟分布是一种普遍的用例。</p>
+<p><strong>主动措施。</strong> DT
+数据被大量用于资源和容量规划等前瞻性措施。
+由于跟踪系统的技术限制，有些主动措施是必要的。
+例如，如果需要记录新信息，被动的故障排除是不切实际的，因为需要数小时到数天的时间才能纳入更改并准备好新数据以供查询。</p>
+<p><strong>网络连接。</strong> 用户希望利用 DT
+的因果关系来了解应用程序内服务的连接性。 这其中出现了两个具体的用例。
+首先，了解一项服务如何与其近邻的其他服务连接--它调用谁，谁调用它。
+第二，了解服务调用对下游服务的间接影响，以及上游服务如何决定其服务被调用的次数。</p>
+<p><strong>跟踪检查和假设验证与生成。</strong>
+用户经常会寻找示例跟踪来验证假设。
+通常情况下，用户只有在使用其他工具或手动查询跟踪数据后才能获得单个跟踪数据。
+用户使用这些其他工具生成假设，然后浏览单个轨迹以验证该假设。
+这是一个双向过程，检查通常会产生新的假设，并重新使用其他工具。
+作为该工作流程的一部分，用户通常会对两个或多个迹线进行比较。</p>
+<p><strong>更多具体用例。</strong> 与会者还介绍了其他一些使用案例。
+其中值得注意的是使用 DT 更仔细地分析时序和延迟细节。
+这可能涉及查看延迟分布，但主要是利用 DT
+数据的丰富性查看每个跨度的时序细节（通常是手动查询数据），并在出现时序差异时排除故障。</p>
+<h1 id="challenges">CHALLENGES</h1>
+<h2 id="c1-流程不匹配">C1: 流程不匹配</h2>
+<p>individual跟踪可视化只是故障排除工作流程的一部分
+。所有参与者描述的工作流程从高层指标和聚合概览数据（从跟踪数据派生的表格数据集）开始，最终导致检查感兴趣的个别跟踪。
+因此，调查过程通常涵盖多个用户界面和工具，并且不同来源数据重复使用相同的可视化特征。
+目前，一个任务的只有很小一部分可以在单一可视化或用户界面内完成；用户在进行分析时常常需要利用多个不同的用户界面和特定可视化的不同实例。
+这不是一个单向工作流，因为用户经常需要回溯上层，移动到其他工具以继续他们的调查。
+任务通常涉及用户形成并验证假设，这自然需要大量的探索和回溯，无论是在工具内还是跨工具。</p>
+<p><em>工具是短视的。</em>
+尽管存在跨多个工具的工具和工作流程生态系统，但默认情况下，每个工具都被呈现为其用户的独立选项。
+参与者描述了尽管很少以这种方式使用，可视化尝试成为“一刀切”的解决方案。
+这导致了工具集的分散并给用户带来负担。</p>
+<p><em>不支持工具间的链接。</em>尽管从概览到跟踪检查是一个共同的进展，但工具之间没有耦合，必须由用户手动访问，每次都需要从头开始导航到相关数据。
+所有参与者都表达了对工具间链接以实现更直接导航的渴望，以及对孤立工具减慢故障排除速度的挫折。在第8节中，我们讨论了行业努力解决短视工具及其链接问题。</p>
+<p><em>缺乏更广泛的上下文。</em>
+个别跟踪检查通常只是更广泛的故障排除工作流程中的一步。
+例如，用户可能检查一个跟踪以确定它是否代表某种性能异常；
+异常的更广泛上下文来源于工作流程的先前步骤。
+参与者描述了他们从任何一个工具或可视化中单独获得的好处并不显著。
+然而，现有工具仅以一种通用方式展示跟踪数据，无论用户是如何或为何来到该工具的。
+例如，观察个别跟踪及其相对时间在你不知道这些时间是比一般跟踪数据集快还是慢的情况下并无价值。</p>
+<h2 id="c2-用户负担过重">C2: 用户负担过重</h2>
+<p>DT支持多样的用户群体、广泛的用例，并且每项调查都可能略有不同。
+同样，跟踪是一个丰富的数据源，每个跟踪的每个方面都附有大量属性；
+例如，每个跨度都会有多个键值对和注释。
+因此，有多种不同的方式来可视化跟踪。
+现有工具试图满足广泛的用例范围，但提供的自定义选项很少，导致视觉上杂乱无章，包含用户经常不需要且分心的信息。</p>
+<p><em>无关数据。</em>
+用户对于他们想要看到哪些数据以及如何与可视化交互有不同的需求。
+这给有经验的用户增加了负担；
+大多数参与者表达了对信息展示方式的挫败感，并讨论了如何学会忽略其中的某些方面。
+有经验的用户会被与他们的任务无关的信息分心，宁愿只关注特定的信息片段。
+在演示现有工具时，几位参与者评论说他们不关心大部分显示的数据，并希望能完全排除它。
+参与者还描述了新手用户如何受到信息过载的困扰。
+对于新用户，试图显示所有相关信息一次性提供过多信息。</p>
+<p><em>有用的信息常常被隐藏。</em>
+几位参与者表达了对信息被埋在几次点击之下的挫败感，这无谓地减慢了调查进度。
+在某些情况下，可视化会完全省略用户知道存在的跟踪数据，迫使他们在其他地方寻找。</p>
+<p><em>缺乏自定义。</em> 一些工具明显缺乏用户明确想要的自定义选项。
+我们的访谈中存在微妙不同的数据呈现促进新发现的想法，这反映了文献中的结果，如“突出”现象和不同的可视化引发不同的结果。</p>
+<p><em>重复努力。</em>
+用户经常在不同的工作流程中以及在相同的工作流程内多次重复相同的操作。
+调查过程经常需要使用相同的可视化但针对不同源数据重复使用（例如，打开多个标签页查看不同的示例跟踪）。
+所有参与者都强调了重复动作和手动努力如何显著减慢调查速度。
+在某些情况下，这种情况非常明显，以至于我们的用户不会进行他们知道会有用的分析，因为时间和努力的要求。
+例如，用户通常在调查过程中途使用UI，带着他们正在寻找的东西的想法。
+我们观察到的与最终用户一起的工具经常以最小的交互支持呈现跟踪，要求用户然后通过视觉扫描来找到相关细节。
+我们在其他行业努力中也看到了这个问题（表1）。
+在展示的几个工具中，用户必须多次使用不同的跟踪进行临时视觉探索，以定位细节。</p>
+<p><em>Mental Model。</em>
+用户需要一个完整的心智模型来解释他们所看到的跟踪。
+用户经常调查那些“看起来不对劲”的事物，这是基于他们对“正常”系统行为的理解。
+这对有经验的用户是可行的，但这大大增加了任何新用户进入这种分析形式的障碍。</p>
+<h2 id="c3-不支持的交互">C3: 不支持的交互</h2>
+<p>我们的访谈中突出显示了几种交互作为故障排除工作流程中重要的部分，但现有工具不支持这些交互，或者只能通过特定的临时解决方法实现。</p>
+<p><em>程序化访问。</em>
+使用DT进行故障排除本质上是开放式的，因此用户不可避免地会遇到当前工具不支持的任务，例如对大量跟踪数据执行自定义的聚合分析。
+在用户当前的工作流程中，他们必须转向程序化API或控制台工具来加载或查询底层跟踪数据。
+虽然对跟踪数据的程序化访问是必要步骤，但当前工具并未提供任何帮助。
+启动这种转换很麻烦，并且涉及过多的手动努力，如复制和粘贴跟踪ID或编写长SQL查询以从后端存储获取跟踪。</p>
+<p><em>聚合分析。</em>
+聚合分析因多种用例而出现，但在当前工具中除了查询高级表格数据集（从跟踪中提取的预定义特征）外，没有得到支持。
+用户必须使用程序化访问手动执行聚合分析，编写查询来加载和处理跟踪数据，并在分析笔记本中生成自定义报告。
+对于常见任务，这样做需要大量重复努力，容易出错，耗时且难以重复。</p>
+<p><em>导航跟踪。</em>
+现有的跟踪可视化假设用户正在进行开放式的手动探索。
+然而，从C1继承而来的实践中，用户带着特定的假设到达一个可视化以进行调查。
+在这些情况下，基于探索的导航不适合用户，他们反而会求助于临时解决方法，例如使用基于浏览器的文本搜索来识别具有特定名称的跨度。
+通常，参与者表达了对在跟踪属性上搜索的渴望，以及对现有工具的挫败感。
+此外，用户需要在跟踪数据的任何元素上进行搜索——即使这些元素在当前的可视化中没有明确显示——因为用户可能是通过显示这些数据的不同可视化到达的，或者这些属性可能在当前视图中被隐藏。
+最后，用户经常想要撤销或回退操作，但现有工具不支持这一点。相反，用户有时不得不从头开始。</p>
+<p><em>跟踪比较。</em>
+所有参与者都将将一个跟踪与另一个比较描述为一种交互方式。
+没有现有的跟踪可视化系统以有意义的方式促进一次跟踪与另一次跟踪的比较（表1）。
+所有用户描述了比较两个跟踪的繁琐方法，实质上归结为打开多个浏览器窗口并进行视觉比较。</p>
+<h2 id="c4-一种尺寸不适合所有">C4: 一种尺寸不适合所有</h2>
+<p>对于如何可视化个别跟踪没有共识，由于故障排除的开放式特质，不太可能有一种可视化方法适用于所有任务。
+然而，参与者描述了开发工作不仅仅专注于寻找“最佳”的可视化方法，而且还积极推动淘汰用户喜欢的现有方法。
+令人惊讶的是，我们了解到，内部工具的开发者目前很少收到关于工具使用频率或如何改进的反馈。
+这部分原因可能是因为追踪用户相对疏离。
+我们认为，对于开源工具，这个问题可能会更加严重，因为其用户与开发者的联系更加疏远。</p>
+<h2 id="c5-数据质量">C5: 数据质量</h2>
+<p>我们识别了几个与数据质量相关的问题。
+一个问题简单地与跟踪数据的长期性相关 —— 追踪后端仅保留数据一到两周 ——
+这使得复现分析变得困难。
+此外，还存在与格式错误的数据相关的问题：数据在用户界面中的展示方式，以及抽样策略可能对呈现数据的真实性产生的影响。</p>
+<p><em>工具专注于“理想”跟踪。</em>
+现有工具被设计为可视化“黄金案例”跟踪数据。
+然而，故障排除隐含地意味着要查看可能偏离正常的跟踪，以尝试理解问题
+。例如，故障排除长时间运行的请求本质上需要可视化非常大的跟踪，而一些跟踪可视化做不到这一点。</p>
+<p><em>数据可能丢失或格式错误。</em>
+用户发现很难确定数据是格式错误还是用户界面存在问题。甚至不知道问题是出在用户界面还是数据上，这通常导致用户不得不放弃跟踪，尽管它可能包含有价值的见解。</p>
+<h1 id="guidelines-and-research-opportunities">GUIDELINES AND RESEARCH
+OPPORTUNITIES</h1>
+<ul>
+<li>G1: Customisation and Persistence (C1, C2)
+<ul>
+<li>优先考虑自定义。自定义是可取的，因为存在许多不同的用户和高级用户。我们认为解决这个问题的方法是促进并优先考虑可视化的自定义，而不是试图专注于一种满足所有用户和用例的可视化方法。例如，用户应该能够对关键字段进行排序，更改配色方案，以及更改可视化方面的存在或缺失（如连接线）。</li>
+<li>持久化自定义
+自定义应该是持久化的——用户不希望每次来检查跟踪时都必须设置他们理想的“视图”，而应该能够保存他们的偏好设置，并选择最符合他们调查需要的配置。这样做可以减少用户每次回访一个可视化时的努力，并简化重复工作流的能力，因为他们可以直接跳到他们需要的内容。</li>
+</ul></li>
+<li>G2: Simple Starting Point (C1, C2)
+<ul>
+<li>虽然高级用户是DT（分布式追踪）的一个常见用户群体，但为新手用户提供一个易于接入的起点也非常重要。因此，我们主张工具中跟踪的初始视图应该尽可能简单。一个简单的起点将减少新用户当前经历的初始视觉杂乱。也就是说，设计者可以考虑一个建构主义的替代方案来代替常见的可视化口号：“首先概览，然后缩放和过滤，按需获取详情”。专家用户可以基于他们对数据和系统的直觉和理解构建所需的视图，根据需要扩展和调查可视化的相关部分，这一过程基于对大型图表探索的研究。当与进一步的自定义和持久化（G1）结合时，用户可以随时返回到这个视图。相反，它也方便新用户探索性地发现跟踪可视化的各个方面，而不会被初始视图压倒。前两个指导原则通过不限制用户的交互方式来解决C1问题，并通过允许用户控制他们所呈现的信息量来解决C2问题。为了实施这一指导原则，我们可以从之前关于领域特定适应信息寻求口号的研究以及关于逐步披露的工作中受益。通过混合主动用户界面等方法减少在DT中取得进展所需的经验和知识门槛也是一个机会，以探索人与机器努力之间的平衡——自动化某些事情，同时留给用户一些判断，以创造人机协作的“两全其美”的情况，通过自动化分析大量可用数据并将其呈现给用户。</li>
+</ul></li>
+<li>G3: Search-based Navigation (C1, C2, C3)
+<ul>
+<li>搜索是一种关键的交互模式，与手动探索有着显著的不同。用户通常知道他们在寻找什么——跟踪中的某个特定内容。因此，搜索必须是工具支持的基本交互方式。此外，用户需要能够搜索跟踪数据的所有元素，即使是当前可视化中未显示的元素。为了支持基于搜索的导航，特别是对于新手用户，可以借鉴几十年来人机交互（HCI）研究的成果，特别是直接操作。特别是，动态查询小部件已被证明可以提高搜索和过滤的性能和用户满意度。这一指导原则通过促进用户渴望执行但当前无法通过现有工具轻松完成的任务，来解决C3挑战。此外，它通过允许利用更多数据，而不是现有的狭窄工作流视图，来解决C1挑战，并通过允许更大范围地展示底层数据，减轻了C2中提到的用户负担。</li>
+</ul></li>
+<li>G4: Interlinking (C1, C2, C3, C4)
+<ul>
+<li>松散耦合的工具。虽然可以通过直接链接到其他工具来实现互联，但由于不断开发新工具和界面，这种方法随时间会变得脆弱。最终，手动将每个工具链接到另一个工具将变得不可行。一些现有的专有DT解决方案——如Lightstep[6]——已经开始通过构建“综合工具”来解决这个问题。这种方法确实允许更容易地链接分析管道的不同部分，但目前尚不清楚这种方法是否能够足够可扩展以处理新工具和可视化方法，或是否足够灵活以满足用户的需求——比如我们发现的用户喜欢在可视化跟踪时能够选择不同工具的能力。理想情况下，工具可以通过某种外部管理框架间接使用一定级别的间接性。工具的开发者和设计者只需要暴露他们可以可视化的相关类型的数据。这需要一个基础设施的改变，我们坚信这将帮助工具的用户和开发者更加顺畅地将DT工作流的不同方面链接在一起。</li>
+<li>而不是从头开始，重用状态。用户经常希望将他们故障排除的一个步骤的状态应用到另一个步骤，例如，在查看一个跟踪时，用户可能想要然后加载不同的数据。系统应支持使用当前可视化作为上下文来填充其他可视化。</li>
+<li>转向程序化访问。一些需要用户离开并查看底层数据的问题，可能可以通过暴露更多数据来就地解决。工具应该使得取得数据和状态并开始程序化工作变得容易。这可以通过暴露产生正在可视化的数据的底层跟踪数据存储的具体查询来实现。我们建议工具通过提供预填充的合成查询，为类似的跟踪直接在控制台执行，以简化过渡。此外，由于基于浏览器的分析笔记本普遍存在，工具可以直接为用户预填充一个可运行的笔记本，并在新的浏览器标签页中打开。这将大大减少手动执行这些步骤时引入的时间和错误。关于将可视化链接到程序化数据访问的先前工作很少，但在“Utopia
+Documents”[59]中可以找到一些灵感，该项目旨在将学术文章与研究数据链接起来，并在生物信息学领域得到了一些应用。</li>
+</ul></li>
+<li>G5: Interaction History (C1, C2, C4)
+<ul>
+<li>历史记录为可复现性。与工具的交互历史记录及其相关状态还可以让分析师以更深入的方式分享他们的分析，向另一个用户准确展示他们是如何得到某个结果的。这在尝试向新用户介绍工具时也是有益的。</li>
+<li>历史记录作为可视化开发者的反馈。如果记录了交互历史，可视化开发者可以利用它来获得有关用户交互的见解。可视化开发者可以利用使用数据来了解用户如何与系统互动，而不必依赖耗时的定性访谈。此外，如§4所述，当前的DT用户是分散的，这减少了开发者与用户之间的沟通和可见性。因此，自动化这种反馈是一个引人注目的解决方案。</li>
+</ul></li>
+<li>G6: Aggregate Context (C2, C3)
+<ul>
+<li>参与者反复强调了聚合上下文对于从DT（分布式追踪）可视化中提取价值的重要性，注意到了决定哪些跟踪重要且值得检查的聚合数据的必要性。为了减少对心智模型的依赖，我们建议在可能的情况下，开发者应将聚合数据集成到单个跟踪视图中，以提供尽可能多的关于跟踪的上下文信息。一个具体的例子是在单个跟踪可视化中显示每个跨度的延迟分布。这减轻了专家用户的心智负担，新手用户也可以开始拥有与经验丰富的用户相同的一些洞察，而无需依赖多年的经验来构建深刻的上下文心智模型。这也使事情变得更快，因为用户经常在聚合和非聚合数据之间来回切换。这个指导原则通过客观地将聚合数据与单个跟踪视图连接起来，而不依赖用户从他们的心智模型中推断这些信息，解决了C2和C3的问题。外部认知和焦点+上下文的概念，结合在位嵌入可视化的工作，可以帮助减轻用户的认知负荷。聚合上下文可以从不同的群体中提取，并且可以沿着许多不同的维度进行分层。例如，它可以考虑所有曾经的跟踪、只包含某些服务的跟踪，或过去24小时的跟踪，仅举几例。先前的工作已经描述了需要根据地理区域、操作系统版本和机器类型等多样化特征进行分层的需求。未来的工作必须解决是否防止用户被多个不同的可视化所压倒、促进聚合人群的定制化，或可视化正在使用的语料库的不确定性的问题。</li>
+</ul></li>
+<li>G7: Comparison (C2, C3)
+<ul>
+<li>我们观察到，在实践中，即使是对于没有明确支持比较的工具，比较也是司空见惯的；然而，这被手动配置多个可视化以并排显示相同信息的需要所困扰。当比较被视为一种一流的用例，并与G1和G4结合时，这将大大提高用户执行任务的效率，因为他们不再被迫在多个标签页中工作并依赖视觉记忆的限制，而是能够直接进行比较。这一指导原则旨在通过鼓励可视化开发者将比较等常见任务直接整合到他们的工具中，来解决C2和C3的问题。除了使用户能够外部比较两个可视化实例变得容易之外，还有为跟踪比较设计特殊工具的机会。一些工作已经探索了这个话题【16】【67】，但大多数提出的解决方案都很笨重，并且在我们观察到的工具中并没有被广泛使用或可用。</li>
+</ul></li>
+<li>G8: Handle Edge-Cases Gracefully (C2, C5)
+<ul>
+<li>DT（分布式追踪）的主要用例是故障排除。故障排除本质上需要调查偏离常规的执行情况，其中执行过程中可能出现了问题，甚至包括捕获数据本身的过程。具有讽刺意味的是，跟踪可视化通常专注于“黄金案例”数据，不适合调查边缘情况。特别是两种边缘情况尚未得到足够支持，但用户经常遇到：大型跟踪和格式错误的数据。G2提出了一种表示单个跟踪的最小化方法，我们认为这也有助于显示大型跟踪，为重新设计可视化和用户界面开辟了机会，以替换大量冗余信息——例如那些由于fanout（重复调用同一服务）而表现出的跟踪经历的，大型跟踪的常见问题——用更简单的可视化，并且只展开用户实际想要与之互动的跟踪区域。未来在可视化大型跟踪方面的工作也可以从利用大图表示和处理算法中受益。解决格式错误的数据需要来自跟踪收集系统的更明确支持，以确保它在数据丢失或损坏时发出标记。然后，用户界面可以视觉上指示发生的情况，而不是依赖用户推断数据格式错误。先前在可视化方面的工作可以为这些努力提供信息。一项最近的研究评估了插补和可视化缺失数据的替代方法，发现显式突出缺失值导致比打破视觉连续性更好的感知数据质量。因此，调查可视化缺失数据的工作可以指导这一领域的未来工作。这里更一般的原则是，调查大型跟踪和格式错误的数据是用户进行的分析的重要部分，因此，就像比较一样，它也应该被视为工具开发中的一个重要方面。通过这样做，开发者可以通过不依赖用户简单地知道数据何时格式错误来解决C2，并且可以开始使用更复杂的方法来与格式错误的数据互动，从而开始解决C5。</li>
+</ul></li>
+</ul>
+<h1 id="analysis-of-existing-tools">ANALYSIS OF EXISTING TOOLS</h1>
+<p>一些分析，这里比较trivial，就不放了。</p>
+<h1 id="open-problems">Open Problems</h1>
+<ul>
+<li>Multi-variate Comparison</li>
+<li>Interactions between different tools</li>
+<li>Customisation of visualisation</li>
+<li>Large data interactions</li>
+<li>User interaction history</li>
+</ul>
+<!-- flag of hidden posts -->
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/others/" rel="tag"># others</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/datawine" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background"><span class="nav-number">1.</span> <span class="nav-text">Background</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#motivation"><span class="nav-number">1.1.</span> <span class="nav-text">Motivation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#distributed-tracing-overview"><span class="nav-number">1.2.</span> <span class="nav-text">Distributed Tracing Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#visualisation"><span class="nav-number">1.3.</span> <span class="nav-text">Visualisation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#interview-study"><span class="nav-number">2.</span> <span class="nav-text">INTERVIEW STUDY</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#participants-and-setting"><span class="nav-number">2.1.</span> <span class="nav-text">Participants and Setting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#method"><span class="nav-number">2.2.</span> <span class="nav-text">Method</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#user-roles"><span class="nav-number">3.</span> <span class="nav-text">USER ROLES</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#use-cases"><span class="nav-number">4.</span> <span class="nav-text">USE CASES</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#challenges"><span class="nav-number">5.</span> <span class="nav-text">CHALLENGES</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#c1-%E6%B5%81%E7%A8%8B%E4%B8%8D%E5%8C%B9%E9%85%8D"><span class="nav-number">5.1.</span> <span class="nav-text">C1: 流程不匹配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c2-%E7%94%A8%E6%88%B7%E8%B4%9F%E6%8B%85%E8%BF%87%E9%87%8D"><span class="nav-number">5.2.</span> <span class="nav-text">C2: 用户负担过重</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c3-%E4%B8%8D%E6%94%AF%E6%8C%81%E7%9A%84%E4%BA%A4%E4%BA%92"><span class="nav-number">5.3.</span> <span class="nav-text">C3: 不支持的交互</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c4-%E4%B8%80%E7%A7%8D%E5%B0%BA%E5%AF%B8%E4%B8%8D%E9%80%82%E5%90%88%E6%89%80%E6%9C%89"><span class="nav-number">5.4.</span> <span class="nav-text">C4: 一种尺寸不适合所有</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c5-%E6%95%B0%E6%8D%AE%E8%B4%A8%E9%87%8F"><span class="nav-number">5.5.</span> <span class="nav-text">C5: 数据质量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#guidelines-and-research-opportunities"><span class="nav-number">6.</span> <span class="nav-text">GUIDELINES AND RESEARCH
+OPPORTUNITIES</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#analysis-of-existing-tools"><span class="nav-number">7.</span> <span class="nav-text">ANALYSIS OF EXISTING TOOLS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#open-problems"><span class="nav-number">8.</span> <span class="nav-text">Open Problems</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Datawine</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">32.8k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user">本站访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye">本站总访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cyw3QwzdC';
+      var conf = 'cbf53c79ec118123e02b0e1a5676be66';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
